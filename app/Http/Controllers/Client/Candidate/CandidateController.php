@@ -45,5 +45,10 @@ class CandidateController extends Controller
     public function saveJob()
     {
         return view('client.candidate.saveJob');
+
+        public
+        function hot()
+        {
+            return view("client.candidate.hot");
     }
 }

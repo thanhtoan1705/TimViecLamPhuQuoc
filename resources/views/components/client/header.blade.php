@@ -14,6 +14,8 @@
                         </li>
                         <li><a href='companies-grid.html'>Công ty</a>
                         </li>
+                        <li><a href='companies-grid.html'>Ứng viên</a>
+                        </li>
                         <li><a href='candidates-grid.html'>Tin tức</a>
                         </li>
                         <li><a href=''>Giới thiệu</a>
