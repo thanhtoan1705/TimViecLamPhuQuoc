@@ -16,7 +16,7 @@
                         </li>
                         <li><a href='candidates-grid.html'>Tin tức</a>
                         </li>
-                        <li><a href='blog-grid.html'>Giới thiệu</a>
+                        <li><a href=''>Giới thiệu</a>
                         </li>
                         <li><a href='blog-grid.html'>Bảng giá</a>
                         </li>
@@ -26,7 +26,8 @@
                         class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
             </div>
             <div class="header-right">
-                <div class="block-signin"><a class='btn btn-default btn-shadow ml-40 hover-up' href='page-signin.html'>Đăng nhập</a></div>
+                <div class="block-signin"><a class='btn btn-default btn-shadow ml-40 hover-up'
+                        href='page-signin.html'>Đăng nhập</a></div>
             </div>
         </div>
     </div>
