@@ -43,7 +43,7 @@
                                 <button class="btn btn-brand-1 hover-up w-100" type="submit" name="register">Đăng ký
                                 </button>
                             </div>
-                            <div class="text-muted text-center">Đã có tài khoản <a href="{{ route('candidate.login')}}">Đăng
+                            <div class="text-muted text-center">Đã có tài khoản <a href="">Đăng
                                     nhập</a>
                             </div>
                         </form>

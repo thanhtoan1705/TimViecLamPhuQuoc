@@ -36,7 +36,7 @@
                                 </button>
                             </div>
                             <div class="text-muted text-center">Chưa có tài khoản? <a
-                                    href="{{ route('employer.register') }}">Đăng
+                                    href="">Đăng
                                     ký</a></div>
                         </form>
                     </div>
