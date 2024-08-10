@@ -3,8 +3,7 @@
 
 <!-- Mirrored from jobbox-html.netlify.app/frontend/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 07 Jun 2024 11:15:51 GMT -->
 <!-- Added by HTTrack -->
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
-
+<meta http-equiv="content-type" content="text/html;charset=UTF-8"/><!-- /Added by HTTrack -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -17,14 +16,11 @@
     <meta name="keywords" content="index, page">
     <meta name="author" content="">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/client/imgs/template/favicon.svg') }}">
+    <link href="{{ asset('assets/client/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/client/css/stylecd4e.css?version=4.1') }}" rel="stylesheet">
+    @stack('css')
     <title>@yield('title', 'Trang chủ')</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    @stack('css')    
 </head>
-
 <body>
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -91,7 +87,7 @@
     <!-- header -->
     {{-- @include('clients.components.header') --}}
     <x-client.header></x-client.header>
-
+    <script src="{{ asset('assets/client/js/app.js')}}"></script>
 
     @yield('content')
 
@@ -127,5 +123,4 @@
 </body>
 
 <!-- Mirrored from jobbox-html.netlify.app/frontend/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 07 Jun 2024 11:15:59 GMT -->
-
 </html>

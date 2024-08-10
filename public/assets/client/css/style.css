@@ -1,0 +1,32 @@
+.login-container {
+    position: relative;
+    display: inline-block;
+}
+
+.login-buttons {
+    z-index: 999 !important;
+    display: none;
+    position: absolute;
+    top: 100%;
+    z-index: 1;
+    padding: 10px 0;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.login-buttons a {
+    display: block;
+    padding: 10px 20px !important;
+
+}
+
+
+.login-buttons a:hover {
+    background-color: #ddd; /* Hover effect for links */
+}
+
+.login-container:hover .login-buttons {
+    display: flex; /* Show dropdown on hover */
+}

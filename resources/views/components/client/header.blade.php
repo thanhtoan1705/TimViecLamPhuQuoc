@@ -26,6 +26,19 @@
                         class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
             </div>
             <div class="header-right">
+                <div id="loginContainer" class="login-container">
+                    <button id="loginButton" class='btn btn-default btn-shadow ml-40 hover-up'>Đăng nhập</button>
+                    <div id="loginButtons" class="login-buttons" style="display: none;">
+                        <a class='btn btn-default btn-shadow ml-40 hover-up'
+                           href="{{ route('employer.login') }}">Tuyển dụng</a>
+                        <a class='btn btn-default btn-shadow ml-40 hover-up'
+                           href="{{ route('candidate.register') }}">Ứng viên</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
                 <div class="block-signin"><a class='btn btn-default btn-shadow ml-40 hover-up'
                         href='page-signin.html'>Đăng nhập</a></div>
             </div>
