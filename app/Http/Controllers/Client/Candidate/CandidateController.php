@@ -15,4 +15,19 @@ class CandidateController extends Controller
     {
         return view('client.candidate.detail');
     }
+
+    public function profile()
+    {
+        return view("client.candidate.profile");
+    }
+
+    public function watched()
+    {
+        return view("client.candidate.watched");
+    }
+
+    public function notification()
+    {
+        return view("client.candidate.notification");
+    }
 }
