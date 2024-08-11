@@ -8,3 +8,4 @@ Route::prefix('/')->name('client.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
     Route::get('/gioi-thieu', [PageController::class, 'about'])->name('about');
 });
+

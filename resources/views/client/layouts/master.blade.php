@@ -2,7 +2,9 @@
 <html lang="en">
 
 <!-- Mirrored from jobbox-html.netlify.app/frontend/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 07 Jun 2024 11:15:51 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -17,73 +19,87 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/client/imgs/template/favicon.svg') }}">
     <link href="{{ asset('assets/client/css/stylecd4e.css?version=4.1') }}" rel="stylesheet">
     <title>@yield('title', 'Trang chủ')</title>
-  </head>
-  <body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    @stack('css')    
+</head>
+
+<body>
     <div id="preloader-active">
-      <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="preloader-inner position-relative">
-          <div class="text-center"><img src="{{ asset('assets/client/imgs/template/loading.gif') }}" alt="jobBox"></div>
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="text-center"><img src="{{ asset('assets/client/imgs/template/loading.gif') }}"
+                        alt="jobBox"></div>
+            </div>
         </div>
-      </div>
     </div>
     <div class="modal fade" id="ModalApplyJobForm" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content apply-job-form">
-          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-          <div class="modal-body pl-30 pr-30 pt-50">
-            <div class="text-center">
-              <p class="font-sm text-brand-2">Job Application </p>
-              <h2 class="mt-10 mb-5 text-brand-1 text-capitalize">Start your career today</h2>
-              <p class="font-sm text-muted mb-30">Please fill in your information and send it to the employer.                   </p>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content apply-job-form">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body pl-30 pr-30 pt-50">
+                    <div class="text-center">
+                        <p class="font-sm text-brand-2">Job Application </p>
+                        <h2 class="mt-10 mb-5 text-brand-1 text-capitalize">Start your career today</h2>
+                        <p class="font-sm text-muted mb-30">Please fill in your information and send it to the employer.
+                        </p>
+                    </div>
+                    <form class="login-register text-start mt-20 pb-30" action="#">
+                        <div class="form-group">
+                            <label class="form-label" for="input-1">Full Name *</label>
+                            <input class="form-control" id="input-1" type="text" required="" name="fullname"
+                                placeholder="Steven Job">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="input-2">Email *</label>
+                            <input class="form-control" id="input-2" type="email" required="" name="emailaddress"
+                                placeholder="stevenjob@gmail.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="number">Contact Number *</label>
+                            <input class="form-control" id="number" type="text" required="" name="phone"
+                                placeholder="(+01) 234 567 89">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="des">Description</label>
+                            <input class="form-control" id="des" type="text" required="" name="Description"
+                                placeholder="Your description...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="file">Upload Resume</label>
+                            <input class="form-control" id="file" name="resume" type="file">
+                        </div>
+                        <div class="login_footer form-group d-flex justify-content-between">
+                            <label class="cb-container">
+                                <input type="checkbox"><span class="text-small">Agree our terms and policy</span><span
+                                    class="checkmark"></span>
+                            </label><a class='text-muted' href='page-contact.html'>Lean more</a>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-default hover-up w-100" type="submit" name="login">Apply
+                                Job</button>
+                        </div>
+                        <div class="text-muted text-center">Do you need support? <a href='page-contact.html'>Contact
+                                Us</a></div>
+                    </form>
+                </div>
             </div>
-            <form class="login-register text-start mt-20 pb-30" action="#">
-              <div class="form-group">
-                <label class="form-label" for="input-1">Full Name *</label>
-                <input class="form-control" id="input-1" type="text" required="" name="fullname" placeholder="Steven Job">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="input-2">Email *</label>
-                <input class="form-control" id="input-2" type="email" required="" name="emailaddress" placeholder="stevenjob@gmail.com">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="number">Contact Number *</label>
-                <input class="form-control" id="number" type="text" required="" name="phone" placeholder="(+01) 234 567 89">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="des">Description</label>
-                <input class="form-control" id="des" type="text" required="" name="Description" placeholder="Your description...">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="file">Upload Resume</label>
-                <input class="form-control" id="file" name="resume" type="file">
-              </div>
-              <div class="login_footer form-group d-flex justify-content-between">
-                <label class="cb-container">
-                  <input type="checkbox"><span class="text-small">Agree our terms and policy</span><span class="checkmark"></span>
-                </label><a class='text-muted' href='page-contact.html'>Lean more</a>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-default hover-up w-100" type="submit" name="login">Apply Job</button>
-              </div>
-              <div class="text-muted text-center">Do you need support? <a href='page-contact.html'>Contact Us</a></div>
-            </form>
-          </div>
         </div>
-      </div>
     </div>
 
-      <!-- header -->
-  {{-- @include('clients.components.header') --}}
-  <x-client.header></x-client.header>
+    <!-- header -->
+    {{-- @include('clients.components.header') --}}
+    <x-client.header></x-client.header>
 
 
-  @yield('content')
+    @yield('content')
 
 
-  <!-- footer area -->
-  <x-client.footer></x-client.footer>
+    <!-- footer area -->
+    <x-client.footer></x-client.footer>
 
-  {{-- @include('clients.components.footer') --}}
+    {{-- @include('clients.components.footer') --}}
 
 
 
@@ -108,7 +124,8 @@
 
     <script src="{{ asset('assets/js/noUISlider.js') }}"></script>
     <script src="{{ asset('assets/js/slider.js') }}"></script>
-  </body>
+</body>
 
 <!-- Mirrored from jobbox-html.netlify.app/frontend/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 07 Jun 2024 11:15:59 GMT -->
+
 </html>
