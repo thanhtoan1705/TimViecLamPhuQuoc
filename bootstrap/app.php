@@ -20,9 +20,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 'client.php',
                 'user.php',
                 'employer.php',
+                'job.php',
                 'candidate.php',
                 'post.php',
                 'auth.php',
+                'pricing.php',
             ];
 
 
@@ -36,6 +38,7 @@ return Application::configure(basePath: dirname(__DIR__))
             foreach ($clientRoutes as $route){
                 Route::middleware('web')
                      ->prefix('')
+                    ->name('client.')
                      ->group(base_path("routes/client/{$route}"));
             }
         },
@@ -44,5 +47,6 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions){
-
+        //
     })->create();
+
