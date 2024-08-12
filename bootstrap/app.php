@@ -27,6 +27,10 @@ return Application::configure(basePath: dirname(__DIR__))
                 'pricing.php',
             ];
 
+            $employerRoutes = [
+                'candidate.php',
+            ];
+
 
             foreach ($adminRoutes as $route){
                 Route::middleware('web')
@@ -40,6 +44,13 @@ return Application::configure(basePath: dirname(__DIR__))
                      ->prefix('')
                     ->name('client.')
                      ->group(base_path("routes/client/{$route}"));
+            }
+
+            foreach ($employerRoutes as $route){
+                Route::middleware('web')
+                     ->prefix('')
+                    ->name('employer.')
+                     ->group(base_path("routes/employer/{$route}"));
             }
         },
     )
