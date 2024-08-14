@@ -35,6 +35,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 'dashboard.php',
                 'job.php',
                 'service.php',
+                'user.php',
+                'interview.php',
             ];
 
 
