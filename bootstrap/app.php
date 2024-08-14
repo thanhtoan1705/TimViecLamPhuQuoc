@@ -31,6 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 'candidate.php',
                 'history.php',
                 'order.php'
+                'voucher.php',
             ];
 
 
