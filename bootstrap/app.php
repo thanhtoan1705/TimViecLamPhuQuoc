@@ -33,6 +33,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 'order.php'
                 'voucher.php',
                 'dashboard.php',
+                'job.php',
+                'service.php',
             ];
 
 
@@ -52,7 +54,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             foreach ($employerRoutes as $route){
                 Route::middleware('web')
-                     ->prefix('')
+                    ->prefix('nha-tuyen-dung')
                     ->name('employer.')
                      ->group(base_path("routes/employer/{$route}"));
             }
