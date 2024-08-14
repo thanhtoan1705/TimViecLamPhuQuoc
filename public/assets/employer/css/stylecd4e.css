@@ -760,6 +760,27 @@ iframe {
   background-color: #F4F7FF !important;
 }
 
+.bg-primary-subtle {
+    background-color: #CFE2FF !important;
+}
+
+.bg-danger-subtle {
+    background-color: #F8D7DA !important;
+}
+
+.bg-warning-subtle {
+    background-color: #FFF3CD !important;
+}
+
+.bg-success-subtle {
+    background-color: #D1E7DD !important;
+}
+
+.border-16 {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
 .main {
   display: flex;
   width: 100%;
@@ -3955,7 +3976,7 @@ option {
 }
 
 /***************************
-    Page section margin 
+    Page section margin
 ****************************/
 .mtb-0 {
   margin: 0;

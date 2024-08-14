@@ -32,6 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 'history.php',
                 'order.php'
                 'voucher.php',
+                'dashboard.php',
             ];
 
 
