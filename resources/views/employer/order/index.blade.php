@@ -59,22 +59,22 @@
                         </div>
                         <div class="tab-content">
                             <div class="tab-pane" id="all-content" data-tab-content="all">
-                                
+
                             </div>
                             <div class="tab-pane" id="pending-content" data-tab-content="pending">
-                                
+
                             </div>
                             <div class="tab-pane" id="in-progress-content" data-tab-content="in-progress">
-                               
+
                             </div>
                             <div class="tab-pane" id="completed-content" data-tab-content="completed">
-                                
+
                             </div>
                             <div class="tab-pane" id="expired-content" data-tab-content="expired">
-                                
+
                             </div>
                             <div class="tab-pane" id="cancelled-content" data-tab-content="cancelled">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -86,3 +86,11 @@
 
 
 @endsection
+
+@push('css')
+    <link href="{{asset ('assets/employer/css/order.css')}}" rel="stylesheet">
+@endpush
+
+@push('script')
+    <script src="{{asset ('assets/employer/js/order.js')}}"></script>
+@endpush

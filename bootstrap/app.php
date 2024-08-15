@@ -30,7 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
             $employerRoutes = [
                 'candidate.php',
                 'history.php',
-                'order.php'
+                'order.php',
                 'voucher.php',
                 'dashboard.php',
                 'job.php',

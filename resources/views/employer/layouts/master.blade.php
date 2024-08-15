@@ -30,8 +30,6 @@
     <!-- FullCalendar JS -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 
-    <link href="{{asset ('assets/employer/css/order.css')}}" rel="stylesheet">
-    <link href="{{asset ('assets/employer/css/activityHistory.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>@yield('title', 'Nhà Tuyển Dụng')</title>
     @stack('css')
@@ -44,7 +42,6 @@
 
 </main>
 @stack('script')
-<script src="{{asset ('assets/employer/js/order.js')}}"></script>
 <script src="{{ asset('assets/employer/js/vendor/modernizr-3.6.0.min.js') }}"></script>
 <script src="{{ asset('assets/employer/js/vendor/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ asset('assets/employer/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>

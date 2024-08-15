@@ -31,7 +31,7 @@
                                     <h4 class="box-left-title">Tất cả lịch sử</h4>
                                     <li><a href=""><i class="bi bi-clock-history"></i> Lịch sử kích hoạt dịch vụ</a></li>
                                     <li><a href=""><i class="bi bi-clock-history"></i> Lịch sử phỏng vấn</a></li>
-                        
+
                                     <li><a href=""><i class="bi bi-clock-history"></i> Lịch sử cập nhật tài khoản</a></li>
                                 </ul>
                             </div>
@@ -57,3 +57,10 @@
 
 </div>
 @endsection
+
+@push('css')
+    <link href="{{asset ('assets/employer/css/activityHistory.css')}}" rel="stylesheet">
+@endpush
+
+@push('script')
+@endpush
