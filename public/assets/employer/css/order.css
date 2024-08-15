@@ -1,0 +1,19 @@
+.count{
+    padding: 5px 5px;
+    background-color: rgb(223, 165, 165,0.2);
+    color: red;
+    border-radius: 100%;
+}
+
+.order-img{
+   margin-left: 440px;
+}
+
+.row-2{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.order-btn{
+    margin-top: 20px;
+}

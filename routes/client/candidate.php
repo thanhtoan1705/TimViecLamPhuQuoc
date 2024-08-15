@@ -12,4 +12,5 @@ Route::prefix('/ung-vien')->name('candidate.')->group(function(){
 
     Route::get('/viec-lam-da-luu', [CandidateController::class, 'saveJob'])->name('saveJob');
     Route::get('/chi-tiet', [CandidateController::class, 'detail'])->name('detail');
+    
 });

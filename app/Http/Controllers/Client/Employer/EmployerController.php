@@ -27,6 +27,6 @@ class EmployerController extends Controller
     public function single()
     {
         return view('client.employer.single');
-
     }
+   
 }
