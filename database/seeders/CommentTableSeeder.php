@@ -6,27 +6,25 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class BlogCategorySeeder extends Seeder
+class CommentTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('blog_categories')->insert([
+        DB::table('comments')->insert([
             [
-                'name' => 'công nghệ',
-                'slug' => 'cong-nghe',
-                'image' => 'cong_nghe.png',
-                'is_active' => true,
+                'blog_id' => 1,
+                'user_id' => 1,
+                'content' => 'Đây là bình luận đầu tiên trên bài vết đầu tiên.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'kinh doanh',
-                'slug' => 'kinh-doanh',
-                'image' => 'kinh_doanh.png',
-                'is_active' => true,
+                'blog_id' => 1,
+                'user_id' => 2,
+                'content' => 'Đây là bình luận thứ hai trên bài vết đầu tiên.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

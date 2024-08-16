@@ -26,6 +26,8 @@ class UserTableSeeder extends Seeder
                 'role' => 'candidate',
                 'google_id' => null,
                 'facebook_id' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'name' => 'Khoa',
@@ -38,6 +40,8 @@ class UserTableSeeder extends Seeder
                 'role' => 'employer',
                 'google_id' => null,
                 'facebook_id' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

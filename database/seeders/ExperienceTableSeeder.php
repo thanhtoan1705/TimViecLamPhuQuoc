@@ -17,10 +17,14 @@ class ExperienceTableSeeder extends Seeder
             [
                 'name' => 'Software Developer',
                 'slug' => 'software-developer',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'name' => 'Project Manager',
                 'slug' => 'project-manager',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ]);
     }

@@ -18,8 +18,22 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserTableSeeder::class,
             AddressTableSeeder::class,
-            MajobTableSeeder::class,
+            MajorTableSeeder::class,
+            ResumeTableSeeder::class,
             ExperienceTableSeeder::class,
+            EducationTableSeeder::class,
+            SkillTableSeeder::class,
+            DegreeTableSeeder::class,
+            CandidateTableSeeder::class,
+            EmployerTableSeeder::class,
+            BlogCategoryTableSeeder::class,
+            BlogTableSeeder::class,
+            CommentTableSeeder::class,
+            JobTypeTableSeeder::class,
+            JobCategoryTableSeeder::class,
+            RankTableSeeder::class,
+            JobPostTableSeeder::class,
+            InterviewTableSeeder::class,
         ]);
     }
 }

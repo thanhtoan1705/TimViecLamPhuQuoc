@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-class InterviewSeeder extends Seeder
+class InterviewTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

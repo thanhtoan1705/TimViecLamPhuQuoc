@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 
-class JobPostSeeder extends Seeder
+class JobPostTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,7 +22,7 @@ class JobPostSeeder extends Seeder
                 'job_category_id' => 1,
                 'major_id' => 1,
                 'employer_id' => 1,
-                'experience_id' => 2,
+                'experience_id' => 1,
                 'job_type_id' => 1,
                 'rank_id' => 1,
                 'degrees_id' => 1,
@@ -44,13 +44,13 @@ class JobPostSeeder extends Seeder
             [
                 'title' => 'Marketing Manager',
                 'slug' => Str::slug('Marketing Manager'),
-                'job_category_id' => 2,
-                'major_id' => 3,
-                'employer_id' => 2,
-                'experience_id' => 3,
-                'job_type_id' => 2,
-                'rank_id' => 2,
-                'degrees_id' => 2,
+                'job_category_id' => 1,
+                'major_id' => 1,
+                'employer_id' => 1,
+                'experience_id' => 1,
+                'job_type_id' => 1,
+                'rank_id' => 1,
+                'degrees_id' => 1,
                 'start_date' => now(),
                 'end_date' => now()->addMonths(2),
                 'description' => 'We are looking for a Marketing Manager...',
@@ -69,13 +69,13 @@ class JobPostSeeder extends Seeder
             [
                 'title' => 'Marketing Manager',
                 'slug' => Str::slug('Marketing Manager'),
-                'job_category_id' => 2,
-                'major_id' => 3,
-                'employer_id' => 2,
-                'experience_id' => 3,
-                'job_type_id' => 2,
-                'rank_id' => 2,
-                'degrees_id' => 2,
+                'job_category_id' => 1,
+                'major_id' => 1,
+                'employer_id' => 1,
+                'experience_id' => 1,
+                'job_type_id' => 1,
+                'rank_id' => 1,
+                'degrees_id' => 1,
                 'start_date' => now(),
                 'end_date' => now()->addMonths(2),
                 'description' => 'We are looking for a Marketing Manager...',

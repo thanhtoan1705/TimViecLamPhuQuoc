@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class DegreesTableSeeder extends Seeder
+class DegreeTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('interviews', function (Blueprint $table) {
             $table->id();
             $table->foreignId('candidate_id')->nullable()->constrained('candidates')->onDelete('set null');
-            $table->foreignId('job_id')->nullable()->constrained('jobs')->onDelete('set null');
+            $table->foreignId('job_id')->nullable()->constrained('job_posts')->onDelete('set null');
             $table->foreignId('employer_id')->nullable()->constrained('employers')->onDelete('set null');
             $table->string('name',255)->nullable();
             $table->string('phone',255)->nullable();
