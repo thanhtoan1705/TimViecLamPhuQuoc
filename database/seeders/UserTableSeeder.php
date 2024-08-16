@@ -18,7 +18,7 @@ class UserTableSeeder extends Seeder
             [
                 'name' => 'Toan',
                 'image' => 'path/to/image.jpg',
-                'email' => 'john.doe@example.com',
+                'email' => 'toan@gmail.com',
                 'password' => Hash::make('password'),
                 'phone' => '1234567890',
                 'remember_token' => null,
@@ -30,7 +30,7 @@ class UserTableSeeder extends Seeder
             [
                 'name' => 'Khoa',
                 'image' => 'path/to/image.jpg',
-                'email' => 'jane.smith@example.com',
+                'email' => 'admin@gmail.com',
                 'password' => Hash::make('password'),
                 'phone' => '0987654321',
                 'remember_token' => null,
