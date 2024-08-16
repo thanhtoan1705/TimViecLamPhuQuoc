@@ -29,6 +29,6 @@ class fiJob_post extends Model
         'quantity',
         'status',
         'premium',
-        'address_id',
+        'address',
     ];
 }
