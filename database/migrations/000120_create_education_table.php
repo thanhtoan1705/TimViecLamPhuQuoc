@@ -22,12 +22,11 @@ return new class extends Migration
             $table->string('name', 255)->nullable();
             $table->string('slug', 255)->nullable();
             $table->text('description')->nullable();
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
             $table->string('institution', 255);
             $table->string('country', 255);
             $table->string('address', 255);
-
             $table->timestamps();
         });
     }

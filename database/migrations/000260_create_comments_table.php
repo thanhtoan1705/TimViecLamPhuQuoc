@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('blog_id')->constrained('blogs')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->text('content', 255);
+            $table->text('content');
             $table->timestamps();
         });
     }
