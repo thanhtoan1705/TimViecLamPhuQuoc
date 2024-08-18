@@ -53,6 +53,17 @@ class User extends Authenticatable
         ];
     }
 
+    public function candidates()
+    {
+        return $this->hasMany(Candidate::class);
+    }
+
+    public function employers()
+    {
+        return $this->hasMany(Employer::class);
+    }
+
+
     public function employer()
     {
         return $this->hasOne(Employer::class);

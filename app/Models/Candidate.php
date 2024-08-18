@@ -69,4 +69,9 @@ class Candidate extends Model
 //    {
 //        return $this->belongsTo(Address::class, 'id');
 //    }
+
+    public function interviews()
+    {
+        return $this->hasMany(Interview::class);
+    }
 }
