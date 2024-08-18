@@ -34,4 +34,8 @@ class Employer extends Model
     {
         return $this->belongsTo(Address::class, 'address_id');
     }
+
+    public function job_post() {
+        return $this->hasMany(Job_post::class);
+    }
 }

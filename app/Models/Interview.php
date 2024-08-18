@@ -23,4 +23,19 @@ class Interview extends Model
         'interview_date',
         'note',
     ];
+
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class);
+    }
+
+    public function job_post()
+    {
+        return $this->belongsTo(Job_post::class,'job_id');
+    }
+
+    public function employer()
+    {
+        return $this->belongsTo(Employer::class);
+    }
 }

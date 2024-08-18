@@ -20,4 +20,14 @@ class Candidate extends Model
         'address_id',
         'salary',
     ];
+
+    public function interviews()
+    {
+        return $this->hasMany(Interview::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
