@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Employer\EmployerInterface;
+use App\Repositories\Employer\EmployerRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(EmployerInterface::class, EmployerRepository::class);
     }
 
     /**

@@ -10,12 +10,14 @@
                         <div class="col-xl-11 col-lg-12">
                             <div class="block-banner">
                                 <h1 class="heading-banner wow animate__animated animate__fadeInUp">Cách <span
-                                        class="color-brand-2">dễ nhất</span><br class="d-none d-lg-block">để có được công
+                                        class="color-brand-2">dễ nhất</span><br class="d-none d-lg-block">để có được
+                                    công
                                     việc mới của bạn</h1>
                                 <div class="banner-description mt-20 wow animate__animated animate__fadeInUp"
-                                    data-wow-delay=".1s">Mỗi tháng, hơn 3 triệu người tìm việc truy cập <br
+                                     data-wow-delay=".1s">Mỗi tháng, hơn 3 triệu người tìm việc truy cập <br
                                         class="d-none d-lg-block">trang web để tìm việc, tạo ra hơn 140.000 <br
-                                        class="d-none d-lg-block">đơn đăng ký mỗi ngày</div>
+                                        class="d-none d-lg-block">đơn đăng ký mỗi ngày
+                                </div>
                                 <div class="form-find mt-40 wow animate__animated animate__fadeIn" data-wow-delay=".2s">
                                     <form>
                                         <div class="box-industry">
@@ -299,12 +301,12 @@
                                             </select>
                                         </div>
                                         <input class="form-input input-keysearch mr-10" type="text"
-                                            placeholder="Từ khóa... ">
+                                               placeholder="Từ khóa... ">
                                         <button class="btn btn-default btn-find font-sm">Tìm kiếm</button>
                                     </form>
                                 </div>
                                 <div class="list-tags-banner mt-60 wow animate__animated animate__fadeInUp"
-                                    data-wow-delay=".3s"><strong>Tìm kiếm phổ biến:</strong><a
+                                     data-wow-delay=".3s"><strong>Tìm kiếm phổ biến:</strong><a
                                         href="#">Designer</a>, <a href="#">Web</a>, <a
                                         href="#">IOS</a>, <a href="#">Developer</a>, <a
                                         href="#">PHP</a>, <a href="#">Senior</a>, <a
@@ -314,13 +316,16 @@
                         <div class="col-xl-1 col-lg-12 d-none d-xl-block col-md-6">
                             <div class="banner-imgs">
                                 <div class="block-1 shape-1"><img class="img-responsive" alt="jobBox"
-                                        src="{{ asset('assets/client/imgs/page/homepage1/banner1.png') }}"></div>
+                                                                  src="{{ asset('assets/client/imgs/page/homepage1/banner1.png') }}">
+                                </div>
                                 <div class="block-2 shape-2"><img class="img-responsive" alt="jobBox"
-                                        src="{{ asset('assets/client/imgs/page/homepage1/banner2.png') }}"></div>
+                                                                  src="{{ asset('assets/client/imgs/page/homepage1/banner2.png') }}">
+                                </div>
                                 <div class="block-3 shape-3"><img class="img-responsive" alt="jobBox"
-                                        src="{{ asset('assets/client/imgs/page/homepage1/icon-top-banner.png') }}"></div>
+                                                                  src="{{ asset('assets/client/imgs/page/homepage1/icon-top-banner.png') }}">
+                                </div>
                                 <div class="block-4 shape-3"><img class="img-responsive" alt="jobBox"
-                                        src="{{ asset('assets/client/imgs/page/homepage1/icon-bottom-banner.png') }}">
+                                                                  src="{{ asset('assets/client/imgs/page/homepage1/icon-bottom-banner.png') }}">
                                 </div>
                             </div>
                         </div>
@@ -333,122 +338,130 @@
             <div class="section-box wow animate__animated animate__fadeIn">
                 <div class="container">
                     <div class="text-center">
-                        <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Tìm kiếm bằng danh mục</h2>
+                        <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Tìm kiếm bằng danh
+                            mục</h2>
                         <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Tìm công việc
-                            hoàn hảo cho bạnt&rsquo; khoảng hơn 800 việc làm mới mỗi ngày</p>
+                            hoàn hảo cho bạn&rsquo; khoảng hơn 800 việc làm mới mỗi ngày</p>
                     </div>
                     <div class="box-swiper mt-50">
                         <div class="swiper-container swiper-group-5 swiper">
                             <div class="swiper-wrapper pb-70 pt-5">
-                                <div class="swiper-slide hover-up"><a href='jobs-list.html'>
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/page/homepage1/marketing.svg') }}')}}">
+                                @foreach ($employers as $item)
+                                    <div class="swiper-slide hover-up">
+                                        <a href=''>
+                                            <div class="item-logo">
+                                                <div class="image-left"><img alt="jobBox" width="50px"
+                                                                             src="{{ asset('storage/' . $item->company_logo) }}">
+                                                </div>
+                                                <div class="text-info-right">
+                                                    <h4>
+                                                        {{$item->name}}
+                                                    </h4>
+                                                    <p class="font-xs">{{$item->company_size}}
+                                                        <span> {{$item->company_type}}</span></p>
+                                                </div>
                                             </div>
-                                            <div class="text-info-right">
-                                                <h4>Marketing &amp; Sale</h4>
-                                                <p class="font-xs">1526<span> Công việc có sẵn</span></p>
-                                            </div>
-                                        </div>
-                                    </a><a href='jobs-grid.html'>
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/page/homepage1/customer.svg') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Trợ giúp khách hàng</h4>
-                                                <p class="font-xs">185<span> Công việc có sẵn</span></p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="swiper-slide hover-up"><a href='jobs-grid.html'>
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/page/homepage1/finance.svg') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Tài chính</h4>
-                                                <p class="font-xs">168<span> Công việc có sẵn</span></p>
-                                            </div>
-                                        </div>
-                                    </a><a href='jobs-list.html'>
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/page/homepage1/lightning.svg') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Software</h4>
-                                                <p class="font-xs">1856<span> Công việc có sẵn</span></p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="swiper-slide hover-up"><a href='jobs-grid.html'>
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/page/homepage1/human.svg') }}"></div>
-                                            <div class="text-info-right">
-                                                <h4>Nguồn nhân lực</h4>
-                                                <p class="font-xs">165<span> Công việc có sẵn</span></p>
-                                            </div>
-                                        </div>
-                                    </a><a href='jobs-grid.html'>
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/page/homepage1/management.svg') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Sự quản lý</h4>
-                                                <p class="font-xs">965<span> Công việc có sẵn</span></p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="swiper-slide hover-up"><a href='jobs-list.html'>
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/page/homepage1/retail.svg') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Sản phẩm bán lẻ</h4>
-                                                <p class="font-xs">563<span> Công việc có sẵn</span></p>
-                                            </div>
-                                        </div>
-                                    </a><a href='jobs-grid.html'>
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/page/homepage1/security.svg') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Nhà phân tích</h4>
-                                                <p class="font-xs">254<span> Công việc có sẵn</span></p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="swiper-slide hover-up"><a href='jobs-grid.html'>
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/page/homepage1/content.svg') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Người viết nội dung</h4>
-                                                <p class="font-xs">142<span> Công việc có sẵn</span></p>
-                                            </div>
-                                        </div>
-                                    </a><a href='jobs-list.html'>
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/page/homepage1/research.svg') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Nghiên cứu</h4>
-                                                <p class="font-xs">532<span> Công việc có sẵn</span></p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
+                                        </a>
+                                        {{--                                        <a href=''>--}}
+                                        {{--                                            <div class="item-logo">--}}
+                                        {{--                                                <div class="image-left"><img alt="jobBox"--}}
+                                        {{--                                                        src="{{ asset('assets/client/imgs/page/homepage1/customer.svg') }}">--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                                <div class="text-info-right">--}}
+                                        {{--                                                    <h4>Trợ giúp khách hàng</h4>--}}
+                                        {{--                                                    <p class="font-xs">185<span> Công việc có sẵn</span></p>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </a>--}}
+                                    </div>
+                                @endforeach
+                                {{--                                <div class="swiper-slide hover-up"><a href='jobs-grid.html'>--}}
+                                {{--                                        <div class="item-logo">--}}
+                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
+                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/finance.svg') }}">--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="text-info-right">--}}
+                                {{--                                                <h4>Tài chính</h4>--}}
+                                {{--                                                <p class="font-xs">168<span> Công việc có sẵn</span></p>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </a><a href='jobs-list.html'>--}}
+                                {{--                                        <div class="item-logo">--}}
+                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
+                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/lightning.svg') }}">--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="text-info-right">--}}
+                                {{--                                                <h4>Software</h4>--}}
+                                {{--                                                <p class="font-xs">1856<span> Công việc có sẵn</span></p>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </a>--}}
+                                {{--                                </div>--}}
+                                {{--                                <div class="swiper-slide hover-up"><a href='jobs-grid.html'>--}}
+                                {{--                                        <div class="item-logo">--}}
+                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
+                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/human.svg') }}"></div>--}}
+                                {{--                                            <div class="text-info-right">--}}
+                                {{--                                                <h4>Nguồn nhân lực</h4>--}}
+                                {{--                                                <p class="font-xs">165<span> Công việc có sẵn</span></p>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </a><a href='jobs-grid.html'>--}}
+                                {{--                                        <div class="item-logo">--}}
+                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
+                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/management.svg') }}">--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="text-info-right">--}}
+                                {{--                                                <h4>Sự quản lý</h4>--}}
+                                {{--                                                <p class="font-xs">965<span> Công việc có sẵn</span></p>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </a>--}}
+                                {{--                                </div>--}}
+                                {{--                                <div class="swiper-slide hover-up"><a href='jobs-list.html'>--}}
+                                {{--                                        <div class="item-logo">--}}
+                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
+                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/retail.svg') }}">--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="text-info-right">--}}
+                                {{--                                                <h4>Sản phẩm bán lẻ</h4>--}}
+                                {{--                                                <p class="font-xs">563<span> Công việc có sẵn</span></p>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </a><a href='jobs-grid.html'>--}}
+                                {{--                                        <div class="item-logo">--}}
+                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
+                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/security.svg') }}">--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="text-info-right">--}}
+                                {{--                                                <h4>Nhà phân tích</h4>--}}
+                                {{--                                                <p class="font-xs">254<span> Công việc có sẵn</span></p>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </a>--}}
+                                {{--                                </div>--}}
+                                {{--                                <div class="swiper-slide hover-up"><a href='jobs-grid.html'>--}}
+                                {{--                                        <div class="item-logo">--}}
+                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
+                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/content.svg') }}">--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="text-info-right">--}}
+                                {{--                                                <h4>Người viết nội dung</h4>--}}
+                                {{--                                                <p class="font-xs">142<span> Công việc có sẵn</span></p>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </a><a href='jobs-list.html'>--}}
+                                {{--                                        <div class="item-logo">--}}
+                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
+                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/research.svg') }}">--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="text-info-right">--}}
+                                {{--                                                <h4>Nghiên cứu</h4>--}}
+                                {{--                                                <p class="font-xs">532<span> Công việc có sẵn</span></p>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </a>--}}
+                                {{--                                </div>--}}
                             </div>
                         </div>
                         <div class="swiper-button-next"></div>
@@ -462,11 +475,14 @@
                 <div class="box-we-hiring">
                     <div class="text-1"><span class="text-we-are">Chúng tôi là</span><span class="text-hiring">Ứng
                             tuyển</span></div>
-                    <div class="text-2">Hãy cùng nhau&rsquo;s <span class="color-brand-1">làm việc</span> <br> &amp; <span
-                            class="color-brand-1">và khám phá</span> cơ hội</div>
+                    <div class="text-2">Hãy cùng nhau&rsquo;s <span class="color-brand-1">làm việc</span> <br> &amp;
+                        <span
+                            class="color-brand-1">và khám phá</span> cơ hội
+                    </div>
                     <div class="text-3">
                         <div class="btn btn-apply btn-apply-icon" data-bs-toggle="modal"
-                            data-bs-target="#ModalApplyJobForm">Ứng tuyển ngay</div>
+                             data-bs-target="#ModalApplyJobForm">Ứng tuyển ngay
+                        </div>
                     </div>
                 </div>
             </div>
@@ -475,32 +491,33 @@
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Công việc trong ngày</h2>
-                    <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Tìm kiếm và kết nối
+                    <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Tìm kiếm và kết
+                        nối
                         với ứng viên phù hợp nhanh hơn. </p>
                     <div class="list-tabs mt-40">
                         <ul class="nav nav-tabs" role="tablist">
                             <li><a class="active" id="nav-tab-job-1" href="#tab-job-1" data-bs-toggle="tab"
-                                    role="tab" aria-controls="tab-job-1" aria-selected="true"><img
+                                   role="tab" aria-controls="tab-job-1" aria-selected="true"><img
                                         src="{{ asset('assets/client/imgs/page/homepage1/management.svg') }}"
                                         alt="jobBox"> Sự quản lý</a></li>
                             <li><a id="nav-tab-job-2" href="#tab-job-2" data-bs-toggle="tab" role="tab"
-                                    aria-controls="tab-job-2" aria-selected="false"><img
+                                   aria-controls="tab-job-2" aria-selected="false"><img
                                         src="{{ asset('assets/client/imgs/page/homepage1/marketing.svg') }}"
                                         alt="jobBox"> Marketing &amp; Sale</a></li>
                             <li><a id="nav-tab-job-3" href="#tab-job-3" data-bs-toggle="tab" role="tab"
-                                    aria-controls="tab-job-3" aria-selected="false"><img
+                                   aria-controls="tab-job-3" aria-selected="false"><img
                                         src="{{ asset('assets/client/imgs/page/homepage1/finance.svg') }}"
                                         alt="jobBox"> Tài chính</a></li>
                             <li><a id="nav-tab-job-4" href="#tab-job-4" data-bs-toggle="tab" role="tab"
-                                    aria-controls="tab-job-4" aria-selected="false"><img
+                                   aria-controls="tab-job-4" aria-selected="false"><img
                                         src="{{ asset('assets/client/imgs/page/homepage1/human.svg') }}"
                                         alt="jobBox">Nguồn nhân lực</a></li>
                             <li><a id="nav-tab-job-5" href="#tab-job-5" data-bs-toggle="tab" role="tab"
-                                    aria-controls="tab-job-5" aria-selected="false"><img
+                                   aria-controls="tab-job-5" aria-selected="false"><img
                                         src="{{ asset('assets/client/imgs/page/homepage1/retail.svg') }}" alt="jobBox">
                                     Bán lẻ &amp; Các sản phẩm</a></li>
                             <li><a id="nav-tab-job-6" href="#tab-job-6" data-bs-toggle="tab" role="tab"
-                                    aria-controls="tab-job-6" aria-selected="false"><img
+                                   aria-controls="tab-job-6" aria-selected="false"><img
                                         src="{{ asset('assets/client/imgs/page/homepage1/content.svg') }}"
                                         alt="jobBox"> Người viết nội dung </a></li>
                         </ul>
@@ -509,7 +526,7 @@
                 <div class="mt-70">
                     <div class="tab-content" id="myTabContent-1">
                         <div class="tab-pane fade show active" id="tab-job-1" role="tabpanel"
-                            aria-labelledby="tab-job-1">
+                             aria-labelledby="tab-job-1">
                             <div class="row">
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12">
                                     <div class="card-grid-2 hover-up">
@@ -518,20 +535,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>LinkedIn</a><span
+                                                                       href='company-details.html'>LinkedIn</a><span
                                                     class="location-small">Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>UI / UX Designer fulltime</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Fulltime</span><span
                                                     class="card-time">4<span> Vài phút trước</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Adobe XD</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Adobe XD</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>Figma</a><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Photoshop</a>
+                                                                                      href='jobs-grid.html'>Photoshop</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -539,7 +559,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -560,11 +581,14 @@
                                             <h6><a href='job-details.html'>Full Stack Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Part time</span><span
                                                     class="card-time">5<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>React</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>React</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>NodeJS</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -573,7 +597,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -587,19 +612,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-3.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job' href='company-details.html'>Bing
-                                                    Search</a><span class="location-small">An Thới, Phú Quốc</span></div>
+                                                    Search</a><span class="location-small">An Thới, Phú Quốc</span>
+                                            </div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Java Software Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Python</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Python</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>AWS</a><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Photoshop</a>
+                                                                                    href='jobs-grid.html'>Photoshop</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -607,7 +636,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -621,18 +651,21 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-4.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Dailymotion</a><span
+                                                                       href='company-details.html'>Dailymotion</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Frontend Developer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Typescript</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Typescript</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>Java</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -641,7 +674,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -655,18 +689,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-5.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Linkedin</a><span
+                                                                       href='company-details.html'>Linkedin</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>React Native Web Developer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Fulltime</span><span
                                                     class="card-time">4<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, </p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Angular</a>
+                                                                  href='jobs-grid.html'>Angular</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -674,7 +710,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -694,11 +731,14 @@
                                             <h6><a href='job-details.html'>Senior System Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Part time</span><span
                                                     class="card-time">5<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>PHP</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>PHP</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Android</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -707,7 +747,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -721,18 +762,21 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-7.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Nintendo</a><span
+                                                                       href='company-details.html'>Nintendo</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Products Manager</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>ASP .Net</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>ASP .Net</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Figma</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -741,7 +785,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -755,19 +800,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-8.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Periscope</a><span
+                                                                       href='company-details.html'>Periscope</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Lead Quality Control QA</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>iOS</a><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>Laravel</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>iOS</a><a
+                                                    class='btn btn-grey-small mr-5'
+                                                    href='job-details.html'>Laravel</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Golang</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -776,7 +825,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -800,11 +850,14 @@
                                             <h6><a href='job-details.html'>Senior System Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Part time</span><span
                                                     class="card-time">5<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>PHP</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>PHP</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Android</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -813,7 +866,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -827,18 +881,21 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-7.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Nintendo</a><span
+                                                                       href='company-details.html'>Nintendo</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Products Manager</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>ASP .Net</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>ASP .Net</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Figma</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -847,7 +904,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -861,18 +919,21 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-4.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Dailymotion</a><span
+                                                                       href='company-details.html'>Dailymotion</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Frontend Developer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Typescript</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Typescript</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>Java</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -881,7 +942,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -895,18 +957,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-5.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Linkedin</a><span
+                                                                       href='company-details.html'>Linkedin</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>React Native Web Developer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Fulltime</span><span
                                                     class="card-time">4<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, </p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Angular</a>
+                                                                  href='jobs-grid.html'>Angular</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -914,7 +978,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -928,19 +993,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-8.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Periscope</a><span
+                                                                       href='company-details.html'>Periscope</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Lead Quality Control QA</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>iOS</a><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>Laravel</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>iOS</a><a
+                                                    class='btn btn-grey-small mr-5'
+                                                    href='job-details.html'>Laravel</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Golang</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -949,7 +1018,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -963,20 +1033,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>LinkedIn</a><span
+                                                                       href='company-details.html'>LinkedIn</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>UI / UX Designer fulltime</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Fulltime</span><span
                                                     class="card-time">4<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, </p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Adobe XD</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Adobe XD</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>Figma</a><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Photoshop</a>
+                                                                                      href='jobs-grid.html'>Photoshop</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -984,7 +1057,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1005,11 +1079,14 @@
                                             <h6><a href='job-details.html'>Full Stack Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Part time</span><span
                                                     class="card-time">5<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>React</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>React</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>NodeJS</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1018,7 +1095,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1032,19 +1110,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-3.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job' href='company-details.html'>Bing
-                                                    Search</a><span class="location-small">An Thới, Phú Quốc</span></div>
+                                                    Search</a><span class="location-small">An Thới, Phú Quốc</span>
+                                            </div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Java Software Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Python</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Python</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>AWS</a><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Photoshop</a>
+                                                                                    href='jobs-grid.html'>Photoshop</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -1052,7 +1134,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1070,18 +1153,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-4.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Dailymotion</a><span
+                                                                       href='company-details.html'>Dailymotion</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Frontend Developer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Typescript</a><a
+                                                                  href='jobs-grid.html'>Typescript</a><a
                                                     class='btn btn-grey-small mr-5' href='jobs-grid.html'>Java</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1090,7 +1175,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1104,18 +1190,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-5.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Linkedin</a><span
+                                                                       href='company-details.html'>Linkedin</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>React Native Web Developer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Fulltime</span><span
                                                     class="card-time">4<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, </p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Angular</a>
+                                                                  href='jobs-grid.html'>Angular</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -1123,7 +1211,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1137,18 +1226,21 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-6.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Quora JSC</a><span
+                                                                       href='company-details.html'>Quora JSC</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Senior System Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Part time</span><span
                                                     class="card-time">5<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>PHP</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>PHP</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Android</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1157,7 +1249,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1171,18 +1264,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-7.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Nintendo</a><span
+                                                                       href='company-details.html'>Nintendo</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Products Manager</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>ASP .Net</a><a
+                                                                  href='job-details.html'>ASP .Net</a><a
                                                     class='btn btn-grey-small mr-5' href='job-details.html'>Figma</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1191,7 +1286,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1205,18 +1301,21 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-8.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Periscope</a><span
+                                                                       href='company-details.html'>Periscope</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Lead Quality Control QA</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>iOS</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>iOS</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Laravel</a><a
                                                     class='btn btn-grey-small mr-5' href='job-details.html'>Golang</a>
                                             </div>
@@ -1226,7 +1325,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1240,20 +1340,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>LinkedIn</a><span
+                                                                       href='company-details.html'>LinkedIn</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>UI / UX Designer fulltime</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Fulltime</span><span
                                                     class="card-time">4<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, </p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Adobe XD</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Adobe XD</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>Figma</a><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Photoshop</a>
+                                                                                      href='jobs-grid.html'>Photoshop</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -1261,7 +1364,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1275,18 +1379,22 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-2.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Adobe Ilustrator</a><span
+                                                                       href='company-details.html'>Adobe
+                                                    Ilustrator</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Full Stack Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Part time</span><span
                                                     class="card-time">5<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>React</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>React</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>NodeJS</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1295,7 +1403,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1309,20 +1418,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-3.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Bing Search</a><span
+                                                                       href='company-details.html'>Bing Search</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Java Software Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Python</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Python</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>AWS</a><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Photoshop</a>
+                                                                                    href='jobs-grid.html'>Photoshop</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -1330,7 +1442,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1348,18 +1461,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-7.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Nintendo</a><span
+                                                                       href='company-details.html'>Nintendo</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Products Manager</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>ASP .Net</a><a
+                                                                  href='job-details.html'>ASP .Net</a><a
                                                     class='btn btn-grey-small mr-5' href='job-details.html'>Figma</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1368,7 +1483,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1382,18 +1498,21 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-8.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Periscope</a><span
+                                                                       href='company-details.html'>Periscope</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Lead Quality Control QA</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>iOS</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>iOS</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Laravel</a><a
                                                     class='btn btn-grey-small mr-5' href='job-details.html'>Golang</a>
                                             </div>
@@ -1403,7 +1522,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1417,18 +1537,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-4.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Dailymotion</a><span
+                                                                       href='company-details.html'>Dailymotion</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Frontend Developer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Typescript</a><a
+                                                                  href='jobs-grid.html'>Typescript</a><a
                                                     class='btn btn-grey-small mr-5' href='jobs-grid.html'>Java</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1437,7 +1559,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1451,18 +1574,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-5.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Linkedin</a><span
+                                                                       href='company-details.html'>Linkedin</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>React Native Web Developer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Fulltime</span><span
                                                     class="card-time">4<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, </p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Angular</a>
+                                                                  href='jobs-grid.html'>Angular</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -1470,7 +1595,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1484,18 +1610,21 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-6.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Quora JSC</a><span
+                                                                       href='company-details.html'>Quora JSC</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Senior System Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Part time</span><span
                                                     class="card-time">5<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>PHP</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>PHP</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Android</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1504,7 +1633,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1518,20 +1648,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>LinkedIn</a><span
+                                                                       href='company-details.html'>LinkedIn</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>UI / UX Designer fulltime</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Fulltime</span><span
                                                     class="card-time">4<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, </p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Adobe XD</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Adobe XD</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>Figma</a><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Photoshop</a>
+                                                                                      href='jobs-grid.html'>Photoshop</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -1539,7 +1672,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1553,18 +1687,22 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-2.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Adobe Ilustrator</a><span
+                                                                       href='company-details.html'>Adobe
+                                                    Ilustrator</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Full Stack Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Part time</span><span
                                                     class="card-time">5<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>React</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>React</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>NodeJS</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1573,7 +1711,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1587,20 +1726,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-3.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Bing Search</a><span
+                                                                       href='company-details.html'>Bing Search</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Java Software Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Python</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Python</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>AWS</a><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Photoshop</a>
+                                                                                    href='jobs-grid.html'>Photoshop</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -1608,7 +1750,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1626,18 +1769,21 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-8.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Periscope</a><span
+                                                                       href='company-details.html'>Periscope</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Lead Quality Control QA</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>iOS</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>iOS</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Laravel</a><a
                                                     class='btn btn-grey-small mr-5' href='job-details.html'>Golang</a>
                                             </div>
@@ -1647,7 +1793,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1661,20 +1808,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>LinkedIn</a><span
+                                                                       href='company-details.html'>LinkedIn</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>UI / UX Designer fulltime</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Fulltime</span><span
                                                     class="card-time">4<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, </p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Adobe XD</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Adobe XD</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>Figma</a><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Photoshop</a>
+                                                                                      href='jobs-grid.html'>Photoshop</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -1682,7 +1832,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1696,18 +1847,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-4.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Dailymotion</a><span
+                                                                       href='company-details.html'>Dailymotion</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Frontend Developer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Typescript</a><a
+                                                                  href='jobs-grid.html'>Typescript</a><a
                                                     class='btn btn-grey-small mr-5' href='jobs-grid.html'>Java</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1716,7 +1869,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1730,18 +1884,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-5.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Linkedin</a><span
+                                                                       href='company-details.html'>Linkedin</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>React Native Web Developer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Fulltime</span><span
                                                     class="card-time">4<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, </p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Angular</a>
+                                                                  href='jobs-grid.html'>Angular</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -1749,7 +1905,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1763,18 +1920,21 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-6.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Quora JSC</a><span
+                                                                       href='company-details.html'>Quora JSC</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Senior System Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Part time</span><span
                                                     class="card-time">5<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>PHP</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>PHP</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Android</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1783,7 +1943,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1797,18 +1958,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-7.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Nintendo</a><span
+                                                                       href='company-details.html'>Nintendo</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Products Manager</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>ASP .Net</a><a
+                                                                  href='job-details.html'>ASP .Net</a><a
                                                     class='btn btn-grey-small mr-5' href='job-details.html'>Figma</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1817,7 +1980,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1831,18 +1995,22 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-2.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Adobe Ilustrator</a><span
+                                                                       href='company-details.html'>Adobe
+                                                    Ilustrator</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Full Stack Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Part time</span><span
                                                     class="card-time">5<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>React</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>React</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>NodeJS</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1851,7 +2019,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1865,20 +2034,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-3.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Bing Search</a><span
+                                                                       href='company-details.html'>Bing Search</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Java Software Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Python</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Python</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>AWS</a><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Photoshop</a>
+                                                                                    href='jobs-grid.html'>Photoshop</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -1886,7 +2058,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1904,18 +2077,21 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-8.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Periscope</a><span
+                                                                       href='company-details.html'>Periscope</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Lead Quality Control QA</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>iOS</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>iOS</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Laravel</a><a
                                                     class='btn btn-grey-small mr-5' href='job-details.html'>Golang</a>
                                             </div>
@@ -1925,7 +2101,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1939,20 +2116,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>LinkedIn</a><span
+                                                                       href='company-details.html'>LinkedIn</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>UI / UX Designer fulltime</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Fulltime</span><span
                                                     class="card-time">4<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, </p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Adobe XD</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Adobe XD</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>Figma</a><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Photoshop</a>
+                                                                                      href='jobs-grid.html'>Photoshop</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -1960,7 +2140,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1974,18 +2155,22 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-2.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Adobe Ilustrator</a><span
+                                                                       href='company-details.html'>Adobe
+                                                    Ilustrator</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Full Stack Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Part time</span><span
                                                     class="card-time">5<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>React</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>React</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>NodeJS</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -1994,7 +2179,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2008,20 +2194,23 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-3.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Bing Search</a><span
+                                                                       href='company-details.html'>Bing Search</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Java Software Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Python</a><a class='btn btn-grey-small mr-5'
+                                                                  href='jobs-grid.html'>Python</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='jobs-grid.html'>AWS</a><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Photoshop</a>
+                                                                                    href='jobs-grid.html'>Photoshop</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -2029,7 +2218,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2043,18 +2233,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-4.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Dailymotion</a><span
+                                                                       href='company-details.html'>Dailymotion</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Frontend Developer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Typescript</a><a
+                                                                  href='jobs-grid.html'>Typescript</a><a
                                                     class='btn btn-grey-small mr-5' href='jobs-grid.html'>Java</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -2063,7 +2255,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2077,18 +2270,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-5.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Linkedin</a><span
+                                                                       href='company-details.html'>Linkedin</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>React Native Web Developer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Fulltime</span><span
                                                     class="card-time">4<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, </p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='jobs-grid.html'>Angular</a>
+                                                                  href='jobs-grid.html'>Angular</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
                                                 <div class="row">
@@ -2096,7 +2291,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2110,18 +2306,21 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-6.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Quora JSC</a><span
+                                                                       href='company-details.html'>Quora JSC</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Senior System Engineer</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Part time</span><span
                                                     class="card-time">5<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>PHP</a><a class='btn btn-grey-small mr-5'
+                                                                  href='job-details.html'>PHP</a><a
+                                                    class='btn btn-grey-small mr-5'
                                                     href='job-details.html'>Android</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -2130,7 +2329,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2144,18 +2344,20 @@
                                                     src="{{ asset('assets/client/imgs/brands/brand-7.png') }}"
                                                     alt="jobBox"></div>
                                             <div class="right-info"><a class='name-job'
-                                                    href='company-details.html'>Nintendo</a><span
+                                                                       href='company-details.html'>Nintendo</a><span
                                                     class="location-small">An Thới, Phú Quốc</span></div>
                                         </div>
                                         <div class="card-block-info">
                                             <h6><a href='job-details.html'>Products Manager</a></h6>
                                             <div class="mt-5"><span class="card-briefcase">Full time</span><span
                                                     class="card-time">6<span> minutes ago</span></span></div>
-                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các tên
-                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty cổ
+                                            <p class="font-sm color-text-paragraph mt-15">Các vị  trí tiếp theo là các
+                                                tên
+                                                tuổi trong lĩnh vực xây dựng, bất động sản, giao thông... như: Công ty
+                                                cổ
                                                 phần Phát triển đô thị Nam Hà Nội, ...</p>
                                             <div class="mt-30"><a class='btn btn-grey-small mr-5'
-                                                    href='job-details.html'>ASP .Net</a><a
+                                                                  href='job-details.html'>ASP .Net</a><a
                                                     class='btn btn-grey-small mr-5' href='job-details.html'>Figma</a>
                                             </div>
                                             <div class="card-2-bottom mt-30">
@@ -2164,7 +2366,8 @@
                                                             VNĐ</span><span class="text-muted">/Giờ</span></div>
                                                     <div class="col-lg-5 col-5 text-end">
                                                         <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                            data-bs-target="#ModalApplyJobForm">Ứng tuyển</div>
+                                                             data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2182,11 +2385,12 @@
                 <div class="row">
                     <div class="col-lg-6 col-sm-12">
                         <div class="box-image-job"><img class="img-job-1" alt="jobBox"
-                                src="{{ asset('assets/client/imgs/page/homepage1/img-chart.png') }}"><img
+                                                        src="{{ asset('assets/client/imgs/page/homepage1/img-chart.png') }}"><img
                                 class="img-job-2" alt="jobBox"
                                 src="{{ asset('assets/client/imgs/page/homepage1/controlcard.png') }}">
                             <figure class="wow animate__animated animate__fadeIn"><img alt="jobBox"
-                                    src="{{ asset('assets/client/imgs/page/homepage1/img1.png') }}"></figure>
+                                                                                       src="{{ asset('assets/client/imgs/page/homepage1/img1.png') }}">
+                            </figure>
                         </div>
                     </div>
                     <div class="col-lg-6 col-sm-12">
@@ -2194,11 +2398,15 @@
                             </span>
                             <h2 class="text-52 wow animate__animated animate__fadeInUp">Tìm người phù hợp
                                 với bạnt&rsquo;s <span class="color-brand-2">Với</span> bạn</h2>
-                            <div class="mt-40 pr-50 text-md-lh28 wow animate__animated animate__fadeInUp">Tìm kiếm tất cả các vị trí mở trên web. Nhận ước tính lương cá nhân của riêng bạn. Đọc đánh giá về hơn 600.000 công ty trên toàn thế giới. Công việc phù hợp đang ở ngoài kia.</div>
+                            <div class="mt-40 pr-50 text-md-lh28 wow animate__animated animate__fadeInUp">Tìm kiếm tất
+                                cả các vị trí mở trên web. Nhận ước tính lương cá nhân của riêng bạn. Đọc đánh giá về
+                                hơn 600.000 công ty trên toàn thế giới. Công việc phù hợp đang ở ngoài kia.
+                            </div>
                             <div class="mt-40">
                                 <div class="wow animate__animated animate__fadeInUp"><a class='btn btn-default'
-                                        href='jobs-grid.html'>Tìm kiếm cong việc</a><a class='btn btn-link'
-                                        href='page-about.html'>Hơn nữa</a></div>
+                                                                                        href='jobs-grid.html'>Tìm kiếm
+                                        cong việc</a><a class='btn btn-link'
+                                                        href='page-about.html'>Hơn nữa</a></div>
                             </div>
                         </div>
                     </div>
@@ -2262,10 +2470,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-1.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Linkedin</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                      src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2285,10 +2494,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-2.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-2.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Adobe</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                   src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2308,10 +2518,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-3.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-3.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Dailymotion</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                         src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2331,10 +2542,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-4.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-4.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>NewSum</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2354,10 +2566,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-5.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-5.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>PowerHome</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                       src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2377,10 +2590,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-6.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-6.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Whop.com</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                      src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2400,10 +2614,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-7.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-7.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Greewood</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                      src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2423,10 +2638,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-8.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-8.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Kentucky</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                      src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2446,10 +2662,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-9.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-9.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Qeuity</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2469,10 +2686,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-10.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-10.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Honda</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                   src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2492,10 +2710,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-5.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-5.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Toyota</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2515,10 +2734,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-3.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-3.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Lexuxs</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2538,10 +2758,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-6.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-6.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Ondo</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                  src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2561,10 +2782,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-2.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-2.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Square</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2584,10 +2806,11 @@
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/brands/brand-8.png') }}"></div>
+                                                                         src="{{ asset('assets/client/imgs/brands/brand-8.png') }}">
+                                            </div>
                                             <div class="text-info-right">
                                                 <h4>Vista</h4><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                                   src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2616,7 +2839,8 @@
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Một số nhóm ngành hot</h2>
-                    <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Tìm công việc yêu thích của bạn và nhận được
+                    <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Tìm công việc yêu
+                        thích của bạn và nhận được
                         lợi ích của chính mình</p>
                 </div>
             </div>
@@ -2625,7 +2849,7 @@
                     <div class="col-xl-3 col-lg-3 col-md-5 col-sm-12 col-12">
                         <div class="card-image-top hover-up"><a href='jobs-grid.html'>
                                 <div class="image"
-                                    style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location1.png') }});">
+                                     style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location1.png') }});">
                                     <span class="lbl-hot">Hot</span></div>
                             </a>
                             <div class="informations"><a href='jobs-grid.html'>
@@ -2643,7 +2867,7 @@
                     <div class="col-xl-4 col-lg-4 col-md-7 col-sm-12 col-12">
                         <div class="card-image-top hover-up"><a href='jobs-grid.html'>
                                 <div class="image"
-                                    style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location2.png') }});">
+                                     style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location2.png') }});">
                                     <span class="lbl-hot">Xu hướng</span></div>
                             </a>
                             <div class="informations"><a href='jobs-grid.html'>
@@ -2661,7 +2885,7 @@
                     <div class="col-xl-5 col-lg-5 col-md-7 col-sm-12 col-12">
                         <div class="card-image-top hover-up"><a href='jobs-grid.html'>
                                 <div class="image"
-                                    style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location3.png') }});">
+                                     style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location3.png') }});">
                                     <span class="lbl-hot">Hot</span></div>
                             </a>
                             <div class="informations"><a href='jobs-grid.html'>
@@ -2679,7 +2903,7 @@
                     <div class="col-xl-4 col-lg-4 col-md-5 col-sm-12 col-12">
                         <div class="card-image-top hover-up"><a href='jobs-grid.html'>
                                 <div class="image"
-                                    style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location4.png') }});">
+                                     style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location4.png') }});">
                                 </div>
                             </a>
                             <div class="informations"><a href='jobs-grid.html'>
@@ -2697,7 +2921,7 @@
                     <div class="col-xl-5 col-lg-5 col-md-7 col-sm-12 col-12">
                         <div class="card-image-top hover-up"><a href='jobs-grid.html'>
                                 <div class="image"
-                                    style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location5.png') }});">
+                                     style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location5.png') }});">
                                 </div>
                             </a>
                             <div class="informations"><a href='jobs-grid.html'>
@@ -2715,7 +2939,7 @@
                     <div class="col-xl-3 col-lg-3 col-md-5 col-sm-12 col-12">
                         <div class="card-image-top hover-up"><a href='jobs-grid.html'>
                                 <div class="image"
-                                    style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location6.png') }});">
+                                     style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location6.png') }});">
                                 </div>
                             </a>
                             <div class="informations"><a href='jobs-grid.html'>
@@ -2737,7 +2961,8 @@
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Tin tức</h2>
-                    <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Nhận tin tức, cập nhật và mẹo mới nhất</p>
+                    <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Nhận tin tức, cập
+                        nhật và mẹo mới nhất</p>
                 </div>
             </div>
             <div class="container">
@@ -2749,15 +2974,16 @@
                                     <div class="card-grid-3 hover-up wow animate__animated animate__fadeIn">
                                         <div class="text-center card-grid-3-image"><a href="#">
                                                 <figure><img alt="jobBox"
-                                                        src="{{ asset('assets/client/imgs/page/homepage1/img-news1.png') }}">
+                                                             src="{{ asset('assets/client/imgs/page/homepage1/img-news1.png') }}">
                                                 </figure>
                                             </a></div>
                                         <div class="card-block-info">
                                             <div class="tags mb-15"><a class='btn btn-tag'
-                                                    href='blog-grid.html'>News</a></div>
+                                                                       href='blog-grid.html'>News</a></div>
                                             <h5><a href='blog-details.html'>21 mẹo phỏng vấn xin việc: Cách tạo ấn
-                                                tượng tốt</a></h5>
-                                            <p class="mt-10 color-text-paragraph font-sm">Sứ mệnh của chúng tôi là tạo ra công ty chăm sóc
+                                                    tượng tốt</a></h5>
+                                            <p class="mt-10 color-text-paragraph font-sm">Sứ mệnh của chúng tôi là tạo
+                                                ra công ty chăm sóc
                                                 sức khỏe bền vững nhất thế giới bằng cách tạo ra
                                                 các sản phẩm chăm sóc sức khỏe chất lượng cao với
                                                 bao bì bền vững, mang tính biểu tượng.</p>
@@ -2765,8 +2991,8 @@
                                                 <div class="row">
                                                     <div class="col-lg-6 col-6">
                                                         <div class="d-flex"><img class="img-rounded"
-                                                                src="{{ asset('assets/client/imgs/page/homepage1/user1.png') }}"
-                                                                alt="jobBox">
+                                                                                 src="{{ asset('assets/client/imgs/page/homepage1/user1.png') }}"
+                                                                                 alt="jobBox">
                                                             <div class="info-right-img"><span
                                                                     class="font-sm font-bold color-brand-1 op-70">Thanh Toàn</span><br><span
                                                                     class="font-xs color-text-paragraph-2">06
@@ -2785,23 +3011,26 @@
                                     <div class="card-grid-3 hover-up wow animate__animated animate__fadeIn">
                                         <div class="text-center card-grid-3-image"><a href="#">
                                                 <figure><img alt="jobBox"
-                                                        src="{{ asset('assets/client/imgs/page/homepage1/img-news2.png') }}">
+                                                             src="{{ asset('assets/client/imgs/page/homepage1/img-news2.png') }}">
                                                 </figure>
                                             </a></div>
                                         <div class="card-block-info">
                                             <div class="tags mb-15"><a class='btn btn-tag'
-                                                    href='blog-grid.html'>Sự kiến</a></div>
-                                            <h5><a href='blog-details.html'>39 điểm mạnh và điểm yếu để thảo luận một cách
-                                                Phỏng vấn xin việc</a></h5>
-                                            <p class="mt-10 color-text-paragraph font-sm">Sứ mệnh của chúng tôi là tạo ra
+                                                                       href='blog-grid.html'>Sự kiến</a></div>
+                                            <h5><a href='blog-details.html'>39 điểm mạnh và điểm yếu để thảo luận một
+                                                    cách
+                                                    Phỏng vấn xin việc</a></h5>
+                                            <p class="mt-10 color-text-paragraph font-sm">Sứ mệnh của chúng tôi là tạo
+                                                ra
                                                 công ty chăm sóc sức khỏe bền vững nhất thế giới bằng cách tạo ra
-                                                sản phẩm chăm sóc sức khỏe chất lượng cao trong bao bì mang tính biểu tượng, bền vững.</p>
+                                                sản phẩm chăm sóc sức khỏe chất lượng cao trong bao bì mang tính biểu
+                                                tượng, bền vững.</p>
                                             <div class="card-2-bottom mt-20">
                                                 <div class="row">
                                                     <div class="col-lg-6 col-6">
                                                         <div class="d-flex"><img class="img-rounded"
-                                                                src="{{ asset('assets/client/imgs/page/homepage1/user2.png') }}"
-                                                                alt="jobBox">
+                                                                                 src="{{ asset('assets/client/imgs/page/homepage1/user2.png') }}"
+                                                                                 alt="jobBox">
                                                             <div class="info-right-img"><span
                                                                     class="font-sm font-bold color-brand-1 op-70">Thanh Toàn</span><br><span
                                                                     class="font-xs color-text-paragraph-2">06
@@ -2820,23 +3049,24 @@
                                     <div class="card-grid-3 hover-up wow animate__animated animate__fadeIn">
                                         <div class="text-center card-grid-3-image"><a href="#">
                                                 <figure><img alt="jobBox"
-                                                        src="{{ asset('assets/client/imgs/page/homepage1/img-news3.png') }}">
+                                                             src="{{ asset('assets/client/imgs/page/homepage1/img-news3.png') }}">
                                                 </figure>
                                             </a></div>
                                         <div class="card-block-info">
                                             <div class="tags mb-15"><a class='btn btn-tag'
-                                                    href='blog-grid.html'>News</a></div>
+                                                                       href='blog-grid.html'>News</a></div>
                                             <h5><a href='blog-details.html'>Câu hỏi phỏng vấn: Tại sao bạn không có
-                                                Bằng cấp?</a></h5>
+                                                    Bằng cấp?</a></h5>
                                             <p class="mt-10 color-text-paragraph font-sm">Tìm hiểu cách phản ứng nếu
-                                                người phỏng vấn hỏi bạn tại sao bạn không có bằng cấp và đọc các câu trả lời ví dụ
+                                                người phỏng vấn hỏi bạn tại sao bạn không có bằng cấp và đọc các câu trả
+                                                lời ví dụ
                                                 điều đó có thể giúp bạn chế tạo</p>
                                             <div class="card-2-bottom mt-20">
                                                 <div class="row">
                                                     <div class="col-lg-6 col-6">
                                                         <div class="d-flex"><img class="img-rounded"
-                                                                src="{{ asset('assets/client/imgs/page/homepage1/user3.png') }}"
-                                                                alt="jobBox">
+                                                                                 src="{{ asset('assets/client/imgs/page/homepage1/user3.png') }}"
+                                                                                 alt="jobBox">
                                                             <div class="info-right-img"><span
                                                                     class="font-sm font-bold color-brand-1 op-70">Khoa Nguyễn</span><br><span
                                                                     class="font-xs color-text-paragraph-2">06
@@ -2857,7 +3087,7 @@
                         <div class="swiper-button-prev"></div>
                     </div>
                     <div class="text-center"><a class='btn btn-brand-1 btn-icon-load mt--30 hover-up'
-                            href='blog-grid.html'>Tải thêm bài viết</a></div>
+                                                href='blog-grid.html'>Tải thêm bài viết</a></div>
                 </div>
             </div>
         </section>
@@ -2869,11 +3099,12 @@
                                 src="{{ asset('assets/client/imgs/template/newsletter-left.png') }}" alt="joxBox">
                         </div>
                         <div class="col-lg-12 col-xl-6 col-12">
-                            <h2 class="text-md-newsletter text-center">Những điều mới sẽ luôn luôn<br> Cập nhật thường xuyên</h2>
+                            <h2 class="text-md-newsletter text-center">Những điều mới sẽ luôn luôn<br> Cập nhật thường
+                                xuyên</h2>
                             <div class="box-form-newsletter mt-40">
                                 <form class="form-newsletter">
                                     <input class="input-newsletter" type="text" value=""
-                                        placeholder="Enter your email here">
+                                           placeholder="Enter your email here">
                                     <button class="btn btn-default font-heading icon-send-letter">Đăng ký</button>
                                 </form>
                             </div>
@@ -2885,6 +3116,6 @@
                 </div>
             </div>
         </section>
-        <script src="{{ asset('assets/client/js/plugins/counterup.js"></script>
+        <script src="</main>{{ asset('assets/client/js/plugins/counterup.js"></script>
     </main>
 @endsection
