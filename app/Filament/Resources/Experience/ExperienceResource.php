@@ -5,21 +5,18 @@ namespace App\Filament\Resources\Experience;
 use App\Filament\Resources\Experience\ExperienceResource\Pages;
 use App\Filament\Resources\Experience\ExperienceResource\RelationManagers;
 use App\Models\Experience;
-use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
-use Filament\Forms\Set;
 
 class ExperienceResource extends Resource
 {
@@ -31,6 +28,17 @@ class ExperienceResource extends Resource
     protected static ?string $navigationGroup = 'Năng lực';
 
     protected static ?string $navigationIcon = 'heroicon-o-pencil';
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'primary';
+    }
 
 
     public static function form(Form $form): Form

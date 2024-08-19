@@ -22,14 +22,14 @@
     <title>@yield('title', 'Trang chủ')</title>
 </head>
 <body>
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="text-center"><img src="{{ asset('assets/client/imgs/template/loading.gif') }}"
-                        alt="jobBox"></div>
-            </div>
-        </div>
-    </div>
+{{--    <div id="preloader-active">--}}
+{{--        <div class="preloader d-flex align-items-center justify-content-center">--}}
+{{--            <div class="preloader-inner position-relative">--}}
+{{--                <div class="text-center"><img src="{{ asset('assets/client/imgs/template/loading.gif') }}"--}}
+{{--                        alt="jobBox"></div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
     <div class="modal fade" id="ModalApplyJobForm" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content apply-job-form">

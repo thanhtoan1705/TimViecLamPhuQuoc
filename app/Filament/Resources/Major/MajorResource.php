@@ -4,9 +4,7 @@ namespace App\Filament\Resources\Major;
 
 use App\Filament\Resources\Major\MajorResource\Pages;
 use App\Filament\Resources\Major\MajorResource\RelationManagers;
-use App\Models\Experience;
 use App\Models\Major;
-use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
@@ -16,11 +14,9 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
 class MajorResource extends Resource
@@ -34,6 +30,17 @@ class MajorResource extends Resource
     protected static ?string $navigationGroup = 'Năng lực';
 
     protected static ?string $navigationIcon = 'heroicon-o-beaker';
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'primary';
+    }
 
     public static function form(Form $form): Form
     {

@@ -14,9 +14,14 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->string('street', 255)->nullable();
-            $table->string('ward', 255)->nullable();
-            $table->string('district', 255)->nullable();
-            $table->string('province', 255)->nullable();
+
+            $table->foreignId('ward_id')->nullable()->constrained('wards')
+                ->onDelete('set null');
+            $table->foreignId('district_id')->nullable()->constrained('districts')
+                ->onDelete('set null');
+            $table->foreignId('province_id')->nullable()->constrained('provinces')
+                ->onDelete('set null');
+
             $table->string('country', 255)->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();

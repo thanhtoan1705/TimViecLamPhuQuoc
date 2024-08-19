@@ -55,7 +55,10 @@ return new class extends Migration
                 ->onDelete('set null');
 
 
-            $table->bigInteger('salary');
+            $table->bigInteger('salary')->nullable();
+            $table->text('description')->nullable();
+            $table->boolean('featured')->default(true);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

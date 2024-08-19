@@ -16,6 +16,10 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
+            ProvinceTableSeeder::class,
+            DistrictTableSeeder::class,
+            WardTableSeeder::class,
+
             UserTableSeeder::class,
             AddressTableSeeder::class,
             MajorTableSeeder::class,

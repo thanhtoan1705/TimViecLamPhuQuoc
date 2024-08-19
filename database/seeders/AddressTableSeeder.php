@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,21 +12,36 @@ class AddressTableSeeder extends Seeder
      */
     public function run(): void
     {
+        // Lấy ngẫu nhiên ID từ bảng provinces
+        $provinceId = DB::table('provinces')->inRandomOrder()->value('id');
+
+        // Lấy ngẫu nhiên ID từ bảng districts dựa trên province_id đã chọn
+        $districtId = DB::table('districts')
+            ->where('province_id', $provinceId)
+            ->inRandomOrder()
+            ->value('id');
+
+        // Lấy ngẫu nhiên ID từ bảng wards dựa trên district_id đã chọn
+        $wardId = DB::table('wards')
+            ->where('district_id', $districtId)
+            ->inRandomOrder()
+            ->value('id');
+
         DB::table('addresses')->insert([
             [
                 'street' => '123 Main St',
-                'ward' => 'Ward 1',
-                'district' => 'District 1',
-                'province' => 'Province 1',
+                'ward_id' => $wardId,
+                'district_id' => $districtId,
+                'province_id' => $provinceId,
                 'country' => 'Country 1',
                 'latitude' => 12.345678,
                 'longitude' => 98.765432,
             ],
             [
                 'street' => '456 Elm St',
-                'ward' => 'Ward 2',
-                'district' => 'District 2',
-                'province' => 'Province 2',
+                'ward_id' => $wardId,
+                'district_id' => $districtId,
+                'province_id' => $provinceId,
                 'country' => 'Country 2',
                 'latitude' => 23.456789,
                 'longitude' => 87.654321,
