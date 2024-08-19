@@ -27,7 +27,7 @@ class ExperienceResource extends Resource
     protected static ?string $modelLabel = 'Kinh nghiệm';
     protected static ?string $navigationGroup = 'Năng lực';
 
-    protected static ?string $navigationIcon = 'heroicon-o-pencil';
+    protected static ?string $navigationIcon = 'heroicon-o-scale';
     protected static ?string $recordTitleAttribute = 'name';
 
     public static function getNavigationBadge(): ?string

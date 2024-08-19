@@ -5,13 +5,20 @@ namespace App\Filament\Resources\Employer;
 use App\Filament\Resources\Employer\EmployerResource\Pages;
 use App\Filament\Resources\Employer\EmployerResource\Pages\CreateEmployer;
 use App\Filament\Resources\Employer\EmployerResource\RelationManagers;
+use App\Models\Address;
+use App\Models\Candidate;
+use App\Models\District;
 use App\Models\Employer;
+use App\Models\Province;
+use App\Models\Ward;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -33,7 +40,7 @@ class EmployerResource extends Resource
 
     protected static ?string $navigationGroup = 'Tài khoản';
 
-    protected static ?string $navigationIcon = 'heroicon-o-pencil';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     public static function getNavigationBadge(): ?string
     {
@@ -120,6 +127,55 @@ class EmployerResource extends Resource
                                                     ->label('Loại công ty'),
                                             ]),
                                     ]),
+                                Section::make('Thông tin địa chỉ')
+                                    ->schema([
+
+                                        Repeater::make('addresses')
+                                            ->relationship('addresses')
+                                            ->label('Nhập địa chỉ (nếu có)')
+                                            ->schema([
+
+                                                // Province/City Selector
+                                                Select::make('province_id')
+                                                    ->label('Tỉnh/Thành phố')
+                                                    ->searchable()
+                                                    ->options(Province::pluck('name', 'id')->toArray())
+                                                    ->reactive()
+                                                    ->afterStateUpdated(function (callable $set, $state) {
+                                                        $districts = District::where('province_id', $state)->pluck('name', 'id')->toArray();
+                                                        $set('district_id', null); // Reset quận/huyện khi tỉnh thay đổi
+                                                        $set('ward_id', null); // Reset xã khi tỉnh thay đổi
+                                                        $set('district_options', $districts);
+                                                    }),
+
+
+                                                // District Selector
+                                                Select::make('district_id')
+                                                    ->label('Quận/Huyện')
+                                                    ->searchable()
+                                                    ->options(fn($get) => District::where('province_id', $get('province_id'))->pluck('name', 'id')->toArray())
+                                                    ->reactive()
+                                                    ->afterStateUpdated(function (callable $set, $state) {
+                                                        $wards = Ward::where('district_id', $state)->pluck('name', 'id')->toArray();
+                                                        $set('ward_id', null); // Reset xã khi quận/huyện thay đổi
+                                                        $set('ward_options', $wards);
+                                                    }),
+
+                                                // Ward Selector
+                                                Select::make('ward_id')
+                                                    ->label('Xã/Phường')
+                                                    ->searchable()
+                                                    ->relationship('ward', 'name')
+                                                    ->options(fn($get) => Ward::where('district_id', $get('district_id'))->pluck('name', 'id')->toArray()),
+
+                                                TextInput::make('street')
+                                                    ->label('Địa chỉ')
+                                                    ->nullable(),
+
+                                            ])->columns(1),
+
+
+                                    ])->columnSpanFull()
                             ])
                             ->columnSpan(2),
 
@@ -207,6 +263,26 @@ class EmployerResource extends Resource
     public static function query(): Builder
     {
         return Employer::query()->with('user');
+    }
+
+    public static function saving(Employer $employer, array $data)
+    {
+        // Prepare address data from the form
+        $addressData = [
+            'province_id' => $data['province_id'],
+            'district_id' => $data['district_id'],
+            'ward_id' => $data['ward_id'],
+            'street' => $data['street'],
+        ];
+
+        // Create or update the address record
+        $address = Address::updateOrCreate(
+            ['id' => $employer->address_id],
+            $addressData
+        );
+
+        // Associate the address with the candidate
+        $employer->address_id = $address->id;
     }
 
 }

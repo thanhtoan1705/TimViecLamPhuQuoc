@@ -42,7 +42,7 @@ class CandidateResource extends Resource
     protected static ?string $navigationLabel = 'Ứng viên';
     protected static ?string $modelLabel = 'Ứng viên';
     protected static ?string $navigationGroup = 'Tài khoản';
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     protected static ?string $recordTitleAttribute = 'user.name';
 

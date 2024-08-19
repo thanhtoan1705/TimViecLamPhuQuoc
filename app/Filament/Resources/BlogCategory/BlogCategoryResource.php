@@ -59,7 +59,6 @@ class BlogCategoryResource extends Resource
                                         ->maxLength(255)
                                         ->live(onBlur: true)
                                         ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation === 'create' || $operation === 'update' ?
-                                        ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation === 'create' || $operation === 'update' ?
                                             $set('slug', Str::slug($state)) : null)
                                         ->label('Tên danh mục'),
 

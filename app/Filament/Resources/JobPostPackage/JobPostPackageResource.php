@@ -26,7 +26,7 @@ class JobPostPackageResource extends Resource
     protected static ?string $modelLabel = 'Gói đăng tin';
     protected static ?string $navigationGroup = 'Dịch vụ';
 //    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
 
     public static function getNavigationBadge(): ?string
     {

@@ -18,11 +18,11 @@ return new class extends Migration {
             $table->string('period', 255);
             $table->bigInteger('quantity');
             $table->bigInteger('limit_job_post');
-            $table->boolean('display_top')->default(true);
-            $table->boolean('display_best')->default(true);
-            $table->boolean('display_haste')->default(true);
+            $table->boolean('display_top')->default(false);
+            $table->boolean('display_best')->default(false);
+            $table->boolean('display_haste')->default(false);
             $table->text('descriptions');
-            $table->boolean('status')->default(true);
+            $table->boolean('status')->default(false);
 
             $table->timestamps();
         });

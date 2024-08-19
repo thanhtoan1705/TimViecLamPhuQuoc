@@ -30,7 +30,7 @@ class UserJobPackageResource extends Resource
     protected static ?string $modelLabel = 'Gói đăng tin người dùng';
     protected static ?string $navigationGroup = 'Dịch vụ';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     public static function form(Form $form): Form
     {

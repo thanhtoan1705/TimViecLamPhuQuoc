@@ -27,7 +27,7 @@ class JobPostResource extends Resource
     protected static ?string $modelLabel = 'Bài đăng vệc làm';
     protected static ?string $navigationGroup = 'Công việc';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
     public static function form(Form $form): Form
     {
@@ -60,7 +60,7 @@ class JobPostResource extends Resource
                                     ->label('Tên chuyên ngành'),
                                 Forms\Components\Select::make('employer_id')
                                     ->required()
-                                    ->relationship('employer', 'name')
+                                    ->relationship('employer', 'company_name')
                                     ->placeholder('Vui lòng chọn tên nhà tuyển dụng')
                                     ->label('Tên nhà tuyển dụng'),
                                 Forms\Components\Select::make('experience_id')
@@ -151,16 +151,18 @@ class JobPostResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('row_number')
                     ->label('STT')
                     ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
                 Tables\Columns\TextColumn::make('title')->label('Tên')->searchable(),
-                Tables\Columns\TextColumn::make('employer.name')->label('Nhà tuyển dụng')->searchable(),
+                Tables\Columns\TextColumn::make('employer.company_name')->label('Tên công ty')->searchable(),
                 Tables\Columns\TextColumn::make('major.name')->label('Chuyên ngành')->searchable(),
                 Tables\Columns\TextColumn::make('experience.name')->label('Kinh nghiệm')->searchable(),
                 Tables\Columns\TextColumn::make('rank.name')->label('Chức vụ')->searchable(),
                 Tables\Columns\TextColumn::make('quantity')->label('Số lượng')->searchable()
+
             ])
             ->filters([
                 Filter::make('title')
