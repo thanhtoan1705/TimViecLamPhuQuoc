@@ -14,33 +14,33 @@ class JobPostPackagesTableSeeder extends Seeder
     {
         DB::table('job_post_packages')->insert([
             [
-                'title' => 'Basic Package',
-                'price' => 100000,
+                'title' => 'Gói cơ bản',
+                'price' => 1999,
                 'period' => '30 days',
-                'quantity' => 10,
+                'quantity' => 5,
                 'limit_job_post' => 5,
-                'display_top' => true,
-                'display_best' => true,
-                'display_haste' => true,
-                'descriptions' => 'This is the basic package for job posting.',
+                'display_top' => false,
+                'display_best' => false,
+                'display_haste' => false,
+                'describe' => 'This is a basic job post package.',
                 'status' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'title' => 'Standard Package',
-                'price' => 200000,
+                'title' => 'Gói cao cấp',
+                'price' => 4999,
                 'period' => '60 days',
-                'quantity' => 20,
+                'quantity' => 10,
                 'limit_job_post' => 10,
                 'display_top' => true,
                 'display_best' => true,
-                'display_haste' => true,
-                'descriptions' => 'This is the standard package for job posting.',
+                'display_haste' => false,
+                'descriptions' => 'This is a premium job post package with top display options.',
                 'status' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
         ]);
     }
 }

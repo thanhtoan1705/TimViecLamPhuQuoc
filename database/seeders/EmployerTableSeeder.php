@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,8 +17,8 @@ class EmployerTableSeeder extends Seeder
                 'user_id' => 1,
                 'address_id' => 1,
                 'slug' => 'employer-1',
-                'name' => 'Employer 1',
-                'phone' => '0123456789',
+                'company_name' => 'Employer 1',
+                'company_phone' => '0123456789',
                 'since' => '2020-01-01',
                 'company_logo' => 'logo1.png',
                 'tax_code' => '123456789',
@@ -35,8 +34,8 @@ class EmployerTableSeeder extends Seeder
                 'user_id' => 2,
                 'address_id' => 2,
                 'slug' => 'employer-2',
-                'name' => 'Employer 2',
-                'phone' => '0987654321',
+                'company_name' => 'Employer 2',
+                'company_phone' => '0987654321',
                 'since' => '2020-01-01',
                 'company_logo' => 'logo2.png',
                 'tax_code' => '123456789',

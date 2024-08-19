@@ -13,8 +13,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('address_id')->constrained('addresses')->onDelete('cascade');
             $table->string('slug', 255);
-            $table->string('name', 255);
-            $table->string('phone', 20);
+            $table->string('company_name', 255);
+            $table->string('company_phone', 20);
             $table->date('since');
             $table->string('company_logo', 255)->nullable();
             $table->string('tax_code', 255)->nullable();
@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('facebook_url', 255)->nullable();
             $table->string('company_size', 255)->nullable();
             $table->string('company_type', 255)->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
