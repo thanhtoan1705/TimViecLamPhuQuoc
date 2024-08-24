@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Blog\BlogInterface;
+use App\Repositories\Blog\BlogRepository;
 use App\Repositories\Employer\EmployerInterface;
 use App\Repositories\Employer\EmployerRepository;
 use App\Repositories\Job\JobInterface;
@@ -17,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(EmployerInterface::class, EmployerRepository::class);
         $this->app->bind(JobInterface::class, JobRepository::class);
+        $this->app->bind(BlogInterface::class, BlogRepository::class);
     }
 
     /**

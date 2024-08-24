@@ -38,5 +38,10 @@ class EmployerRepository implements EmployerInterface
     }
 
 
-
+    public function getEmployerByStatusPaginate(int $status, int $paginate)
+    {
+        return $this->employer->where('status', $status)
+            ->with('addresses.province', 'addresses.district', 'addresses.ward')
+            ->paginate($paginate);
+    }
 }

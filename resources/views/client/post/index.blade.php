@@ -20,32 +20,7 @@
                 </div>
             </div>
         </section>
-        <section class="section-box mt-50">
-            <div class="container">
-                <div class="row">
-                    @for($i = 0 ; $i < 3; $i++)
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12">
-                            <div class="card-grid-5">
-                                <div class="card-grid-5 hover-up"
-                                     style="background-image: url('{{ asset('assets/client/imgs/page/blog/img-big1.png') }}')">
-                                    <a href='blog-details.html'>
-                                        <div class="box-cover-img">
-                                            <div class="content-bottom">
-                                                <h3 class="color-white mb-20">11 Giúp bạn có được khách hàng mới</h3>
-                                                <div class="author d-flex align-items-center mr-20"><img class="mr-10"
-                                                                                                         alt="jobBox"
-                                                                                                         src="{{ asset('assets/client/imgs/page/candidates/user3.png') }}"><span
-                                                        class="color-white font-sm mr-25">Khoa Nguyễn</span><span
-                                                        class="color-white font-sm">25 tháng 12 năm 2024</span></div>
-                                            </div>
-                                        </div>
-                                    </a></div>
-                            </div>
-                        </div>
-                    @endfor
-                </div>
-            </div>
-        </section>
+
         <section class="section-box mt-50">
             <div class="post-loop-grid">
                 <div class="container">
@@ -57,96 +32,54 @@
                     <div class="row mt-30">
                         <div class="col-lg-8">
                             <div class="row">
-                                @for($i = 0; $i < 7; $i++)
-                                    <div class="col-lg-6 mb-30">
-                                        <div class="card-grid-3 hover-up">
-                                            <div class="text-center card-grid-3-image"><a href='blog-details.html'>
-                                                    <figure><img alt="jobBox"
-                                                                 src="{{ asset('assets/client/imgs/page/blog/img1.png') }}">
-                                                    </figure>
-                                                </a></div>
-                                            <div class="card-block-info">
-                                                <div class="tags mb-15"><a class='btn btn-tag' href='blog-grid.html'>Tin
-                                                        tức</a></div>
-                                                <h5><a href='blog-details.html'>21 Mẹo Phỏng Vấn Xin Việc: Làm Thế Nào
-                                                        Để Tạo Ấn Tượng Tuyệt Vời</a></h5>
-                                                <p class="mt-10 color-text-paragraph font-sm">
-                                                    Sứ mệnh của chúng tôi là tạo ra công ty chăm sóc sức khỏe bền vững
-                                                    bằng cách tạo ra các sản phẩm
-                                                    chăm sóc sức khỏe chất lượng cao trong bao bì bền vững, mang tính
-                                                    biểu tượng.
-                                                </p>
-                                                <div class="card-2-bottom mt-20">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 col-6">
-                                                            <div class="d-flex"><img class="img-rounded"
-                                                                                     src="{{ asset('assets/client/imgs/page/homepage1/user1.png') }}">
-                                                                <div class="info-right-img"><span
-                                                                        class="font-sm font-bold color-brand-1 op-70">Duy Trần</span><br><span
-                                                                        class="font-xs color-text-paragraph-2">25 tháng 4 năm 2024</span>
+
+                                @if(is_object($blogs))
+                                    @foreach($blogs as $value)
+                                        <div class="col-lg-6 mb-30">
+
+                                            <div class="card-grid-3 hover-up">
+                                                <div class="text-center card-grid-3-image"><a href='blog-details.html'>
+                                                        <figure><img alt="jobBox" style="max-width: 100%;
+                                                                                        max-height: 220px;
+                                                                                        object-fit: cover;"
+                                                                     src="{{ asset('storage/' . $value->image) }}">
+                                                        </figure>
+                                                    </a></div>
+                                                <div class="card-block-info">
+                                                    <div class="tags mb-15"><a class='btn btn-tag'
+                                                                               href='blog-grid.html'>{{ $value->category->name }}</a>
+                                                    </div>
+                                                    <h5><a href='blog-details.html'>{{ $value->title }}</a></h5>
+                                                    <p class="mt-10 color-text-paragraph font-sm">
+                                                        {{ \Illuminate\Support\Str::limit($value->content, 100, '...') }}
+                                                    </p>
+                                                    <div class="card-2-bottom mt-20">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-6">
+                                                                <div class="d-flex"><img class="img-rounded"
+                                                                                         src="{{ asset('storage/'. $value->user->image) }}">
+                                                                    <div class="info-right-img"><span
+                                                                            class="font-sm font-bold color-brand-1 op-70">{{ $value->user->name }}</span><br><span
+                                                                            class="font-xs color-text-paragraph-2">{{ $value->created_at->format('d-m-Y') }}</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-lg-6 text-end col-6 pt-15"><span
-                                                                class="color-text-paragraph-2 font-xs">8 phút trước</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endfor
-                                <div class="col-lg-6 mb-30">
-                                    <div class="card-grid-3 hover-up">
-                                        <div class="text-center card-grid-3-image"><a href='blog-details.html'>
-                                                <figure><img alt="jobBox"
-                                                             src="{{ asset('assets/client/imgs/page/blog/img2.png') }}">
-                                                </figure>
-                                            </a></div>
-                                        <div class="card-block-info">
-                                            <div class="tags mb-15"><a class='btn btn-tag' href='blog-grid.html'>Sự
-                                                    kiện</a></div>
-                                            <h5><a href='blog-details.html'>21 Mẹo Phỏng Vấn Xin Việc: Làm Thế Nào Để
-                                                    Tạo Ấn Tượng Tuyệt Vời</a></h5>
-                                            <p class="mt-10 color-text-paragraph font-sm">
-                                                Sứ mệnh của chúng tôi là tạo ra công ty chăm sóc sức khỏe bền vững bằng
-                                                cách tạo ra các sản phẩm
-                                                chăm sóc sức khỏe chất lượng cao trong bao bì bền vững, mang tính biểu
-                                                tượng.
-                                            </p>
-                                            <div class="card-2-bottom mt-20">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-6">
-                                                        <div class="d-flex"><img class="img-rounded"
-                                                                                 src="{{ asset('assets/client/imgs/page/homepage1/user1.png') }}">
-                                                            <div class="info-right-img"><span
-                                                                    class="font-sm font-bold color-brand-1 op-70">Duy Trần</span><br><span
-                                                                    class="font-xs color-text-paragraph-2">25 tháng 4 năm 2022</span>
+                                                            <div class="col-lg-6 text-end col-6 pt-15"><span
+                                                                    class="color-text-paragraph-2 font-xs">{{ $value->created_at->diffForHumans() }}</span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6 text-end col-6 pt-15"><span
-                                                            class="color-text-paragraph-2 font-xs">8 phút trước</span>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    @endforeach
+                                @endif
+
+
                             </div>
-                            <div class="paginations">
-                                <ul class="pager">
-                                    <li><a class="pager-prev" href="#"></a></li>
-                                    <li><a class="pager-number" href="#">1</a></li>
-                                    <li><a class="pager-number" href="#">2</a></li>
-                                    <li><a class="pager-number" href="#">3</a></li>
-                                    <li><a class="pager-number" href="#">4</a></li>
-                                    <li><a class="pager-number" href="#">5</a></li>
-                                    <li><a class="pager-number active" href="#">6</a></li>
-                                    <li><a class="pager-number" href="#">7</a></li>
-                                    <li><a class="pager-next" href="#"></a></li>
-                                </ul>
-                            </div>
+
+                            {{ $blogs->links('vendor.pagination.custom') }}
+
                         </div>
                         <div class="col-lg-4 col-md-12 col-sm-12 col-12 pl-40 pl-lg-15 mt-lg-30">
                             <div class="widget_search mb-40">
@@ -252,3 +185,16 @@
         </section>
     </main>
 @endsection
+
+@push('style')
+    <style>
+
+
+        .card-grid-3-image img {
+            max-width: 100% !important;
+            max-height: 220px !important;
+            object-fit: cover !important;
+            border-radius: 8px;
+        }
+    </style>
+@endpush

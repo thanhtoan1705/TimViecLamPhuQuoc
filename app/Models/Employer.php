@@ -24,6 +24,7 @@ class Employer extends Model
         'facebook_url',
         'company_size',
         'company_type',
+        'status',
     ];
 
     public function user()
@@ -43,7 +44,7 @@ class Employer extends Model
 
     public function job_post()
     {
-        return $this->hasMany(Job_post::class);
+        return $this->hasMany(JobPost::class);
     }
 
     public function jobPosts()

@@ -123,6 +123,8 @@ class BlogResource extends Resource
                                                     ->label('Nhập ảnh .png, .jpg, .jpeg')
                                                     ->image()
                                                     ->required()
+                                                    ->disk('public')
+                                                    ->directory('images/blogs/')
                                                     ->columnSpan(2),
                                             ]),
                                         Section::make('SEO')

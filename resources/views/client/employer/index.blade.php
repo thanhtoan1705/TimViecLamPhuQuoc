@@ -360,51 +360,45 @@
                                 </div>
                             </div>
                             <div class="row">
-                                @for($i=0; $i < 18; $i++)
+                                @if(is_object($employers))
+                                    @foreach($employers as $employer)
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                                         <div class="card-grid-1 hover-up wow animate__animated animate__fadeIn">
-                                            <div class="image-box"><a href='company-details.html'><img
-                                                        src="{{ asset('assets/client/imgs/brands/brand-2.png') }}"
-                                                        alt="jobBox"></a></div>
+                                            <div class="image-box">
+                                                <a href='company-details.html'>
+                                                    <img style="width: 50px; height: 50px"
+                                                         src="{{ asset('storage/' . $employer->company_logo) }}"
+                                                         alt="jobBox">
+                                                </a>
+                                            </div>
                                             <div class="info-text mt-10">
-                                                <h5 class="font-bold"><a href='company-details.html'>Carols Company</a>
+                                                <h5 class="font-bold"><a
+                                                        href='company-details.html'>{{ $employer->company_name }}</a>
                                                 </h5>
-                                                <div class="mt-5"><img alt="jobBox"
-                                                                       src="{{ asset('assets/client//imgs/template/icons/star.svg') }}">
-                                                    <img alt="jobBox"
-                                                         src="{{ asset('assets/client//imgs/template/icons/star.svg') }}">
-                                                    <img alt="jobBox"
-                                                         src="{{ asset('assets/client//imgs/template/icons/star.svg') }}">
-                                                    <img alt="jobBox"
-                                                         src="{{ asset('assets/client//imgs/template/icons/star.svg') }}">
-                                                    <img alt="jobBox"
-                                                         src="{{ asset('assets/client//imgs/template/icons/star.svg') }}">
-                                                    <span
-                                                        class="font-xs color-text-mutted ml-10"><span>(</span><span>18</span><span>)</span></span>
-                                                </div>
-                                                <span class="card-location">Cái Răng, Cần Thơ</span>
+
+                                                <span class="card-location">
+
+                                                    @foreach ($employer->addresses as $address)
+                                                        {{ $address->district->name }},
+                                                        {{ $address->province->name }}
+                                                        <br>
+                                                    @endforeach
+
+                                                </span>
+
                                                 <div class="mt-30"><a class='btn btn-grey-big'
-                                                                      href='jobs-grid.html'><span>25</span><span> việc làm</span></a>
+                                                                      href='jobs-grid.html'><span>{{ $employer->job_post->count() }}</span><span> việc làm</span></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                @endfor
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
-                        <div class="paginations">
-                            <ul class="pager">
-                                <li><a class="pager-prev" href="#"></a></li>
-                                <li><a class="pager-number" href="#">1</a></li>
-                                <li><a class="pager-number" href="#">2</a></li>
-                                <li><a class="pager-number" href="#">3</a></li>
-                                <li><a class="pager-number" href="#">4</a></li>
-                                <li><a class="pager-number" href="#">5</a></li>
-                                <li><a class="pager-number active" href="#">6</a></li>
-                                <li><a class="pager-number" href="#">7</a></li>
-                                <li><a class="pager-next" href="#"></a></li>
-                            </ul>
-                        </div>
+
+                        {{ $employers->links('vendor.pagination.custom') }}
+
                     </div>
                     <div class="col-lg-3 col-md-12 col-sm-12 col-12">
                         <div class="sidebar-shadow none-shadow mb-30">

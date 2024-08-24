@@ -2,9 +2,11 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Auth\AdminLogin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -16,7 +18,10 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -26,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('panel')
-            ->login()
+            ->login(AdminLogin::class)
             ->colors([
                 'primary' => Color::Blue,
             ])
@@ -55,6 +60,27 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->userMenuItems([
+                'profile' => MenuItem::make()
+                    ->label(fn() => Auth::user()->name)
+                    ->url(fn(): string => EditProfilePage::getUrl())
+                    ->icon('heroicon-m-user-circle')
+
+
+            ])
+            ->plugins([
+                FilamentEditProfilePlugin::make()
+                    ->setIcon('heroicon-o-user')
+                    ->setTitle('Hồ sơ')
+                    ->setNavigationLabel('Hồ sơ')
+                    ->shouldRegisterNavigation(true)
+                    ->shouldShowDeleteAccountForm(false)
+                    ->shouldShowAvatarForm(
+                        value: true,
+                        directory: 'avatars',
+                        rules: 'mimes:jpeg,png|max:1024'
+                    )
             ]);
     }
 }
