@@ -15,7 +15,7 @@ return new class extends Migration {
 
             $table->foreignId('employer_id')->nullable()->constrained('employers')->onDelete('set null');
             $table->foreignId('packages_id')->nullable()->constrained('job_post_packages')->onDelete('set null');
-            $table->foreignId('promotion_id')->nullable()->constrained('promotion_id')->onDelete('set null');
+            $table->foreignId('promotion_id')->nullable()->constrained('promotions')->onDelete('set null');
             $table->bigInteger('amount');
             $table->dateTime('payment_date');
             $table->dateTime('expiration_date');

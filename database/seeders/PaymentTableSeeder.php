@@ -28,7 +28,7 @@ class PaymentTableSeeder extends Seeder
             [
                 'employer_id' => 2,
                 'packages_id' => 2,
-                'promotion_id' => 2,
+                'promotion_id' => 1,
                 'amount' => 200000,
                 'payment_date' => now(),
                 'expiration_date' => now()->addDays(60),

@@ -36,9 +36,9 @@ class DatabaseSeeder extends Seeder
             JobPostTableSeeder::class,
             InterviewTableSeeder::class,
             JobPostPackagesTableSeeder::class,
+            PromotionSeeder::class,
             PaymentTableSeeder::class,
             UserJobPackageSeeder::class,
-            PromotionSeeder::class,
         ]);
     }
 }
