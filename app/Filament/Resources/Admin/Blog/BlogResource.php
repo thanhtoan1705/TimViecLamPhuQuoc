@@ -9,7 +9,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -98,7 +98,7 @@ class BlogResource extends Resource
                                             ->placeholder('Nhập đường dẫn')
                                             ->columnSpan(1),
 
-                                        MarkdownEditor::make('content')
+                                        RichEditor::make('content')
                                             ->label('Nội dung bình luận')
                                             ->placeholder('Nhập nội dung bình luận...')
                                             ->required()

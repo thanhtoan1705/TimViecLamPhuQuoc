@@ -2363,14 +2363,15 @@
                     <div class="swiper-container swiper-group-1 swiper-style-2 swiper">
                         <div class="swiper-wrapper pt-5">
                             <div class="swiper-slide">
+                                @foreach($topEmployers as $topEmployer)
                                 <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                         <div class="item-logo">
                                             <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-1.png') }}">
+                                                                         src="{{ asset('storage/' . $topEmployer['company_logo']) }}">
                                             </div>
                                             <div class="text-info-right">
-                                                <h4>Linkedin</h4><img alt="jobBox"
-                                                                      src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
+                                                <h4>{{$topEmployer['company_name']}}</h4><img alt="jobBox"
+                                                                                              src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
                                                     src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
                                                     alt="jobBox"
@@ -2382,347 +2383,15 @@
                                                     class="font-xs color-text-mutted ml-10"><span>(</span><span>68</span><span>)</span></span>
                                             </div>
                                             <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">25<span> Công việc hiện có</span></span></div>
+                                                    class="font-xs color-text-mutted icon-location">
+                                                    {{$topEmployer['ward_name']}}, {{$topEmployer['district_name']}}, {{$topEmployer['province_name']}}
+                                                    </span><span
+                                                    class="font-xs color-text-mutted float-end mt-5">{{$topEmployer['total_jobs']}}<span> Công việc hiện có</span></span>
+                                            </div>
                                         </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-2.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Adobe</h4><img alt="jobBox"
-                                                                   src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>42</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">17<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-3.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Dailymotion</h4><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>46</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">65<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-4.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>NewSum</h4><img alt="jobBox"
-                                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>68</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">25<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-5.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>PowerHome</h4><img alt="jobBox"
-                                                                       src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>87</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">34<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-6.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Whop.com</h4><img alt="jobBox"
-                                                                      src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>34</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">56<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-7.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Greewood</h4><img alt="jobBox"
-                                                                      src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>124</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">78<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-8.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Kentucky</h4><img alt="jobBox"
-                                                                      src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>54</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">98<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-9.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Qeuity</h4><img alt="jobBox"
-                                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>76</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">90<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-10.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Honda</h4><img alt="jobBox"
-                                                                   src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>89</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">34<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-5.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Toyota</h4><img alt="jobBox"
-                                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>34</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">26<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-3.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Lexuxs</h4><img alt="jobBox"
-                                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>27</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">54<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-6.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Ondo</h4><img alt="jobBox"
-                                                                  src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>54</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">58<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-2.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Square</h4><img alt="jobBox"
-                                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>16</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">37<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
-                                <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
-                                        <div class="item-logo">
-                                            <div class="image-left"><img alt="jobBox"
-                                                                         src="{{ asset('assets/client/imgs/brands/brand-8.png') }}">
-                                            </div>
-                                            <div class="text-info-right">
-                                                <h4>Vista</h4><img alt="jobBox"
-                                                                   src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><img
-                                                    alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"><span
-                                                    class="font-xs color-text-mutted ml-10"><span>(</span><span>97</span><span>)</span></span>
-                                            </div>
-                                            <div class="text-info-bottom mt-5"><span
-                                                    class="font-xs color-text-mutted icon-location">An Thới, Phú
-                                                    Quốc</span><span
-                                                    class="font-xs color-text-mutted float-end mt-5">43<span> Công việc hiện có</span></span></div>
-                                        </div>
-                                    </a></div>
+                                    </a>
+                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -2742,114 +2411,27 @@
             </div>
             <div class="container">
                 <div class="row mt-50">
-                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-12 col-12">
-                        <div class="card-image-top hover-up"><a href='jobs-grid.html'>
-                                <div class="image"
-                                     style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location1.png') }});">
-                                    <span class="lbl-hot">Hot</span></div>
-                            </a>
-                            <div class="informations"><a href='jobs-grid.html'>
-                                    <h5>Phú Quốc</h5>
-                                </a>
-                                <div class="row">
-                                    <div class="col-lg-6 col-6"><span class="text-14 color-text-paragraph-2">5
-                                            vị trí ứng tuyển</span></div>
-                                    <div class="col-lg-6 col-6 text-end"><span
-                                            class="color-text-paragraph-2 text-14">120 công ty</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @foreach($hotJobCategories as $hotJobCategory)
                     <div class="col-xl-4 col-lg-4 col-md-7 col-sm-12 col-12">
                         <div class="card-image-top hover-up"><a href='jobs-grid.html'>
                                 <div class="image"
-                                     style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location2.png') }});">
-                                    <span class="lbl-hot">Xu hướng</span></div>
+                                     style="background-image: url('{{ asset('storage/' . $hotJobCategory['category_image']) }}');">
+                                    <span class="lbl-hot">Hot</span>
+                                </div>
                             </a>
                             <div class="informations"><a href='jobs-grid.html'>
-                                    <h5>Phú Quốc</h5>
+                                    <h5>{{$hotJobCategory['category_name']}}</h5>
                                 </a>
                                 <div class="row">
-                                    <div class="col-lg-6 col-6"><span class="text-14 color-text-paragraph-2">7
-                                            vị trí</span></div>
-                                    <div class="col-lg-6 col-6 text-end"><span class="color-text-paragraph-2 text-14">68
+                                    <div class="col-lg-6 col-6"><span class="text-14 color-text-paragraph-2">{{$hotJobCategory['total_job_posts']}}
+                                            vị trí ứng tuyển</span></div>
+                                    <div class="col-lg-6 col-6 text-end"><span class="color-text-paragraph-2 text-14">{{$hotJobCategory['total_employers']}}
                                             công ty</span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-5 col-lg-5 col-md-7 col-sm-12 col-12">
-                        <div class="card-image-top hover-up"><a href='jobs-grid.html'>
-                                <div class="image"
-                                     style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location3.png') }});">
-                                    <span class="lbl-hot">Hot</span></div>
-                            </a>
-                            <div class="informations"><a href='jobs-grid.html'>
-                                    <h5>An Thới, Phú Quốc</h5>
-                                </a>
-                                <div class="row">
-                                    <div class="col-lg-6 col-6"><span class="text-14 color-text-paragraph-2">9
-                                            vị trí</span></div>
-                                    <div class="col-lg-6 col-6 text-end"><span class="color-text-paragraph-2 text-14">80
-                                            công ty</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-5 col-sm-12 col-12">
-                        <div class="card-image-top hover-up"><a href='jobs-grid.html'>
-                                <div class="image"
-                                     style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location4.png') }});">
-                                </div>
-                            </a>
-                            <div class="informations"><a href='jobs-grid.html'>
-                                    <h5>Amsterdam, Holland</h5>
-                                </a>
-                                <div class="row">
-                                    <div class="col-lg-6 col-6"><span class="text-14 color-text-paragraph-2">16
-                                            vị trí</span></div>
-                                    <div class="col-lg-6 col-6 text-end"><span class="color-text-paragraph-2 text-14">86
-                                            công ty</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-5 col-lg-5 col-md-7 col-sm-12 col-12">
-                        <div class="card-image-top hover-up"><a href='jobs-grid.html'>
-                                <div class="image"
-                                     style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location5.png') }});">
-                                </div>
-                            </a>
-                            <div class="informations"><a href='jobs-grid.html'>
-                                    <h5>Phú Quốc</h5>
-                                </a>
-                                <div class="row">
-                                    <div class="col-lg-6 col-6"><span class="text-14 color-text-paragraph-2">39
-                                            vị trí</span></div>
-                                    <div class="col-lg-6 col-6 text-end"><span
-                                            class="color-text-paragraph-2 text-14">186 công ty</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-12 col-12">
-                        <div class="card-image-top hover-up"><a href='jobs-grid.html'>
-                                <div class="image"
-                                     style="background-image: url({{ asset('assets/client/imgs/page/homepage1/location6.png') }});">
-                                </div>
-                            </a>
-                            <div class="informations"><a href='jobs-grid.html'>
-                                    <h5>Cần Thơ</h5>
-                                </a>
-                                <div class="row">
-                                    <div class="col-lg-6 col-6"><span class="text-14 color-text-paragraph-2">15
-                                            vị trí</span></div>
-                                    <div class="col-lg-6 col-6 text-end"><span
-                                            class="color-text-paragraph-2 text-14">632 công ty</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>

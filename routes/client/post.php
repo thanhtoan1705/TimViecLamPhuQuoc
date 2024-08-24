@@ -8,6 +8,6 @@ Route::prefix('bai-viet')
     ->group(function () {
 
         Route::get('/', [PostController::class, 'index'])->name('index');
-        Route::get('/chi-tiet', [PostController::class, 'detail'])->name('detail');
-
+        Route::get('/{slug}', [PostController::class, 'detail'])->name('detail');
+        
     });

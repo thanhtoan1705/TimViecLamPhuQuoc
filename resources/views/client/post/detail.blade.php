@@ -9,19 +9,23 @@
             <div class="archive-header pt-50 text-center">
                 <div class="container">
                     <div class="box-white">
-                        <div class="max-width-single"><a class="btn btn-tag" href="#">Loại công việc</a>
-                            <h2 class="mb-30 mt-20 text-center">11 mẹo giúp bạn có được khách hàng mới thông qua việc
-                                gọi điện ngẫu nhiên</h2>
+                        <div class="max-width-single"><a class="btn btn-tag"
+                                                         href="#">{{$postDetail->category->name}}</a>
+                            <h2 class="mb-30 mt-20 text-center">{{$postDetail->title}}</h2>
                             <div class="post-meta text-muted d-flex align-items-center mx-auto justify-content-center">
                                 <div class="author d-flex align-items-center mr-30"><img alt="jobBox"
-                                                                                         src="{{ asset('assets/client/imgs/page/homepage1/user3.png') }}"><span>Khoa Nguyễn</span>
+                                                                                         src="{{ asset('storage/' . $postDetail->user->image) }}"><span>{{$postDetail->user->name}}</span>
                                 </div>
                                 <div class="date"><span class="font-xs color-text-paragraph-2 mr-20 d-inline-block"><img
                                             class="img-middle mr-5"
-                                            src="{{ asset('assets/client/imgs/page/blog/calendar.svg') }}"> 06 tháng 12 năm 2022</span><span
+                                            src="{{ asset('assets/client/imgs/page/blog/calendar.svg') }}">
+                                            {{ \Carbon\Carbon::parse($postDetail->created_at)->format('d \t\há\n\g m \nă\m Y') }}
+                                            </span><span
                                         class="font-xs color-text-paragraph-2 d-inline-block"><img
                                             class="img-middle mr-5"
-                                            src="{{ asset('assets/client/imgs/template/icons/time.svg') }}"> 8 phút trước</span>
+                                            src="{{ asset('assets/client/imgs/template/icons/time.svg') }}">
+                                            {{ \Carbon\Carbon::parse($postDetail->created_at)->diffForHumans() }}
+                                        </span>
                                 </div>
                             </div>
                         </div>
@@ -37,23 +41,15 @@
                             <div class="max-width-single">
                                 <div class="font-lg mb-30">
                                     <p>
-                                        Khách hàng rất quan trọng, khách hàng sẽ được khách hàng theo đuổi. Mọi người
-                                        đều quan tâm đến bọn trẻ.
-                                        Điện thoại thông minh Tôi sợ tiếng cười, hãy để nó là mục tiêu của trí tuệ chứ
-                                        không phải là mục đích của tâm trí tôi.
-                                        Ở trường đại học, anh ấy cần một chiếc gối. Chúng ta cần uống một lượng nước
-                                        nhất định.
-                                        Feugiat nở một nụ cười nhưng việc trang điểm không thành vấn đề.
-                                        Không có tiền sảnh và vào thời điểm nào, chất độc đó muốn eleifend.
-                                        Hai trong số họ là mục tiêu của tiếng cười. Bây giờ euismod đó rất buồn. Đó là
-                                        điểm nổi bật của trẻ.
+                                        {{-- {{$postDetail['content']}}--}}
                                     </p>
                                 </div>
                             </div>
-                            <figure><img src="{{ asset('assets/client/imgs/page/blog/img-content.png') }}"></figure>
+                            <figure class="text-center"><img src="{{ asset('storage/' . $postDetail->image) }}">
+                            </figure>
                             <div class="max-width-single">
                                 <div class="content-single">
-                                    <p></p>
+                                    {{-- <p></p>
                                     <p>
                                         Khách hàng rất quan trọng, khách hàng sẽ được khách hàng theo đuổi. Mọi người
                                         đều quan tâm đến bọn trẻ.
@@ -103,7 +99,8 @@
                                         chuột lố bịch sẽ ra đời.
                                         Suốt cả cuộc đời trước đây. Nhưng đó là một ý tưởng tốt. Sẽ rất thú vị khi xem
                                         giá của hương vị và một số ghét như thế nào.
-                                    </p>
+                                    </p> --}}
+                                    {!!$postDetail->content!!}
                                 </div>
                                 <div class="single-apply-jobs mt-20">
                                     <div class="row">

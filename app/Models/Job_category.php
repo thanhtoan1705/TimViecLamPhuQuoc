@@ -13,4 +13,9 @@ class Job_category extends Model
         'slug',
         'image'
     ];
+
+    public function jobPosts()
+    {
+        return $this->hasMany(JobPost::class, 'job_category_id');
+    }
 }

@@ -4,15 +4,21 @@ namespace App\Http\Controllers\Client\Post;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Blog\BlogInterface;
+use App\Repositories\Post\PostInterface;
 
 class PostController extends Controller
 {
+    protected PostInterface $post;
+
     protected BlogInterface $blogRepository;
 
-    public function __construct(BlogInterface $blog)
+    public function __construct(PostInterface $post, BlogInterface $blog)
     {
+        $this->post = $post;
         $this->blogRepository = $blog;
     }
+
+
     public function index()
     {
         $data = [
@@ -22,8 +28,12 @@ class PostController extends Controller
         return view("client.post.index", $data);
     }
 
-    public function detail()
+    public function detail($slug)
     {
-        return view("client.post.detail");
+        $postDetail = $this->post->getPostDetail($slug);
+
+        return view("client.post.detail", [
+            'postDetail' => $postDetail,
+        ]);
     }
 }
