@@ -37,9 +37,9 @@ class JobPost extends Model
         return $this->belongsTo(Job_category::class, 'job_category_id');
     }
 
-    public function major()
+    public function majors()
     {
-        return $this->belongsTo(Major::class, 'major_id');
+        return $this->belongsToMany(Major::class, 'job_post_major');
     }
 
     public function employer()
@@ -52,9 +52,14 @@ class JobPost extends Model
         return $this->belongsTo(Experience::class, 'experience_id');
     }
 
+    public function jobType()
+    {
+        return $this->belongsTo(JobType::class, 'job_type_id');
+    }
+
     public function job_type()
     {
-        return $this->belongsTo(Job_type::class, 'job_type_id');
+        return $this->belongsTo(JobType::class, 'job_type_id');
     }
 
     public function rank()
@@ -66,5 +71,11 @@ class JobPost extends Model
     {
         return $this->belongsTo(Degree::class, 'degrees_id');
     }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'job_post_skill');
+    }
+
 
 }

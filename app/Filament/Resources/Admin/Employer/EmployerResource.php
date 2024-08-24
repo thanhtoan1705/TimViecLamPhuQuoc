@@ -182,7 +182,19 @@ class EmployerResource extends Resource
                                 Section::make('Logo công ty')
                                     ->schema([
                                         FileUpload::make('company_logo')
-                                            ->label('Logo công ty'),
+                                            ->label('Logo công ty')
+                                            ->image()
+                                            ->imageEditor()
+                                            ->required()
+                                            ->disk('public')
+                                            ->directory('images/employer/logo'),
+                                        FileUpload::make('company_photo_cover')
+                                            ->label('Ảnh bìa công ty')
+                                            ->image()
+                                            ->imageEditor()
+                                            ->required()
+                                            ->disk('public')
+                                            ->directory('images/employer/banner'),
                                     ]),
 
                                 Section::make('Liên hệ')

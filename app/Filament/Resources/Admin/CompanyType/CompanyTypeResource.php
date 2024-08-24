@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\Admin\JobType;
+namespace App\Filament\Resources\Admin\CompanyType;
 
-use App\Filament\Resources\JobType\JobTypeResource\Pages;
-use App\Filament\Resources\JobType\JobTypeResource\RelationManagers;
-use App\Models\JobType;
+use App\Filament\Resources\Admin\CompanyType\CompanyTypeResource\Pages;
+use App\Filament\Resources\Admin\CompanyType\CompanyTypeResource\RelationManagers;
+use App\Models\CompanyType;
+use App\Models\Skill;
+use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
@@ -13,32 +15,24 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
-class JobTypeResource extends Resource
+class CompanyTypeResource extends Resource
 {
-    protected static ?string $model = JobType::class;
+    protected static ?string $model = CompanyType::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Loại công ty';
 
-    protected static ?string $navigationLabel = 'Loại công việc';
-
-    protected static ?string $modelLabel = 'Loại công việc';
+    protected static ?string $modelLabel = 'Loại công ty';
 
     protected static ?string $navigationGroup = 'Công việc';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
-
-    public static function getNavigationBadgeColor(): string|array|null
-    {
-        return 'primary';
-    }
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -47,7 +41,7 @@ class JobTypeResource extends Resource
                 Grid::make(3)
                     ->schema([
                         Grid::make(1)->schema([
-                            Section::make('Thông tin loại công việc')
+                            Section::make('Thông tin loại công ty')
                                 ->schema([
                                     TextInput::make('name')
                                         ->required()
@@ -55,11 +49,11 @@ class JobTypeResource extends Resource
                                         ->live(onBlur: true)
                                         ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation
                                         === 'create' || 'update' ? $set('slug', Str::slug($state)) : null)
-                                        ->label('Tên loại công việc'),
+                                        ->label('Loại công ty'),
                                     TextInput::make('slug')
                                         ->required()
                                         ->dehydrated()
-                                        ->unique(Job_type::class, 'slug', ignoreRecord: true)
+                                        ->unique(CompanyType::class, 'slug', ignoreRecord: true)
                                         ->maxLength(255),
                                 ])
                         ])->columnSpan(2),
@@ -87,30 +81,22 @@ class JobTypeResource extends Resource
                 Tables\Columns\TextColumn::make('row_number')
                     ->label('STT')
                     ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
-                Tables\Columns\TextColumn::make('row_number')
-                    ->label('STT')
-                    ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Tên loại công việc')
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->label('Đường dẫn')
-                    ->sortable()
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('name')->label('Loại công ty')->searchable(),
+                Tables\Columns\TextColumn::make('slug')->label('Đường dẫn')->searchable(),
             ])
             ->filters([
                 Filter::make('name')
-                    ->label('Lọc theo loại công việc')
+                    ->label('Lọc theo tên')
                     ->query(fn(Builder $query, array $data) => $query->where('name', 'like', '%' . $data['value'] . '%'))
                     ->form([
                         TextInput::make('value')
-                            ->label('Loại công việc')
-                            ->placeholder('Nhập loại công việc để lọc...')
+                            ->label('Tên loại công ty')
+                            ->placeholder('Nhập tên để lọc...')
                     ]),
             ])
             ->actions([
-                Tables\Actions\ActionGroup::make([
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
                 ])
@@ -132,10 +118,9 @@ class JobTypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\Admin\JobType\JobTypeResource\Pages\ListJobTypes::route('/'),
-            'create' => \App\Filament\Resources\Admin\JobType\JobTypeResource\Pages\CreateJobType::route('/create'),
-            'view' => \App\Filament\Resources\Admin\JobType\JobTypeResource\Pages\ViewJobType::route('/{record}'),
-            'edit' => \App\Filament\Resources\Admin\JobType\JobTypeResource\Pages\EditJobType::route('/{record}/edit'),
+            'index' => Pages\ListCompanyTypes::route('/'),
+            'create' => Pages\CreateCompanyType::route('/create'),
+            'edit' => Pages\EditCompanyType::route('/{record}/edit'),
         ];
     }
 }

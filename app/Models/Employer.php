@@ -17,6 +17,7 @@ class Employer extends Model
         'company_phone',
         'since',
         'company_logo',
+        'company_photo_cover',
         'tax_code',
         'description',
         'website_url',
@@ -43,6 +44,11 @@ class Employer extends Model
     public function job_post()
     {
         return $this->hasMany(Job_post::class);
+    }
+
+    public function jobPosts()
+    {
+        return $this->hasMany(JobPost::class);
     }
 
     public function addresses()

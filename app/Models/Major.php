@@ -14,4 +14,9 @@ class Major extends Model
         'describe',
         'slug',
     ];
+
+    public function jobPosts()
+    {
+        return $this->belongsToMany(JobPost::class, 'job_post_major');
+    }
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('company_phone', 20);
             $table->date('since');
             $table->string('company_logo', 255)->nullable();
+            $table->string('company_photo_cover', 255)->nullable();
             $table->string('tax_code', 255)->nullable();
             $table->text('description')->nullable();
             $table->string('website_url', 255)->nullable();

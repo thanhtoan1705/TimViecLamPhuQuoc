@@ -8349,3 +8349,31 @@ ul li:last-child .card-list-4 {
   }
 }
 /*# sourceMappingURL=style.css.map */
+.banner-image-single .img-container {
+    height: 366px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner-image-single .img-container img {
+    height: auto;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+@media (max-width: 992px) {
+    .banner-image-single .img-container {
+        height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner-image-single .img-container {
+        height: 200px;
+    }
+}

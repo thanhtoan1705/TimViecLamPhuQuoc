@@ -51,13 +51,16 @@ class JobPostResource extends Resource
                                     ->unique(JobPost::class, 'slug', ignoreRecord: true)
                                     ->maxLength(255)
                                     ->label('Slug'),
-                                Forms\Components\MarkdownEditor::make('description')
+                                Forms\Components\RichEditor::make('description')
                                     ->label('Mô tả công việc')->placeholder('Vui lòng nhập mô tả công việc'),
                                 Forms\Components\Select::make('major_id')
+                                    ->multiple()
                                     ->required()
-                                    ->relationship('major', 'name')
+                                    ->relationship('majors', 'name')
                                     ->placeholder('Vui lòng chọn tên chuyên ngành')
-                                    ->label('Tên chuyên ngành'),
+                                    ->label('Tên chuyên ngành')
+                                    ->searchable()
+                                    ->preload(),
                                 Forms\Components\Select::make('employer_id')
                                     ->required()
                                     ->relationship('employer', 'company_name')
@@ -75,9 +78,18 @@ class JobPostResource extends Resource
                                     ->label('Tên danh mục'),
                                 Forms\Components\Select::make('job_type_id')
                                     ->required()
-                                    ->relationship('job_type', 'name')
+                                    ->relationship('jobType', 'name')
                                     ->placeholder('Vui lòng chọn loại công việc')
                                     ->label('Loại công việc'),
+                                Forms\Components\Select::make('skills')
+                                    ->multiple()
+                                    ->relationship('skills', 'name')
+                                    ->placeholder('Vui lòng chọn kỹ năng')
+                                    ->label('Kỹ năng')
+                                    ->searchable()
+                                    ->preload(), // Thêm thuộc tính này để cho phép tìm kiếm
+
+
                             ]),
 
                         Section::make('Chi tiết công việc')

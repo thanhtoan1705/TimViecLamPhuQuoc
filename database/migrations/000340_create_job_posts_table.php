@@ -34,6 +34,8 @@ return new class extends Migration
             $table->foreignId('rank_id')->nullable()->comment('chức vụ')
             ->constrained('ranks')->onDelete('set null');
 
+            $table->foreignId('skill_id')->nullable()->comment('Kỹ năng')
+                ->constrained('skills')->onDelete('set null');
 
             $table->foreignId('degrees_id')->nullable()
                 ->constrained('degrees')->onDelete('set null');
@@ -53,6 +55,21 @@ return new class extends Migration
             $table->string('address', 255)->nullable();
             $table->timestamps();
         });
+
+        Schema::create('job_post_skill', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('job_post_id')->nullable()->constrained('job_posts')->onDelete('set null');
+            $table->foreignId('skill_id')->nullable()->constrained('skills')->onDelete('set null');
+            $table->timestamps();
+        });
+
+        Schema::create('job_post_major', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('job_post_id')->nullable()->constrained('job_posts')->onDelete('set null');
+            $table->foreignId('major_id')->nullable()->constrained('majors')->onDelete('set null');
+            $table->timestamps();
+        });
+
     }
 
     /**
@@ -60,6 +77,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('job_post_skill');
+        Schema::dropIfExists('job_post_major');
         Schema::dropIfExists('job_posts');
+
     }
 };

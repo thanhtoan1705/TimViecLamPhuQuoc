@@ -18,6 +18,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/client/imgs/template/favicon.svg') }}">
     <link href="{{ asset('assets/client/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/client/css/stylecd4e.css?version=4.1') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    @livewireStyles
     @stack('css')
     <title>@yield('title', 'Trang chủ')</title>
 </head>
@@ -102,7 +105,9 @@
 
 
 
-
+    @stack('script')
+    @livewireScripts
+    <script src="//unpkg.com/alpinejs" defer></script>
     <script src="{{ asset('assets/client/js/vendor/modernizr-3.6.0.min.js') }}"></script>
     <script src="{{ asset('assets/client/js/vendor/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('assets/client/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>

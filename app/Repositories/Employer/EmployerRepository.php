@@ -20,4 +20,23 @@ class EmployerRepository implements EmployerInterface
             ->take($limit)
             ->get();
     }
+
+    public function getEmployerBySlug($slug)
+    {
+        return $this->employer::where('slug', $slug)
+            ->with(['user', 'address'])
+            ->firstOrFail();
+    }
+
+    public function getJobPostsByEmployerSlug($slug, $perPage = 2)
+    {
+        $employer = $this->employer->where('slug', $slug)->firstOrFail();
+
+        return $employer->jobPosts()
+            ->latest('id')
+            ->paginate($perPage);
+    }
+
+
+
 }
