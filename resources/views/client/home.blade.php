@@ -346,122 +346,31 @@
                     <div class="box-swiper mt-50">
                         <div class="swiper-container swiper-group-5 swiper">
                             <div class="swiper-wrapper pb-70 pt-5">
-                                @foreach ($employers as $item)
+                                @foreach ($jobpost as $item)
                                     <div class="swiper-slide hover-up">
                                         <a href=''>
                                             <div class="item-logo">
-                                                <div class="image-left"><img alt="jobBox" width="50px"
-                                                                             src="{{ asset('storage/' . $item->company_logo) }}">
+                                                <div class="image-left">
+                                                    @if(isset($item->job_category) && $item->job_category->image)
+                                                        <img alt="jobBox" width="50px"
+                                                             src="{{ asset('storage/' . $item->job_category->image) }}">
+                                                    @else
+                                                        <img alt="jobBox" width="50px"
+                                                             src="{{ asset('path/to/default/image.png') }}">
+                                                    @endif
                                                 </div>
                                                 <div class="text-info-right">
                                                     <h4>
-                                                        {{$item->name}}
+                                                        {{$item->title}}
                                                     </h4>
-                                                    <p class="font-xs">{{$item->company_size}}
-                                                        <span> {{$item->company_type}}</span></p>
+                                                    <p class="font-xs">({{$item->quantity}})
+                                                        <span> {{ $item->job_category->name}}</span>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </a>
-                                        {{--                                        <a href=''>--}}
-                                        {{--                                            <div class="item-logo">--}}
-                                        {{--                                                <div class="image-left"><img alt="jobBox"--}}
-                                        {{--                                                        src="{{ asset('assets/client/imgs/page/homepage1/customer.svg') }}">--}}
-                                        {{--                                                </div>--}}
-                                        {{--                                                <div class="text-info-right">--}}
-                                        {{--                                                    <h4>Trợ giúp khách hàng</h4>--}}
-                                        {{--                                                    <p class="font-xs">185<span> Công việc có sẵn</span></p>--}}
-                                        {{--                                                </div>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        </a>--}}
                                     </div>
-                                @endforeach
-                                {{--                                <div class="swiper-slide hover-up"><a href='jobs-grid.html'>--}}
-                                {{--                                        <div class="item-logo">--}}
-                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
-                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/finance.svg') }}">--}}
-                                {{--                                            </div>--}}
-                                {{--                                            <div class="text-info-right">--}}
-                                {{--                                                <h4>Tài chính</h4>--}}
-                                {{--                                                <p class="font-xs">168<span> Công việc có sẵn</span></p>--}}
-                                {{--                                            </div>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a><a href='jobs-list.html'>--}}
-                                {{--                                        <div class="item-logo">--}}
-                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
-                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/lightning.svg') }}">--}}
-                                {{--                                            </div>--}}
-                                {{--                                            <div class="text-info-right">--}}
-                                {{--                                                <h4>Software</h4>--}}
-                                {{--                                                <p class="font-xs">1856<span> Công việc có sẵn</span></p>--}}
-                                {{--                                            </div>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a>--}}
-                                {{--                                </div>--}}
-                                {{--                                <div class="swiper-slide hover-up"><a href='jobs-grid.html'>--}}
-                                {{--                                        <div class="item-logo">--}}
-                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
-                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/human.svg') }}"></div>--}}
-                                {{--                                            <div class="text-info-right">--}}
-                                {{--                                                <h4>Nguồn nhân lực</h4>--}}
-                                {{--                                                <p class="font-xs">165<span> Công việc có sẵn</span></p>--}}
-                                {{--                                            </div>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a><a href='jobs-grid.html'>--}}
-                                {{--                                        <div class="item-logo">--}}
-                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
-                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/management.svg') }}">--}}
-                                {{--                                            </div>--}}
-                                {{--                                            <div class="text-info-right">--}}
-                                {{--                                                <h4>Sự quản lý</h4>--}}
-                                {{--                                                <p class="font-xs">965<span> Công việc có sẵn</span></p>--}}
-                                {{--                                            </div>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a>--}}
-                                {{--                                </div>--}}
-                                {{--                                <div class="swiper-slide hover-up"><a href='jobs-list.html'>--}}
-                                {{--                                        <div class="item-logo">--}}
-                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
-                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/retail.svg') }}">--}}
-                                {{--                                            </div>--}}
-                                {{--                                            <div class="text-info-right">--}}
-                                {{--                                                <h4>Sản phẩm bán lẻ</h4>--}}
-                                {{--                                                <p class="font-xs">563<span> Công việc có sẵn</span></p>--}}
-                                {{--                                            </div>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a><a href='jobs-grid.html'>--}}
-                                {{--                                        <div class="item-logo">--}}
-                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
-                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/security.svg') }}">--}}
-                                {{--                                            </div>--}}
-                                {{--                                            <div class="text-info-right">--}}
-                                {{--                                                <h4>Nhà phân tích</h4>--}}
-                                {{--                                                <p class="font-xs">254<span> Công việc có sẵn</span></p>--}}
-                                {{--                                            </div>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a>--}}
-                                {{--                                </div>--}}
-                                {{--                                <div class="swiper-slide hover-up"><a href='jobs-grid.html'>--}}
-                                {{--                                        <div class="item-logo">--}}
-                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
-                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/content.svg') }}">--}}
-                                {{--                                            </div>--}}
-                                {{--                                            <div class="text-info-right">--}}
-                                {{--                                                <h4>Người viết nội dung</h4>--}}
-                                {{--                                                <p class="font-xs">142<span> Công việc có sẵn</span></p>--}}
-                                {{--                                            </div>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a><a href='jobs-list.html'>--}}
-                                {{--                                        <div class="item-logo">--}}
-                                {{--                                            <div class="image-left"><img alt="jobBox"--}}
-                                {{--                                                    src="{{ asset('assets/client/imgs/page/homepage1/research.svg') }}">--}}
-                                {{--                                            </div>--}}
-                                {{--                                            <div class="text-info-right">--}}
-                                {{--                                                <h4>Nghiên cứu</h4>--}}
-                                {{--                                                <p class="font-xs">532<span> Công việc có sẵn</span></p>--}}
-                                {{--                                            </div>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </a>--}}
-                                {{--                                </div>--}}
+                                @endforeach.
                             </div>
                         </div>
                         <div class="swiper-button-next"></div>
@@ -496,30 +405,17 @@
                         với ứng viên phù hợp nhanh hơn. </p>
                     <div class="list-tabs mt-40">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li><a class="active" id="nav-tab-job-1" href="#tab-job-1" data-bs-toggle="tab"
-                                   role="tab" aria-controls="tab-job-1" aria-selected="true"><img
-                                        src="{{ asset('assets/client/imgs/page/homepage1/management.svg') }}"
-                                        alt="jobBox"> Sự quản lý</a></li>
-                            <li><a id="nav-tab-job-2" href="#tab-job-2" data-bs-toggle="tab" role="tab"
-                                   aria-controls="tab-job-2" aria-selected="false"><img
-                                        src="{{ asset('assets/client/imgs/page/homepage1/marketing.svg') }}"
-                                        alt="jobBox"> Marketing &amp; Sale</a></li>
-                            <li><a id="nav-tab-job-3" href="#tab-job-3" data-bs-toggle="tab" role="tab"
-                                   aria-controls="tab-job-3" aria-selected="false"><img
-                                        src="{{ asset('assets/client/imgs/page/homepage1/finance.svg') }}"
-                                        alt="jobBox"> Tài chính</a></li>
-                            <li><a id="nav-tab-job-4" href="#tab-job-4" data-bs-toggle="tab" role="tab"
-                                   aria-controls="tab-job-4" aria-selected="false"><img
-                                        src="{{ asset('assets/client/imgs/page/homepage1/human.svg') }}"
-                                        alt="jobBox">Nguồn nhân lực</a></li>
-                            <li><a id="nav-tab-job-5" href="#tab-job-5" data-bs-toggle="tab" role="tab"
-                                   aria-controls="tab-job-5" aria-selected="false"><img
-                                        src="{{ asset('assets/client/imgs/page/homepage1/retail.svg') }}" alt="jobBox">
-                                    Bán lẻ &amp; Các sản phẩm</a></li>
-                            <li><a id="nav-tab-job-6" href="#tab-job-6" data-bs-toggle="tab" role="tab"
-                                   aria-controls="tab-job-6" aria-selected="false"><img
-                                        src="{{ asset('assets/client/imgs/page/homepage1/content.svg') }}"
-                                        alt="jobBox"> Người viết nội dung </a></li>
+                            @foreach($jobpost as $item)
+                                <li><a class="active" id="nav-tab-job-1" href="#tab-job-1" data-bs-toggle="tab"
+                                       role="tab" aria-controls="tab-job-1"
+                                       aria-selected="true">@if(isset($item->job_category) && $item->job_category->image)
+                                            <img alt="jobBox" width="50px"
+                                                 src="{{ asset('storage/' . $item->job_category->image) }}">
+                                        @else
+                                            <img alt="jobBox" width="50px"
+                                                 src="{{ asset('path/to/default/image.png') }}">
+                                        @endif {{ $item->job_category->name}}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

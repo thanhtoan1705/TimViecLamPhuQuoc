@@ -3,22 +3,25 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Employer\EmployerInterface;
+use App\Repositories\JobPost\JobPostInterface;
 
 class HomeController extends Controller{
 
-    protected $employer;
+    protected $jobPostRepository;
 
-    public function __construct(EmployerInterface $employer)
+    public function __construct(JobPostInterface $jobPostRepository)
     {
-        $this->employer = $employer;
+        $this->jobPostRepository = $jobPostRepository;
     }
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
      */
     public function index(){
-        $employers = $this->employer->getAllEmployers();
-        return view("client.home", compact('employers'));
+        $jobPostRepository = $this->jobPostRepository->getAllJobPost();
+        $data = [
+            'jobpost' => $jobPostRepository
+        ];
+        return view("client.home", $data);
     }
 
     public function about()

@@ -8,6 +8,8 @@ use App\Repositories\Employer\EmployerInterface;
 use App\Repositories\Employer\EmployerRepository;
 use App\Repositories\Job\JobInterface;
 use App\Repositories\Job\JobRepository;
+use App\Repositories\JobPost\JobPostInterface;
+use App\Repositories\JobPost\JobPostRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(EmployerInterface::class, EmployerRepository::class);
         $this->app->bind(JobInterface::class, JobRepository::class);
         $this->app->bind(BlogInterface::class, BlogRepository::class);
+        $this->app->bind(JobPostInterface::class, JobPostRepository::class);
     }
 
     /**

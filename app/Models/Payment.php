@@ -12,6 +12,7 @@ class Payment extends Model
     protected $fillable = [
         'employer_id',
         'packages_id',
+        'promotion_id',
         'amount',
         'payment_date',
         'expiration_date',

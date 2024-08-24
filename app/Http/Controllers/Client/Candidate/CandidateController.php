@@ -3,17 +3,29 @@
 namespace App\Http\Controllers\Client\Candidate;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Candidate\CandidateRepository;
 
 class CandidateController extends Controller
 {
+    protected $candidate;
+
+    public function __construct(CandidateRepository $candidate)
+    {
+        $this->candidate = $candidate;
+    }
+
     public function index()
     {
         return view("client.cv.index");
     }
 
-    public function detail()
+    public function detail($id)
     {
-        return view('client.candidate.detail');
+        $candidate = $this->candidate->getOneCandidate($id);
+        $data = [
+            'candidate' => $candidate
+        ];
+        return view('client.candidate.detail', $data);
     }
 
     public function profile()

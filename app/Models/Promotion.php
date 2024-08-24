@@ -5,12 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Job_category extends Model
+class Promotion extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'name',
-        'slug',
-        'image'
+        'code',
+        'discount',
+        'number_use',
+        'start_time',
+        'end_time',
+        'describe',
+        'status',
     ];
 }

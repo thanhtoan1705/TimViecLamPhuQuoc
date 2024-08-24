@@ -101,19 +101,6 @@ class BlogResource extends Resource
                                         MarkdownEditor::make('content')
                                             ->label('Nội dung bình luận')
                                             ->placeholder('Nhập nội dung bình luận...')
-                                            ->toolbarButtons([
-                                                'bold',
-                                                'italic',
-                                                'underline',
-                                                'link',
-                                                'bulletList',
-                                                'numberList',
-                                                'blockquote',
-                                                'codeBlock',
-                                                'code',
-                                                'image',
-                                                'media',
-                                            ])
                                             ->required()
                                             ->maxLength(65535)
                                             ->columnSpan(2),
@@ -122,9 +109,10 @@ class BlogResource extends Resource
                                                 FileUpload::make('image')
                                                     ->label('Nhập ảnh .png, .jpg, .jpeg')
                                                     ->image()
-                                                    ->required()
+                                                    ->imageEditor()
                                                     ->disk('public')
-                                                    ->directory('images/blogs/')
+                                                    ->required()
+                                                    ->directory('images/blog')
                                                     ->columnSpan(2),
                                             ]),
                                         Section::make('SEO')

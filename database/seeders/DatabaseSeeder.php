@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             ProvinceTableSeeder::class,
             DistrictTableSeeder::class,
             WardTableSeeder::class,
-
             UserTableSeeder::class,
             AddressTableSeeder::class,
             MajorTableSeeder::class,
@@ -39,6 +38,7 @@ class DatabaseSeeder extends Seeder
             JobPostPackagesTableSeeder::class,
             PaymentTableSeeder::class,
             UserJobPackageSeeder::class,
+            PromotionSeeder::class,
         ]);
     }
 }
