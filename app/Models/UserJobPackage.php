@@ -10,7 +10,7 @@ class UserJobPackage extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'employer_id',
         'packages_id',
         'remaining_posts',
         'expires_at',
@@ -21,8 +21,8 @@ class UserJobPackage extends Model
         return $this->belongsTo(JobPostPackage::class, 'packages_id');
     }
 
-    public function user()
+    public function employer()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Employer::class, 'employer_id');
     }
 }

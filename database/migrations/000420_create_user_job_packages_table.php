@@ -13,9 +13,9 @@ return new class extends Migration {
         Schema::create('user_job_packages', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('employer_id');
             $table->unsignedBigInteger('packages_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('employer_id')->references('id')->on('employers')->onDelete('cascade');
             $table->foreign('packages_id')->references('id')->on('job_post_packages')->onDelete('cascade');
 
             $table->integer('remaining_posts')->comment('Theo dõi số lượng bài đăng còn lại trong gói');

@@ -4,8 +4,8 @@ namespace App\Filament\Resources\Admin\UserJobPackage;
 
 use App\Filament\Resources\UserJobPackage\UserJobPackageResource\Pages;
 use App\Filament\Resources\UserJobPackage\UserJobPackageResource\RelationManagers;
+use App\Models\Employer;
 use App\Models\JobPostPackage;
-use App\Models\User;
 use App\Models\UserJobPackage;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
@@ -41,13 +41,13 @@ class UserJobPackageResource extends Resource
                         Grid::make(1)->schema([
                             Section::make('Thông tin gói đăng tin')
                                 ->schema([
-                                    Select::make('user_id')
-                                        ->relationship('user', 'name')
-                                        ->options(User::all()->pluck('name', 'id'))
+                                    Select::make('employer_id')
+                                        ->relationship('employer', 'company_name')
+                                        ->options(Employer::all()->pluck('company_name', 'id'))
                                         ->searchable()
                                         ->required()
                                         ->nullable(false)
-                                        ->label('Người dùng'),
+                                        ->label('Nhà tuyển dụng'),
 
                                     Select::make('packages_id')
                                         ->relationship('jobPostPackage', 'title')
@@ -59,6 +59,7 @@ class UserJobPackageResource extends Resource
 
                                     TextInput::make('remaining_posts')
                                         ->required()
+                                        ->rules(['min:1'])
                                         ->numeric()
                                         ->label('Số bài đăng còn lại'),
 
@@ -93,7 +94,7 @@ class UserJobPackageResource extends Resource
                     ->label('STT')
                     ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
 
-                Tables\Columns\TextColumn::make('user.name')->label('Người dùng')->searchable(),
+                Tables\Columns\TextColumn::make('employer.company_name')->label('Nhà tuyển dụng')->searchable(),
                 Tables\Columns\TextColumn::make('jobPostPackage.title')->label('Gói đăng tin')->searchable(),
                 Tables\Columns\TextColumn::make('remaining_posts')->label('Số bài đăng còn lại'),
                 Tables\Columns\TextColumn::make('expires_at')->label('Ngày hết hạn')->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('d/m/Y - h:i A')),

@@ -14,6 +14,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
@@ -42,8 +43,7 @@ class PaymentResource extends Resource
                                 ->schema([
                                     Select::make('employer_id')
                                         ->relationship('employer.user', 'name')
-
-//                                        ->searchable()
+                                        ->searchable()
 
                                         ->options(Employer::with('user')->get()->pluck('user.name', 'id'))
                                         ->required()
@@ -58,6 +58,7 @@ class PaymentResource extends Resource
                                         ->label('Gói đăng tin'),
                                     TextInput::make('amount')
                                         ->required()
+                                        ->rules(['min:10000'])
                                         ->numeric()
                                         ->label('Số tiền'),
                                     Grid::make(2)
@@ -65,18 +66,34 @@ class PaymentResource extends Resource
                                             DateTimePicker::make('payment_date')
                                                 ->required()
                                                 ->label('Ngày thanh toán')
-                                                ->displayFormat('d/m/Y - h:i A'),
+                                                ->displayFormat('d/m/Y - h:i A')
+                                                ->afterStateUpdated(function ($state, callable $set, $get) {
+                                                    if ($get('expiration_date') && $state >= $get('expiration_date')) {
+                                                        $set('expiration_date', null);
+                                                    }
+                                                }),
                                             DateTimePicker::make('expiration_date')
                                                 ->required()
                                                 ->label('Ngày hết hạn')
-                                                ->displayFormat('d/m/Y - h:i A'),
+                                                ->displayFormat('d/m/Y - h:i A')
+                                                ->afterStateUpdated(function ($state, callable $set, $get) {
+                                                    if ($state <= $get('payment_date')) {
+                                                        $set('expiration_date', null);
+                                                        Notification::make()
+                                                            ->title('Ngày hết hạn phải lớn hơn ngày thanh toán')
+                                                            ->danger()
+                                                            ->send();
+                                                    }
+                                                }),
                                         ]),
                                     TextInput::make('payment_method')
                                         ->required()
+                                        ->rules(['regex:/^[\w\s-]+$/u'])
                                         ->maxLength(255)
                                         ->label('Phương thức thanh toán'),
                                     Toggle::make('payment_status')
                                         ->label('Trạng thái')
+                                        ->required()
                                         ->default(1),
                                 ])
                         ])->columnSpan(2),

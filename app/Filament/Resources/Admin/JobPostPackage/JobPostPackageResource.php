@@ -48,22 +48,27 @@ class JobPostPackageResource extends Resource
                                 ->schema([
                                     TextInput::make('title')
                                         ->required()
+                                        ->rules(['regex:/^[\w\s-]+$/u'])
                                         ->maxLength(255)
                                         ->label('Tiêu đề gói'),
                                     TextInput::make('price')
                                         ->required()
+                                        ->rules(['min:10000'])
                                         ->numeric()
                                         ->label('Giá'),
                                     TextInput::make('period')
                                         ->required()
+                                        ->rules(['regex:/^[\w\s-]+$/u'])
                                         ->maxLength(255)
                                         ->label('Thời hạn'),
                                     TextInput::make('quantity')
                                         ->required()
+                                        ->rules(['min:1'])
                                         ->numeric()
                                         ->label('Số lượng'),
                                     TextInput::make('limit_job_post')
                                         ->required()
+                                        ->rules(['min:1'])
                                         ->numeric()
                                         ->label('Giới hạn bài đăng'),
                                     Grid::make(3)

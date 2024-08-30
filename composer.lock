@@ -984,7 +984,7 @@
         },
         {
             "name": "filament/actions",
-            "version": "v3.2.107",
+            "version": "v3.2.108",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/actions.git",

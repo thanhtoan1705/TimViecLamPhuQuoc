@@ -580,7 +580,7 @@
                                     <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                             <div class="item-logo">
                                                 <div class="image-left"><img alt="jobBox"
-                                                                             src="{{ asset('storage/' . $topEmployer['company_logo']) }}">
+                                                                             src="{{ asset('storage/' . $topEmployer->company_logo) }}">
                                                 </div>
                                                 <div class="text-info-right">
                                                     <h4>{{$topEmployer['company_name']}}</h4><img alt="jobBox"
@@ -597,9 +597,9 @@
                                                 </div>
                                                 <div class="text-info-bottom mt-5"><span
                                                         class="font-xs color-text-mutted icon-location">
-                                                    {{$topEmployer['ward_name']}}, {{$topEmployer['district_name']}}, {{$topEmployer['province_name']}}
+                                                    {{$topEmployer->employer->address->ward->name}}, {{$topEmployer->employer->address->district->name}}, {{$topEmployer->employer->address->district->province->name}}
                                                     </span><span
-                                                        class="font-xs color-text-mutted float-end mt-5">{{$topEmployer['total_jobs']}}<span> Công việc hiện có</span></span>
+                                                        class="font-xs color-text-mutted float-end mt-5">{{$topEmployer->total_jobs}}<span> Công việc hiện có</span></span>
                                                 </div>
                                             </div>
                                         </a>
@@ -628,18 +628,18 @@
                         <div class="col-xl-4 col-lg-4 col-md-7 col-sm-12 col-12">
                             <div class="card-image-top hover-up"><a href='jobs-grid.html'>
                                     <div class="image"
-                                         style="background-image: url('{{ asset('storage/' . $hotJobCategory['category_image']) }}');">
+                                         style="background-image: url('{{ asset('storage/' . $hotJobCategory->image) }}');">
                                         <span class="lbl-hot">Hot</span>
                                     </div>
                                 </a>
                                 <div class="informations"><a href='jobs-grid.html'>
-                                        <h5>{{$hotJobCategory['category_name']}}</h5>
+                                        <h5>{{$hotJobCategory->name}}</h5>
                                     </a>
                                     <div class="row">
-                                        <div class="col-lg-6 col-6"><span class="text-14 color-text-paragraph-2">{{$hotJobCategory['total_job_posts']}}
+                                        <div class="col-lg-6 col-6"><span class="text-14 color-text-paragraph-2">{{$hotJobCategory->total_job_posts}}
                                             vị trí ứng tuyển</span></div>
                                         <div class="col-lg-6 col-6 text-end"><span
-                                                class="color-text-paragraph-2 text-14">{{$hotJobCategory['total_employers']}}
+                                                class="color-text-paragraph-2 text-14">{{$hotJobCategory->total_employers}}
                                             công ty</span></div>
                                     </div>
                                 </div>
