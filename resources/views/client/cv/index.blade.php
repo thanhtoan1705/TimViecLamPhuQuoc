@@ -7,7 +7,7 @@
         <section class="section-box mt-50">
             <div class="container">
                 <div class="row">
-                    <x-client.sidebarcandidate></x-client.sidebarcandidate>
+                    <x-client.sidebar-candidate></x-client.sidebar-candidate>
                     <div class="col-lg-9">
                         <div class="card mb-3">
                             <div class="card-body">

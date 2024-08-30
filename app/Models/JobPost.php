@@ -76,6 +76,4 @@ class JobPost extends Model
     {
         return $this->belongsToMany(Skill::class, 'job_post_skill');
     }
-
-
 }

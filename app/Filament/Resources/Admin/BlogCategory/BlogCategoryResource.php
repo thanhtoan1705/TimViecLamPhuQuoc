@@ -20,6 +20,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class BlogCategoryResource extends Resource
 {
@@ -57,9 +58,19 @@ class BlogCategoryResource extends Resource
                                     TextInput::make('name')
                                         ->required()
                                         ->maxLength(255)
+                                        ->rules([
+                                            'min:2',
+                                            function (\Filament\Forms\Get $get) {
+                                                return Rule::unique('blog_categories', 'name')->ignore($get('id'));
+                                            }
+                                        ])
                                         ->live(onBlur: true)
-                                        ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation === 'create' || $operation === 'update' ?
-                                            $set('slug', Str::slug($state)) : null)
+                                        ->afterStateUpdated(function (string $operation, $state, Set $set) {
+                                            if ($operation === 'create' || $operation === 'update') {
+                                                $slug = Str::slug($state);
+                                                $set('slug', $slug);
+                                            }
+                                        })
                                         ->label('Tên danh mục'),
 
                                     FileUpload::make('image')
@@ -68,7 +79,9 @@ class BlogCategoryResource extends Resource
                                         ->imageEditor()
                                         ->required()
                                         ->disk('public')
-                                        ->directory('images/blog-category'),
+                                        ->directory('images/blog-category')
+                                        ->maxSize(1024 * 5)
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp']),
                                 ])->columnSpan(1),
 
                                 Grid::make(1)->schema([

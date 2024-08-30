@@ -5,10 +5,12 @@ namespace App\Filament\Resources\Admin\Blog;
 use App\Filament\Resources\Blog\BlogResource\Pages;
 use App\Filament\Resources\Blog\BlogResource\RelationManagers;
 use App\Models\Blog;
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -16,6 +18,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
@@ -24,6 +27,9 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class BlogResource extends Resource
 {
@@ -77,6 +83,12 @@ class BlogResource extends Resource
                                     Grid::make(2)->schema([
                                         TextInput::make('title')
                                             ->required()
+                                            ->rules([
+                                                'min:2',
+                                                function (\Filament\Forms\Get $get) {
+                                                    return Rule::unique('blogs', 'title')->ignore($get('id'));
+                                                }
+                                            ])
                                             ->maxLength(255)
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(function (string $operation, $state, Set $set) {
@@ -91,8 +103,7 @@ class BlogResource extends Resource
 
                                         TextInput::make('slug')
                                             ->required()
-                                            ->dehydrated()
-                                            ->unique(Blog::class, 'slug', ignoreRecord: true)
+                                            ->unique(Blog::class, 'slug', fn($record) => $record)
                                             ->maxLength(255)
                                             ->label('Đường dẫn')
                                             ->placeholder('Nhập đường dẫn')
@@ -102,7 +113,6 @@ class BlogResource extends Resource
                                             ->label('Nội dung bình luận')
                                             ->placeholder('Nhập nội dung bình luận...')
                                             ->required()
-                                            ->maxLength(65535)
                                             ->columnSpan(2),
                                         Section::make('Hình ảnh')
                                             ->schema([
@@ -113,6 +123,7 @@ class BlogResource extends Resource
                                                     ->disk('public')
                                                     ->required()
                                                     ->directory('images/blog')
+                                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
                                                     ->columnSpan(2),
                                             ]),
                                         Section::make('SEO')
@@ -146,10 +157,29 @@ class BlogResource extends Resource
                                     DatePicker::make('published_at')
                                         ->label('Ngày đăng')
                                         ->required()
-                                        ->rules([
-                                            'after_or_equal:' . now()->toDateString()
-                                        ])
-                                        ->helperText('Ngày đăng không được nhỏ hơn ngày hiện tại.'),
+                                        ->minDate(fn () => request()->routeIs('filament.resources.blogs.create') ? Carbon::today() : null)
+                                        ->afterStateUpdated(function ($state, callable $set) {
+                                            $selectedDate = Carbon::parse($state);
+                                            $today = Carbon::today();
+
+                                            $isCreating = !request()->route('record');
+
+                                            if ($isCreating && $selectedDate->lt($today)) {
+                                                $set('published_at', null);
+                                                Notification::make()
+                                                    ->title('Ngày đăng phải lớn hơn hoặc bằng ngày hiện tại!')
+                                                    ->danger()
+                                                    ->send();
+                                            }
+                                        }),
+
+                                    Placeholder::make('created_at')
+                                        ->label('Thời gian tạo')
+                                        ->content(fn($record) => $record ? $record->created_at->format('d/m/Y H:i:s') : '-'),
+
+                                    Placeholder::make('updated_at')
+                                        ->label('Thời gian cập nhật mới nhất')
+                                        ->content(fn($record) => $record ? $record->updated_at->format('d/m/Y H:i:s') : '-'),
 
                                     Section::make('Chuyên mục')
                                         ->schema([

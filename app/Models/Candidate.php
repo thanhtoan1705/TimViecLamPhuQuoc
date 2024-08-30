@@ -16,7 +16,6 @@ class Candidate extends Model
         'resume_id',
         'experience_id',
         'education_id',
-        'skill_id',
         'degree_id',
         'address_id',
         'salary',
@@ -50,9 +49,9 @@ class Candidate extends Model
         return $this->belongsTo(Education::class);
     }
 
-    public function skill(): BelongsTo
+    public function skills()
     {
-        return $this->belongsTo(Skill::class);
+        return $this->belongsToMany(Skill::class, 'candidate_skill');
     }
 
     public function degree(): BelongsTo
@@ -64,11 +63,6 @@ class Candidate extends Model
     {
         return $this->hasMany(Address::class, 'id');
     }
-
-//    public function address()
-//    {
-//        return $this->belongsTo(Address::class, 'id');
-//    }
 
     public function interviews()
     {

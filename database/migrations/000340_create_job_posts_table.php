@@ -34,8 +34,8 @@ return new class extends Migration
             $table->foreignId('rank_id')->nullable()->comment('chức vụ')
             ->constrained('ranks')->onDelete('set null');
 
-            $table->foreignId('skill_id')->nullable()->comment('Kỹ năng')
-                ->constrained('skills')->onDelete('set null');
+//            $table->foreignId('skill_id')->nullable()->comment('Kỹ năng')
+//                ->constrained('skills')->onDelete('set null');
 
             $table->foreignId('degrees_id')->nullable()
                 ->constrained('degrees')->onDelete('set null');

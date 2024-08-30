@@ -30,7 +30,7 @@ return new class extends Migration {
      *
      * @return void
      */
-    public function down0()
+    public function down()
     {
         Schema::dropIfExists('promotions');
     }

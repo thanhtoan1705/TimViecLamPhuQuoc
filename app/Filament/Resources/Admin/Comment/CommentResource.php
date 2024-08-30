@@ -29,7 +29,7 @@ class CommentResource extends Resource
 
     protected static ?string $navigationGroup = 'Bài viết';
 
-    protected static ?int $navigationSort = 3; // xếp thứ tự
+    protected static ?int $navigationSort = 3;
 
     public static function getNavigationBadge(): ?string
     {
@@ -54,18 +54,20 @@ class CommentResource extends Resource
                                         ->relationship('user', 'name')
                                         ->label('Người bình luận')
                                         ->searchable()
+                                        ->required()
                                         ->placeholder('Chọn người bình luận'),
 
                                     Select::make('blog_id')
                                         ->relationship('blog', 'title')
                                         ->label('Tên bài viết')
                                         ->searchable()
+                                        ->required()
                                         ->placeholder('Chọn bài viết'),
                                 ])
                         ])->columnSpan(2),
 
                         Grid::make(1)->schema([
-                            Section::make()
+                            Section::make('Thời gian')
                                 ->schema([
                                     Placeholder::make('created_at')
                                         ->label('Thời gian tạo')

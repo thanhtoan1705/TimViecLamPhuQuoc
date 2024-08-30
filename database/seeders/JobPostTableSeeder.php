@@ -26,7 +26,7 @@ class JobPostTableSeeder extends Seeder
                 'job_type_id' => 1,
                 'rank_id' => 1,
                 'degrees_id' => 1,
-                'skill_id' => 1,
+//                'skill_id' => 1,
                 'start_date' => now(),
                 'end_date' => now()->addMonths(1),
                 'description' => 'We are looking for a Software Engineer...',
@@ -52,7 +52,7 @@ class JobPostTableSeeder extends Seeder
                 'job_type_id' => 1,
                 'rank_id' => 1,
                 'degrees_id' => 1,
-                'skill_id' => 1,
+//                'skill_id' => 1,
                 'start_date' => now(),
                 'end_date' => now()->addMonths(2),
                 'description' => 'We are looking for a Marketing Manager...',
@@ -78,7 +78,7 @@ class JobPostTableSeeder extends Seeder
                 'job_type_id' => 1,
                 'rank_id' => 1,
                 'degrees_id' => 1,
-                'skill_id' => 1,
+//                'skill_id' => 1,
                 'start_date' => now(),
                 'end_date' => now()->addMonths(2),
                 'description' => 'We are looking for a Marketing Manager...',
@@ -94,7 +94,6 @@ class JobPostTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // Add more job entries here...
         ]);
     }
 }

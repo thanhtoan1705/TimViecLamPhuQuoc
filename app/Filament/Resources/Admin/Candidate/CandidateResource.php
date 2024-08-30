@@ -117,11 +117,19 @@ class CandidateResource extends Resource
                                                 ->options(Education::pluck('name', 'id'))
                                                 ->required(),
 
-                                            Select::make('skill_id')
+//                                            Select::make('skill_id')
+//                                                ->label('Kỹ năng')
+//                                                ->relationship('skill', 'name')
+//                                                ->options(Skill::pluck('name', 'id'))
+//                                                ->required(),
+
+                                            Select::make('skills')
+                                                ->multiple()
+                                                ->relationship('skills', 'name')
+                                                ->placeholder('Vui lòng chọn kỹ năng')
                                                 ->label('Kỹ năng')
-                                                ->relationship('skill', 'name')
-                                                ->options(Skill::pluck('name', 'id'))
-                                                ->required(),
+                                                ->searchable()
+                                                ->preload(),
 
                                             Select::make('degree_id')
                                                 ->label('Bằng cấp')
@@ -263,7 +271,7 @@ class CandidateResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                TextColumn::make('skill.name')
+                TextColumn::make('skills.name')
                     ->label('Kỹ năng')
                     ->sortable()
                     ->searchable(),
@@ -282,8 +290,8 @@ class CandidateResource extends Resource
                 Tables\Filters\SelectFilter::make('major')->label('Chuyên ngành')
                     ->relationship('major', 'name'),
 
-                Tables\Filters\SelectFilter::make('skill')->label('Kỹ năng')
-                    ->relationship('skill', 'name'),
+                Tables\Filters\SelectFilter::make('skills')->label('Kỹ năng')
+                    ->relationship('skills', 'name'),
 
                 Filter::make('status')->label('Hiển thị')->toggle(),
                 Filter::make('featured')->label('Nổi bật')->toggle(),

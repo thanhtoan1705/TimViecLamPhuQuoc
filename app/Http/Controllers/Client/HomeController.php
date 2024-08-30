@@ -28,6 +28,8 @@ class HomeController extends Controller{
     public function index(){
         $jobPostRepository = $this->jobPostRepository->getAllJobPost();
 
+        $jobCategoriesRepository = $this->jobCategoryRepository->getAllJobCategories();
+
         $employers = $this->employerRepository->getAllEmployers();
 
         $topEmployers = $this->jobPostRepository->topEmployers();
@@ -36,6 +38,7 @@ class HomeController extends Controller{
 
         $data = [
             'jobpost' => $jobPostRepository,
+            'jobCategories' => $jobCategoriesRepository,
             'employers' => $employers,
             'topEmployers' => $topEmployers,
             'hotJobCategories' => $hotJobCategories

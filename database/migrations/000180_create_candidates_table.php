@@ -39,10 +39,10 @@ return new class extends Migration
                 ->constrained('education')
                 ->onDelete('set null');
 
-            $table->foreignId('skill_id')
-                ->nullable()
-                ->constrained('skills')
-                ->onDelete('set null');
+//            $table->foreignId('skill_id')
+//                ->nullable()
+//                ->constrained('skills')
+//                ->onDelete('set null');
 
             $table->foreignId('degree_id')
                 ->nullable()
@@ -61,13 +61,23 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+
+        Schema::create('candidate_skill', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('candidate_id')->nullable()->constrained('candidates')->onDelete('set null');
+            $table->foreignId('skill_id')->nullable()->constrained('skills')->onDelete('set null');
+            $table->timestamps();
+        });
     }
+
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
+        Schema::dropIfExists('candidate_skill');
         Schema::dropIfExists('candidates');
     }
 };

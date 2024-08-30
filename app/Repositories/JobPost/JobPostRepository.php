@@ -47,6 +47,13 @@ class JobPostRepository implements JobPostInterface
 
     public function getAllJobPost($limit = 10)
     {
-        return $this->jobPost->limit($limit)->get();
+        $jobPosts = $this->jobPost->limit($limit)->get();
+
+        $jobPosts = $jobPosts->groupBy(function ($item) {
+            return $item->job_category->name;
+        });
+
+
+        return $jobPosts;
     }
 }

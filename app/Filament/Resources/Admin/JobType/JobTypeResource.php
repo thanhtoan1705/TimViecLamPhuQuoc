@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Admin\JobType;
 
-use App\Filament\Resources\JobType\JobTypeResource\Pages;
-use App\Filament\Resources\JobType\JobTypeResource\RelationManagers;
+//use App\Filament\Resources\JobType\JobTypeResource\Pages;
+//use App\Filament\Resources\JobType\JobTypeResource\RelationManagers;
 use App\Models\JobType;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
@@ -17,6 +17,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class JobTypeResource extends Resource
 {
@@ -51,6 +52,15 @@ class JobTypeResource extends Resource
                                 ->schema([
                                     TextInput::make('name')
                                         ->required()
+                                        ->rules([
+                                            'min:2',
+                                            'max:255',
+                                            'regex:/^[\pL\pM\pN\s]+$/u',
+                                            'unique:job_types,name',
+                                            function (\Filament\Forms\Get $get) {
+                                                return Rule::unique('job_types', 'name')->ignore($get('id'));
+                                            }
+                                        ])
                                         ->maxLength(255)
                                         ->live(onBlur: true)
                                         ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation
@@ -59,13 +69,13 @@ class JobTypeResource extends Resource
                                     TextInput::make('slug')
                                         ->required()
                                         ->dehydrated()
-                                        ->unique(Job_type::class, 'slug', ignoreRecord: true)
+                                        ->unique(JobType::class, 'slug', ignoreRecord: true)
                                         ->maxLength(255),
                                 ])
                         ])->columnSpan(2),
 
                         Grid::make(1)->schema([
-                            Section::make()
+                            Section::make('Thời gian')
                                 ->schema([
                                     Placeholder::make('created_at')
                                         ->label('Thời gian tạo')

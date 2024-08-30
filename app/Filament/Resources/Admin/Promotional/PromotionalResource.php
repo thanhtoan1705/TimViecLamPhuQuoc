@@ -10,11 +10,14 @@ use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Notifications\Notification;
+use Carbon\Carbon;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Builder;
 
 class PromotionalResource extends Resource
@@ -53,18 +56,35 @@ class PromotionalResource extends Resource
                                             ->label('Mã giảm giá')
                                             ->required()
                                             ->maxLength(255)
+                                            ->rules([
+                                                function (\Filament\Forms\Get $get) {
+                                                    return Rule::unique('promotions', 'code')->ignore($get('id'));
+                                                }
+                                            ])
                                             ->columnSpan(1),
 
                                         TextInput::make('discount')
                                             ->label('Giảm giá')
                                             ->numeric()
                                             ->required()
+                                            ->reactive()
+                                            ->rule('min:0')
+                                            ->afterStateUpdated(function ($state, callable $set) {
+                                                if ($state < 0) {
+                                                    $set('discount', null);
+                                                    Notification::make()
+                                                        ->title('Giảm giá phải lớn hơn hoặc bằng 0!')
+                                                        ->danger()
+                                                        ->send();
+                                                }
+                                            })
                                             ->columnSpan(1),
 
                                         TextInput::make('number_use')
                                             ->label('Số lần sử dụng')
                                             ->numeric()
                                             ->required()
+                                            ->rules(['min:1'])
                                             ->columnSpan(1),
 
                                         MarkdownEditor::make('describe')
@@ -81,11 +101,39 @@ class PromotionalResource extends Resource
                                 ->schema([
                                     DatePicker::make('start_time')
                                         ->label('Thời gian bắt đầu')
-                                        ->required(),
+                                        ->required()
+                                        ->minDate(Carbon::today())
+                                        ->reactive()
+                                        ->afterStateUpdated(function (callable $set, $state) {
+                                            if ($state < Carbon::today()) {
+                                                $set('start_time', null);
+                                                Notification::make()
+                                                    ->title('Thời gian bắt đầu phải lớn hơn hoặc bằng ngày hiện tại!')
+                                                    ->danger()
+                                                    ->send();
+                                            }
+                                        }),
 
                                     DatePicker::make('end_time')
                                         ->label('Thời gian kết thúc')
-                                        ->required(),
+                                        ->required()
+                                        ->reactive()
+                                        ->minDate(Carbon::today())
+                                        ->afterStateUpdated(function (callable $set, $state, $get) {
+                                            if ($state <= $get('start_time')) {
+                                                $set('end_time', null);
+                                                Notification::make()
+                                                    ->title('Thời gian kết thúc phải sau thời gian bắt đầu!')
+                                                    ->danger()
+                                                    ->send();
+                                            } elseif ($state < Carbon::today()) {
+                                                $set('end_time', null);
+                                                Notification::make()
+                                                    ->title('Thời gian kết thúc phải lớn hơn hoặc bằng ngày hiện tại!')
+                                                    ->danger()
+                                                    ->send();
+                                            }
+                                        }),
 
                                     Section::make('Trạng thái')
                                         ->schema([

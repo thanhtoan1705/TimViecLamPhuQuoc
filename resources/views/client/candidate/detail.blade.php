@@ -19,8 +19,10 @@
                         <div class="col-lg-8 col-md-12">
                             <h5>{{$candidate->user->name}}
                             </h5>
+{{--                            @dd($candidate->addresses)--}}
                             <p>
                                 @foreach ($candidate->addresses as $address)
+                                    {{ $address->street }},
                                     {{ $address->district->name }},
                                     {{ $address->province->name }}
                                     <br>
@@ -60,12 +62,13 @@
                                     </p>
                                 </div>
                                 <div class="tab-pane fade" id="tab-skills" role="tabpanel" aria-labelledby="tab-skills">
-                                    <h4>Skills</h4>
-                                    <p></p>Xin chào! Tên tôi là Alan Walker. Tôi là một nhà thiết kế đồ họa, tôi rất đam
-                                    mê và tận tâm với công việc của mình. Với 20 năm kinh nghiệm làm nhà thiết kế đồ họa
-                                    chuyên nghiệp, tôi đã có được những kỹ năng và kiến thức cần thiết để giúp dự án của
-                                    bạn thành công.
-
+                                    <h4>Kỹ năng</h4>
+                                    <p>
+                                        @foreach($candidate->skills as $key => $skill)
+                                            <a class='btn btn-grey-small mr-5'
+                                               href=''>{{ $skill->name }}</a>
+                                        @endforeach
+                                    </p>
                                 </div>
                             </div>
                         </div>
