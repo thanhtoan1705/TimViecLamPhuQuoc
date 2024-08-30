@@ -76,6 +76,8 @@ class CandidateResource extends Resource
                                         TextInput::make('user.email')
                                             ->required()
                                             ->email()
+                                            ->unique()
+                                            ->maxLength(255)
                                             ->label('Email'),
 
                                         TextInput::make('user.phone')
@@ -87,6 +89,7 @@ class CandidateResource extends Resource
                                         TextInput::make('user.password')
                                             ->label('Mật khẩu')
                                             ->password()
+                                            ->maxLength(255)
                                             ->dehydrated(fn($state) => filled($state))
                                             ->required(fn(Page $livewire) => ($livewire instanceof CreateCandidate))
 
@@ -158,8 +161,11 @@ class CandidateResource extends Resource
 
                                 Section::make('Hình ảnh')
                                     ->schema([
-                                        FileUpload::make('user.image')
-                                            ->label('Chọn ảnh định dang png, jpg, jpeg'),
+                                        FileUpload::make('user.avatar_url')
+                                            ->label('Chọn ảnh định dang png, jpg, jpeg')
+                                            ->image()
+                                            ->disk('public')
+                                            ->directory('images/users/candidates')
 
                                     ]),
 

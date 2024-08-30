@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\Blog\BlogInterface;
 use App\Repositories\Blog\BlogRepository;
+use App\Repositories\Candidate\CandidateInterface;
+use App\Repositories\Candidate\CandidateRepository;
 use App\Repositories\Employer\EmployerInterface;
 use App\Repositories\Employer\EmployerRepository;
 use App\Repositories\Job\JobInterface;
@@ -14,6 +16,8 @@ use App\Repositories\JobPost\JobPostInterface;
 use App\Repositories\JobPost\JobPostRepository;
 use App\Repositories\Post\PostInterface;
 use App\Repositories\Post\PostRepository;
+use App\Repositories\User\UserInterface;
+use App\Repositories\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,7 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(UserInterface::class, UserRepository::class);
         $this->app->bind(EmployerInterface::class, EmployerRepository::class);
+        $this->app->bind(CandidateInterface::class, CandidateRepository::class);
         $this->app->bind(JobInterface::class, JobRepository::class);
         $this->app->bind(BlogInterface::class, BlogRepository::class);
         $this->app->bind(JobPostInterface::class, JobPostRepository::class);

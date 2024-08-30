@@ -26,7 +26,7 @@ class EditCandidate extends EditRecord
         $user->name = $data['user']['name'];
         $user->email = $data['user']['email'];
         $user->phone = $data['user']['phone'];
-        $user->image = $data['user']['image'];
+        $user->avatar_url = $data['user']['avatar_url'];
 
         if (!empty($data['user']['password'])) {
             $user->password = Hash::make($data['user']['password']);
@@ -45,7 +45,7 @@ class EditCandidate extends EditRecord
         $data['user']['email'] = $user->email;
         $data['user']['phone'] = $user->phone;
 //        $data['user']['password'] = $user->password;
-        $data['user']['image'] = $user->image;
+        $data['user']['avatar_url'] = $user->avatar_url;
 
         return $data;
     }

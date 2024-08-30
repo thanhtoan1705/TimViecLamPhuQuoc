@@ -4,11 +4,16 @@
 use App\Http\Controllers\Client\Auth\AuthController;
 use App\Http\Controllers\Client\Candidate\CandidateController;
 use App\Http\Controllers\Client\Employer\EmployerController;
+use App\Http\Controllers\Client\Candidate\AuthController as AuthCandidateController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/ung-vien/dang-nhap', [CandidateController::class, 'login'])->name('candidate.login');
-Route::get('/ung-vien/dang-ky', [CandidateController::class, 'register'])->name('candidate.register');
+Route::get('/ung-vien/dang-nhap', [AuthCandidateController::class, 'login'])->name('candidate.login');
+Route::post('/ung-vien/dang-nhap', [AuthCandidateController::class, 'handleLogin'])->name('candidate.login.post');
+Route::get('/ung-vien/dang-xuat', [AuthCandidateController::class, 'logout'])->name('candidate.logout');
+
+Route::get('/ung-vien/dang-ky', [AuthCandidateController::class, 'register'])->name('candidate.register');
+Route::post('/ung-vien/dang-ky', [AuthCandidateController::class, 'handleRegister'])->name('candidate.register.post');
 Route::get('/nha-tuyen-dung/dang-nhap', [EmployerController::class, 'login'])->name('employer.login');
 Route::get('/nha-tuyen-dung/dang-ky', [EmployerController::class, 'register'])->name('employer.register');
 Route::get('dat-lai-mat-khau', [AuthController::class, 'reset'])->name('reset');

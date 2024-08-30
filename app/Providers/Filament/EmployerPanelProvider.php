@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use App\Filament\Resources\Pages\RegistrationEmployer;
 
 class EmployerPanelProvider extends PanelProvider
 {
@@ -31,6 +32,7 @@ class EmployerPanelProvider extends PanelProvider
             ->id('employer')
             ->path('panel/employer')
             ->login(EmployerLogin::class)
+            ->registration(RegistrationEmployer::class)
             ->colors([
                 'primary' => Color::Blue,
             ])

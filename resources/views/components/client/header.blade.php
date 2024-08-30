@@ -27,17 +27,33 @@
                 <div class="burger-icon burger-icon-white"><span class="burger-icon-top"></span><span
                         class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
             </div>
-            <div class="header-right">
-                <div id="loginContainer" class="login-container">
-                    <button id="loginButton" class='btn btn-default btn-shadow ml-40 hover-up'>Đăng nhập</button>
-                    <div id="loginButtons" class="login-buttons" style="display: none;">
-                        <a class='btn btn-default btn-shadow ml-40 hover-up'
-                           href="">Tuyển dụng</a>
-                        <a class='btn btn-default btn-shadow ml-40 hover-up'
-                           href="">Ứng viên</a>
+            @if(auth()->check())
+                <div class="header-right">
+                    <div id="loginContainer" class="login-container">
+
+                        <a href="" id="loginButton" class='btn btn-default btn-shadow ml-40 hover-up'>Tài khoản</a>
+{{--                        <div id="loginButtons" class="login-buttons" style="display: none;">--}}
+{{--                            <a class='btn btn-default btn-shadow ml-40 hover-up'--}}
+{{--                               href="">Quản lý</a>--}}
+{{--                            <a class='btn btn-default btn-shadow ml-40 hover-up'--}}
+{{--                               href="{{ route('client.candidate.logout') }}">Thoát</a>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
-            </div>
+            @else
+                <div class="header-right">
+                    <div id="loginContainer" class="login-container">
+                        <button id="loginButton" class='btn btn-default btn-shadow ml-40 hover-up'>Đăng nhập</button>
+                        <div id="loginButtons" class="login-buttons" style="display: none;">
+                            <a class='btn btn-default btn-shadow ml-40 hover-up'
+                               href="">Tuyển dụng</a>
+                            <a class='btn btn-default btn-shadow ml-40 hover-up'
+                               href="{{ route('client.candidate.login') }}">Ứng viên</a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
         </div>
     </div>
 </header>

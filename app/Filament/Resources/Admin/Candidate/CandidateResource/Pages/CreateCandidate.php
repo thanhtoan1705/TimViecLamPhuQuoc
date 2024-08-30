@@ -25,7 +25,7 @@ class CreateCandidate extends CreateRecord
                 'phone' => $data['user']['phone'],
 //                'password' => Hash::make($data['user']['password']),
                 'password' => $data['user']['password'],
-                'image' => $data['user']['image'] ?? null,
+                'avatar_url' => $data['user']['avatar_url'] ?? null,
             ]);
         } else {
             $user = $existingUser;

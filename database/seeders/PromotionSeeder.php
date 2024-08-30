@@ -21,7 +21,7 @@ class PromotionSeeder extends Seeder
             'start_time' => now(),
             'end_time' => now()->addDays(30),
             'describe' => 'Giảm giá mùa hè 2024',
-            'status' => 'active',
+            'status' => 1,
         ]);
 
         Promotion::create([
@@ -31,7 +31,7 @@ class PromotionSeeder extends Seeder
             'start_time' => now()->addMonths(3),
             'end_time' => now()->addMonths(4),
             'describe' => 'Giảm giá mùa đông 2024',
-            'status' => 'inactive',
+            'status' => 1,
         ]);
     }
 }

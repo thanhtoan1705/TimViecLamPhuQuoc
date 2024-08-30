@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Client\Employer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\Employer\RegisterRequest;
 use App\Repositories\Employer\EmployerInterface;
+use App\Repositories\User\UserInterface;
 
 
 class EmployerController extends Controller

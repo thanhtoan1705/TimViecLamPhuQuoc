@@ -44,15 +44,7 @@ class CandidateController extends Controller
     }
 
 
-    public function login()
-    {
-        return view('client.candidate.login');
-    }
 
-    public function register()
-    {
-        return view('client.candidate.register');
-    }
 
     public function saveJob()
     {

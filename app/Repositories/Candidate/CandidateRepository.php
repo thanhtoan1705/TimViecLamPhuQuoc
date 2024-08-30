@@ -13,6 +13,11 @@ class CandidateRepository implements CandidateInterface
         $this->candidate = $candidate;
     }
 
+    public function create(array $data)
+    {
+        return $this->candidate->create($data);
+    }
+
     public function getOneCandidate($id)
     {
         // Tìm ứng viên theo ID và lấy các mối quan hệ
@@ -26,4 +31,5 @@ class CandidateRepository implements CandidateInterface
 //            ->with('addresses.province', 'addresses.district', 'addresses.ward')
 //            ->paginate($paginate);
 //    }
+
 }

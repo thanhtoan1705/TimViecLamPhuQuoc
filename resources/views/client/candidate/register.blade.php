@@ -16,35 +16,54 @@
                                     Google</strong></button>
                             <div class="divider-text-center"><span>hoặc tiếp tục với</span></div>
                         </div>
-                        <form class="login-register text-start mt-20" action="#">
+                        <form class="login-register text-start mt-20" method="post" action="{{ route('client.candidate.register.post') }}">
+                            @csrf
                             <div class="form-group">
                                 <label class="form-label" for="input-1">Họ và tên *</label>
-                                <input class="form-control" id="input-1" type="text" required="" name="fullname">
+                                <input class="form-control" value="{{ old('name') }}" id="input-1" type="text"  name="name">
+                                @error('name')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="input-2">Email *</label>
-                                <input class="form-control" id="input-2" type="email" required="" name="emailaddress">
+                                <input class="form-control" value="{{ old('email') }}" id="input-2" type="email"  name="email">
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="input-4">Mật khẩu *</label>
-                                <input class="form-control" id="input-4" type="password" required="" name="password">
+                                <input class="form-control" value="{{ old('passwords') }}" id="input-4" type="password"  name="passwords">
+                                @error('passwords')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="input-5">Nhập lại mật khẩu *</label>
-                                <input class="form-control" id="input-5" type="password" required="" name="re-password">
+                                <input class="form-control" value="{{ old('confirm-password') }}" id="input-5" type="password"  name="confirm-password">
+                                @error('confirm-password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="login_footer form-group d-flex justify-content-between">
                                 <label class="cb-container">
-                                    <input type="checkbox"><span class="text-small">Đồng ý các điều khoản và chính sách của chúng
-                  tôi</span><span class="checkmark"></span>
+                                    <input type="checkbox" name="term">
+                                    <span class="text-small">Đồng ý các điều khoản và chính sách của chúngtôi</span>
+                                    <span class="checkmark"></span>
+                                    @error('term')
+                                    <br><span class="text-danger">{{ $message }}</span>
+                                    @enderror
 
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-brand-1 hover-up w-100" type="submit" name="register">Đăng ký
                                 </button>
                             </div>
-                            <div class="text-muted text-center">Đã có tài khoản <a href="">Đăng
-                                    nhập</a>
+                            <div class="text-muted text-center">Đã có tài khoản?
+                                <a href="{{ route('client.candidate.login') }}">
+                                    Đăng nhập
+                                </a>
                             </div>
                         </form>
                     </div>
