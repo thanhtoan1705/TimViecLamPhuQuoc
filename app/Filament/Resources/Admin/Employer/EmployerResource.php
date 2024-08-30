@@ -69,7 +69,7 @@ class EmployerResource extends Resource
                                             ->label('Email')
                                             ->required()
                                             ->email()
-                                            ->unique('users', 'user.email', ignoreRecord: true)
+//                                            ->unique('users', 'user.email', ignoreRecord: true)
                                             ->validationAttribute('email'),
 
                                         TextInput::make('user.phone')

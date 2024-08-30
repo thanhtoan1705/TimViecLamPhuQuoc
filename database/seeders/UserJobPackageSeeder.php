@@ -15,7 +15,7 @@ class UserJobPackageSeeder extends Seeder
     {
         DB::table('user_job_packages')->insert([
             [
-                'user_id' => 1,
+                'employer_id' => 1,
                 'packages_id' => 1,
                 'remaining_posts' => 10,
                 'expires_at' => Carbon::now()->addDays(30),
@@ -23,8 +23,8 @@ class UserJobPackageSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
             [
-                'user_id' => 2,
-                'packages_id' => 2,
+                'employer_id' => 1,
+                'packages_id' => 1,
                 'remaining_posts' => 5,
                 'expires_at' => Carbon::now()->addDays(15),
                 'created_at' => Carbon::now(),

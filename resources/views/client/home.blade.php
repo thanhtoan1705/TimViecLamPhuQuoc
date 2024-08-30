@@ -625,22 +625,32 @@
             <div class="container">
                 <div class="row mt-50">
                     @foreach($hotJobCategories as $hotJobCategory)
-                        <div class="col-xl-4 col-lg-4 col-md-7 col-sm-12 col-12">
-                            <div class="card-image-top hover-up"><a href='jobs-grid.html'>
-                                    <div class="image"
-                                         style="background-image: url('{{ asset('storage/' . $hotJobCategory->image) }}');">
+                        <div class="
+                                @if($loop->index == 0) col-xl-3 col-lg-3
+                                @elseif($loop->index == 1) col-xl-4 col-lg-4
+                                @elseif($loop->index == 2) col-xl-5 col-lg-5
+                                @elseif($loop->index == 3) col-xl-4 col-lg-4
+                                @elseif($loop->index == 4) col-xl-5 col-lg-5
+                                @else col-xl-3 col-lg-3
+                                @endif
+                                col-md-7 col-sm-12 col-12">
+                            <div class="card-image-top hover-up">
+                                <a href='jobs-grid.html'>
+                                    <div class="image" style="background-image: url('{{ asset('storage/' . $hotJobCategory->image) }}');">
                                         <span class="lbl-hot">Hot</span>
                                     </div>
                                 </a>
-                                <div class="informations"><a href='jobs-grid.html'>
-                                        <h5>{{$hotJobCategory->name}}</h5>
+                                <div class="informations">
+                                    <a href='jobs-grid.html'>
+                                        <h5>{{ $hotJobCategory->name }}</h5>
                                     </a>
                                     <div class="row">
-                                        <div class="col-lg-6 col-6"><span class="text-14 color-text-paragraph-2">{{$hotJobCategory->total_job_posts}}
-                                            vị trí ứng tuyển</span></div>
-                                        <div class="col-lg-6 col-6 text-end"><span
-                                                class="color-text-paragraph-2 text-14">{{$hotJobCategory->total_employers}}
-                                            công ty</span></div>
+                                        <div class="col-lg-6 col-6">
+                                            <span class="text-14 color-text-paragraph-2">{{ $hotJobCategory->total_job_posts }} vị trí ứng tuyển</span>
+                                        </div>
+                                        <div class="col-lg-6 col-6 text-end">
+                                            <span class="color-text-paragraph-2 text-14">{{ $hotJobCategory->total_employers }} công ty</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

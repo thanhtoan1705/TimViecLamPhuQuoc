@@ -28,7 +28,7 @@ class JobCategoryRepository implements JobCategoryInterface
 
     public function getAllJobCategories($limit = 10)
     {
-        return $jobCategories = $this->jobCategoryRepository
+        return $jobCategories = $this->jobCategory
             ->withCount('jobPosts')
             ->with(['jobPosts' => function($query) {
                 $query->select('id', 'title', 'job_category_id');

@@ -76,7 +76,6 @@ class CandidateResource extends Resource
                                         TextInput::make('user.email')
                                             ->required()
                                             ->email()
-                                            ->unique()
                                             ->maxLength(255)
                                             ->label('Email'),
 
