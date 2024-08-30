@@ -66,9 +66,11 @@ class EmployerResource extends Resource
                                             ->label('Tên nhà tuyển dụng'),
 
                                         TextInput::make('user.email')
+                                            ->label('Email')
                                             ->required()
                                             ->email()
-                                            ->label('Email'),
+                                            ->unique('users', 'user.email', ignoreRecord: true)
+                                            ->validationAttribute('email'),
 
                                         TextInput::make('user.phone')
                                             ->required()
@@ -78,12 +80,14 @@ class EmployerResource extends Resource
                                         TextInput::make('user.password')
                                             ->label('Mật khẩu')
                                             ->password()
-                                            ->dehydrated(fn($state) => filled($state))
-                                            ->required(fn(Page $livewire) => ($livewire instanceof CreateEmployer)),
+                                            ->required(fn(Page $livewire) => ($livewire instanceof CreateEmployer))
+                                            ->minLength(8),
 
                                         FileUpload::make('user.image')
-                                            ->label('Ảnh đại diện'),
+                                            ->label('Ảnh đại diện')
+                                            ->image(),
                                     ]),
+
                                 Section::make('Thông tin nhà tuyển dụng')
                                     ->schema([
                                         TextInput::make('company_name')
@@ -91,7 +95,7 @@ class EmployerResource extends Resource
                                             ->maxLength(255)
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(function (string $operation, $state, Set $set) {
-                                                if ($operation === 'create' || 'update') {
+                                                if ($operation === 'create' || $operation === 'update') {
                                                     $slug = Str::slug($state);
                                                     $set('slug', $slug);
                                                 }
@@ -113,18 +117,25 @@ class EmployerResource extends Resource
                                         Grid::make(2)
                                             ->schema([
                                                 DatePicker::make('since')
-                                                    ->label('Ngày thành lập'),
+                                                    ->label('Ngày thành lập')
+                                                    ->required()
+                                                    ->rules(['before:today'])
+                                                    ->validationAttribute('ngày thành lập')
+                                                    ->default(now()),
 
                                                 TextInput::make('tax_code')
-                                                    ->label('Mã số thuế'),
+                                                    ->label('Mã số thuế')
+                                                    ->maxLength(15),
 
                                                 TextInput::make('company_size')
-                                                    ->label('Số nhân viên'),
+                                                    ->label('Số nhân viên')
+                                                    ->numeric(),
 
                                                 TextInput::make('company_type')
                                                     ->label('Loại công ty'),
                                             ]),
                                     ]),
+
                                 Section::make('Thông tin địa chỉ')
                                     ->schema([
 
@@ -133,47 +144,44 @@ class EmployerResource extends Resource
                                             ->label('Nhập địa chỉ (nếu có)')
                                             ->schema([
 
-                                                // Province/City Selector
                                                 Select::make('province_id')
                                                     ->label('Tỉnh/Thành phố')
                                                     ->searchable()
                                                     ->options(Province::pluck('name', 'id')->toArray())
                                                     ->reactive()
+                                                    ->required()
                                                     ->afterStateUpdated(function (callable $set, $state) {
                                                         $districts = District::where('province_id', $state)->pluck('name', 'id')->toArray();
-                                                        $set('district_id', null); // Reset quận/huyện khi tỉnh thay đổi
-                                                        $set('ward_id', null); // Reset xã khi tỉnh thay đổi
+                                                        $set('district_id', null);
+                                                        $set('ward_id', null);
                                                         $set('district_options', $districts);
                                                     }),
 
-
-                                                // District Selector
                                                 Select::make('district_id')
                                                     ->label('Quận/Huyện')
                                                     ->searchable()
+                                                    ->required()
                                                     ->options(fn($get) => District::where('province_id', $get('province_id'))->pluck('name', 'id')->toArray())
                                                     ->reactive()
                                                     ->afterStateUpdated(function (callable $set, $state) {
                                                         $wards = Ward::where('district_id', $state)->pluck('name', 'id')->toArray();
-                                                        $set('ward_id', null); // Reset xã khi quận/huyện thay đổi
+                                                        $set('ward_id', null);
                                                         $set('ward_options', $wards);
                                                     }),
 
-                                                // Ward Selector
                                                 Select::make('ward_id')
                                                     ->label('Xã/Phường')
-                                                    ->searchable()
+//                                                    ->searchable()
+                                                    ->required()
                                                     ->relationship('ward', 'name')
                                                     ->options(fn($get) => Ward::where('district_id', $get('district_id'))->pluck('name', 'id')->toArray()),
 
                                                 TextInput::make('street')
                                                     ->label('Địa chỉ')
-                                                    ->nullable(),
+                                                    ->maxLength(255),
 
                                             ])->columns(1),
-
-
-                                    ])->columnSpanFull()
+                                    ])->columnSpanFull(),
                             ])
                             ->columnSpan(2),
 
@@ -184,14 +192,13 @@ class EmployerResource extends Resource
                                         FileUpload::make('company_logo')
                                             ->label('Logo công ty')
                                             ->image()
-                                            ->imageEditor()
                                             ->required()
                                             ->disk('public')
                                             ->directory('images/employer/logo'),
+
                                         FileUpload::make('company_photo_cover')
                                             ->label('Ảnh bìa công ty')
                                             ->image()
-                                            ->imageEditor()
                                             ->required()
                                             ->disk('public')
                                             ->directory('images/employer/banner'),
@@ -200,11 +207,17 @@ class EmployerResource extends Resource
                                 Section::make('Liên hệ')
                                     ->schema([
                                         TextInput::make('company_phone')
-                                            ->label('Số điện thoại công ty'),
+                                            ->label('Số điện thoại công ty')
+                                            ->required()
+                                            ->maxLength(20),
+
                                         TextInput::make('facebook_url')
-                                            ->label('Facebook'),
+                                            ->label('Facebook')
+                                            ->url(),
+
                                         TextInput::make('website_url')
-                                            ->label('Website'),
+                                            ->label('Website')
+                                            ->url(),
                                     ]),
 
                                 Section::make('Trạng thái')
@@ -229,6 +242,7 @@ class EmployerResource extends Resource
             ]);
     }
 
+
     public static function table(Table $table): Table
     {
         return $table
@@ -245,7 +259,10 @@ class EmployerResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

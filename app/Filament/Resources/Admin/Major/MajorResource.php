@@ -55,14 +55,24 @@ class MajorResource extends Resource
                                         ->required()
                                         ->maxLength(255)
                                         ->live(onBlur: true)
-                                        ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation
-                                        === 'create' ? $set('slug', Str::slug($state)) : null)
-                                        ->label('Tên chuyên ngành'),
+                                        ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' || $operation === 'update' ? $set('slug', Str::slug($state)) : null)
+                                        ->label('Tên chuyên ngành')
+                                        ->rules([
+                                            'regex:/^[a-zA-Z0-9\s]+$/u',
+                                            'unique:majors,name',
+                                        ])
+                                        ->validationAttribute('Tên chuyên ngành'),
+
                                     TextInput::make('slug')
                                         ->required()
                                         ->dehydrated()
-                                        ->unique(Major::class, 'slug', ignoreRecord: true)
-                                        ->maxLength(255),
+                                        ->maxLength(255)
+                                        ->rules([
+                                            'regex:/^[a-zA-Z0-9\-]+$/u',
+                                            'unique:majors,slug',
+                                        ])
+                                        ->validationAttribute('Slug'),
+
                                     Textarea::make('describe')
                                         ->label('Mô tả')
                                         ->placeholder('Nhập mô tả')
@@ -85,6 +95,7 @@ class MajorResource extends Resource
                     ]),
             ]);
     }
+
 
     public static function table(Table $table): Table
     {

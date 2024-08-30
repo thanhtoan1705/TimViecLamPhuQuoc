@@ -54,14 +54,26 @@ class ExperienceResource extends Resource
                                         ->required()
                                         ->maxLength(255)
                                         ->live(onBlur: true)
-                                        ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation
-                                        === 'create' ? $set('slug', Str::slug($state)) : null)
-                                        ->label('Tên kinh nghiệm'),
+                                        ->afterStateUpdated(function (string $operation, $state, Set $set) {
+                                            $slug = Str::slug($state);
+                                            if ($operation === 'create' || $operation === 'update') {
+                                                $set('slug', $slug);
+                                            }
+                                        })
+                                        ->label('Tên kinh nghiệm')
+                                        ->validationAttribute('tên kinh nghiệm')
+                                        ->rules(['regex:/^[a-zA-Z0-9\s]+$/u',
+                                            'unique:experiences,name']),
+
                                     TextInput::make('slug')
                                         ->required()
+                                        ->maxLength(255)
                                         ->dehydrated()
-                                        ->unique(Experience::class, 'slug', ignoreRecord: true)
-                                        ->maxLength(255),
+                                        ->label('Đường dẫn')
+                                        ->rules([
+                                            'regex:/^[a-zA-Z0-9\-]+$/u',
+                                            'unique:experiences,slug',
+                                        ]),
                                 ])
                         ])->columnSpan(2),
 
@@ -80,6 +92,7 @@ class ExperienceResource extends Resource
                     ]),
             ]);
     }
+
 
     public static function table(Table $table): Table
     {
