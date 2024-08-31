@@ -77,4 +77,9 @@ class JobPost extends Model
     {
         return $this->belongsToMany(Skill::class, 'job_post_skill');
     }
+
+    public function candidates()
+    {
+        return $this->belongsToMany(Candidate::class, 'saved_jobs', 'job_post_id', 'candidate_id');
+    }
 }

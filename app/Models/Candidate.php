@@ -73,4 +73,9 @@ class Candidate extends Model
     {
         return $this->hasMany(Interview::class);
     }
+
+    public function savedJobs()
+    {
+        return $this->belongsToMany(JobPost::class, 'saved_jobs', 'candidate_id', 'job_post_id');
+    }
 }

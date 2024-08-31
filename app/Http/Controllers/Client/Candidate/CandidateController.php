@@ -6,18 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Candidate\UpdatePasswordRequest;
 use App\Repositories\Candidate\CandidateRepository;
 use App\Repositories\Location\LocationInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CandidateController extends Controller
 {
-    protected $candidate;
+    protected $candidateRepository;
     protected $locationRepository;
 
-    public function __construct(CandidateRepository $candidate, LocationInterface $locationRepository)
+    public function __construct(CandidateRepository $candidateRepository, LocationInterface $locationRepository)
     {
-        $this->candidate = $candidate;
+        $this->candidateRepository = $candidateRepository;
         $this->locationRepository = $locationRepository;
     }
+
 
     public function index()
     {
@@ -26,7 +28,7 @@ class CandidateController extends Controller
 
     public function detail($id)
     {
-        $candidate = $this->candidate->getOneCandidate($id);
+        $candidate = $this->candidateRepository->getOneCandidate($id);
         $data = [
             'candidate' => $candidate
         ];
@@ -72,14 +74,26 @@ class CandidateController extends Controller
         return view("client.candidate.notification");
     }
 
-
-
-
-    public function saveJob()
+    public function viewSavedJobs()
     {
-        return view('client.candidate.saveJob');
+        $savedJobs = $this->candidateRepository->getSavedJobs();
+        return view('client.candidate.saveJob', compact('savedJobs'));
     }
 
+    public function saveJob(Request $request, $job_id)
+    {
+        if (!auth()->check()) {
+            return redirect()->back()->with('error', 'Bạn cần đăng nhập để lưu công việc.');
+        }
+
+        $isSaved = $this->candidateRepository->saveJob($job_id);
+
+        if (!$isSaved) {
+            return redirect()->back()->with('error', 'Công việc này đã được lưu rồi hoặc không tìm thấy ứng viên.');
+        }
+
+        return redirect()->back()->with('success', 'Công việc đã được lưu.');
+    }
 
     public function hot()
     {
@@ -95,7 +109,7 @@ class CandidateController extends Controller
     {
         $user = Auth::user();
 
-        $this->candidate->updatePassword($user, $request->input('new_password'));
+        $this->candidateRepository->updatePassword($user, $request->input('new_password'));
 
         flash()->success('Cập nhật mật khẩu thành công');
 

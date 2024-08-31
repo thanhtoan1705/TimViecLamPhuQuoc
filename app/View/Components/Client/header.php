@@ -13,7 +13,6 @@ class header extends Component
      */
     public function __construct()
     {
-        //
     }
 
     /**

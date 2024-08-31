@@ -4,6 +4,7 @@ namespace App\Repositories\Candidate;
 
 use App\Models\Candidate;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class CandidateRepository implements CandidateInterface
@@ -22,6 +23,7 @@ class CandidateRepository implements CandidateInterface
 
     public function getOneCandidate($id)
     {
+        // Tìm ứng viên theo ID và lấy các mối quan hệ
         return $this->candidate->where('status', 1)
             ->with(['addresses.province', 'addresses.district', 'addresses.ward',
             ])->findOrFail($id);
@@ -41,4 +43,35 @@ class CandidateRepository implements CandidateInterface
         $user->save();
     }
 
+    public function getCandidateByUser($userId)
+    {
+        return $this->candidate->where('user_id', $userId)->with('user', 'addresses.district', 'addresses.province', 'major')->first();
+    }
+
+    public function getSavedJobs()
+    {
+        $candidate = Auth::user()->candidate;
+
+        if (!$candidate) {
+            return collect(); // Trả về tập hợp rỗng nếu không tìm thấy ứng viên
+        }
+
+        return $candidate->savedJobs()->paginate(9);
+    }
+
+    public function saveJob($job_id)
+    {
+        $candidate = Auth::user()->candidate;
+
+        if (!$candidate) {
+            return false;
+        }
+
+        if ($candidate->savedJobs->contains($job_id)) {
+            return false;
+        }
+
+        $candidate->savedJobs()->attach($job_id);
+        return true;
+    }
 }

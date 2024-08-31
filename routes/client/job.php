@@ -10,7 +10,6 @@ Route::prefix('tin-tuyen-dung')
         Route::get('/', function () {
             return view('client.job.index');
         });
-
         Route::get('/chi-tiet/{employerSlug}/{jobSlug}', [JobController::class, 'single'])->name('single');
     });
 

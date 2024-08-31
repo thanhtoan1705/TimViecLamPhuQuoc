@@ -15,10 +15,18 @@
                         <h3>{{$job->title}}</h3>
                         <div class="mt-0 mb-15">
                             <span class="card-briefcase">{{$job->jobType->name}}</span>
-                            <span class="card-time"> {{ \Carbon\Carbon::parse($job->start_date)->diffForHumans() }}</span>
+                            <span
+                                class="card-time"> {{ \Carbon\Carbon::parse($job->start_date)->diffForHumans() }}</span>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 text-lg-end">
+                        <div class="btn">
+                            <form action="{{ route('client.candidate.saveJob', ['job_id' => $job->id]) }}"
+                                  method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-white border">Lưu lại</button>
+                            </form>
+                        </div>
                         <div class="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal"
                              data-bs-target="#ModalApplyJobForm">Ứng tuyển ngay
                         </div>
@@ -41,9 +49,9 @@
                                     <div class="sidebar-text-info ml-10"><span
                                             class="text-description industry-icon mb-10">Ngành nghề</span>
                                         <strong class="small-heading">
-                                        @foreach($job->majors as $key => $major)
-                                            {{ $major->name }}{{ $key != $job->majors->count() - 1 ? ' / ' : '' }}
-                                        @endforeach
+                                            @foreach($job->majors as $key => $major)
+                                                {{ $major->name }}{{ $key != $job->majors->count() - 1 ? ' / ' : '' }}
+                                            @endforeach
                                         </strong>
 
                                     </div>
@@ -69,7 +77,8 @@
                                             class="small-heading">@if($job->salary_min == $job->salary_max || $job->salary_min <= 1000000 || $job->salary_max <= 1000000)
                                                 {{ formatSalary($job->salary_min) }}
                                             @else
-                                                {{ formatSalary($job->salary_min) }} - {{ formatSalary($job->salary_max) }}
+                                                {{ formatSalary($job->salary_min) }}
+                                                - {{ formatSalary($job->salary_max) }}
                                             @endif</strong></div>
                                 </div>
                                 <div class="col-md-6 d-flex">
@@ -100,7 +109,8 @@
                                             alt="jobBox"></div>
                                     <div class="sidebar-text-info ml-10"><span
                                             class="text-description mb-10">Thời hạn ứng tuyển</span><strong
-                                            class="small-heading">{{ \Carbon\Carbon::parse($job->end_date)->format('d/m/Y') }}</strong></div>
+                                            class="small-heading">{{ \Carbon\Carbon::parse($job->end_date)->format('d/m/Y') }}</strong>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mt-25">
@@ -121,7 +131,8 @@
                                             alt="jobBox"></div>
                                     <div class="sidebar-text-info ml-10"><span
                                             class="text-description mb-10">Địa chỉ</span><strong
-                                            class="small-heading">{{$job->employer->address->province->name}}</strong></div>
+                                            class="small-heading">{{$job->employer->address->province->name}}</strong>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -130,8 +141,15 @@
                         </div>
                         <div class="single-apply-jobs">
                             <div class="row align-items-center">
-                                <div class="col-md-5"><a class="btn btn-default mr-15" href="#">Ứng tuyển</a><a
-                                        class="btn btn-border" href="#">Lưu công việc</a></div>
+                                <div class="col-md-5 d-flex justify-content-center align-content-center">
+                                    <button type="submit" class="btn btn-primary me-3">Ứng tuyển ngay</button>
+                                    <form action="{{ route('client.candidate.saveJob', ['job_id' => $job->id]) }}"
+                                          method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-white border">Lưu lại</button>
+                                    </form>
+
+                                </div>
                                 <div class="col-md-7 text-lg-end social-share">
                                     <h6 class="color-text-paragraph-2 d-inline-block d-baseline mr-10">Chia sẻ </h6><a
                                         class="mr-5 d-inline-block d-middle" href="#"><img alt="jobBox"
@@ -153,9 +171,11 @@
                                     <figure><img src="{{ asset('storage/' . $job->employer->company_logo) }}"
                                                  alt="jobBox" width="85px" height="85px">
                                     </figure>
-                                    <div class="sidebar-info"><span class="sidebar-company">{{$job->employer->company_name}}</span><span
+                                    <div class="sidebar-info"><span
+                                            class="sidebar-company">{{$job->employer->company_name}}</span><span
                                             class="card-location">Cần Thơ</span><a class="link-underline mt-15"
-                                                                                   href="#"> {{ $jobsCount }} ứng tuyển vào công ty</a>
+                                                                                   href="#"> {{ $jobsCount }} ứng tuyển
+                                            vào công ty</a>
                                     </div>
                                 </div>
                             </div>
@@ -179,7 +199,8 @@
                                             <div class="card-list-4 wow animate__animated animate__fadeIn hover-up">
                                                 <div class="image">
                                                     <a href="">
-                                                        <img src="{{ asset('assets/client/imgs/brands/brand-1.png') }}" alt="jobBox">
+                                                        <img src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
+                                                             alt="jobBox">
                                                     </a>
                                                 </div>
                                                 <div class="info-text">
@@ -189,8 +210,10 @@
                                                         </a>
                                                     </h5>
                                                     <div class="mt-0">
-                                                        <span class="card-briefcase">{{ $otherJob->jobType->name }}</span>
-                                                        <span class="card-time">{{ \Carbon\Carbon::parse($otherJob->start_date)->diffForHumans() }}</span>
+                                                        <span
+                                                            class="card-briefcase">{{ $otherJob->jobType->name }}</span>
+                                                        <span
+                                                            class="card-time">{{ \Carbon\Carbon::parse($otherJob->start_date)->diffForHumans() }}</span>
                                                     </div>
                                                     <div class="mt-5">
                                                         <div class="row">
@@ -198,7 +221,8 @@
                                                                 <h6 class="card-price">{{ formatSalary($otherJob->salary_min) }}</h6>
                                                             </div>
                                                             <div class="col-6 text-end">
-                                                                <span class="card-briefcase">{{ $otherJob->employer->address->province->name }}</span>
+                                                                <span
+                                                                    class="card-briefcase">{{ $otherJob->employer->address->province->name }}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -226,48 +250,54 @@
                         <div class="swiper-container swiper-group-4 swiper">
                             <div class="swiper-wrapper pb-10 pt-5">
                                 @foreach($relatedJobs as $relatedJob)
-                                            <div class="swiper-slide">
-                                                <div class="card-grid-2 hover-up">
-                                                    <div class="card-grid-2-image-left"><span class="flash"></span>
-                                                        <div class="image-box"><img
-                                                                src="{{ asset('storage/' . $relatedJob->employer->company_logo) }}"
-                                                                alt="jobBox" width="85px" height="85px">
-                                                        </div>
-                                                        <div class="right-info"><a class='name-job' href='company-details.html'>{{$relatedJob->employer->company_name}}</a><span class="location-small">Cần Thơ</span></div>
-                                                    </div>
-                                                    <div class="card-block-info">
-                                                        <h6><a href='{{ route('client.job.single', ['employerSlug' => $relatedJob->employer->slug, 'jobSlug' => $relatedJob->slug]) }}'>{{$relatedJob->title}}</a></h6>
-                                                        <div class="mt-5"><span class="card-briefcase">{{$relatedJob->jobType->name}}</span>
-                                                            <span class="card-time">
+                                    <div class="swiper-slide">
+                                        <div class="card-grid-2 hover-up">
+                                            <div class="card-grid-2-image-left"><span class="flash"></span>
+                                                <div class="image-box"><img
+                                                        src="{{ asset('storage/' . $relatedJob->employer->company_logo) }}"
+                                                        alt="jobBox" width="85px" height="85px">
+                                                </div>
+                                                <div class="right-info"><a class='name-job'
+                                                                           href='company-details.html'>{{$relatedJob->employer->company_name}}</a><span
+                                                        class="location-small">Cần Thơ</span></div>
+                                            </div>
+                                            <div class="card-block-info">
+                                                <h6>
+                                                    <a href='{{ route('client.job.single', ['employerSlug' => $relatedJob->employer->slug, 'jobSlug' => $relatedJob->slug]) }}'>{{$relatedJob->title}}</a>
+                                                </h6>
+                                                <div class="mt-5"><span
+                                                        class="card-briefcase">{{$relatedJob->jobType->name}}</span>
+                                                    <span class="card-time">
                                                                 {{ \Carbon\Carbon::parse($relatedJob->start_date)->diffForHumans() }}
                                                         </span>
-                                                        </div>
-                                                        <p class="font-sm color-text-paragraph mt-15"> {!! $relatedJob->description !!}</p>
-                                                        <div class="mt-30">
-                                                            @foreach($relatedJob->skills as $key => $skill)
-                                                                <a class='btn btn-grey-small mr-5'
-                                                                   href=''>{{ $skill->name }}</a>
-                                                            @endforeach
-                                                        </div>
-                                                        <div class="card-2-bottom mt-30">
-                                                            <div class="row">
-                                                                <div class="col-lg-7 col-7"><span
-                                                                        class="card-text-price">@if($relatedJob->salary_min == $relatedJob->salary_max || $relatedJob->salary_min <= 1000000 || $relatedJob->salary_max <= 1000000)
-                                                                            {{ formatSalary($relatedJob->salary_min) }}
-                                                                        @else
-                                                                            {{ formatSalary($relatedJob->salary_min) }} - {{ formatSalary($relatedJob->salary_max) }}
-                                                                        @endif</span></div>
-                                                                <div class="col-lg-5 col-5 text-end">
-                                                                    <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                                         data-bs-target="#ModalApplyJobForm">
-                                                                        ỨNG TUYỂN
-                                                                    </div>
-                                                                </div>
+                                                </div>
+                                                <p class="font-sm color-text-paragraph mt-15"> {!! $relatedJob->description !!}</p>
+                                                <div class="mt-30">
+                                                    @foreach($relatedJob->skills as $key => $skill)
+                                                        <a class='btn btn-grey-small mr-5'
+                                                           href=''>{{ $skill->name }}</a>
+                                                    @endforeach
+                                                </div>
+                                                <div class="card-2-bottom mt-30">
+                                                    <div class="row">
+                                                        <div class="col-lg-7 col-7"><span
+                                                                class="card-text-price">@if($relatedJob->salary_min == $relatedJob->salary_max || $relatedJob->salary_min <= 1000000 || $relatedJob->salary_max <= 1000000)
+                                                                    {{ formatSalary($relatedJob->salary_min) }}
+                                                                @else
+                                                                    {{ formatSalary($relatedJob->salary_min) }}
+                                                                    - {{ formatSalary($relatedJob->salary_max) }}
+                                                                @endif</span></div>
+                                                        <div class="col-lg-5 col-5 text-end">
+                                                            <div class="btn btn-apply-now" data-bs-toggle="modal"
+                                                                 data-bs-target="#ModalApplyJobForm">
+                                                                ỨNG TUYỂN
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
@@ -278,11 +308,7 @@
                 </div>
             </div>
         </section>
-
-        <!-- Component newsletter -->
         <x-client.newsletter/>
-        <!-- End component newsletter -->
-
     </main>
 @endsection
 @push('css')
@@ -334,7 +360,7 @@
                 popupAnchor: [0, -38]
             });
 
-            var marker = L.marker([lat, lon], { icon: customIcon }).addTo(map);
+            var marker = L.marker([lat, lon], {icon: customIcon}).addTo(map);
 
             var apiKey = '3497af00b0434dc0ac2c08b62bd21f3e';
             var apiUrl = `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&format=json&apiKey=${apiKey}`;
@@ -364,7 +390,7 @@
                     var container = L.DomUtil.create('div', 'custom-control');
                     container.innerHTML = 'Xem bản đồ lớn hơn';
 
-                    container.onclick = function(){
+                    container.onclick = function () {
                         // Chuyển hướng sang Google Maps với vị trí đã định
                         window.open(`https://www.google.com/maps?q=${lat},${lon}&z=18`, '_blank');
                     };

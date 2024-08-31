@@ -9,7 +9,8 @@ Route::prefix('/ung-vien')->name('candidate.')->group(function(){
     Route::get('/tuyen-dung-da-xem', [CandidateController::class, 'watched'])->name('watched');
     Route::get('/thong-bao', [CandidateController::class, 'notification'])->name('notification');
     Route::get('/quan-ly-cv', [CandidateController::class, 'index'])->name('cv.management');
-    Route::get('/viec-lam-da-luu', [CandidateController::class, 'saveJob'])->name('saveJob');
+    Route::get('/viec-lam-da-luu', [CandidateController::class, 'viewSavedJobs'])->name('viewSavedJobs');
+    Route::post('/save-job/{job_id}', [CandidateController::class, 'saveJob'])->name('saveJob');
     Route::get('/chi-tiet/{id}', [CandidateController::class, 'detail'])->name('detail');
 
     Route::get('/doi-mat-khau', [CandidateController::class, 'editPassword'])->name('change-password');

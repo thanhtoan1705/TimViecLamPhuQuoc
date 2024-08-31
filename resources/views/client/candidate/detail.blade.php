@@ -8,18 +8,18 @@
                         src="{{ asset('assets/client/imgs/page/candidates/img.png') }}" alt="jobbox">
                 </div>
                 <div class="box-company-profile">
-                    <div class="image-compay">
-                        @if(isset($candidate->image) && $candidate->user->image)
-                            <img alt="jobBox" width="50px" src="{{ asset('storage/' . $candidate->user->image) }}">
+                    {{--                    @dd($candidate->user->image)--}}
+                    <div class="image-compay" style="width: 100px;">
+                        @if(isset($candidate->avatar_url) && $candidate->user->avatar_url)
+                            <img alt="jobBox" width="10px" src="{{ asset('storage/' . $candidate->user->avatar_url) }}">
                         @else
-                            <img alt="jobBox" width="50px" src="{{ asset('path/to/default/image.png') }}">
+                            <img alt="jobBox" width="10px" src="{{ asset('storage/images/default.jpeg') }}">
                         @endif
                     </div>
                     <div class="row mt-10">
                         <div class="col-lg-8 col-md-12">
                             <h5>{{$candidate->user->name}}
                             </h5>
-{{--                            @dd($candidate->addresses)--}}
                             <p>
                                 @foreach ($candidate->addresses as $address)
                                     {{ $address->street }},

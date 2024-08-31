@@ -26,6 +26,20 @@ return new class extends Migration {
 
             $table->timestamps();
         });
+
+        Schema::create('saved_jobs', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('candidate_id')
+                ->constrained('candidates')
+                ->onDelete('cascade');
+
+            $table->foreignId('job_post_id')
+                ->constrained('job_posts')
+                ->onDelete('cascade');
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -33,6 +47,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        Schema::dropIfExists('saved_jobs');
         Schema::dropIfExists('job_post_packages');
     }
 };

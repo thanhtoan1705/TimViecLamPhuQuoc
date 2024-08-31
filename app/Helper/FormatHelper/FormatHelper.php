@@ -11,7 +11,7 @@ if (!function_exists('formatSalary')) {
         } elseif ($length == 7 || $length == 8) {
             return ($amount / 1000000) . ' triệu';
         } elseif ($length <= 6) {
-            return 'dưới 1 triệu';
+            return 'Dưới 1 triệu';
         }
 
         return $amount;
