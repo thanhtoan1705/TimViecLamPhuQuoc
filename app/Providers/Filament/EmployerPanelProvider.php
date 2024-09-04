@@ -7,6 +7,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -23,6 +24,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use App\Filament\Resources\Pages\RegistrationEmployer;
+use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 
 class EmployerPanelProvider extends PanelProvider
 {
@@ -35,6 +37,14 @@ class EmployerPanelProvider extends PanelProvider
             ->registration(RegistrationEmployer::class)
             ->colors([
                 'primary' => Color::Blue,
+            ])
+            ->navigationItems([
+                NavigationItem::make('Đăng tin tuyển dụng')
+                    ->group('Quản lý tin đăng')
+                    ->url(config('app.url') . '/panel/employer/employer/job-post/job-posts/create')
+                    ->sort(1)
+                    ->icon('heroicon-o-folder-plus'),
+
             ])
             ->discoverResources(in: app_path('Filament/Resources/Employer'), for: 'App\\Filament\\Resources\\Employer')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -71,15 +81,23 @@ class EmployerPanelProvider extends PanelProvider
             ->plugins([
                 FilamentEditProfilePlugin::make()
                     ->setIcon('heroicon-o-user')
-                    ->setTitle('Hồ sơ')
-                    ->setNavigationLabel('Hồ sơ')
+                    ->setTitle('Cập nhật hồ sơ')
+                    ->setNavigationLabel('Cập nhật hồ sơ')
+                    ->setNavigationGroup('Tài khoản')
                     ->shouldRegisterNavigation(true)
                     ->shouldShowDeleteAccountForm(false)
                     ->shouldShowAvatarForm(
                         value: true,
                         directory: 'avatars',
                         rules: 'mimes:jpeg,png|max:1024'
-                    )
+                    ),
+                FilamentFullCalendarPlugin::make()
+                    ->selectable()
+                    ->editable()
+                    ->config([
+                        'dayMaxEvents' => true,
+                        'moreLinkClick' => 'day'
+                    ])
             ]);
     }
 }

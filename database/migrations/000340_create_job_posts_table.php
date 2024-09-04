@@ -67,6 +67,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('job_post_id')->nullable()->constrained('job_posts')->onDelete('set null');
             $table->foreignId('major_id')->nullable()->constrained('majors')->onDelete('set null');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
 
