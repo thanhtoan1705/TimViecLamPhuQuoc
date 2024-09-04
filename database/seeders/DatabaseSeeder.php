@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             EmployerTableSeeder::class,
             BlogCategoryTableSeeder::class,
             BlogTableSeeder::class,
-            CommentTableSeeder::class,
+//            CommentTableSeeder::class,
             JobTypeTableSeeder::class,
             JobCategoryTableSeeder::class,
             RankTableSeeder::class,

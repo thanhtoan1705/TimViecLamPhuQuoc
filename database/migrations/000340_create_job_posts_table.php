@@ -53,6 +53,7 @@ return new class extends Migration
             $table->boolean('status')->default(0);
             $table->boolean('premium')->default(0);
             $table->string('address', 255)->nullable();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
 

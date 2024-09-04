@@ -13,7 +13,7 @@
             </div>
             <div class="row mt-10">
                 <div class="col-lg-8 col-md-12">
-                    z
+
                     <p class="mt-0 font-md color-text-paragraph-2 mb-15">{{$candidate->major->name}}</p>
                 </div>
                 <div class="col-lg-4 col-md-12 text-lg-end"><a
@@ -24,3 +24,5 @@
         <div class="border-bottom pt-10 pb-10"></div>
     </div>
 </section>
+
+
