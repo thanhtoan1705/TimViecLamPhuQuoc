@@ -3,7 +3,8 @@
         <div class="main-header">
             <div class="header-left">
                 <div class="header-logo"><a class='d-flex' href='index.html'><img alt="jobBox"
-                            src="{{ asset('assets/client//imgs/template/jobhub-logo.svg') }}"></a></div>
+                                                                                  src="{{ asset('assets/client/imgs/template/jobhub-logo.svg') }}"></a>
+                </div>
             </div>
             <div class="header-nav">
                 <nav class="nav-main-menu">

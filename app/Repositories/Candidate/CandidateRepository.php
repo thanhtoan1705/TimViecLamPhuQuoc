@@ -22,17 +22,18 @@ class CandidateRepository implements CandidateInterface
 
     public function getOneCandidate($id)
     {
-        // Tìm ứng viên theo ID và lấy các mối quan hệ
         return $this->candidate->where('status', 1)
             ->with(['addresses.province', 'addresses.district', 'addresses.ward',
             ])->findOrFail($id);
     }
 
-//    public function getEmployerByStatusPaginate(int $status, int $paginate) {
-//        return $this->employer->where('status', $status)
-//            ->with('addresses.province', 'addresses.district', 'addresses.ward')
-//            ->paginate($paginate);
-//    }
+    public function update($id, array $data)
+    {
+        $candidate = $this->candidate->findOrFail($id);
+        $candidate->update($data);
+        return $candidate;
+    }
+
 
     public function updatePassword(User $user, string $newPassword)
     {

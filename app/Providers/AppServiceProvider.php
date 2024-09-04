@@ -14,6 +14,8 @@ use App\Repositories\JobCategory\JobCategoryInterface;
 use App\Repositories\JobCategory\JobCategoryRepository;
 use App\Repositories\JobPost\JobPostInterface;
 use App\Repositories\JobPost\JobPostRepository;
+use App\Repositories\Location\LocationInterface;
+use App\Repositories\Location\LocationRepository;
 use App\Repositories\Post\PostInterface;
 use App\Repositories\Post\PostRepository;
 use App\Repositories\User\UserInterface;
@@ -35,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(JobPostInterface::class, JobPostRepository::class);
         $this->app->bind(JobCategoryInterface::class, JobCategoryRepository::class);
         $this->app->bind(PostInterface::class, PostRepository::class);
+        $this->app->bind(LocationInterface::class, LocationRepository::class);
     }
 
     /**
@@ -42,6 +45,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
     }
 }

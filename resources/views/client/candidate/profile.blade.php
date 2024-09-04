@@ -1,9 +1,41 @@
 @extends('client.layouts.master')
 @section('title', 'Hồ sơ của tôi')
 @section('content')
-
     <main class="main">
-        <x-client.cadidate-header></x-client.cadidate-header>
+        <section class="section-box-2">
+            <div class="container">
+                <div class="banner-hero banner-image-single"><img
+                        src="{{ asset('assets/client/imgs/page/candidates/img.png') }}"
+                        alt="jobbox"><a class="btn-editor" href="#"></a></div>
+                <div class="box-company-profile">
+                    <div class="image-compay">
+                        @if(isset($candidate->image) && $candidate->image)
+                            <img alt="jobBox" width="85px" height="85px"
+                                 src="{{ asset('storage/' . $candidate->image) }}">
+                        @else
+                            <img alt="jobBox" width="85px" height="85px"
+                                 src="{{ asset('assets/client/imgs/page/candidates/candidate-profile.png') }}">
+                        @endif
+                    </div>
+                    <div class="row mt-10">
+                        <div class="col-lg-8 col-md-12">
+                            <h5>{{$candidate->name}}</h5>
+                            {{--                            @dd($candidate->candidate->major->name)--}}
+                            {{--                            <p class="mt-0 font-md color-text-paragraph-2 mb-15">@if ($candidate->candidate->major)--}}
+                            {{--                                    <span>{{ $candidate->candidate->major->name }}</span>--}}
+                            {{--                                @else--}}
+                            {{--                                    <span>N/A</span>--}}
+                            {{--                                @endif</p>--}}
+                        </div>
+                        <div class="col-lg-4 col-md-12 text-lg-end"><a
+                                class='btn btn-download-icon btn-apply btn-apply-big'
+                                href=''>Tải xuống CV</a></div>
+                    </div>
+                </div>
+                <div class="border-bottom pt-10 pb-10"></div>
+            </div>
+        </section>
+
         <section class="section-box mt-50">
             <div class="container">
                 <div class="row">
@@ -27,105 +59,7 @@
                     <div class="col-lg-9 col-md-8 col-sm-12 col-12 mb-50">
                         <div class="content-single">
                             <div class="tab-content">
-                                <div class="tab-pane fade show active" id="tab-my-profile" role="tabpanel"
-                                     aria-labelledby="tab-my-profile">
-                                    <h3 class="mt-0 mb-15 color-brand-1">Tài khoản của tôi</h3><a
-                                        class="font-md color-text-paragraph-2" href="#">Cập nhật hồ sơ</a>
-                                    <div class="mt-35 mb-40 box-info-profie">
-                                        <div class="image-profile"><img
-                                                src="{{ asset('assets/client/imgs/page/candidates/candidate-profile.png') }}"
-                                                alt="jobbox"></div>
-                                        <a class="btn btn-apply">Cập nhật ảnh đại diện</a><a
-                                            class="btn btn-link">Xóa</a>
-                                    </div>
-                                    <div class="row form-contact">
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="form-group">
-                                                <label class="font-sm color-text-mutted mb-10">Tên đầy đủ *</label>
-                                                <input class="form-control" type="text" value="Steven Job">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="font-sm color-text-mutted mb-10">Email *</label>
-                                                <input class="form-control" type="text" value="stevenjob@gmail.com">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="font-sm color-text-mutted mb-10">Số điện thoại</label>
-                                                <input class="form-control" type="text" value="01 - 234 567 89">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="font-sm color-text-mutted mb-10">Tiểu sử</label>
-                                                <textarea class="form-control" rows="4">We are AliThemes , a creative and dedicated group of individuals who love web development almost as much as we love our customers. We are passionate team with the mission for achieving the perfection in web design.</textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="font-sm color-text-mutted mb-10">Website cá nhân</label>
-                                                <input class="form-control" type="url" value="https://alithemes.com/">
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label class="font-sm color-text-mutted mb-10">Tỉnh / Thành
-                                                            phố</label>
-                                                        <input class="form-control" type="text" value="United States">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <label class="font-sm color-text-mutted mb-10">Quận /
-                                                            Huyện</label>
-                                                        <input class="form-control" type="text" value="New York">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="form-group">
-                                                        <label class="font-sm color-text-mutted mb-10">Đại chỉ</label>
-                                                        <input class="form-control" type="text" value="Mcallen">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="border-bottom pt-10 pb-10 mb-30"></div>
-                                            <div class="box-agree mt-30">
-                                                <label class="lbl-agree font-xs color-text-paragraph-2">
-                                                    <input class="lbl-checkbox" type="checkbox" value="1">Đồng ý với
-                                                    điều khoản
-                                                </label>
-                                            </div>
-                                            <div class="box-button mt-15">
-                                                <button class="btn btn-apply-big font-md font-bold">Lưu tất cả thay
-                                                    đổi
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-md-12">
-                                            <div class="box-skills">
-                                                <h5 class="mt-0 color-brand-1">Kỹ năng</h5>
-                                                <div class="form-contact">
-                                                    <div class="form-group">
-                                                        <input class="form-control search-icon" type="text" value=""
-                                                               placeholder="E.g. Angular, Laravel...">
-                                                    </div>
-                                                </div>
-                                                <div class="box-tags mt-30"><a
-                                                        class="btn btn-grey-small mr-10">Figma<span
-                                                            class="close-icon"></span></a><a
-                                                        class="btn btn-grey-small mr-10">Adobe XD<span
-                                                            class="close-icon"></span></a><a
-                                                        class="btn btn-grey-small mr-10">NextJS<span
-                                                            class="close-icon"></span></a><a
-                                                        class="btn btn-grey-small mr-10">React<span
-                                                            class="close-icon"></span></a><a
-                                                        class="btn btn-grey-small mr-10">App<span
-                                                            class="close-icon"></span></a><a
-                                                        class="btn btn-grey-small mr-10">Digital<span
-                                                            class="close-icon"></span></a><a
-                                                        class="btn btn-grey-small mr-10">NodeJS<span
-                                                            class="close-icon"></span></a></div>
-                                                <div class="mt-40"><span
-                                                        class="card-info font-sm color-text-paragraph-2">Bạn có thể thêm đến 15 kỹ năng</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @livewire('client.candidate.profile')
                             </div>
                         </div>
                     </div>
@@ -158,3 +92,6 @@
     </main>
 
 @endsection
+@push('script')
+
+@endpush

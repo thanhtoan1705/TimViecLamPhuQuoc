@@ -39,11 +39,6 @@ return new class extends Migration
                 ->constrained('education')
                 ->onDelete('set null');
 
-//            $table->foreignId('skill_id')
-//                ->nullable()
-//                ->constrained('skills')
-//                ->onDelete('set null');
-
             $table->foreignId('degree_id')
                 ->nullable()
                 ->constrained('degrees')

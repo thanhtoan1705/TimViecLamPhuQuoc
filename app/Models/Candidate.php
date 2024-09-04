@@ -64,6 +64,11 @@ class Candidate extends Model
         return $this->hasMany(Address::class, 'id');
     }
 
+    public function address()
+    {
+        return $this->belongsTo(Address::class, 'address_id', 'id');
+    }
+
     public function interviews()
     {
         return $this->hasMany(Interview::class);

@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Admin\JobPost;
 
-use App\Filament\Resources\Admin\JobPost\JobPostResource\Pages;
 use App\Filament\Resources\Admin\JobPost\JobPostResource\RelationManagers;
 use App\Models\JobPost;
 use Filament\Forms;
@@ -54,13 +53,10 @@ class JobPostResource extends Resource
                                 Forms\Components\RichEditor::make('description')
                                     ->label('Mô tả công việc')->placeholder('Vui lòng nhập mô tả công việc'),
                                 Forms\Components\Select::make('major_id')
-                                    ->multiple()
                                     ->required()
                                     ->relationship('majors', 'name')
                                     ->placeholder('Vui lòng chọn tên chuyên ngành')
-                                    ->label('Tên chuyên ngành')
-                                    ->searchable()
-                                    ->preload(),
+                                    ->label('Tên chuyên ngành'),
                                 Forms\Components\Select::make('employer_id')
                                     ->required()
                                     ->relationship('employer', 'company_name')

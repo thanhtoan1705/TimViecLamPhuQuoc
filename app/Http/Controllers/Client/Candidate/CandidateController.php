@@ -3,17 +3,20 @@
 namespace App\Http\Controllers\Client\Candidate;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\Candidate\CandidateRepository;
 use App\Http\Requests\Client\Candidate\UpdatePasswordRequest;
+use App\Repositories\Candidate\CandidateRepository;
+use App\Repositories\Location\LocationInterface;
 use Illuminate\Support\Facades\Auth;
 
 class CandidateController extends Controller
 {
     protected $candidate;
+    protected $locationRepository;
 
-    public function __construct(CandidateRepository $candidate)
+    public function __construct(CandidateRepository $candidate, LocationInterface $locationRepository)
     {
         $this->candidate = $candidate;
+        $this->locationRepository = $locationRepository;
     }
 
     public function index()
@@ -32,7 +35,31 @@ class CandidateController extends Controller
 
     public function profile()
     {
-        return view("client.candidate.profile");
+        $candidate = auth()->user();
+        $locations = $this->locationRepository->getAllLocations();
+        $candidateLocation = $this->locationRepository->getCandidateLocation($candidate);
+
+        $data = [
+            'candidate' => $candidate,
+            'locations' => $locations,
+            'candidateLocation' => $candidateLocation
+        ];
+
+        return view("client.candidate.profile", $data);
+    }
+
+    // API để lấy huyện theo tỉnh
+    public function getDistricts($provinceId)
+    {
+        $districts = $this->locationRepository->getDistrictsByProvince($provinceId);
+        return response()->json($districts);
+    }
+
+    // API để lấy xã/phường theo huyện
+    public function getWards($districtId)
+    {
+        $wards = $this->locationRepository->getWardsByDistrict($districtId);
+        return response()->json($wards);
     }
 
     public function watched()
@@ -75,4 +102,15 @@ class CandidateController extends Controller
         return redirect()->back();
     }
 
+
+    public function header()
+    {
+        $candidate = auth()->user();
+
+        $data = [
+            'candidate' => $candidate,
+        ];
+
+        return view('your-view-name', $data);
+    }
 }
