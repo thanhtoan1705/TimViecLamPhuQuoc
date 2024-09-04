@@ -468,7 +468,13 @@
                                                     <div class="card-2-bottom mt-30">
                                                         <div class="row">
                                                             {{--                                                            card-text-price--}}
-                                                            <div class="col-lg-7 col-7"><span class=" text-sm">{{ $post->salary_min }}-{{ $post->salary_max }}</span><span
+                                                            <div class="col-lg-7 col-7"><span class=" text-sm">
+                                                                    @if($post->salary_min == $post->salary_max || $post->salary_min <= 1000000 || $post->salary_max <= 1000000)
+                                                                        {{ formatSalary($post->salary_min) }}
+                                                                    @else
+                                                                        {{ formatSalary($post->salary_min) }} - {{ formatSalary($post->salary_max) }}
+                                                                    @endif
+                                                                </span><span
                                                                     class="text-muted">/Giờ</span></div>
                                                             <div class="col-lg-5 col-5 text-end">
                                                                 <div class="btn btn-apply-now" data-bs-toggle="modal"
