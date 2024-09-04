@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use App\Traits\HasUserAvatar;
 
 class User extends Authenticatable implements HasAvatar
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasUserAvatar;
 
     /**
      * The attributes that are mass assignable.
@@ -92,5 +93,10 @@ class User extends Authenticatable implements HasAvatar
     public function blogs()
     {
         return $this->hasMany(Blog::class, 'user_id');
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(CommentLike::class);
     }
 }

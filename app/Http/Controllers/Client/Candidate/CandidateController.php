@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Client\Candidate;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Candidate\CandidateRepository;
+use App\Http\Requests\Client\Candidate\UpdatePasswordRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CandidateController extends Controller
 {
@@ -56,4 +58,21 @@ class CandidateController extends Controller
     {
         return view("client.candidate.hot");
     }
+
+    public function editPassword()
+    {
+        return view('client.candidate.change_password');
+    }
+
+    public function updatePassword(UpdatePasswordRequest $request)
+    {
+        $user = Auth::user();
+
+        $this->candidate->updatePassword($user, $request->input('new_password'));
+
+        flash()->success('Cập nhật mật khẩu thành công');
+
+        return redirect()->back();
+    }
+
 }

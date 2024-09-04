@@ -3,6 +3,8 @@
 namespace App\Repositories\Candidate;
 
 use App\Models\Candidate;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class CandidateRepository implements CandidateInterface
 {
@@ -31,5 +33,11 @@ class CandidateRepository implements CandidateInterface
 //            ->with('addresses.province', 'addresses.district', 'addresses.ward')
 //            ->paginate($paginate);
 //    }
+
+    public function updatePassword(User $user, string $newPassword)
+    {
+        $user->password = Hash::make($newPassword);
+        $user->save();
+    }
 
 }
