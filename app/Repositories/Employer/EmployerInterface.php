@@ -16,4 +16,10 @@ interface EmployerInterface
 
     public function searchCandidates(array $filters, $sortOrder = 'newest');
 
+    public function getSavedCandidatesByEmployer($employerId, $sortOrder = 'newest');
+
+    public function saveCandidate($employerId, $candidateId);
+
+    public function unsaveCandidate($employerId, $candidateId);
+
 }

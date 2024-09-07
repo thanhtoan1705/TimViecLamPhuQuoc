@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Client\Job;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Job\JobInterface;
-
+use Illuminate\Http\Request;
 class JobController extends Controller
 {
     protected $jobRepository;
@@ -32,5 +32,20 @@ class JobController extends Controller
 
         return view('client.job.single', $data);
     }
+
+    public function applyForJob(Request $request, $jobId)
+    {
+        $request->validate([
+            'resume' => 'required|file|max:5120',
+            'description' => 'required|string|max:1000',
+        ]);
+
+
+        $filePath = $request->file('resume')->store('resumes', 'public');
+        $this->jobRepository->applyForJob($jobId, auth()->id(), $filePath, $request->input('description'));
+        flash('success', 'Đã nộp đơn thành công.');
+        return redirect()->back();
+    }
+
 
 }

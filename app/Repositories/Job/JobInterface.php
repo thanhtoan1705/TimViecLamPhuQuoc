@@ -13,5 +13,8 @@ interface JobInterface
 
     public function findJobsByMajor(int $majorId, int $excludeJobId);
 
+    public function applyForJob($jobPostId, $candidateId, $file, $description);
+
+
 }
 

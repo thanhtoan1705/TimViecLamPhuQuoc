@@ -5,6 +5,7 @@ namespace App\Repositories\Job;
 use App\Models\Employer;
 use App\Models\JobPost;
 use App\Repositories\Job\JobInterface;
+use Illuminate\Support\Facades\DB;
 
 class JobRepository implements JobInterface
 {
@@ -52,9 +53,15 @@ class JobRepository implements JobInterface
         return $jobs;
     }
 
-
-
-
-
-
+    public function applyForJob($jobPostId, $candidateId, $file, $description)
+    {
+        return DB::table('job_post_candidates')->insert([
+            'job_post_id' => $jobPostId,
+            'candidate_id' => $candidateId,
+            'file' => $file,
+            'description' => $description,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
 }

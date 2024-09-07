@@ -4,17 +4,16 @@
             {{ $this->form }}
         </div>
         <div class="candidate-grid">
-            @foreach($candidates as $candidate)
-                <div class="candidate-card">
-                    <i class="fa-solid fa-phone"></i>
+            @foreach($savedCandidates as $candidate)
+                <div class="candidate-card"><i class="fa-solid fa-user"></i>
                     <div class="card-content">
-                        <img src="{{ asset('storage/' . $candidate->user->image) }}"
-                             alt="{{ $candidate->user->name }}" class="candidate-avatar">
+                        <img src="{{ asset('storage/' . $candidate->candidate->user->image) }}"
+                             alt="{{ $candidate->candidate->user->name }}" class="candidate-avatar">
                         <div class="candidate-info">
-                            <h3 class="candidate-name">{{ $candidate->user->name }}</h3>
+                            <h3 class="candidate-name">{{ $candidate->candidate->user->name }}</h3>
                             <span class="candidate-major">
-                                    @if ($candidate->major)
-                                    <span>{{ $candidate->major->name }}</span>
+                                    @if ($candidate->candidate->major->name)
+                                    <span>{{ $candidate->candidate->major->name }}</span>
                                 @else
                                     <span>N/A</span>
                                 @endif
@@ -22,28 +21,29 @@
                         </div>
                     </div>
                     <div>
-                        <p class="candidate-description">{{ $candidate->description }}</p>
+                        <p class="candidate-description">{{ $candidate->candidate->description }}</p>
                     </div>
                     <div class="candidate-details">
                         <div class="skills">
-                            @foreach($candidate->skills->take(4) as $skill)
+                            @foreach($candidate->candidate->skills->take(4) as $skill)
                                 <span class="skill-tag">{{ $skill->name }}</span>
                             @endforeach
                         </div>
                         <div class="location-price">
-                                <span class="location">
-                                    <i class="fas fa-info-circle"></i>
-                                    @if ($candidate->address)
-                                        {{ $candidate->address->province->name }}
-                                    @else
-                                        N/A
-                                    @endif
-                                </span>
-                            <span class="price">{{ number_format($candidate->salary) }} VNĐ</span>
+                            <span class="location">
+                                <i class="fas fa-info-circle"></i>
+                                @if ($candidate->candidate->address)
+                                    {{ $candidate->candidate->address->province->name }}
+                                @else
+                                    N/A
+                                @endif
+                            </span>
+                            <span class="price">{{ number_format($candidate->candidate->salary) }} VNĐ</span>
                         </div>
-                        <button wire:click="saveCandidate({{ $candidate->id }})" class="save-button">
+
+                        <button wire:click="unsaveCandidate({{ $candidate->candidate->id }})" class="button-un-save">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                             </svg>
                         </button>
                     </div>
@@ -158,7 +158,7 @@
             color: #333;
         }
 
-        .save-button {
+        .button-un-save {
             position: absolute;
             top: 16px;
             right: 16px;
@@ -176,14 +176,14 @@
             justify-content: center;
         }
 
-        .save-button svg {
+        .button-un-save svg {
             width: 16px;
             height: 18px;
         }
 
-        .save-button:hover {
+        .button-un-save:hover {
             background-color: #3358c5;
         }
-
     </style>
+
 </x-filament-panels::page>

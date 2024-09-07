@@ -2,31 +2,9 @@
     @livewireStyles
     <div class="content-wrapper">
         <div class="filter-container">
-            <!-- Tìm kiếm -->
-            <input type="text" wire:model.debounce.300ms="filters.search" placeholder="Tìm kiếm theo tên..."/>
-
-            <!-- Lọc theo chuyên ngành -->
-            <select wire:model="filters.major">
-                <option value="">Chọn chuyên ngành</option>
-                @foreach ($filters['majors'] as $major)
-                    <option value="{{ $major->id }}">{{ $major->name }}</option>
-                @endforeach
-            </select>
-
-            <!-- Lọc theo kỹ năng -->
-            <select wire:model="filters.skills" multiple>
-                @foreach ($filters['skills'] as $skill)
-                    <option value="{{ $skill->id }}">{{ $skill->name }}</option>
-                @endforeach
-            </select>
-
-            <!-- Lọc theo kinh nghiệm -->
-            <select wire:model="filters.experience">
-                <option value="">Chọn kinh nghiệm</option>
-                @foreach ($filters['experiences'] as $experience)
-                    <option value="{{ $experience->id }}">{{ $experience->experience }} năm</option>
-                @endforeach
-            </select>
+            <div class="filter-container">
+                <input type="text" wire:model="filters.search" placeholder="Nhập tên ứng viên hoặc chuyên ngành">
+            </div>
         </div>
 
         <div class="candidate-grid">

@@ -308,11 +308,147 @@
                 </div>
             </div>
         </section>
+        @if(auth()->check())
+        <div class="modal fade" id="ModalApplyJobForm" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content apply-job-form">
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body pl-30 pr-30 pt-50">
+                        <div class="text-center">
+                            <p class="font-sm text-brand-2">Nộp Hồ Sơ</p>
+                            <h2 class="mt-10 mb-5 text-brand-1 text-capitalize">Bắt đầu sự nghiệp của bạn ngay hôm nay</h2>
+                            <p class="font-sm text-muted mb-30">Vui lòng điền thông tin của bạn và gửi cho nhà tuyển dụng.
+                            </p>
+                        </div>
+                        <form class="login-register text-start mt-20 pb-30" action="{{ route('client.job.apply', $job->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <label class="form-label" for="file-upload" style="display: block;">
+{{--                                    <i class="fa-solid fa-upload"></i>--}}
+                                    <span>Tải lên CV từ máy tính, chọn hoặc kéo thả</span>
+                                </label>
+                                <input class="form-control" id="file-upload" name="resume" type="file" accept=".pdf,.doc,.docx" required style="display: none;">
+                                <div class="text-muted text-center">Hỗ trợ định dạng .doc, .docx, pdf có kích thước dưới 5MB.</div>
+                                <div class="text-center mt-2">
+                                    <button type="button" class="btn btn-default text-" onclick="document.getElementById('file-upload').click()">Chọn CV</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="des" class="form-label">Giới thiệu ngắn</label>
+                                <textarea id="des" name="description" class="form-control" placeholder="Giới thiệu ngắn của bạn..." rows="5" required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-default hover-up w-100" type="submit" name="login">Ứng Tuyển</button>
+                            </div>
+                        </form>
+
+                    </div>
+            </div>
+        </div>
+        @else
+            <div class="modal fade" id="ModalLoginForm" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content login-form">
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="modal-body pl-30 pr-30 pt-50">
+                            <div class="text-center">
+                                <p class="font-sm text-brand-2">Login Required</p>
+                                <h2 class="mt-10 mb-5 text-brand-1 text-capitalize">Please login to apply</h2>
+                            </div>
+                            <form class="login-register text-start mt-20 pb-30" action="" method="POST">
+                                @csrf
+                                <div class="form-group">
+                                    <label class="form-label" for="email">Email</label>
+                                    <input class="form-control" id="email" name="email" type="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="password">Password</label>
+                                    <input class="form-control" id="password" name="password" type="password" required>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-default hover-up w-100" type="submit" name="login">Login</button>
+                                </div>
+                                <div class="text-muted text-center">Don't have an account? <a href="">Register</a></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         <x-client.newsletter/>
     </main>
 @endsection
 @push('css')
     <style>
+        /* File Upload Button */
+        input[type="file"] {
+            display: none;
+        }
+
+        .btn-default {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+
+        /* Label for File Upload */
+        label[for="file-upload"] {
+            display: block;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+            cursor: pointer;
+            text-align: center;
+            border: 2px dashed #007bff;
+            padding: 20px;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        label[for="file-upload"]:hover {
+            background-color: #eef7ff;
+            border-color: #0056b3;
+        }
+
+        textarea#des:focus {
+            border-color: #0056b3;
+            outline: none;
+        }
+
+        /* Small Help Text */
+        small.text-muted {
+            font-size: 12px;
+            color: #666;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            label[for="file-upload"] {
+                padding: 15px;
+                font-size: 16px;
+            }
+
+            .btn-default, button[type="submit"] {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+        }
+
+
         .custom-control {
             background-color: white;
             border-radius: 4px;

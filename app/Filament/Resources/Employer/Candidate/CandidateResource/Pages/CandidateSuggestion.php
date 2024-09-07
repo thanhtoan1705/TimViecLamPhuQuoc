@@ -49,4 +49,19 @@ class CandidateSuggestion extends Page
             ->getSuggestedCandidatesByEmployer($employerId, $this->sortOrder);
     }
 
+    public function saveCandidate($candidateId)
+    {
+        $employerId = Auth::user()->employer->id;
+
+        $isSaved = app(EmployerInterface::class)->saveCandidate($employerId, $candidateId);
+
+        if ($isSaved) {
+            flash('message', 'Ứng viên đã được lưu.');
+        } else {
+            flash('error', 'Ứng viên đã được lưu trước đó.');
+        }
+    }
+
+
+
 }

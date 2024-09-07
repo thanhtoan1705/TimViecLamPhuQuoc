@@ -53,7 +53,7 @@ class CandidateRepository implements CandidateInterface
         $candidate = Auth::user()->candidate;
 
         if (!$candidate) {
-            return collect(); // Trả về tập hợp rỗng nếu không tìm thấy ứng viên
+            return collect();
         }
 
         return $candidate->savedJobs()->paginate(9);

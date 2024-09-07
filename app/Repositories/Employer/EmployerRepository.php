@@ -5,6 +5,8 @@ namespace App\Repositories\Employer;
 use App\Models\Candidate;
 use App\Models\Employer;
 use App\Models\JobPost;
+use App\Models\SaveCandidate;
+use Illuminate\Support\Facades\Auth;
 
 class EmployerRepository implements EmployerInterface
 {
@@ -77,34 +79,21 @@ class EmployerRepository implements EmployerInterface
 
     public function searchCandidates(array $filters, $sortOrder = 'newest')
     {
-        $query = Candidate::with(['user', 'skills', 'major', 'address']);
+        $query = Candidate::with(['user', 'major', 'address']);
 
+        // Lọc theo tên hoặc chuyên ngành
         if (isset($filters['search']) && !empty($filters['search'])) {
-            $query->whereHas('user', function ($q) use ($filters) {
-                $q->where('name', 'like', '%' . $filters['search'] . '%');
+            $searchTerm = '%' . $filters['search'] . '%'; // Chuẩn bị điều kiện like
+
+            // Tìm kiếm theo tên người dùng hoặc chuyên ngành
+            $query->whereHas('user', function ($q) use ($searchTerm) {
+                $q->where('name', 'like', $searchTerm);
+            })->orWhereHas('major', function ($q) use ($searchTerm) {
+                $q->where('name', 'like', $searchTerm);
             });
         }
 
-        if (isset($filters['major']) && !empty($filters['major'])) {
-            $query->where('major_id', $filters['major']);
-        }
-
-        if (isset($filters['skills']) && is_array($filters['skills'])) {
-            $query->whereHas('skills', function ($q) use ($filters) {
-                $q->whereIn('id', $filters['skills']);
-            });
-        }
-
-        if (isset($filters['experience']) && !empty($filters['experience'])) {
-            [$minExp, $maxExp] = explode('-', $filters['experience']);
-            $query->whereBetween('experience', [(int)$minExp, (int)($maxExp === '+' ? 100 : $maxExp)]);
-        }
-
-        if (isset($filters['salary']) && !empty($filters['salary'])) {
-            [$salaryMin, $salaryMax] = explode('-', $filters['salary']);
-            $query->whereBetween('salary', [(int)$salaryMin, (int)$salaryMax]);
-        }
-
+        // Sắp xếp theo thứ tự
         if ($sortOrder === 'oldest') {
             $query->orderBy('created_at', 'asc');
         } else {
@@ -113,4 +102,45 @@ class EmployerRepository implements EmployerInterface
 
         return $query->get();
     }
+
+
+    public function getSavedCandidatesByEmployer($employerId, $sortOrder = 'newest')
+    {
+        $query = SaveCandidate::where('employer_id', $employerId);
+
+        if ($sortOrder === 'newest') {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->orderBy('created_at', 'asc');
+        }
+
+        return $query->get();
+    }
+
+    public function unsaveCandidate($employerId, $candidateId)
+    {
+        return SaveCandidate::where('employer_id', $employerId)
+            ->where('candidate_id', $candidateId)
+            ->delete();
+    }
+
+    public function saveCandidate($employerId, $candidateId)
+    {
+        $existingSave = SaveCandidate::where('employer_id', $employerId)
+            ->where('candidate_id', $candidateId)
+            ->first();
+
+        if (!$existingSave) {
+            SaveCandidate::create([
+                'employer_id' => $employerId,
+                'candidate_id' => $candidateId,
+            ]);
+
+            return true;
+        }
+
+        return false;
+    }
+
+
 }
