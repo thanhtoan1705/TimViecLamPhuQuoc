@@ -20,14 +20,6 @@ class BuyServicesResource extends Resource
     {
         return $table
             ->columns([
-//                Tables\Columns\TextColumn::make('id')->label('Mã Gói'),
-//                Tables\Columns\TextColumn::make('title')->label('Tên Gói'),
-//                Tables\Columns\TextColumn::make('period')->label('Ngày sử dụng'),
-//                Tables\Columns\TextColumn::make('limit_job_post')->label('Giới hạn'),
-//                Tables\Columns\TextColumn::make('quantity')->label('số lượng'),
-//                Tables\Columns\TextColumn::make('descriptions')->label('mô tả'),
-//                Tables\Columns\TextColumn::make('price')->label('Giá'),
-//                Tables\Columns\TextColumn::make('created_at')->label('Ngày Tạo')->date(),
             ])
             ->filters([
             ])

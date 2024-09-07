@@ -30,7 +30,8 @@
         },
 
         "files": [
-            "app/Helper/FormatHelper/FormatHelper.php"
+            "app/Helper/FormatHelper/FormatHelper.php",
+            "app/Helper/PromotionHelper/PromotionHelper.php"
         ]
     },
     "autoload-dev": {

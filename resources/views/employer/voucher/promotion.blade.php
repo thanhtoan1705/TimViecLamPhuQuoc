@@ -213,8 +213,6 @@
                                                  aria-labelledby="pills-expired-tab">
                                                 <div class="card mb-3">
                                                     <div class="card-body">
-
-
                                                         <div class="text-center mt-4">
                                                             <img
                                                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4MTN2bQzCBeBpWdpYUrMHeuQsx3NA7kyMTw&s"
@@ -246,85 +244,85 @@
                 </div>
             </div>
         </div>
+    </div>
+@endsection
 
-        @endsection
+@push('css')
+    <style>
+        .vertical-tab {
+            height: 100%;
+            width: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+        }
 
-        @push('css')
-            <style>
-                .vertical-tab {
-                    height: 100%;
-                    width: 70px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    position: absolute;
-                    left: 0;
-                }
+        .vertical-tab span {
+            transform: rotate(-90deg);
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
 
-                .vertical-tab span {
-                    transform: rotate(-90deg);
-                    color: white;
-                    font-weight: bold;
-                    font-size: 16px;
-                }
+        .vertical-tab span::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            left: calc(50% - 10px);
+            top: -90%;
+            transform: translateY(-50%);
+        }
 
-                .vertical-tab span::before {
-                    content: '';
-                    position: absolute;
-                    width: 20px;
-                    height: 20px;
-                    background-color: white;
-                    border-radius: 50%;
-                    left: calc(50% - 10px);
-                    top: -90%;
-                    transform: translateY(-50%);
-                }
+        .card {
+            position: relative;
+            padding-left: 70px;
+        }
 
-                .card {
-                    position: relative;
-                    padding-left: 70px;
-                }
+        .nav-pills .nav-link.active {
+            background-color: #3C65F5;
+            color: white;
+        }
 
-                .nav-pills .nav-link.active {
-                    background-color: #3C65F5;
-                    color: white;
-                }
+        ul.nav {
+            display: flex !important;
+            flex-wrap: wrap;
+        }
+    </style>
+@endpush
 
-                ul.nav {
-                    display: flex !important;
-                    flex-wrap: wrap;
-                }
-            </style>
-        @endpush
+@push('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabButtons = document.querySelectorAll('.navtest button');
+            const tabContents = document.querySelectorAll('.tab-pane');
 
-        @push('script')
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    const tabButtons = document.querySelectorAll('.navtest button');
-                    const tabContents = document.querySelectorAll('.tab-pane');
-
-                    tabButtons.forEach(button => {
-                        button.addEventListener('click', function () {
-                            // Remove active class from all buttons
-                            tabButtons.forEach(btn => {
-                                btn.classList.remove('active');
-                                btn.classList.add('text-dark');
-                            });
-
-                            // Add active class to the clicked button
-                            this.classList.add('active');
-                            this.classList.remove('text-dark');
-
-                            // Hide all tab contents
-                            tabContents.forEach(content => {
-                                content.classList.remove('show', 'active');
-                            });
-
-                            // Show the selected tab content
-                            const target = this.getAttribute('data-bs-target');
-                            document.querySelector(target).classList.add('show', 'active');
-                        });
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.classList.add('text-dark');
                     });
+
+                    // Add active class to the clicked button
+                    this.classList.add('active');
+                    this.classList.remove('text-dark');
+
+                    // Hide all tab contents
+                    tabContents.forEach(content => {
+                        content.classList.remove('show', 'active');
+                    });
+
+                    // Show the selected tab content
+                    const target = this.getAttribute('data-bs-target');
+                    document.querySelector(target).classList.add('show', 'active');
                 });
-            </script>
-    @endpush
+            });
+        });
+    </script>
+@endpush
