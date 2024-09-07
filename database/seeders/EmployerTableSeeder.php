@@ -47,6 +47,23 @@ class EmployerTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'user_id' => 3,
+                'address_id' => 3,
+                'slug' => 'Công ty phần mềm Ksoft',
+                'company_name' => 'cong-ty-ksoft-3',
+                'company_phone' => '0987654321',
+                'since' => '2020-01-01',
+                'company_logo' => 'images/employer/01J73DDRMPH7VMN8PHZMDQAZWF.png',
+                'tax_code' => '123456789',
+                'description' => 'Đây là mô tả dành cho Nhà tuyển dụng 2.',
+                'website_url' => 'https://khoait.online',
+                'facebook_url' => 'https://www.facebook.com/nguyenleanhkhoa03/',
+                'company_size' => '100',
+                'company_type' => 'IT',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

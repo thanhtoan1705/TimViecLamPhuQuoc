@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Candidate;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -39,6 +40,8 @@ class DatabaseSeeder extends Seeder
             PromotionSeeder::class,
             PaymentTableSeeder::class,
             UserJobPackageSeeder::class,
+
+            JobPostCandidateTableSeeder::class,
         ]);
     }
 }

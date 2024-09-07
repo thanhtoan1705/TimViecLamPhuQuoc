@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Candidate extends Model
 {
@@ -69,13 +70,30 @@ class Candidate extends Model
         return $this->belongsTo(Address::class, 'address_id', 'id');
     }
 
-    public function interviews()
-    {
-        return $this->hasMany(Interview::class);
-    }
+//    public function interviews()
+//    {
+//        return $this->hasMany(Interview::class);
+//    }
 
     public function savedJobs()
     {
         return $this->belongsToMany(JobPost::class, 'saved_jobs', 'candidate_id', 'job_post_id');
+    }
+
+//    public function jobPosts()
+//    {
+//        return $this->belongsToMany(JobPost::class, 'job_post_candidate');
+//    }
+
+
+    // Chức năng interview
+    public function jobPostsAppliedTo()
+    {
+        return $this->belongsToMany(JobPost::class, 'job_post_candidates', 'candidate_id', 'job_post_id');
+    }
+
+    public function interviews(): BelongsToMany
+    {
+        return $this->belongsToMany(Interview::class, 'candidate_interviews', 'candidate_id', 'interview_id');
     }
 }

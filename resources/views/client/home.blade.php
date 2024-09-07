@@ -603,7 +603,10 @@
                                                 </div>
                                                 <div class="text-info-bottom mt-5"><span
                                                         class="font-xs color-text-mutted icon-location">
-                                                    {{$topEmployer->employer->address->ward->name}}, {{$topEmployer->employer->address->district->name}}, {{$topEmployer->employer->address->district->province->name}}
+                                                        @if(isset($topEmployer->employer->address->ward->name))
+                                                            {{$topEmployer->employer->address->ward->name}}, {{$topEmployer->employer->address->district->name}}, {{$topEmployer->employer->address->district->province->name}}
+                                                        @endif
+
                                                     </span><span
                                                         class="font-xs color-text-mutted float-end mt-5">{{$topEmployer->total_jobs}}<span> Công việc hiện có</span></span>
                                                 </div>

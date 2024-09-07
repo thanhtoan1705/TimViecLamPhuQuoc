@@ -6,49 +6,74 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 class InterviewTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function run()
+    public function run(): void
     {
+        // Lấy ID của các bản ghi job_post_candidates
+        $jobPostCandidateIds = DB::table('job_post_candidates')->pluck('id');
+
+        // Nếu không có dữ liệu trong bảng job_post_candidates, dừng việc tạo dữ liệu cho bảng interviews
+        if ($jobPostCandidateIds->isEmpty()) {
+            return;
+        }
+
         DB::table('interviews')->insert([
             [
-                'candidate_id' => 1, // Đảm bảo rằng candidate_id này tồn tại trong bảng candidates
-                'job_id' => 1, // Đảm bảo rằng job_id này tồn tại trong bảng jobs
-                'employer_id' => 1, // Đảm bảo rằng employer_id này tồn tại trong bảng employers
-                'name' => 'John Doe',
-                'phone' => '123-456-7890',
-                'email' => 'johndoe@example.com',
-                'time' => '10:00:00',
-                'viewer' => 'HR Manager',
-                'location' => 'Office 101',
-                'status' => 1, // 1: đã hoàn thành, 0: chưa hoàn thành
-                'feedback' => 'Good interview, promising candidate.',
-                'date' => '2024-08-16',
-                'note' => 'Discussed project management skills.',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'job_id' => 1,
+                'employer_id' => 3,
+                'name' => 'Phỏng vấn nhân viên kế toán 9/2024',
+                'phone' => '1234567890',
+                'email' => 'interview1@example.com',
+                'location' => 'Room A1, Building 1',
+                'status' => 1,
+                'feedback' => 'The candidate performed well.',
+                'start_at' => Carbon::now()->addDays(1),
+                'end_at' => Carbon::now()->addDays(1)->addHours(1),
+                'color' => '#FF0000',
+                'job_post_candidates' => json_encode($jobPostCandidateIds->toArray()), // ID của các bản ghi trong job_post_candidates
+                'note' => 'Candidate needs to improve on communication skills.',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'candidate_id' => 1, // Đảm bảo rằng candidate_id này tồn tại trong bảng candidates
-                'job_id' => 1, // Đảm bảo rằng job_id này tồn tại trong bảng jobs
-                'employer_id' => 1, // Đảm bảo rằng employer_id này tồn tại trong bảng employers
-                'name' => 'Jane Smith',
-                'phone' => '987-654-3210',
-                'email' => 'janesmith@example.com',
-                'time' => '14:00:00',
-                'viewer' => 'Technical Lead',
-                'location' => 'Office 202',
-                'status' => 0, // 1: đã hoàn thành, 0: chưa hoàn thành
-                'feedback' => 'Candidate has good technical skills.',
-                'date' => '2024-08-17',
-                'note' => 'Further review needed for team fit.',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'job_id' => 2,
+                'employer_id' => 3,
+                'name' => 'Phỏng vấn nhân viên bảo trì 9/2024',
+                'phone' => '0987654321',
+                'email' => 'interview2@example.com',
+                'location' => 'Room B2, Building 3',
+                'status' => 0,
+                'feedback' => null,
+                'start_at' => Carbon::now()->addDays(3),
+                'end_at' => Carbon::now()->addDays(3)->addHours(1),
+                'color' => '#00FF00',
+                'job_post_candidates' => json_encode($jobPostCandidateIds->toArray()), // ID của các bản ghi trong job_post_candidates
+                'note' => 'Candidate has good technical skills.',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
-            // Thêm các bản ghi khác nếu cần
+            [
+                'job_id' => 3,
+                'employer_id' => 3,
+                'name' => 'Interview for Marketing Position',
+                'phone' => '1122334455',
+                'email' => 'interview3@example.com',
+                'location' => 'Room C3, Building 2',
+                'status' => 0,
+                'feedback' => null,
+                'start_at' => Carbon::now()->addDays(5),
+                'end_at' => Carbon::now()->addDays(5)->addHours(2),
+                'color' => '#0000FF',
+                'job_post_candidates' => json_encode($jobPostCandidateIds->toArray()), // ID của các bản ghi trong job_post_candidates
+                'note' => 'The candidate has a strong portfolio.',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
         ]);
     }
 }

@@ -13,18 +13,22 @@ return new class extends Migration
     {
         Schema::create('interviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('candidate_id')->nullable()->constrained('candidates')->onDelete('set null');
+//            $table->foreignId('candidate_id')->nullable()->constrained('candidates')->onDelete('set null');
             $table->foreignId('job_id')->nullable()->constrained('job_posts')->onDelete('set null');
             $table->foreignId('employer_id')->nullable()->constrained('employers')->onDelete('set null');
             $table->string('name',255)->nullable();
             $table->string('phone',255)->nullable();
             $table->string('email',255)->nullable();
-            $table->time('time')->nullable();
-            $table->string('viewer',255)->nullable();
+//            $table->time('time')->nullable();
+//            $table->string('viewer',255)->nullable();
             $table->string('location',255)->nullable();
             $table->boolean('status')->default(0);
             $table->text('feedback')->nullable();
-            $table->date('date')->nullable();
+//            $table->date('date')->nullable();
+            $table->dateTime('start_at')->nullable();
+            $table->dateTime('end_at')->nullable();
+            $table->string('color',255)->nullable();
+            $table->json('job_post_candidates')->nullable(); // Lưu danh sách ứng viên dưới dạng JSON
             $table->text('note')->nullable();
             $table->timestamps();
         });

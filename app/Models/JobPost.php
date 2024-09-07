@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class JobPost extends Model
@@ -81,5 +82,12 @@ class JobPost extends Model
     public function candidates()
     {
         return $this->belongsToMany(Candidate::class, 'saved_jobs', 'job_post_id', 'candidate_id');
+    }
+
+
+    // Chức năng interview
+    public function candidatesAppliedToJob()
+    {
+        return $this->belongsToMany(Candidate::class, 'job_post_candidates', 'job_post_id', 'candidate_id');
     }
 }
