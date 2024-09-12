@@ -40,8 +40,8 @@ class DatabaseSeeder extends Seeder
             PromotionSeeder::class,
             PaymentTableSeeder::class,
             UserJobPackageSeeder::class,
-
             JobPostCandidateTableSeeder::class,
+            SavedJobSeeder::class,
         ]);
     }
 }

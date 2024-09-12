@@ -3,6 +3,8 @@
 namespace App\Repositories\JobPost;
 
 use App\Models\JobPost;
+use App\Models\JobPostCandidate;
+use Illuminate\Support\Facades\Auth;
 
 class JobPostRepository implements JobPostInterface
 {
@@ -31,7 +33,35 @@ class JobPostRepository implements JobPostInterface
             return $item->job_category->name;
         });
 
-
         return $jobPosts;
+    }
+
+    public function getApplyCandidatesByJobPost($jobPostID = null, $sortOrder = 'newest')
+    {
+        $employerId = Auth::user()->employer->id;
+
+        $query = JobPostCandidate::query()
+            ->whereHas('jobPost', function ($q) use ($employerId) {
+                $q->where('employer_id', $employerId);
+            });
+
+        if ($jobPostID) {
+            $query->where('job_post_id', $jobPostID);
+        }
+
+        if ($sortOrder === 'newest') {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->orderBy('created_at', 'asc');
+        }
+
+        return $query->get();
+    }
+
+    public function unApplyCandidate($jobpostId, $candidateId)
+    {
+        return JobPostCandidate::where('job_post_id', $jobpostId)
+        ->where('candidate_id', $candidateId)
+            ->delete();
     }
 }

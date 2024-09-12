@@ -63,14 +63,15 @@
         .row {
             display: flex;
             flex-wrap: wrap;
+            gap: 20px;
         }
 
         .col {
             display: flex;
             flex-direction: column;
-            /*max-width: calc(100% / 3);*/
             padding: 10px;
-            flex: 1;
+            flex: 1 1 300px;
+            box-sizing: border-box;
         }
 
         .section-box {
@@ -104,14 +105,15 @@
             border-radius: 8px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
         }
 
         .card-title {
             color: #dc3545;
             font-size: 20px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .card-body {
@@ -154,7 +156,6 @@
             max-height: 4.5em;
             margin-bottom: 5px;
         }
-
 
         .custom-tab-pane {
             display: none;

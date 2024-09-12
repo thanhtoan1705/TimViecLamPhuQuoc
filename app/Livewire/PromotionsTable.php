@@ -33,7 +33,7 @@ class PromotionsTable extends Component
                 return $query->where('status', 1)
                     ->where('end_time', '<', $now);
             })
-            ->paginate(3);
+            ->paginate(9);
         return view('livewire.client.promotions.promotions-table', [
             'promotions' => $promotions,
         ]);

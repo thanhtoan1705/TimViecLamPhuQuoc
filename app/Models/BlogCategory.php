@@ -10,10 +10,17 @@ class BlogCategory extends Model
     use HasFactory;
 
     protected $fillable = [
+        'order',
         'name',
         'slug',
         'image',
         'is_active',
+    ];
+
+    public $sortable = [
+        'order_column_name' => 'order',
+        'sort_when_creating' => true,
+        'sort_when_updating' => true,
     ];
 
     public function blogs()

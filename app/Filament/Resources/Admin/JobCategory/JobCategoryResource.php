@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Admin\JobCategory;
 use App\Filament\Resources\JobCategory\JobCategoryResource\Pages;
 use App\Filament\Resources\JobCategory\JobCategoryResource\RelationManagers;
 use App\Models\Job_category;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
@@ -13,10 +14,12 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use Filament\Forms\Components\Hidden;
 
 class JobCategoryResource extends Resource
 {
@@ -50,6 +53,17 @@ class JobCategoryResource extends Resource
                                         ->dehydrated()
                                         ->unique(Job_category::class, 'slug', ignoreRecord: true)
                                         ->maxLength(255),
+                                    Hidden::make('order')
+                                        ->default(fn ($livewire) => $livewire->getModel()->id ?? 0),
+                                    FileUpload::make('image')
+                                        ->label('Hình ảnh')
+                                        ->image()
+                                        ->imageEditor()
+                                        ->required()
+                                        ->disk('public')
+                                        ->directory('images/job-category')
+                                        ->maxSize(1024 * 5)
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp']),
                                 ])
                         ])->columnSpan(2),
 
@@ -78,7 +92,9 @@ class JobCategoryResource extends Resource
                     ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
                 Tables\Columns\TextColumn::make('name')->label('Tên danh mục')->searchable(),
                 Tables\Columns\TextColumn::make('slug')->label('Đường dẫn')->searchable(),
+                ImageColumn::make('image')->label('Hình ảnh'),
             ])
+            ->reorderable('order')
             ->filters([
                 Filter::make('name')
                     ->label('Lọc theo tên')
@@ -91,7 +107,7 @@ class JobCategoryResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\ViewAction::make(),
+//                    Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
                 ])

@@ -11,4 +11,13 @@ class JobPostCandidate extends Model
 
     protected $fillable = ['job_post_id', 'candidate_id', 'file', 'status', 'description'];
 
+    public function jobPost()
+    {
+        return $this->belongsTo(JobPost::class, 'job_post_id');
+    }
+
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class);
+    }
 }

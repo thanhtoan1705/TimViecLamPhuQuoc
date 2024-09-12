@@ -7,6 +7,7 @@ use App\Filament\Resources\BlogCategory\BlogCategoryResource\RelationManagers;
 use App\Models\BlogCategory;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -92,6 +93,9 @@ class BlogCategoryResource extends Resource
                                         ->maxLength(255)
                                         ->label('Đường dẫn'),
 
+                                    Hidden::make('order')
+                                        ->default(fn ($livewire) => $livewire->getModel()->id ?? 0),
+
                                     Section::make('Trạng thái')
                                         ->schema([
                                             Toggle::make('is_active')
@@ -129,6 +133,7 @@ class BlogCategoryResource extends Resource
                     ->trueColor('success')
                     ->falseColor('danger'),
             ])
+            ->reorderable('order')
             ->filters([
                 Filter::make('name')
                     ->label('Lọc theo tên')
