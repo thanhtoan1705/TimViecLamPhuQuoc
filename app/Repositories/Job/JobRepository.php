@@ -64,4 +64,15 @@ class JobRepository implements JobInterface
             'updated_at' => now(),
         ]);
     }
+
+    public function findLastApplication($candidateId, $jobId)
+    {
+        return DB::table('job_post_candidates')
+            ->where('candidate_id', $candidateId)
+            ->where('job_post_id', $jobId)
+            ->orderBy('created_at', 'desc')
+            ->first();
+    }
+
+
 }

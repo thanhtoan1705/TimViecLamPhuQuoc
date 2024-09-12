@@ -58,7 +58,6 @@ class MajorResource extends Resource
                                         ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' || $operation === 'update' ? $set('slug', Str::slug($state)) : null)
                                         ->label('Tên chuyên ngành')
                                         ->rules([
-                                            'regex:/^[a-zA-Z0-9\s]+$/u',
                                             'unique:majors,name',
                                         ])
                                         ->validationAttribute('Tên chuyên ngành'),

@@ -9,19 +9,19 @@
             <div class="header-nav">
                 <nav class="nav-main-menu">
                     <ul class="main-menu">
-                        <li><a class='active' href='index.html'>Trang chủ</a>
+                        <li><a class='active' href='/'>Trang chủ</a>
                         </li>
-                        <li><a href='jobs-grid.html'>Việc làm</a>
+                        <li><a href='{{route('client.job.index')}}'>Việc làm</a>
                         </li>
-                        <li><a href='companies-grid.html'>Công ty</a>
+                        <li><a href='{{route('client.employer.index')}}'>Công ty</a>
                         </li>
-                        <li><a href='companies-grid.html'>Ứng viên</a>
+                        <li><a href='{{route('client.candidate.hot')}}'>Ứng viên</a>
                         </li>
-                        <li><a href='candidates-grid.html'>Tin tức</a>
+                        <li><a href='{{route('client.post.index')}}'>Tin tức</a>
                         </li>
-                        <li><a href=''>Giới thiệu</a>
+                        <li><a href='{{route('client.client.about')}}'>Giới thiệu</a>
                         </li>
-                        <li><a href='blog-grid.html'>Bảng giá</a>
+                        <li><a href='{{route('client.pricing.index')}}'>Bảng giá</a>
                         </li>
                     </ul>
                 </nav>

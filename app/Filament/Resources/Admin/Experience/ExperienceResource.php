@@ -62,7 +62,7 @@ class ExperienceResource extends Resource
                                         })
                                         ->label('Tên kinh nghiệm')
                                         ->validationAttribute('tên kinh nghiệm')
-                                        ->rules(['regex:/^[a-zA-Z0-9\s]+$/u',
+                                        ->rules([
                                             'unique:experiences,name']),
 
                                     TextInput::make('slug')

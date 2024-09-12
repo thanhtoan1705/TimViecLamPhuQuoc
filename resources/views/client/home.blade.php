@@ -474,8 +474,7 @@
                                                                     @else
                                                                         {{ formatSalary($post->salary_min) }} - {{ formatSalary($post->salary_max) }}
                                                                     @endif
-                                                                </span><span
-                                                                    class="text-muted">/Giờ</span></div>
+                                                                </span></div>
                                                             <div class="col-lg-5 col-5 text-end">
                                                                 <div class="btn btn-apply-now" data-bs-toggle="modal"
                                                                      data-bs-target="#ModalApplyJobForm">Ứng tuyển

@@ -74,4 +74,18 @@ class CandidateRepository implements CandidateInterface
         $candidate->savedJobs()->attach($job_id);
         return true;
     }
+
+    public function getAllCandidates($sortBy, $perPage)
+    {
+        $query = $this->candidate->newQuery();
+
+        if ($sortBy === 'newest') {
+            $query->orderBy('created_at', 'desc');
+        } elseif ($sortBy === 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        }
+        \Log::info($query->toSql());
+        return $query->paginate($perPage);
+    }
+
 }

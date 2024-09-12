@@ -15,6 +15,8 @@ interface JobInterface
 
     public function applyForJob($jobPostId, $candidateId, $file, $description);
 
+    public function findLastApplication($candidateId, $jobId);
+
 
 }
 

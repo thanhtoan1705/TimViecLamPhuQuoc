@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="msapplication-TileColor" content="#0E0E0E">
     <meta name="template-color" content="#0E0E0E">
-    <link rel="manifest" href="manifest.html" crossorigin>
+{{--    <link rel="manifest" href="manifest.html" crossorigin>--}}
     <meta name="msapplication-config" content="browserconfig.html">
     <meta name="description" content="Index page">
     <meta name="keywords" content="index, page">
@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
     @livewireStyles
     @stack('css')
     <title>@yield('title', 'Trang chủ')</title>
@@ -35,26 +36,15 @@
 {{--        </div>--}}
 {{--    </div>--}}
 
-    <!-- header -->
     <x-client.header></x-client.header>
     <script src="{{ asset('assets/client/js/app.js')}}"></script>
-
     @yield('content')
-
-
-    <!-- footer area -->
     <x-client.footer></x-client.footer>
 
-    {{-- @include('clients.components.footer') --}}
-
-
-
-
-
-
     @stack('script')
+
     @livewireScripts
-    <script src="//unpkg.com/alpinejs" defer></script>
+{{--    <script src="//unpkg.com/alpinejs" defer></script>--}}
     <script src="{{ asset('assets/client/js/vendor/modernizr-3.6.0.min.js') }}"></script>
     <script src="{{ asset('assets/client/js/vendor/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('assets/client/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
@@ -69,9 +59,32 @@
     <script src="{{ asset('assets/client/js/plugins/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/client/js/plugins/counterup.js') }}"></script>
     <script src="{{ asset('assets/client/js/main8c94.js?v=4.1') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @if(session()->has('flasher'))
+        @foreach(session('flasher') as $notification)
+        var level = "{{ $notification['level'] }}";
+        var message = "{{ $notification['message'] }}";
 
-    <script src="{{ asset('assets/js/noUISlider.js') }}"></script>
-    <script src="{{ asset('assets/js/slider.js') }}"></script>
+        // Tùy chỉnh cấp độ thông báo
+        if (level === 'error') {
+            level = 'lỗi';
+        } else if (level === 'success') {
+            level = 'thành công';
+        } else if (level === 'info') {
+            level = 'thông tin';
+        } else if (level === 'warning') {
+            level = 'cảnh báo';
+        }
+
+        // Hiển thị thông báo
+        Flasher[level](message);
+        @endforeach
+        @endif
+    });
+</script>
+{{--    <script src="{{ asset('assets/js/noUISlider.js') }}"></script>--}}
+{{--    <script src="{{ asset('assets/js/slider.js') }}"></script>--}}
 </body>
 
 <!-- Mirrored from jobbox-html.netlify.app/frontend/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 07 Jun 2024 11:15:59 GMT -->

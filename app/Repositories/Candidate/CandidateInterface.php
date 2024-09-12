@@ -17,4 +17,6 @@ interface CandidateInterface
     public function updatePassword(User $user, string $newPassword);
 
     public function update($id, array $data);
+
+    public function getAllCandidates($sortBy, $perPage);
 }

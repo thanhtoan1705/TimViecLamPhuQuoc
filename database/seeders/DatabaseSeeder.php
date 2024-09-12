@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             AddressTableSeeder::class,
             MajorTableSeeder::class,
+            SalaryTableSeeder::class,
             ResumeTableSeeder::class,
             ExperienceTableSeeder::class,
             EducationTableSeeder::class,

@@ -323,20 +323,25 @@
                         <form class="login-register text-start mt-20 pb-30" action="{{ route('client.job.apply', $job->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label class="form-label" for="file-upload" style="display: block;">
-{{--                                    <i class="fa-solid fa-upload"></i>--}}
-                                    <span>Tải lên CV từ máy tính, chọn hoặc kéo thả</span>
+                                <label class="form-label" for="file-upload" id="drop-zone" style="display: block;">
+                                    <span id="file-name">Tải lên CV từ máy tính, chọn hoặc kéo thả</span>
                                 </label>
-                                <input class="form-control" id="file-upload" name="resume" type="file" accept=".pdf,.doc,.docx" required style="display: none;">
+                                <input class="form-control" id="file-upload" name="resume" type="file" accept=".pdf,.doc,.docx" required style="display: none;" onchange="updateFileName(this)">
                                 <div class="text-muted text-center">Hỗ trợ định dạng .doc, .docx, pdf có kích thước dưới 5MB.</div>
                                 <div class="text-center mt-2">
                                     <button type="button" class="btn btn-default text-" onclick="document.getElementById('file-upload').click()">Chọn CV</button>
                                 </div>
+                                @if ($errors->has('resume'))
+                                    <div class="text-danger">{{ $errors->first('resume') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
                                 <label for="des" class="form-label">Giới thiệu ngắn</label>
                                 <textarea id="des" name="description" class="form-control" placeholder="Giới thiệu ngắn của bạn..." rows="5" required></textarea>
+                                @if ($errors->has('description'))
+                                    <div class="text-danger">{{ $errors->first('description') }}</div>
+                                @endif
                             </div>
 
                             <div class="form-group">
@@ -475,6 +480,37 @@
     </style>
 @endpush
 @push('script')
+    <script>
+        document.getElementById('drop-zone').addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.add('dragover');
+        });
+
+        document.getElementById('drop-zone').addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('dragover');
+        });
+
+        document.getElementById('drop-zone').addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('dragover');
+
+            // Lấy file từ sự kiện drop
+            var files = e.dataTransfer.files;
+            if (files.length > 0) {
+                document.getElementById('file-upload').files = files;
+                updateFileName(document.getElementById('file-upload')); // Cập nhật tên file
+            }
+        });
+
+        function updateFileName(input) {
+            var fileName = input.files[0].name;
+            document.getElementById('file-name').innerText = fileName;
+        }
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
