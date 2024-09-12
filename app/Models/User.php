@@ -3,17 +3,21 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\HasUserAvatar;
+use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\Traits\HasUserAvatar;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements HasAvatar
+class User extends Authenticatable implements HasAvatar, FilamentUser
 {
-    use HasFactory, Notifiable, HasUserAvatar;
+    use HasFactory, Notifiable, HasUserAvatar, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -98,5 +102,31 @@ class User extends Authenticatable implements HasAvatar
     public function likes()
     {
         return $this->hasMany(CommentLike::class);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return false;
+        }
+
+        if ($panel->getId() === 'admin') {
+            return $this->hasAnyRole([
+                'super_admin',
+                'admin',
+                'blogger',
+                'moderator'
+            ]);
+        }
+
+        if ($panel->getId() === 'employer') {
+            return $user->role === 'employer' || $this->hasAnyRole([
+                    'employer',
+                ]);
+        }
+
+        return true;
     }
 }

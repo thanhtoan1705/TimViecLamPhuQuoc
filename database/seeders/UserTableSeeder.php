@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserTableSeeder extends Seeder
 {
@@ -37,7 +36,7 @@ class UserTableSeeder extends Seeder
                 'phone' => '0987654321',
                 'remember_token' => null,
                 'email_verified_at' => now(),
-                'role' => 'employer',
+                'role' => 'admin',
                 'google_id' => null,
                 'facebook_id' => null,
                 'created_at' => now(),

@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Spatie\Permission\Models\Role;
 
-class CommentPolicy
+class RolePolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class CommentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_admin::comment::comment');
+        return $user->can('view_any_role');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Comment $comment): bool
+    public function view(User $user, Role $role): bool
     {
-        return $user->can('view_admin::comment::comment');
+        return $user->can('view_role');
     }
 
     /**
@@ -31,23 +31,23 @@ class CommentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_admin::comment::comment');
+        return $user->can('create_role');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Comment $comment): bool
+    public function update(User $user, Role $role): bool
     {
-        return $user->can('update_admin::comment::comment');
+        return $user->can('update_role');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Comment $comment): bool
+    public function delete(User $user, Role $role): bool
     {
-        return $user->can('delete_admin::comment::comment');
+        return $user->can('delete_role');
     }
 
     /**
@@ -55,15 +55,15 @@ class CommentPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_admin::comment::comment');
+        return $user->can('delete_any_role');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Comment $comment): bool
+    public function forceDelete(User $user, Role $role): bool
     {
-        return $user->can('force_delete_admin::comment::comment');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,15 +71,15 @@ class CommentPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::comment::comment');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Comment $comment): bool
+    public function restore(User $user, Role $role): bool
     {
-        return $user->can('restore_admin::comment::comment');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,15 +87,15 @@ class CommentPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::comment::comment');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Comment $comment): bool
+    public function replicate(User $user, Role $role): bool
     {
-        return $user->can('replicate_admin::comment::comment');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class CommentPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::comment::comment');
+        return $user->can('{{ Reorder }}');
     }
 }
