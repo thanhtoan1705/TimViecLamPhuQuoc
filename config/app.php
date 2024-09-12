@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
@@ -137,6 +138,13 @@ return [
         App\Providers\Filament\EmployerPanelProvider::class,
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\Client\Comment\CommentifyServiceProvider::class,
+        Jorenvh\Share\Providers\ShareServiceProvider::class,
     ])->toArray(),
 
+    'aliases' => Facade::defaultAliases()->merge([
+        /*
+         * Package Aliases...
+         */
+        'Share' => Jorenvh\Share\ShareFacade::class,
+    ])->toArray(),
 ];

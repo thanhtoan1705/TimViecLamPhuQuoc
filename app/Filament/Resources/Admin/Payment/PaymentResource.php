@@ -6,6 +6,7 @@ use App\Filament\Resources\Payment\PaymentResource\Pages;
 use App\Models\Employer;
 use App\Models\JobPostPackage;
 use App\Models\Payment;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
@@ -31,6 +32,16 @@ class PaymentResource extends Resource
     protected static ?string $modelLabel = 'Thanh toán';
     protected static ?string $navigationGroup = 'Quản lý thanh toán';
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'primary';
+    }
 
     public static function form(Form $form): Form
     {
@@ -125,19 +136,30 @@ class PaymentResource extends Resource
                 Tables\Columns\TextColumn::make('jobPostPackage.title')->label('Gói đăng tin')->searchable(),
                 Tables\Columns\TextColumn::make('amount')->label('Số tiền')
                     ->formatStateUsing(fn($state) => number_format($state, 0, ',', ',') . ' vnđ'),
-                Tables\Columns\TextColumn::make('payment_date')->label('Ngày thanh toán')->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('d/m/Y - h:i A')),
+                Tables\Columns\TextColumn::make('payment_date')->label('Ngày thanh toán')->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)
+                    ->format('d/m/Y - h:i A'))->sortable(),
                 Tables\Columns\TextColumn::make('expiration_date')->label('Ngày hết hạn')->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('d/m/Y - h:i A')),
                 Tables\Columns\TextColumn::make('payment_method')->label('Phương thức thanh toán')->searchable(),
                 Tables\Columns\BooleanColumn::make('payment_status')->label('Trạng thái')->default(true),
             ])
             ->filters([
-                Filter::make('payment_method')
-                    ->label('Lọc theo phương thức thanh toán')
-                    ->query(fn(Builder $query, array $data) => $query->where('payment_method', 'like', '%' . $data['value'] . '%'))
+                Filter::make('payment_date')
+                    ->label('Lọc theo ngày thanh toán')
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['start_date']) && !empty($data['end_date'])) {
+                            $startDate = \Carbon\Carbon::parse($data['start_date'])->startOfDay();
+                            $endDate = \Carbon\Carbon::parse($data['end_date'])->endOfDay();
+
+                            return $query->whereBetween('payment_date', [$startDate, $endDate]);
+                        }
+                        return $query;
+                    })
                     ->form([
-                        TextInput::make('value')
-                            ->label('Phương thức thanh toán')
-                            ->placeholder('Nhập phương thức thanh toán để lọc...')
+                        DatePicker::make('start_date')
+                            ->label('Từ ngày'),
+
+                        DatePicker::make('end_date')
+                            ->label('Đến ngày'),
                     ]),
             ])
             ->actions([

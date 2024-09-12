@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\CommentPresenter;
 use App\Scopes\CommentScopes;
 use App\Scopes\HasLikes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
@@ -53,6 +49,11 @@ class Comment extends Model
     public function children()
     {
         return $this->hasMany(Comment::class, 'parent_id')->oldest();
+    }
+
+    public function isChild()
+    {
+        return !is_null($this->parent_id);
     }
 
     public function commentable()

@@ -3,6 +3,7 @@
 namespace App\Livewire\Client\Comment;
 
 
+use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -11,15 +12,13 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use App\Models\User;
 
 class Comment extends Component
 {
     use AuthorizesRequests;
 
     public $comment;
-
-    public $parentUserName;
+    public $parentComment = null;
 
     public $users = [];
 
@@ -43,7 +42,20 @@ class Comment extends Component
         'editState.content' => 'Reply'
     ];
 
+    public function toggleReplying()
+    {
+        $this->isReplying = !$this->isReplying;
+    }
 
+    public function toggleReplies()
+    {
+        $this->hasReplies = !$this->hasReplies;
+    }
+
+    public function toggleShowOptions()
+    {
+        $this->showOptions = !$this->showOptions;
+    }
 
     /**
      * @param $isEditing
@@ -87,6 +99,13 @@ class Comment extends Component
         $this->dispatch('refresh');
     }
 
+    public function mount()
+    {
+        if ($this->comment->isChild()) {
+            $this->parentComment = $this->comment->parent()->with('user')->first();
+        }
+    }
+
     /**
      * @return Factory|Application|View|\Illuminate\Contracts\Foundation\Application|null
      */
@@ -103,9 +122,8 @@ class Comment extends Component
     public function postReply(): void
     {
         $this->validate([
-            'replyState.content' => 'required|min:2',
+            'replyState.content' => 'required'
         ]);
-
         $reply = $this->comment->children()->make($this->replyState);
         $reply->user()->associate(auth()->user());
         $reply->commentable()->associate($this->comment->commentable);

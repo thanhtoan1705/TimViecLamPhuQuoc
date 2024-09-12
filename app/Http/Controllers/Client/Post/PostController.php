@@ -32,8 +32,16 @@ class PostController extends Controller
     {
         $postDetail = $this->post->getPostDetail($slug);
 
+        $shareButton = \Share::page(
+            url('bai-viet/' . $postDetail->slug),
+            'test share'
+        )->facebook()->twitter()->pinterest();
+
+        $shareUrls = $shareButton->getRawLinks();
+
         return view("client.post.detail", [
             'postDetail' => $postDetail,
+            'shareUrls' => $shareUrls,
         ]);
     }
 }

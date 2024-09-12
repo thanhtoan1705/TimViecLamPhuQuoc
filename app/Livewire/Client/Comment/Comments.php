@@ -43,11 +43,21 @@ class Comments extends Component
         $comments = $this->model
             ->comments()
             ->with('user', 'children.user', 'children.children')
+            ->withCount('children')
             ->parent()
             ->latest()
-            ->paginate(config('commentify.pagination_count',10));
+            ->paginate(config('commentify.pagination_count', 3));
+
+        $totalComments = $this->model->comments()
+            ->withCount('children')
+            ->get()
+            ->count(function ($comment) {
+                return 1 + $comment->children_count;
+            });
+
         return view('livewire.client.comment.comments', [
-            'comments' => $comments
+            'comments' => $comments,
+            'totalComments' => $totalComments,
         ]);
     }
 
@@ -70,9 +80,8 @@ class Comments extends Component
 
         $comment->save();
 
-        $this->newCommentState = [
-            'content' => ''
-        ];
+        $this->reset('newCommentState');
+
         $this->users = [];
         $this->showDropdown = false;
 
