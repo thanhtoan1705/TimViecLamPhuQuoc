@@ -17,5 +17,9 @@ class BlogRepository implements BlogInterface
     {
         return $this->blog->where('is_publish', $is_publish)->paginate($paginate);
     }
+
+    public function getAllBlog(){
+        return $this->blog->get();
+    }
 }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Client\Candidate\CandidateController;
 use App\Http\Controllers\Client\Employer\EmployerController;
 use App\Http\Controllers\Client\Candidate\AuthController as AuthCandidateController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\Auth\FacebookController;
 
 
 Route::get('/ung-vien/dang-nhap', [AuthCandidateController::class, 'login'])->name('candidate.login');
@@ -19,3 +20,6 @@ Route::get('/nha-tuyen-dung/dang-ky', [EmployerController::class, 'register'])->
 Route::get('dat-lai-mat-khau', [AuthController::class, 'reset'])->name('reset');
 Route::get('tao-moi-mat-khau', [AuthController::class, 'newPass'])->name('newPass');
 Route::get('nhap-otp', [AuthController::class, 'otp'])->name('OTP');
+
+Route::get('login/facebook', [FacebookController::class, 'redirectToFacebook'])->name('login.facebook');
+Route::get('login/facebook/callback', [FacebookController::class, 'handleFacebookCallback']);

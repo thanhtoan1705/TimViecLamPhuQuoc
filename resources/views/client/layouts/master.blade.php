@@ -39,6 +39,7 @@
     <x-client.header></x-client.header>
     <script src="{{ asset('assets/client/js/app.js')}}"></script>
     @yield('content')
+    <x-client.newsletter></x-client.newsletter>
     <x-client.footer></x-client.footer>
 
     @stack('script')

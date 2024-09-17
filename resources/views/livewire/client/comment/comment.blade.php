@@ -12,17 +12,24 @@
             class="py-2 px-4 my-4 text-base rounded rounded-lg bg-white border border-secondary-subtle @if($comment->isChild()) ms-4 @endif">
             <footer class="d-flex justify-content-between align-items-center mb-1">
                 <div class="d-flex align-items-center pt-2 mt-2">
+                    @php
+                        if (isset($comment->user->avatar_url)) {
+                            $user_img = $comment->user->avatar_url;
+                        } else {
+                            $user_img = asset('default/user.png');
+                        }
+                    @endphp
                     @if($comment->isChild() && $parentComment)
                     <p class="d-inline-flex align-items-center mr-3 text-muted"><img
                             class="mr-2 rounded-circle" style="width: 24px; height: 24px;"
-                            src="{{ $comment->user->avatar_url }}"
+                            src="{{ $user_img }}"
                             alt="{{ $comment->user->name }}"><strong
                             class="text-primary">{{ Str::ucfirst($comment->user->name) }}</strong>
                         @<u>{{ $parentComment->user->name }}</u></p>
                     @else
                         <p class="d-inline-flex align-items-center mr-3 text-muted"><img
                                 class="mr-2 rounded-circle" style="width: 24px; height: 24px;"
-                                src="{{ $comment->user->avatar_url }}"
+                                src="{{ $user_img }}"
                                 alt="{{ $comment->user->name }}"><strong
                                 class="text-primary">{{ Str::ucfirst($comment->user->name) }}</strong></p>
                     @endif
