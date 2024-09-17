@@ -14,6 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
 
 class User extends Authenticatable implements HasAvatar, FilamentUser
 {
@@ -106,27 +107,28 @@ class User extends Authenticatable implements HasAvatar, FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
+
         $user = Auth::user();
 
         if (!$user) {
-            return false;
+            return false; // Nếu không có user đăng nhập, từ chối truy cập
         }
 
-        if ($panel->getId() === 'admin') {
-            return $this->hasAnyRole([
-                'super_admin',
-                'admin',
-                'blogger',
-                'moderator'
-            ]);
-        }
+        switch ($panel->getId()) {
+            case 'admin':
+                // Lấy tất cả các role trừ 'employer'
+                $adminRoles = Role::where('name', '!=', 'employer')
+                    ->pluck('name')
+                    ->toArray();
 
-        if ($panel->getId() === 'employer') {
-            return $user->role === 'employer' || $this->hasAnyRole([
-                    'employer',
-                ]);
-        }
+                return $user->hasAnyRole($adminRoles);
 
-        return true;
+            case 'employer':
+                // Kiểm tra xem user có role 'employer' không
+                return $user->hasRole('employer');
+
+            default:
+                return true; // Cho phép truy cập các panel khác
+        }
     }
 }

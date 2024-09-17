@@ -30,8 +30,9 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 
-class BlogResource extends Resource
+class BlogResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Blog::class;
 
@@ -291,6 +292,18 @@ class BlogResource extends Resource
             'index' => \App\Filament\Resources\Admin\Blog\BlogResource\Pages\ListBlogs::route('/'),
             'create' => \App\Filament\Resources\Admin\Blog\BlogResource\Pages\CreateBlog::route('/create'),
             'edit' => \App\Filament\Resources\Admin\Blog\BlogResource\Pages\EditBlog::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
         ];
     }
 }

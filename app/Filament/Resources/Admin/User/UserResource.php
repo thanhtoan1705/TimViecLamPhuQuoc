@@ -12,18 +12,29 @@ use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationLabel = 'Quản trị viên';
+    protected static ?string $navigationLabel = 'Thành viên';
 
-    protected static ?string $modelLabel = 'Quản trị viên';
+    protected static ?string $modelLabel = 'Thành viên';
 
-    protected static ?string $navigationGroup = 'Tài khoản';
+    protected static ?string $navigationGroup = 'Filament Shield';
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('role', 'admin')->count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'primary';
+    }
 
     public static function form(Form $form): Form
     {
@@ -62,8 +73,7 @@ class UserResource extends Resource
     {
         return $table
             ->modifyQueryUsing(function (Builder $query) {
-//                $query->where('role', 'employer');
-//                ->orWhere('role', 'employer');
+                    $query->where('role', 'admin');
             })
             ->columns([
                 Tables\Columns\TextColumn::make('row_number')

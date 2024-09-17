@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Pages;
 
+use Database\Seeders\AssignEmployerPermissionsSeeder;
+use Database\Seeders\RegisterEmployerPermissionsSeeder;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Pages\Auth\Register;
@@ -15,6 +17,7 @@ use App\Models\User;
 use App\Models\Employer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Artisan;
 
 class RegistrationEmployer extends Register
 {
@@ -84,6 +87,10 @@ class RegistrationEmployer extends Register
         ]);
 
         auth()->login($user);
+
+        // Chạy seeder AssignEmployerPermissionsSeeder
+        // Phân quyền Employer cho người dùng vừa đăng ký
+        (new RegisterEmployerPermissionsSeeder())->run($user->id);
 
         return app(RegistrationResponse::class);
     }

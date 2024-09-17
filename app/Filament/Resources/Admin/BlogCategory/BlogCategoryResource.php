@@ -22,8 +22,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 
-class BlogCategoryResource extends Resource
+class BlogCategoryResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = BlogCategory::class;
 
@@ -170,6 +171,19 @@ class BlogCategoryResource extends Resource
             'index' => \App\Filament\Resources\Admin\BlogCategory\BlogCategoryResource\Pages\ListBlogCategories::route('/'),
             'create' => \App\Filament\Resources\Admin\BlogCategory\BlogCategoryResource\Pages\CreateBlogCategory::route('/create'),
             'edit' => \App\Filament\Resources\Admin\BlogCategory\BlogCategoryResource\Pages\EditBlogCategory::route('/{record}/edit'),
+        ];
+    }
+
+    // Cac quyen tron phan quyen
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
         ];
     }
 }
