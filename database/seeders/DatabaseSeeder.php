@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
             UserJobPackageSeeder::class,
             JobPostCandidateTableSeeder::class,
             SavedJobSeeder::class,
+            AssignEmployerPermissionsSeeder::class,
         ]);
     }
 }

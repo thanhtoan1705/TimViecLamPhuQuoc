@@ -158,12 +158,12 @@
                                         <span class="d-flex align-items-center">
                                             <i class="fi-rr-marker mr-5 ml-0"></i>
                                             <span
-                                                class="font-sm color-text-mutted">{{ $candidate->address->province->name }}</span>
+                                                class="font-sm color-text-mutted">{{ $candidate->address->province->name ?? null}}</span>
                                         </span>
                                                     </div>
                                                     <div class="col-6">
                                         <span class="d-flex justify-content-end align-items-center">
-                                            <span class="font-sm color-brand-1">{{ $candidate->salary->name }}</span>
+                                            <span class="font-sm color-brand-1">{{ $candidate->salary->name ?? '' }}</span>
                                             <i class="fi-rr-clock mr-5"></i>
                                         </span>
                                                     </div>
