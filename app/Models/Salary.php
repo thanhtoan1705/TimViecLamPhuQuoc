@@ -13,4 +13,9 @@ class Salary extends Model
         'name',
         'slug'
     ];
+
+    public function jobPosts()
+    {
+        return $this->hasMany(JobPost::class, 'salary_id');
+    }
 }

@@ -5,6 +5,8 @@ namespace App\Repositories\Job;
 
 interface JobInterface
 {
+    public function getAllJobPaginated($perPage, $sortBy, $sortOrder);
+
     public function findBySlugs(string $employerSlug, string $jobSlug);
 
     public function findJobsByEmployer($employer_id);

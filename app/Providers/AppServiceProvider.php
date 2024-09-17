@@ -8,6 +8,8 @@ use App\Repositories\Candidate\CandidateInterface;
 use App\Repositories\Candidate\CandidateRepository;
 use App\Repositories\Employer\EmployerInterface;
 use App\Repositories\Employer\EmployerRepository;
+use App\Repositories\Filter\FilterInterface;
+use App\Repositories\Filter\FilterRepository;
 use App\Repositories\Job\JobInterface;
 use App\Repositories\Job\JobRepository;
 use App\Repositories\JobCategory\JobCategoryInterface;
@@ -38,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(JobCategoryInterface::class, JobCategoryRepository::class);
         $this->app->bind(PostInterface::class, PostRepository::class);
         $this->app->bind(LocationInterface::class, LocationRepository::class);
+        $this->app->bind(FilterInterface::class, FilterRepository::class);
     }
 
     /**

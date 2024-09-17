@@ -20,6 +20,7 @@ class JobPost extends Model
         'job_type_id',
         'rank_id',
         'degrees_id',
+        'salary_id',
         'end_date',
         'start_date',
         'description',
@@ -84,6 +85,10 @@ class JobPost extends Model
         return $this->belongsToMany(Candidate::class, 'saved_jobs', 'job_post_id', 'candidate_id');
     }
 
+    public function salary()
+    {
+        return $this->belongsTo(Salary::class, 'salary_id');
+    }
 
     // Chức năng interview
     public function candidatesAppliedToJob()

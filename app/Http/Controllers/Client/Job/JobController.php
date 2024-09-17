@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client\Job;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\Filter\FilterInterface;
 use App\Repositories\Job\JobInterface;
 use Illuminate\Http\Request;
 use Flasher\Laravel\Facade\Flasher;
@@ -10,10 +11,61 @@ use Flasher\Laravel\Facade\Flasher;
 class JobController extends Controller
 {
     protected $jobRepository;
+    protected $filterRepository;
 
-    public function __construct(JobInterface $jobRepository)
+
+    public function __construct(JobInterface $jobRepository, FilterInterface $filterRepository)
     {
         $this->jobRepository = $jobRepository;
+        $this->filterRepository = $filterRepository;
+    }
+
+    public function index(Request $request)
+    {
+        $selectedCategories = $request->input('categories', []);
+        $selectedSalaries = $request->input('salaries', []);
+        $selectedKeywords = $request->input('keywords', []);
+
+        $perPage = $request->query('per_page', 12);
+        $sortBy = $request->query('sort_by', 'created_at');
+        $sortOrder = $request->query('sort_order', 'desc');
+
+        $validSortBy = ['created_at', 'rating'];
+        $validSortOrders = ['asc', 'desc'];
+
+        if (!in_array($sortBy, $validSortBy)) {
+            $sortBy = 'created_at';
+        }
+        if (!in_array($sortOrder, $validSortOrders)) {
+            $sortOrder = 'desc';
+        }
+
+        $filteredData = $this->filterRepository->filterJob($selectedCategories, $selectedSalaries, $selectedKeywords);
+
+        $jobCategories = $filteredData['categories'];
+        $salaries = $filteredData['salaries'];
+        $keywords = $filteredData['keywords'];
+
+        $filteredJobsQuery = $filteredData['jobs'];
+
+        $filteredJobs = $filteredJobsQuery->orderBy($sortBy, $sortOrder)->paginate($perPage);
+
+        if ($request->ajax()) {
+            return view('client.job.partials.job_list', ['job' => $filteredJobs])->render();
+        }
+
+        $data = [
+            'job' => $filteredJobs,
+            'totalJobs' => $filteredJobs->total(),
+            'perPage' => $perPage,
+            'sortBy' => $sortBy,
+            'sortOrder' => $sortOrder,
+            'categories' => $jobCategories,
+            'salaries' => $salaries,
+            'keywords' => $keywords,
+        ];
+
+        return view('client.job.index', $data);
     }
 
     public function single($employerSlug, $jobSlug)

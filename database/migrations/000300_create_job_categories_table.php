@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('job_categories', function (Blueprint $table) {
             $table->id();
+            $table->integer('order');
             $table->string('name',255)->nullable();
             $table->string('slug',255)->nullable();
             $table->string('image', 255)->nullable();

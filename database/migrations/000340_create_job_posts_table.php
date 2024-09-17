@@ -57,6 +57,10 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::table('job_posts', function (Blueprint $table) {
+            $table->foreignId('salary_id')->constrained()->onDelete('cascade');
+        });
+
         Schema::create('job_post_skill', function (Blueprint $table) {
             $table->id();
             $table->foreignId('job_post_id')->nullable()->constrained('job_posts')->onDelete('set null');

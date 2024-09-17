@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('blog_categories', function (Blueprint $table) {
             $table->id();
+            $table->integer('order');
             $table->string('name', 255);
             $table->string('slug', 255);
             $table->string('image', 255)->nullable();
