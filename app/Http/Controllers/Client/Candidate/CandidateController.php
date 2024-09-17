@@ -95,9 +95,14 @@ class CandidateController extends Controller
         return redirect()->back()->with('success', 'Công việc đã được lưu.');
     }
 
-    public function hot()
+    public function hot(Request $request)
     {
-        return view("client.candidate.hot");
+        $sortBy = $request->input('sortBy', 'newest');
+        $perPage = $request->input('perPage', 10);
+
+        $candidates = $this->candidateRepository->getAllCandidates($sortBy, $perPage);
+
+        return view('client.candidate.hot', compact('candidates', 'sortBy', 'perPage'));
     }
 
     public function editPassword()

@@ -15,16 +15,16 @@ class JobCategoryTableSeeder extends Seeder
     {
         DB::table('job_categories')->insert([
             [
-                'name' => 'Technology',
-                'slug' => Str::slug('Technology'),
+                'name' => 'Dịch vụ',
+                'slug' => Str::slug('dich-vu'),
                 'image' => 'logo.png',
                 'order' => '1',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Healthcare',
-                'slug' => Str::slug('Healthcare'),
+                'name' => 'Quản trị khách sạn',
+                'slug' => Str::slug('quan-tri-khach-san'),
                 'image' => 'logo1.png',
                 'order' => '2',
                 'created_at' => now(),

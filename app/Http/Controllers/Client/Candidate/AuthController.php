@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Client\Candidate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Employer\LoginRequest;
 use App\Http\Requests\Client\Employer\RegisterRequest;
-use App\Repositories\User\UserInterface;
 use App\Repositories\Candidate\CandidateInterface;
+use App\Repositories\User\UserInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -82,4 +83,31 @@ class AuthController extends Controller
 
         return redirect()->route('client.candidate.login');
     }
+
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->stateless()->user();
+
+            $user = $this->userRepository->createOrUpdateGoogleUser([
+                'name' => $googleUser->name,
+                'email' => $googleUser->email,
+                'google_id' => $googleUser->id,
+                'avatar_url' => $googleUser->avatar,
+                'password' => encrypt('password')
+            ]);
+
+            Auth::login($user);
+
+            return redirect()->route('client.client.index');
+        } catch (\Exception $e) {
+            return redirect()->route('client.candidate.login')->withErrors(['msg' => 'Đăng nhập thất bại']);
+        }
+    }
+
 }

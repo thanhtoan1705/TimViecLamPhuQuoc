@@ -2,11 +2,10 @@
 
 
 use App\Http\Controllers\Client\Auth\AuthController;
-use App\Http\Controllers\Client\Candidate\CandidateController;
-use App\Http\Controllers\Client\Employer\EmployerController;
-use App\Http\Controllers\Client\Candidate\AuthController as AuthCandidateController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\Auth\FacebookController;
+use App\Http\Controllers\Client\Candidate\AuthController as AuthCandidateController;
+use App\Http\Controllers\Client\Employer\EmployerController;
+use Illuminate\Support\Facades\Route;
 
 
 Route::get('/ung-vien/dang-nhap', [AuthCandidateController::class, 'login'])->name('candidate.login');
@@ -23,3 +22,7 @@ Route::get('nhap-otp', [AuthController::class, 'otp'])->name('OTP');
 
 Route::get('login/facebook', [FacebookController::class, 'redirectToFacebook'])->name('login.facebook');
 Route::get('login/facebook/callback', [FacebookController::class, 'handleFacebookCallback']);
+
+Route::get('auth/google', [AuthCandidateController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [AuthCandidateController::class, 'handleGoogleCallback']);
+

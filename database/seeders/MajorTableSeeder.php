@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,14 +14,14 @@ class MajorTableSeeder extends Seeder
     {
         DB::table('majors')->insert([
             [
-                'name' => 'Computer Science',
+                'name' => 'Quản lý nhà hàng',
                 'describe' => 'Study of computers and computational systems.',
                 'slug' => 'computer-science',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'name' => 'Electrical Engineering',
+                'name' => 'Quản lý khách sạn',
                 'describe' => 'Engineering field focused on electrical and electronic systems.',
                 'slug' => 'electrical-engineering',
                 'created_at' => now(),

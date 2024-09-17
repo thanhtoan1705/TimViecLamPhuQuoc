@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +22,8 @@ class CandidateTableSeeder extends Seeder
 //                'skill_id' => 1,
                 'degree_id' => 1,
                 'address_id' => 1,
-                'salary' => 50000000,
+                'salary_id' => 1,
+//                'salary' => 50000000,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -36,7 +36,8 @@ class CandidateTableSeeder extends Seeder
 //                'skill_id' => 1,
                 'degree_id' => 1,
                 'address_id' => 1,
-                'salary' => 60000000,
+                'salary_id' => 2,
+//                'salary' => 60000000,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -48,7 +49,8 @@ class CandidateTableSeeder extends Seeder
                 'education_id' => 1,
                 'degree_id' => 1,
                 'address_id' => 4,
-                'salary' => 60000000,
+                'salary_id' => 3,
+//                'salary' => 60000000,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -60,7 +62,8 @@ class CandidateTableSeeder extends Seeder
                 'education_id' => 1,
                 'degree_id' => 1,
                 'address_id' => 5,
-                'salary' => 60000000,
+                'salary_id' => 4,
+//                'salary' => 60000000,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -72,7 +75,8 @@ class CandidateTableSeeder extends Seeder
                 'education_id' => 1,
                 'degree_id' => 1,
                 'address_id' => 6,
-                'salary' => 60000000,
+                'salary_id' => 4,
+//                'salary' => 60000000,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -84,7 +88,8 @@ class CandidateTableSeeder extends Seeder
                 'education_id' => 1,
                 'degree_id' => 1,
                 'address_id' => 7,
-                'salary' => 60000000,
+                'salary_id' => 4,
+//                'salary' => 60000000,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

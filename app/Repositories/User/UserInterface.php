@@ -6,4 +6,6 @@ interface UserInterface
 {
     public function create(array $data);
 
+    public function createOrUpdateGoogleUser(array $googleUserData);
+
 }

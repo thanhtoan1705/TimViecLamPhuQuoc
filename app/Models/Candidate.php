@@ -19,7 +19,8 @@ class Candidate extends Model
         'education_id',
         'degree_id',
         'address_id',
-        'salary',
+        'salary_id',
+//        'salary',
         'description',
         'featured',
         'status',
@@ -58,6 +59,11 @@ class Candidate extends Model
     public function degree(): BelongsTo
     {
         return $this->belongsTo(Degree::class);
+    }
+
+    public function salary(): BelongsTo
+    {
+        return $this->belongsTo(Salary::class, 'salary_id');
     }
 
     public function addresses()

@@ -84,7 +84,6 @@ class CandidateRepository implements CandidateInterface
         } elseif ($sortBy === 'oldest') {
             $query->orderBy('created_at', 'asc');
         }
-        \Log::info($query->toSql());
         return $query->paginate($perPage);
     }
 

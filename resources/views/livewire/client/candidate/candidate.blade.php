@@ -1,7 +1,7 @@
 <div class="container">
     <div class="content-page">
         <div class="box-filters-job">
-            <p>Bạn đã chọn: {{ $sortBy }}</p>
+            <p>Bạn đã chọn: {{ $sortBy === 'newest' ? 'Ứng viên mới nhất' : 'Ứng viên cũ nhất' }}</p>
             <div class="row">
                 <div class="col-xl-6 col-lg-5">
                     <span class="text-small text-showing">Hiển thị <strong>{{ $candidates->firstItem() }}-{{ $candidates->lastItem() }}</strong> của <strong>{{ $candidates->total() }}</strong> ứng viên</span>
@@ -41,13 +41,7 @@
                                 <a href='#'>
                                     <h5>{{ $candidate->user->name }}</h5>
                                 </a>
-                                <span class="font-xs color-text-mutted">{{ $candidate->major->name }}</span>
-{{--                                <div class="rate-reviews-small pt-5">--}}
-{{--                                    @for ($i = 0; $i < 5; $i++)--}}
-{{--                                        <span><img src="{{ asset('assets/client/imgs/template/icons/star.svg') }}" alt="jobBox"></span>--}}
-{{--                                    @endfor--}}
-{{--                                    <span class="ml-10 color-text-mutted font-xs">({{ $candidate->reviews_count }})</span>--}}
-{{--                                </div>--}}
+                                <span class="font-xs color-text-mutted">{{ $candidate->major->name ?? '' }}</span>
                             </div>
                         </div>
                         <div class="card-block-info">
@@ -82,6 +76,6 @@
         </div>
     </div>
     <div class="paginations">
-        {{ $candidates->links() }}
+        {{ $candidates->links('vendor.pagination.custom') }}
     </div>
 </div>

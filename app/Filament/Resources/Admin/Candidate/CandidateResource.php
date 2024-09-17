@@ -13,7 +13,7 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Major;
 use App\Models\Province;
-use App\Models\Skill;
+use App\Models\Salary;
 use App\Models\Ward;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -140,10 +140,17 @@ class CandidateResource extends Resource
                                                 ->searchable()
                                                 ->nullable(),
 
-                                            TextInput::make('salary')
-                                                ->numeric()
-                                                ->nullable()
-                                                ->label('Mức lương'),
+                                            Select::make('salary_id')
+                                                ->label('Khoảng lương')
+                                                ->relationship('salary', 'name')
+                                                ->options(Salary::pluck('name', 'id'))
+                                                ->searchable()
+                                                ->nullable(),
+
+//                                            TextInput::make('salary')
+//                                                ->numeric()
+//                                                ->nullable()
+//                                                ->label('Mức lương'),
 
                                             RichEditor::make('description')
                                                 ->nullable()

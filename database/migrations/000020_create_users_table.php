@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('phone', 20)->nullable();
             $table->string('remember_token', 255)->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->enum('role', ['employer', 'candidate', 'admin']);
+            $table->enum('role', ['candidate', 'employer', 'admin']);
             $table->string('google_id', 255)->nullable();
             $table->string('facebook_id', 255)->nullable();
             $table->timestamps();

@@ -60,30 +60,6 @@
     <script src="{{ asset('assets/client/js/plugins/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('assets/client/js/plugins/counterup.js') }}"></script>
     <script src="{{ asset('assets/client/js/main8c94.js?v=4.1') }}"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        @if(session()->has('flasher'))
-        @foreach(session('flasher') as $notification)
-        var level = "{{ $notification['level'] }}";
-        var message = "{{ $notification['message'] }}";
-
-        // Tùy chỉnh cấp độ thông báo
-        if (level === 'error') {
-            level = 'lỗi';
-        } else if (level === 'success') {
-            level = 'thành công';
-        } else if (level === 'info') {
-            level = 'thông tin';
-        } else if (level === 'warning') {
-            level = 'cảnh báo';
-        }
-
-        // Hiển thị thông báo
-        Flasher[level](message);
-        @endforeach
-        @endif
-    });
-</script>
 {{--    <script src="{{ asset('assets/js/noUISlider.js') }}"></script>--}}
 {{--    <script src="{{ asset('assets/js/slider.js') }}"></script>--}}
 </body>

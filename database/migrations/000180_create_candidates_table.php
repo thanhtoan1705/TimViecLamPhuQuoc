@@ -49,8 +49,13 @@ return new class extends Migration
                 ->constrained('addresses')
                 ->onDelete('set null');
 
+            $table->foreignId('salary_id')
+                ->nullable()
+                ->constrained('salaries')
+                ->onDelete('set null');
 
-            $table->bigInteger('salary')->nullable();
+
+//            $table->bigInteger('salary')->nullable();
             $table->text('description')->nullable();
             $table->boolean('featured')->default(true);
             $table->boolean('status')->default(true);

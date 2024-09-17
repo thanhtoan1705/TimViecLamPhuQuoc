@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Client\Candidate;
 
+use App\Models\Address;
 use App\Repositories\Location\LocationInterface;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -42,10 +43,10 @@ class Profile extends Component
         $this->email = $user->email;
         $this->phone = $user->phone;
         $this->description = $candidate->description;
-        $this->province_id = $address->province_id;
-        $this->district_id = $address->district_id;
-        $this->ward_id = $address->ward_id;
-        $this->street = $address->street;
+        $this->province_id = $address->province_id ?? null;
+        $this->district_id = $address->district_id ?? null;
+        $this->ward_id = $address->ward_id ?? null;
+        $this->street = $address->street ?? '';
 
         $this->provinces = $this->locationRepository->getAllLocations();
 
@@ -96,10 +97,14 @@ class Profile extends Component
             'ward_id' => $this->ward_id,
             'street' => $this->street,
         ];
+        if ($user->candidate->address_id) {
+            $user->candidate->address->update($addressData);
+        } else {
+            $address = Address::create($addressData);
+            $user->candidate->update(['address_id' => $address->id]);
+        }
 
-        $user->candidate->address->update($addressData);
-
-        flash('message', 'Thông tin tài khoản đã được cập nhật.');
+        flash()->success('Thông tin tài khoản đã được cập nhật.');
     }
 
     public function render()
