@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Observers\UserObserver;
 use App\Repositories\Blog\BlogInterface;
 use App\Repositories\Blog\BlogRepository;
 use App\Repositories\Candidate\CandidateInterface;
@@ -48,5 +50,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        User::observe(UserObserver::class);
     }
 }

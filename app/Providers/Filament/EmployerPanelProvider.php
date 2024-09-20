@@ -25,6 +25,7 @@ use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use App\Filament\Resources\Pages\RegistrationEmployer;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
+use App\Filament\Pages\Auth\Employer\RequestPasswordReset;
 
 class EmployerPanelProvider extends PanelProvider
 {
@@ -35,6 +36,8 @@ class EmployerPanelProvider extends PanelProvider
             ->path('panel/employer')
             ->login(EmployerLogin::class)
             ->registration(RegistrationEmployer::class)
+            ->passwordReset(RequestPasswordReset::class)
+            ->databaseNotifications()
             ->colors([
                 'primary' => Color::Blue,
             ])
