@@ -214,11 +214,6 @@
             </div>
         </section>
 
-
-        <!-- Component newsletter -->
-        <x-client.newsletter/>
-        <!-- End component newsletter -->
-
     </main>
 
 @endsection

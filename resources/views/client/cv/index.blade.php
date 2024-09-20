@@ -370,6 +370,6 @@
                 </div>
             </div>
         </section>
-        <x-client.newsletter></x-client.newsletter>
+
     </main>
 @endsection

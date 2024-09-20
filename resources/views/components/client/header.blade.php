@@ -31,14 +31,13 @@
             @if(auth()->check())
                 <div class="header-right">
                     <div id="loginContainer" class="login-container">
-
-                        <a href="" id="loginButton" class='btn btn-default btn-shadow ml-40 hover-up'>Tài khoản</a>
-{{--                        <div id="loginButtons" class="login-buttons" style="display: none;">--}}
-{{--                            <a class='btn btn-default btn-shadow ml-40 hover-up'--}}
-{{--                               href="">Quản lý</a>--}}
-{{--                            <a class='btn btn-default btn-shadow ml-40 hover-up'--}}
-{{--                               href="{{ route('client.candidate.logout') }}">Thoát</a>--}}
-{{--                        </div>--}}
+                        <button id="loginButton" class='btn btn-default btn-shadow ml-40 hover-up'>Tài khoản</button>
+                        <div id="loginButtons" class="login-buttons" style="display: none;">
+                            <a class='btn btn-default btn-shadow ml-40 hover-up'
+                            href="{{route('client.candidate.profile')}}">Hồ sơ</a>
+                            <a class='btn btn-default btn-shadow ml-40 hover-up'
+                            href="{{route('client.candidate.logout')}}">Đăng xuất</a>
+                        </div>
                     </div>
                 </div>
             @else

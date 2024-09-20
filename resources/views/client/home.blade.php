@@ -641,14 +641,14 @@
                             }
                         @endphp
                         <div class="
-                                @if($loop->index == 0) col-xl-3 col-lg-3
-                                @elseif($loop->index == 1) col-xl-4 col-lg-4
-                                @elseif($loop->index == 2) col-xl-5 col-lg-5
-                                @elseif($loop->index == 3) col-xl-4 col-lg-4
-                                @elseif($loop->index == 4) col-xl-5 col-lg-5
-                                @else col-xl-3 col-lg-3
+                                @if($loop->index == 0) col-xl-3 col-lg-3 col-md-5 col-sm-12 col-12
+                                @elseif($loop->index == 1) col-xl-4 col-lg-4 col-md-7 col-sm-12 col-12
+                                @elseif($loop->index == 2) col-xl-5 col-lg-5 col-md-7 col-sm-12 col-12
+                                @elseif($loop->index == 3) col-xl-4 col-lg-4 col-md-5 col-sm-12 col-12
+                                @elseif($loop->index == 4) col-xl-5 col-lg-5 col-md-7 col-sm-12 col-12
+                                @else col-xl-3 col-lg-3 col-md-5 col-sm-12 col-12
                                 @endif
-                                col-md-7 col-sm-12 col-12">
+                                ">
                             <div class="card-image-top hover-up">
                                 <a href='jobs-grid.html'>
                                     <div class="image" style="background-image: url('{{ $img }}');">
