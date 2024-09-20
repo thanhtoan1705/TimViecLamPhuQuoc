@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('transaction_logs', function (Blueprint $table) {
-            $table->id('log_id');
+            $table->id();
             $table->foreignId('transaction_id')->constrained('transactions')->onDelete('cascade');
             $table->string('event');
             $table->timestamps();

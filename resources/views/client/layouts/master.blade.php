@@ -10,12 +10,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="msapplication-TileColor" content="#0E0E0E">
     <meta name="template-color" content="#0E0E0E">
-{{--    <link rel="manifest" href="manifest.html" crossorigin>--}}
+    <link rel="manifest" href="manifest.html" crossorigin>
     <meta name="msapplication-config" content="browserconfig.html">
     <meta name="description" content="Index page">
     <meta name="keywords" content="index, page">
     <meta name="author" content="">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/client/imgs/template/favicon.svg') }}">
     <link href="{{ asset('assets/client/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/client/css/stylecd4e.css?version=4.1') }}" rel="stylesheet">

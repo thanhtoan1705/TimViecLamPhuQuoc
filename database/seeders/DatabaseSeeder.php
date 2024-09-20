@@ -39,15 +39,15 @@ class DatabaseSeeder extends Seeder
             InterviewTableSeeder::class,
             JobPostPackagesTableSeeder::class,
             PromotionSeeder::class,
+            MerchantSeeder::class,
+            TransactionSeeder::class,
+            TransactionLogSeeder::class,
+            PaymentMethodSeeder::class,
             PaymentTableSeeder::class,
             UserJobPackageSeeder::class,
             JobPostCandidateTableSeeder::class,
             SavedJobSeeder::class,
-            AssignEmployerPermissionsSeeder::class,
-            PaymentMethodSeeder::class,
-            TransactionSeeder::class,
-            TransactionLogSeeder::class,
-            MerchantSeeder::class,
+//            AssignEmployerPermissionsSeeder::class,
         ]);
     }
 }

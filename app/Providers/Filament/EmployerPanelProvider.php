@@ -60,7 +60,7 @@ class EmployerPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
-                EmployerNotificationsWidget::class,
+//                EmployerNotificationsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
