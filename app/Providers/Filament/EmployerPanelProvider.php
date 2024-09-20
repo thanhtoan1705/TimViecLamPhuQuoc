@@ -3,6 +3,10 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\EmployerLogin;
+use App\Filament\Pages\Auth\Employer\RequestPasswordReset;
+use App\Filament\Resources\Employer\Notification\NotificationResource\Pages\NotificationsPage;
+use App\Filament\Resources\Employer\Notification\NotificationResource\Widgets\EmployerNotificationsWidget;
+use App\Filament\Resources\Pages\RegistrationEmployer;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -23,9 +27,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
-use App\Filament\Resources\Pages\RegistrationEmployer;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
-use App\Filament\Pages\Auth\Employer\RequestPasswordReset;
 
 class EmployerPanelProvider extends PanelProvider
 {
@@ -58,6 +60,7 @@ class EmployerPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                EmployerNotificationsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -78,8 +81,6 @@ class EmployerPanelProvider extends PanelProvider
                     ->label(fn() => Auth::user()->name)
                     ->url(fn(): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle')
-
-
             ])
             ->plugins([
                 FilamentEditProfilePlugin::make()

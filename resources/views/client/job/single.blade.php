@@ -131,7 +131,7 @@
                                             alt="jobBox"></div>
                                     <div class="sidebar-text-info ml-10"><span
                                             class="text-description mb-10">Địa chỉ</span><strong
-                                            class="small-heading">{{$job->employer->address->province->name}}</strong>
+                                            class="small-heading">{{$job->employer->address->province->name ?? null}}</strong>
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +184,7 @@
                                     <div id="map" style="height: 200px; width: 100%;"></div>
                                 </div>
                                 <ul class="ul-disc">
-                                    <li>{{$job->employer->address->street}}</li>
+                                    <li>{{$job->employer->address->street ?? null}}</li>
                                     <li>Điện thoại: {{$job->employer->company_phone}}</li>
                                     <li>Email: {{$job->employer->user->email}}</li>
                                 </ul>
@@ -222,7 +222,7 @@
                                                             </div>
                                                             <div class="col-6 text-end">
                                                                 <span
-                                                                    class="card-briefcase">{{ $otherJob->employer->address->province->name }}</span>
+                                                                    class="card-briefcase">{{ $otherJob->employer->address->province->name ?? '' }}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -514,8 +514,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var lat = {{$job->employer->address->latitude}};
-            var lon = {{$job->employer->address->longitude}};
+            var lat = {{$job->employer->address->latitude ?? null}};
+            var lon = {{$job->employer->address->longitude ?? null}};
             var map = L.map('map', {
                 center: [lat, lon],
                 zoom: 16,

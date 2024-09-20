@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class JobPostCandidate extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = ['job_post_id', 'candidate_id', 'file', 'status', 'description'];
 

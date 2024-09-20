@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Client\Job;
 use App\Http\Controllers\Controller;
 use App\Repositories\Filter\FilterInterface;
 use App\Repositories\Job\JobInterface;
-use Illuminate\Http\Request;
 use Flasher\Laravel\Facade\Flasher;
+use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
@@ -102,9 +102,9 @@ class JobController extends Controller
 
     public function applyForJob(Request $request, $jobId)
     {
-        $lastApplication = $this->jobRepository->findLastApplication(auth()->id(), $jobId);
+        $lastApplication = $this->jobRepository->findLastApplication(auth()->user()->candidate->id, $jobId);
 
-        if (\Carbon\Carbon::parse($lastApplication->created_at)->diffInHours(now()) < 24) {
+        if ($lastApplication && \Carbon\Carbon::parse($lastApplication->created_at)->diffInHours(now()) < 24) {
             Flasher::error('Bạn đã nộp CV cho bài đăng này. Vui lòng đợi 24 giờ để nộp lại.');
             return redirect()->back();
         }
@@ -115,7 +115,9 @@ class JobController extends Controller
         ]);
 
         $filePath = $request->file('resume')->store('resumes', 'public');
-        $this->jobRepository->applyForJob($jobId, auth()->id(), $filePath, $request->input('description'));
+        $this->jobRepository->applyForJob($jobId, auth()->user()->candidate->id, $filePath, $request->input('description'));
+
+
 
         Flasher::success('Đã nộp đơn thành công.');
         return redirect()->back();

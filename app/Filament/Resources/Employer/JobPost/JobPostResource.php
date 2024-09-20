@@ -2,13 +2,11 @@
 
 namespace App\Filament\Resources\Employer\JobPost;
 
-use App\Filament\Resources\Employer\JobPost\JobPostResource\Pages;
 use App\Filament\Resources\Employer\JobPost\JobPostResource\RelationManagers;
 use App\Models\JobPost;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
@@ -180,6 +178,11 @@ class JobPostResource extends Resource
                                 TextInput::make('quantity')
                                     ->numeric()
                                     ->label('Số lượng')->placeholder('Vui lòng nhập số lượng'),
+                                Forms\Components\Select::make('salary_id')
+                                    ->required()
+                                    ->placeholder('Vui lòng chọn bằng cấp')
+                                    ->relationship('salary', 'name')
+                                    ->label('Khoảng lương'),
                                 TextInput::make('address')
                                     ->required()
                                     ->label('Địa chỉ')->placeholder('Vui lòng nhập địa chỉ'),
