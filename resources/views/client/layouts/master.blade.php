@@ -15,6 +15,7 @@
     <meta name="description" content="Index page">
     <meta name="keywords" content="index, page">
     <meta name="author" content="">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/client/imgs/template/favicon.svg') }}">
     <link href="{{ asset('assets/client/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/client/css/stylecd4e.css?version=4.1') }}" rel="stylesheet">

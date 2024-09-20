@@ -44,6 +44,10 @@ class DatabaseSeeder extends Seeder
             JobPostCandidateTableSeeder::class,
             SavedJobSeeder::class,
             AssignEmployerPermissionsSeeder::class,
+            PaymentMethodSeeder::class,
+            TransactionSeeder::class,
+            TransactionLogSeeder::class,
+            MerchantSeeder::class,
         ]);
     }
 }

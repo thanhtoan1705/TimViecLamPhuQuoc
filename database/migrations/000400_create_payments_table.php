@@ -19,8 +19,8 @@ return new class extends Migration {
             $table->bigInteger('amount');
             $table->dateTime('payment_date');
             $table->dateTime('expiration_date');
-            $table->string('payment_method', 255);
-            $table->tinyInteger('payment_status')->default(1);
+            $table->foreignId('payment_method_id')->nullable()->constrained('payment_methods')->onDelete('set null');
+            $table->foreignId('transaction_id')->nullable()->constrained('transactions')->onDelete('cascade');
 
             $table->timestamps();
         });

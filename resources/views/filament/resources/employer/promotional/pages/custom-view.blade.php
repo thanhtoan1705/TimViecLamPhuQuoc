@@ -2,11 +2,7 @@
     function getTimeRemaining($promotion) {
         $now = new DateTime();
         $endTime = new DateTime($promotion->end_time);
-
-        // Tính khoảng thời gian còn lại
         $interval = $now->diff($endTime);
-
-        // Lấy số ngày, giờ, và phút
         $days = $interval->days;
         $hours = $interval->h;
         $minutes = $interval->i;
@@ -14,7 +10,6 @@
         return "{$days} ngày {$hours} giờ {$minutes} phút";
     }
 @endphp
-
 
 <x-filament::page>
     <style>
@@ -70,15 +65,17 @@
             display: flex;
             flex-direction: column;
             padding: 10px;
-            flex: 1 1 300px;
+            /*flex: 1 1 300px;*/
             box-sizing: border-box;
         }
 
         .section-box {
             background-color: white;
             padding: 20px;
-            border: 1px solid #ddd;
             border-radius: 8px;
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
         }
 
         .navtest {

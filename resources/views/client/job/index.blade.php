@@ -130,7 +130,7 @@
                             <div class="box-filters-job">
                                 <div class="row">
                                     <div class="col-xl-6 col-lg-5"><span
-                                            class="text-small text-showing">Hiển thị <strong>{{ $job->firstItem() }}-{{ $job->lastItem() }}</strong> trên <strong>{{ $totalJobs }} </strong>việc làm</span>
+                                            class="text-small text-showing">Hiển thị <strong>{{ $jobs->firstItem() }}-{{ $jobs->lastItem() }}</strong> trên <strong>{{ $totalJobs }} </strong>việc làm</span>
                                     </div>
                                     <div class="col-xl-6 col-lg-7 text-lg-end mt-sm-15">
                                         <div class="display-flex2">
@@ -188,7 +188,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                @foreach($job as $item)
+                                @foreach($jobs as $item)
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                                         <div class="card-grid-2 hover-up">
                                             <div class="card-grid-2-image-left"><span class="flash"></span>
@@ -234,7 +234,7 @@
                             </div>
                         </div>
                         <div class="paginations">
-                            {{ $job->appends(request()->query())->links('vendor.pagination.custom_job') }}
+                            {{ $jobs->appends(request()->query())->links('vendor.pagination.custom_job') }}
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12 col-sm-12 col-12">
@@ -242,16 +242,18 @@
                             <div class="sidebar-filters">
                                 <form method="GET" action="{{ route('client.job.index') }}">
                                     <div class="filter-block head-border mb-30">
-                                        <h5>Bộ lọc nâng cao<a class="link-reset" href="#">Làm mới</a></h5>
+                                        <h5>Bộ lọc nâng cao<a class="link-reset" href="{{ route('client.job.index') }}">Làm
+                                                mới</a></h5>
                                     </div>
                                     <div class="filter-block mb-30">
                                         <div class="form-group select-style select-style-icon">
-                                            <select class="form-control form-icons select-active">
-                                                <option>Cần Thơ</option>
-                                                <option>Hồ Chí Minh</option>
-                                                <option>Hà Nội</option>
-                                                <option>Phú Quốc</option>
-                                            </select><i class="fi-rr-marker"></i>
+                                            <select id="location-select" name="locations[]" class="form-control form-icons select-active">
+                                                <option value="">Chọn địa điểm</option>
+                                                @foreach($locations as $location)
+                                                    <option value="{{ $location }}">{{ $location }}</option>
+                                                @endforeach
+                                            </select>
+                                            <i class="fi-rr-marker"></i>
                                         </div>
                                     </div>
                                     <div class="filter-block mb-20">
@@ -259,19 +261,17 @@
                                         <div class="form-group">
                                             <ul class="list-checkbox">
                                                 @foreach($categories as $category)
-                                                    @if($category->job_posts_count > 0)
-                                                        <li>
-                                                            <label class="cb-container">
-                                                                <input type="checkbox" name="categories[]"
-                                                                       value="{{ $category->id }}"
-                                                                    {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}>
-                                                                <span class="text-small">{{ $category->name }}</span>
-                                                                <span class="checkmark"></span>
-                                                            </label>
-                                                            <span
-                                                                class="number-item">{{ $category->job_posts_count }}</span>
-                                                        </li>
-                                                    @endif
+                                                    <li>
+                                                        <label class="cb-container">
+                                                            <input type="checkbox" name="categories[]"
+                                                                   value="{{ $category->id }}"
+                                                                {{ in_array($category->id, request('categories', [])) ? 'checked' : '' }}>
+                                                            <span class="text-small">{{ $category->name }}</span>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                        <span
+                                                            class="number-item">{{ $category->job_posts_count }}</span>
+                                                    </li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -281,19 +281,17 @@
                                         <div class="form-group mb-20">
                                             <ul class="list-checkbox">
                                                 @foreach($salaries as $salary)
-                                                    @if($salary->job_posts_count > 0)
-                                                        <li>
-                                                            <label class="cb-container">
-                                                                <input type="checkbox" name="salaries[]"
-                                                                       value="{{ $salary->id }}"
-                                                                    {{ in_array($salary->id, request('salaries', [])) ? 'checked' : '' }}>
-                                                                <span class="text-small">{{ $salary->name }}</span>
-                                                                <span class="checkmark"></span>
-                                                            </label>
-                                                            <span
-                                                                class="number-item">{{ $salary->job_posts_count }}</span>
-                                                        </li>
-                                                    @endif
+                                                    <li>
+                                                        <label class="cb-container">
+                                                            <input type="checkbox" name="salaries[]"
+                                                                   value="{{ $salary->id }}"
+                                                                {{ in_array($salary->id, request('salaries', [])) ? 'checked' : '' }}>
+                                                            <span class="text-small">{{ $salary->name }}</span>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                        <span
+                                                            class="number-item">{{ $salary->job_posts_count }}</span>
+                                                    </li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -321,27 +319,17 @@
                                         <h5 class="medium-heading mb-10">Chức vụ</h5>
                                         <div class="form-group">
                                             <ul class="list-checkbox">
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">Senior</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">12</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox" checked="checked"><span
-                                                            class="text-small">Junior</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">35</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">Fresher</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">56</span>
-                                                </li>
+                                                @foreach($ranks as $rank)
+                                                    <li>
+                                                        <label class="cb-container">
+                                                            <input type="checkbox" name="ranks[]"
+                                                                   value="{{ $rank->id }}"
+                                                                {{ in_array($rank->id, request('ranks', [])) ? 'checked' : '' }}>
+                                                            <span class="text-small">{{ $rank->name }}</span>
+                                                            <span class="checkmark"></span>
+                                                        </label><span class="number-item">{{ $rank->job_count }}</span>
+                                                    </li>
+                                                @endforeach
                                             </ul>
                                         </div>
                                     </div>
@@ -349,76 +337,18 @@
                                         <h5 class="medium-heading mb-10">Kinh nghiệm làm việc</h5>
                                         <div class="form-group">
                                             <ul class="list-checkbox">
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">Thực tập</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">56</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">Entry Level</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">87</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox" checked="checked"><span
-                                                            class="text-small">Mức giữa</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">24</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">Giám đốc</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">45</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">Điều Hành</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">76</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">Kết hợp</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">89</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="filter-block mb-30">
-                                        <h5 class="medium-heading mb-10">Tại chỗ/Từ xa</h5>
-                                        <div class="form-group">
-                                            <ul class="list-checkbox">
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">Tại chỗ</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">12</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox" checked="checked"><span
-                                                            class="text-small">Từ xa</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">65</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">Hỗn hợp</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">58</span>
-                                                </li>
+                                                @foreach($experiences as $experience)
+                                                    <li>
+                                                        <label class="cb-container">
+                                                            <input type="checkbox" name="experiences[]"
+                                                                   value="{{ $experience->id }}"
+                                                                {{ in_array($experience->id, request('experiences', [])) ? 'checked' : '' }}>
+                                                            <span class="text-small">{{ $experience->name }}</span>
+                                                            <span class="checkmark"></span>
+                                                        </label><span
+                                                            class="number-item">{{ $experience->job_count }}</span>
+                                                    </li>
+                                                @endforeach
                                             </ul>
                                         </div>
                                     </div>
@@ -428,31 +358,30 @@
                                             <ul class="list-checkbox">
                                                 <li>
                                                     <label class="cb-container">
-                                                        <input type="checkbox" checked="checked"><span
-                                                            class="text-small">Tất cả</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">78</span>
+                                                        <input type="checkbox" name="posted_time"
+                                                               value="1_day" {{ request('posted_time') == '1_day' ? 'checked' : '' }}>
+                                                        <span class="text-small">1 ngày</span>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                    <span class="number-item">{{ $jobsCount1Day }}</span>
                                                 </li>
                                                 <li>
                                                     <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">1 ngày</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">65</span>
+                                                        <input type="checkbox" name="posted_time"
+                                                               value="7_days" {{ request('posted_time') == '7_days' ? 'checked' : '' }}>
+                                                        <span class="text-small">7 ngày</span>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                    <span class="number-item">{{ $jobsCount7Days }}</span>
                                                 </li>
                                                 <li>
                                                     <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">7 ngày</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">24</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">30 ngày</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">56</span>
+                                                        <input type="checkbox" name="posted_time"
+                                                               value="30_days" {{ request('posted_time') == '30_days' ? 'checked' : '' }}>
+                                                        <span class="text-small">30 ngày</span>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                    <span class="number-item">{{ $jobsCount30Days }}</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -461,34 +390,18 @@
                                         <h5 class="medium-heading mb-15">Loại công việc</h5>
                                         <div class="form-group">
                                             <ul class="list-checkbox">
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">Toàn thời gian</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">25</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox" checked="checked"><span
-                                                            class="text-small">Bán thời gian</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">64</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">Công việc từ xa</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">78</span>
-                                                </li>
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox"><span
-                                                            class="text-small">Làm việc tự do</span><span
-                                                            class="checkmark"></span>
-                                                    </label><span class="number-item">97</span>
-                                                </li>
+                                                @foreach($jobTypes as $jobType)
+                                                    <li>
+                                                        <label class="cb-container">
+                                                            <input type="checkbox" name="job_types[]"
+                                                                   value="{{ $jobType->id }}"
+                                                                {{ in_array($jobType->id, request('job_types', [])) ? 'checked' : '' }}>
+                                                            <span class="text-small">{{ $jobType->name }}</span>
+                                                            <span class="checkmark"></span>
+                                                        </label><span
+                                                            class="number-item">{{ $jobType->job_count }}</span>
+                                                    </li>
+                                                @endforeach
                                             </ul>
                                         </div>
                                     </div>
@@ -607,80 +520,65 @@
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            console.log('JavaScript đã được tải');
             const sortDropdowns = document.querySelectorAll('.dropdown-menu a');
             const jobListContainer = document.querySelector('#job-list-container');
 
             sortDropdowns.forEach(dropdown => {
                 dropdown.addEventListener('click', function (event) {
                     event.preventDefault();
-
-                    // Lấy các tham số từ URL hiện tại
                     const url = new URL(window.location.href);
                     const currentParams = new URLSearchParams(url.search);
-
-                    // Cập nhật các tham số từ thuộc tính data của dropdown
                     const perPage = document.querySelector('#dropdownSort').textContent.trim();
                     const sortBy = this.getAttribute('data-sort-by');
                     const sortOrder = this.getAttribute('data-sort-order');
 
-                    // Cập nhật các tham số trong URL
                     currentParams.set('per_page', perPage);
                     currentParams.set('sort_by', sortBy);
                     currentParams.set('sort_order', sortOrder);
 
-                    // Chuyển hướng đến URL mới
                     url.search = currentParams.toString();
                     window.location.href = url.toString();
                 });
             });
-            document.querySelectorAll('input[name="categories[]"]').forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    const url = new URL(window.location.href);
-                    const currentParams = new URLSearchParams(url.search);
-                    currentParams.delete('categories[]');
-                    document.querySelectorAll('input[name="categories[]"]:checked').forEach(function (checkedBox) {
-                        currentParams.append('categories[]', checkedBox.value);
+
+            function updateFilter(name) {
+                document.querySelectorAll(`input[name="${name}"], select[name="${name}"]`).forEach(function (element) {
+
+                    element.addEventListener('change', function () {
+
+                        const url = new URL(window.location.href);
+                        const currentParams = new URLSearchParams(url.search);
+
+                        currentParams.delete(name);
+
+                        if (element.type === 'checkbox') {
+                            document.querySelectorAll(`input[name="${name}"]:checked`).forEach(function (checkedBox) {
+                                console.log(`Checkbox selected: ${checkedBox.value}`);
+                                currentParams.append(name, checkedBox.value);
+                            });
+                        } else if (element.type === 'select-one') {
+                            console.log(`Select value: ${element.value}`);
+                            if (element.value) {
+                                currentParams.set(name, element.value);
+                            }
+                        }
+
+                        url.search = currentParams.toString();
+                        window.location.href = url.toString();
                     });
-                    url.search = currentParams.toString();
-                    window.location.href = url.toString();
                 });
-            });
-            document.querySelectorAll('input[name="salaries[]"]').forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    const url = new URL(window.location.href);
-                    const currentParams = new URLSearchParams(url.search);
+            }
 
-                    // Xóa tất cả các tham số lương hiện có
-                    currentParams.delete('salaries[]');
-
-                    // Lấy tất cả các checkbox đã chọn
-                    document.querySelectorAll('input[name="salaries[]"]:checked').forEach(function (checkedBox) {
-                        currentParams.append('salaries[]', checkedBox.value);
-                    });
-
-                    // Chuyển hướng đến URL mới với các tham số đã cập nhật
-                    url.search = currentParams.toString();
-                    window.location.href = url.toString();
-                });
-            });
-            document.querySelectorAll('input[name="keywords[]"]').forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    const url = new URL(window.location.href);
-                    const currentParams = new URLSearchParams(url.search);
-
-                    // Xóa tất cả các tham số từ khóa hiện có
-                    currentParams.delete('keywords[]');
-
-                    // Lấy tất cả các checkbox đã chọn
-                    document.querySelectorAll('input[name="keywords[]"]:checked').forEach(function (checkedBox) {
-                        currentParams.append('keywords[]', checkedBox.value);
-                    });
-
-                    // Chuyển hướng đến URL mới với các tham số đã cập nhật
-                    url.search = currentParams.toString();
-                    window.location.href = url.toString();
-                });
-            });
+            updateFilter('categories[]');
+            updateFilter('salaries[]');
+            updateFilter('keywords[]');
+            updateFilter('ranks[]');
+            updateFilter('experiences[]');
+            updateFilter('job_types[]');
+            updateFilter('locations[]');
         });
+
     </script>
+
 @endsection

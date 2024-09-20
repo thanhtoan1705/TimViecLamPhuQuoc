@@ -16,8 +16,8 @@ class Payment extends Model
         'amount',
         'payment_date',
         'expiration_date',
-        'payment_method',
-        'payment_status',
+        'payment_method_id',
+        'transaction_id',
     ];
 
     public function employer()
@@ -28,5 +28,20 @@ class Payment extends Model
     public function jobPostPackage()
     {
         return $this->belongsTo(JobPostPackage::class, 'packages_id');
+    }
+
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class, 'promotion_id');
+    }
+
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
+    }
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class, 'transaction_id');
     }
 }

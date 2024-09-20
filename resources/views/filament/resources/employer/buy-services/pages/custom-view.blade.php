@@ -133,7 +133,10 @@
                     <li>Cập nhật tin không giới hạn</li>
                     <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
                 </ul>
-                <a href="#" class="subscribe-btn">Đăng ký</a>
+                <form action="{{ route('client.employer.payment') }}" method="GET">
+                    <input type="hidden" name="package_id" value="{{ $package->id }}">
+                    <button type="submit" class="subscribe-btn">Đăng ký</button>
+                </form>
             </div>
         @endforeach
     </div>

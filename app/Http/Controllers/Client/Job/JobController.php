@@ -25,6 +25,11 @@ class JobController extends Controller
         $selectedCategories = $request->input('categories', []);
         $selectedSalaries = $request->input('salaries', []);
         $selectedKeywords = $request->input('keywords', []);
+        $selectedRanks = $request->input('ranks', []);
+        $selectedExperiences = $request->input('experiences', []);
+        $selectedJobTypes = $request->input('job_types', []);
+        $selectedPostedTime = $request->input('posted_time', null);
+        $selectedLocations = $request->input('locations', []);
 
         $perPage = $request->query('per_page', 12);
         $sortBy = $request->query('sort_by', 'created_at');
@@ -40,29 +45,37 @@ class JobController extends Controller
             $sortOrder = 'desc';
         }
 
-        $filteredData = $this->filterRepository->filterJob($selectedCategories, $selectedSalaries, $selectedKeywords);
-
-        $jobCategories = $filteredData['categories'];
-        $salaries = $filteredData['salaries'];
-        $keywords = $filteredData['keywords'];
+        $filteredData = $this->filterRepository->filterJob(
+            $selectedCategories,
+            $selectedSalaries,
+            $selectedKeywords,
+            $selectedRanks,
+            $selectedExperiences,
+            $selectedJobTypes,
+            $selectedPostedTime,
+            $selectedLocations,
+        );
 
         $filteredJobsQuery = $filteredData['jobs'];
 
         $filteredJobs = $filteredJobsQuery->orderBy($sortBy, $sortOrder)->paginate($perPage);
 
-        if ($request->ajax()) {
-            return view('client.job.partials.job_list', ['job' => $filteredJobs])->render();
-        }
-
         $data = [
-            'job' => $filteredJobs,
+            'jobs' => $filteredJobs,
             'totalJobs' => $filteredJobs->total(),
             'perPage' => $perPage,
             'sortBy' => $sortBy,
             'sortOrder' => $sortOrder,
-            'categories' => $jobCategories,
-            'salaries' => $salaries,
-            'keywords' => $keywords,
+            'categories' => $filteredData['categories'],
+            'salaries' => $filteredData['salaries'],
+            'keywords' => $filteredData['keywords'],
+            'ranks' => $filteredData['ranks'],
+            'experiences' => $filteredData['experiences'],
+            'jobTypes' => $filteredData['jobTypes'],
+            'jobsCount1Day' => $filteredData['jobsCount1Day'],
+            'jobsCount7Days' => $filteredData['jobsCount7Days'],
+            'jobsCount30Days' => $filteredData['jobsCount30Days'],
+            'locations' => $filteredData['locations'],
         ];
 
         return view('client.job.index', $data);
