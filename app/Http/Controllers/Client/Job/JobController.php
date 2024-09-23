@@ -7,17 +7,22 @@ use App\Repositories\Filter\FilterInterface;
 use App\Repositories\Job\JobInterface;
 use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Http\Request;
+use App\Services\Search\SearchService;
 
 class JobController extends Controller
 {
     protected $jobRepository;
     protected $filterRepository;
+    protected $searchService;
 
 
-    public function __construct(JobInterface $jobRepository, FilterInterface $filterRepository)
+    public function __construct(JobInterface $jobRepository,
+                                FilterInterface $filterRepository,
+                                SearchService $searchService)
     {
         $this->jobRepository = $jobRepository;
         $this->filterRepository = $filterRepository;
+        $this->searchService = $searchService;
     }
 
     public function index(Request $request)
@@ -60,6 +65,9 @@ class JobController extends Controller
 
         $filteredJobs = $filteredJobsQuery->orderBy($sortBy, $sortOrder)->paginate($perPage);
 
+        $searchJob = $request->only(['category', 'location', 'salary', 'experience', 'keyword']);
+        $jobResult = $this->searchService->searchJobs($searchJob);
+
         $data = [
             'jobs' => $filteredJobs,
             'totalJobs' => $filteredJobs->total(),
@@ -76,6 +84,7 @@ class JobController extends Controller
             'jobsCount7Days' => $filteredData['jobsCount7Days'],
             'jobsCount30Days' => $filteredData['jobsCount30Days'],
             'locations' => $filteredData['locations'],
+            'jobResult' => $jobResult,
         ];
 
         return view('client.job.index', $data);

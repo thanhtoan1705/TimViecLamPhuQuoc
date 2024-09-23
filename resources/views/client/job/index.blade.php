@@ -12,112 +12,7 @@
                              data-wow-delay=".1s">Khám phá cơ hội việc làm tuyệt vời và tìm kiếm công việc phù hợp với
                             bạn.<br class="d-none d-xl-block">Ứng tuyển ngay để bắt đầu sự nghiệp của bạn!?
                         </div>
-                        <div class="form-find text-start mt-40 wow animate__animated animate__fadeInUp"
-                             data-wow-delay=".2s">
-                            <form>
-                                <div class="box-industry">
-                                    <select class="form-input mr-10 select-active input-industry">
-                                        <option value="0">Ngành</option>
-                                        <option value="1">Software</option>
-                                        <option value="2">Finance</option>
-                                        <option value="3">Recruting</option>
-                                        <option value="4">Management</option>
-                                        <option value="5">Advertising</option>
-                                        <option value="6">Development</option>
-                                    </select>
-                                </div>
-                                <select class="form-input mr-10 select-active">
-                                    <option value="">Vị Trí</option>
-                                    <option value="AG">An Giang</option>
-                                    <option value="BV">Bà Rịa - Vũng Tàu</option>
-                                    <option value="BK">Bắc Kạn</option>
-                                    <option value="BG">Bắc Giang</option>
-                                    <option value="BN">Bắc Ninh</option>
-                                    <option value="BT">Bến Tre</option>
-                                    <option value="BD">Bình Dương</option>
-                                    <option value="BP">Bình Phước</option>
-                                    <option value="BĐ">Bình Định</option>
-                                    <option value="BV">Bình Thuận</option>
-                                    <option value="BL">Bạc Liêu</option>
-                                    <option value="CM">Cà Mau</option>
-                                    <option value="CT">Cần Thơ</option>
-                                    <option value="CA">Cao Bằng</option>
-                                    <option value="ĐN">Đà Nẵng</option>
-                                    <option value="ĐL">Đắk Lắk</option>
-                                    <option value="ĐN">Đắk Nông</option>
-                                    <option value="ĐB">Điện Biên</option>
-                                    <option value="ĐN">Đồng Nai</option>
-                                    <option value="ĐT">Đồng Tháp</option>
-                                    <option value="GL">Gia Lai</option>
-                                    <option value="HG">Hà Giang</option>
-                                    <option value="HM">Hà Nam</option>
-                                    <option value="HT">Hà Tĩnh</option>
-                                    <option value="HD">Hải Dương</option>
-                                    <option value="HP">Hải Phòng</option>
-                                    <option value="HG">Hậu Giang</option>
-                                    <option value="HN">Hà Nội</option>
-                                    <option value="HB">Hòa Bình</option>
-                                    <option value="HY">Hưng Yên</option>
-                                    <option value="KH">Khánh Hòa</option>
-                                    <option value="KG">Kiên Giang</option>
-                                    <option value="KT">Kon Tum</option>
-                                    <option value="LC">Lai Châu</option>
-                                    <option value="LD">Lâm Đồng</option>
-                                    <option value="LS">Lạng Sơn</option>
-                                    <option value="LC">Lào Cai</option>
-                                    <option value="LA">Long An</option>
-                                    <option value="NB">Nam Định</option>
-                                    <option value="NA">Nghệ An</option>
-                                    <option value="NB">Ninh Bình</option>
-                                    <option value="NT">Ninh Thuận</option>
-                                    <option value="PY">Phú Yên</option>
-                                    <option value="PT">Phú Thọ</option>
-                                    <option value="QB">Quảng Bình</option>
-                                    <option value="QN">Quảng Nam</option>
-                                    <option value="QN">Quảng Ngãi</option>
-                                    <option value="QN">Quảng Ninh</option>
-                                    <option value="QT">Quảng Trị</option>
-                                    <option value="ST">Sóc Trăng</option>
-                                    <option value="SL">Sơn La</option>
-                                    <option value="TĐ">Tây Ninh</option>
-                                    <option value="TN">Thái Nguyên</option>
-                                    <option value="TB">Thái Bình</option>
-                                    <option value="TH">Thanh Hóa</option>
-                                    <option value="TTH">Thừa Thiên Huế</option>
-                                    <option value="TG">Tiền Giang</option>
-                                    <option value="TV">Trà Vinh</option>
-                                    <option value="TQ">Tuyên Quang</option>
-                                    <option value="VL">Vĩnh Long</option>
-                                    <option value="VP">Vĩnh Phúc</option>
-                                    <option value="YB">Yên Bái</option>
-                                    <option value="HCM">Hồ Chí Minh</option>
-                                </select>
-                                <div class="box-industry">
-                                    <select class="form-input mr-10 select-active input-industry">
-                                        <option value="0">Mức lương</option>
-                                        <option value="1">Software</option>
-                                        <option value="2">Finance</option>
-                                        <option value="3">Recruting</option>
-                                        <option value="4">Management</option>
-                                        <option value="5">Advertising</option>
-                                        <option value="6">Development</option>
-                                    </select>
-                                </div>
-                                <div class="box-industry">
-                                    <select class="form-input mr-10 select-active input-industry">
-                                        <option value="0">Kinh nghiệm</option>
-                                        <option value="1">Software</option>
-                                        <option value="2">Finance</option>
-                                        <option value="3">Recruting</option>
-                                        <option value="4">Management</option>
-                                        <option value="5">Advertising</option>
-                                        <option value="6">Development</option>
-                                    </select>
-                                </div>
-                                <input class="form-input input-keysearch mr-10" type="text" placeholder="Từ khóa... ">
-                                <button class="btn btn-default btn-find font-sm">Tìm Kiếm</button>
-                            </form>
-                        </div>
+                        <x-client.search></x-client.search>
                     </div>
                 </div>
             </div>
@@ -188,6 +83,56 @@
                                 </div>
                             </div>
                             <div class="row">
+                                @if(isset($jobResult) && !$jobResult->isEmpty())
+                                    @foreach($jobResult as $item)
+                                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                                            <div class="card-grid-2 hover-up">
+                                                <div class="card-grid-2-image-left"><span class="flash"></span>
+                                                    <div class="image-box"><img
+                                                            src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
+                                                            alt="jobBox"></div>
+                                                    <div class="right-info"><a class='name-job'
+                                                                            href="{{route('client.job.single', ['employerSlug' => $item->employer->slug, 'jobSlug' => $item->slug])}}">
+                                                                            {{ $item->employer->company_name }}</a><span
+                                                            class="location-small">{{ $item->address }}</span></div>
+                                                </div>
+                                                <div class="card-block-info">
+                                                    <h6><a href="{{route('client.job.single', ['employerSlug' => $item->employer->slug, 'jobSlug' => $item->slug])}}">{{ $item->title }}</a></h6>
+                                                    <div class="mt-5"><span
+                                                            class="card-briefcase">{{ $item->jobType->name }}</span>
+                                                        <span
+                                                            class="card-time">{{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }}</span>
+                                                    </div>
+                                                    <p class="font-sm color-text-paragraph mt-15">
+                                                        {{ $item->description }}
+                                                    </p>
+                                                    <div class="mt-30">
+                                                        @foreach($item->skills as $skill)
+                                                            <a class='btn btn-grey-small mr-5'
+                                                            href='#'>{{ $skill->name }}</a>
+                                                        @endforeach
+                                                    </div>
+                                                    <div class="card-2-bottom mt-30">
+                                                        <div class="row">
+                                                            <div class="col-lg-7 col-7"><span
+                                                                    class="card-text-price">{{ $item->salary->name }}</span>
+                                                            </div>
+                                                            <div class="col-lg-5 col-5 text-end">
+                                                                <div class="btn btn-apply-now" data-bs-toggle="modal"
+                                                                    data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @elseif($jobResult->isEmpty())
+                                <div class="no-results">
+                                    <h6>Không có kết quả tìm kiếm phù hợp</h6>
+                                </div>
+                                @else
                                 @foreach($jobs as $item)
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                                         <div class="card-grid-2 hover-up">
@@ -196,11 +141,12 @@
                                                         src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
                                                         alt="jobBox"></div>
                                                 <div class="right-info"><a class='name-job'
-                                                                           href='company-details.html'>{{ $item->employer->company_name }}</a><span
+                                                                           href="{{route('client.job.single', ['employerSlug' => $item->employer->slug, 'jobSlug' => $item->slug])}}">
+                                                                           {{ $item->employer->company_name }}</a><span
                                                         class="location-small">{{ $item->address }}</span></div>
                                             </div>
                                             <div class="card-block-info">
-                                                <h6><a href='job-details.html'>{{ $item->title }}</a></h6>
+                                                <h6><a href="{{route('client.job.single', ['employerSlug' => $item->employer->slug, 'jobSlug' => $item->slug])}}">{{ $item->title }}</a></h6>
                                                 <div class="mt-5"><span
                                                         class="card-briefcase">{{ $item->jobType->name }}</span>
                                                     <span
@@ -231,6 +177,7 @@
                                         </div>
                                     </div>
                                 @endforeach
+                                @endif
                             </div>
                         </div>
                         <div class="paginations">
@@ -412,69 +359,7 @@
                 </div>
             </div>
         </section>
-        <section class="section-box mt-50 mb-50">
-            <div class="container">
-                <div class="text-start">
-                    <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Tin tức và Blog</h2>
-                    <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Nhận tin tức, cập
-                        nhật và mẹo mới nhất</p>
-                </div>
-            </div>
-            <div class="container">
-                <div class="mt-50">
-                    <div class="box-swiper style-nav-top">
-                        <div class="swiper-container swiper-group-3 swiper">
-                            <div class="swiper-wrapper pb-70 pt-5">
-                                @for($i=0; $i < 5; $i++)
-                                    <div class="swiper-slide">
-                                        <div class="card-grid-3 hover-up wow animate__animated animate__fadeIn">
-                                            <div class="text-center card-grid-3-image"><a href="#">
-                                                    <figure><img alt="jobBox"
-                                                                 src="{{ asset('assets/client/imgs/page/homepage1/img-news1.png') }}">
-                                                    </figure>
-                                                </a></div>
-                                            <div class="card-block-info">
-                                                <div class="tags mb-15"><a class='btn btn-tag' href='blog-grid.html'>Tin
-                                                        tức</a></div>
-                                                <h5><a href='blog-details.html'>21 Mẹo phỏng vấn xin việc: Làm thế nào
-                                                        để tạo ấn tượng tuyệt vời</a></h5>
-                                                <p class="mt-10 color-text-paragraph font-sm">
-                                                    Sứ mệnh của chúng tôi là tạo ra công ty chăm sóc sức khỏe bền vững
-                                                    bằng cách tạo ra các sản phẩm
-                                                    chăm sóc sức khỏe chất lượng cao trong bao bì bền vững, mang tính
-                                                    biểu tượng.
-                                                </p>
-                                                <div class="card-2-bottom mt-20">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 col-6">
-                                                            <div class="d-flex"><img class="img-rounded"
-                                                                                     src="{{ asset('assets/client/imgs/page/homepage1/user1.png') }}"
-                                                                                     alt="jobBox">
-                                                                <div class="info-right-img"><span
-                                                                        class="font-sm font-bold color-brand-1 op-70">Trần Thanh Duy</span><br><span
-                                                                        class="font-xs color-text-paragraph-2">06 tháng 9</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 text-end col-6 pt-15"><span
-                                                                class="color-text-paragraph-2 font-xs">8  phút trước</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endfor
-                            </div>
-                        </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                    <div class="text-center"><a class='btn btn-brand-1 btn-icon-load mt--30 hover-up'
-                                                href='blog-grid.html'>Tải thêm bài viết</a></div>
-                </div>
-            </div>
-        </section>
+        <x-client.blog></x-client.blog>
     </main>
     <style>
         .row {

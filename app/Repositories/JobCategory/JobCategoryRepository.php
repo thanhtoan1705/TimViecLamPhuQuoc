@@ -36,4 +36,9 @@ class JobCategoryRepository implements JobCategoryInterface
             ->limit($limit)
             ->get();
     }
+
+    public function getAll()
+    {
+        return $this->jobCategory->all();
+    }
 }

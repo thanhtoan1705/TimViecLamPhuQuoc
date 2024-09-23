@@ -8,4 +8,6 @@ interface JobCategoryInterface
 
     public function getAllJobCategories();
 
+    public function getAll();
+
 }
