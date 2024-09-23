@@ -15,6 +15,7 @@
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
+        "rmsramos/activitylog": "^1.0",
         "saade/filament-fullcalendar": "^3.0",
         "spatie/eloquent-sortable": "^4.4",
         "yoeunes/toastr": "^3.0"

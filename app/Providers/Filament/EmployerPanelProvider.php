@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Auth\EmployerLogin;
 use App\Filament\Pages\Auth\Employer\RequestPasswordReset;
+use App\Filament\Resources\Employer\JobPost\JobPostResource;
 use App\Filament\Resources\Employer\Notification\NotificationResource\Pages\NotificationsPage;
 use App\Filament\Resources\Employer\Notification\NotificationResource\Widgets\EmployerNotificationsWidget;
 use App\Filament\Resources\Pages\RegistrationEmployer;

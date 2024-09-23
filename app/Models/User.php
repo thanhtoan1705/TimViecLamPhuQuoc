@@ -15,10 +15,27 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+
 
 class User extends Authenticatable implements HasAvatar, FilamentUser
 {
     use HasFactory, Notifiable, HasUserAvatar, HasRoles;
+    use LogsActivity;
+
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly([
+                'name',
+                'email',
+                'phone',
+                'avatar_url',
+
+            ]);
+    }
 
     /**
      * The attributes that are mass assignable.

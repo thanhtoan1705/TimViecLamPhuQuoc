@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Auth\AdminLogin;
+use App\Filament\Resources\Admin\UserLog\UserLogResource;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use Rmsramos\Activitylog\ActivitylogPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -99,6 +101,16 @@ class AdminPanelProvider extends PanelProvider
                         'default' => 1,
                         'sm' => 2,
                     ]),
+
+                ActivitylogPlugin::make()
+                    ->resource(UserLogResource::class)
+                    ->label('Nhật ký hoạt động')
+                    ->pluralLabel('Nhật ký hoạt động')
+                    ->navigationGroup('Nhật ký hoạt động')
+                    ->navigationIcon('heroicon-o-clock')
+                    ->navigationCountBadge(true)
+                    ->navigationSort(1)
+                ,
             ]);
     }
 }
