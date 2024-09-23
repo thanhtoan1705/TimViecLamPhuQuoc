@@ -18,6 +18,7 @@
         "rmsramos/activitylog": "^1.0",
         "saade/filament-fullcalendar": "^3.0",
         "spatie/eloquent-sortable": "^4.4",
+        "srmklive/paypal": "~3.0",
         "yoeunes/toastr": "^3.0"
     },
     "require-dev": {

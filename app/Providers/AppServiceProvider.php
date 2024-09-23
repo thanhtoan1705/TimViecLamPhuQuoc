@@ -24,6 +24,8 @@ use App\Repositories\Location\LocationInterface;
 use App\Repositories\Location\LocationRepository;
 use App\Repositories\Post\PostInterface;
 use App\Repositories\Post\PostRepository;
+use App\Repositories\Promotional\PromotionalInterface;
+use App\Repositories\Promotional\PromotionalRepository;
 use App\Repositories\User\UserInterface;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -45,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PostInterface::class, PostRepository::class);
         $this->app->bind(LocationInterface::class, LocationRepository::class);
         $this->app->bind(FilterInterface::class, FilterRepository::class);
+        $this->app->bind(PromotionalInterface::class, PromotionalRepository::class);
     }
 
     /**

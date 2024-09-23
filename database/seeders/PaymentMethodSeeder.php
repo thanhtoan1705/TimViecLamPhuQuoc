@@ -16,14 +16,14 @@ class PaymentMethodSeeder extends Seeder
     {
         DB::table('payment_methods')->insert([
             [
-                'user_id' => 1,
+                'employer_id' => 1,
                 'method_type' => 'Credit Card',
                 'details' => 'Card number ending with 1234',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
-                'user_id' => 2,
+                'employer_id' => 2,
                 'method_type' => 'PayPal',
                 'details' => 'paypal@example.com',
                 'created_at' => Carbon::now(),

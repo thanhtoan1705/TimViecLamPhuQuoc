@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('employer_id')->constrained('employers')->onDelete('cascade');
             $table->string('method_type');
             $table->text('details');
             $table->timestamps();

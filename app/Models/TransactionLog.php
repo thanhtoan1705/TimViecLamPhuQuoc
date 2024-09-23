@@ -9,8 +9,6 @@ class TransactionLog extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'log_id';
-
     protected $fillable = [
         'transaction_id',
         'event',

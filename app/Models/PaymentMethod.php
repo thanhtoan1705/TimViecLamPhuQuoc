@@ -9,16 +9,14 @@ class PaymentMethod extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'payment_method_id';
-
     protected $fillable = [
-        'user_id',
+        'employer_id',
         'method_type',
         'details',
     ];
 
-    public function user()
+    public function employer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Employer::class);
     }
 }

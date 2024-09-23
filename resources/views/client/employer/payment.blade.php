@@ -1,4 +1,4 @@
-@extends('client.layouts.master')
+@extends('client.layouts.payment')
 @section('title', 'Nhà tuyển dụng')
 @section('content')
     <main class="main">
@@ -89,7 +89,7 @@
                 </div>
                 <div class="p-4">
                     <div class="mb-4">
-                        <input type="text" id="promoCodeInput" class="border rounded w-full p-2"
+                        <input type="text" id="promoCodeTextInput" class="border rounded w-full p-2"
                                placeholder="Nhập mã giảm giá"
                                aria-label="Promo Code">
                     </div>
@@ -133,7 +133,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const promoModal = document.getElementById('promoModal');
             const modalContent = document.getElementById('modalContent');
-            const promoCodeInput = document.getElementById('promoCodeInput');
+            const promoCodeTextInput = document.getElementById('promoCodeTextInput');
             const applyPromoCodeButton = document.getElementById('applyPromoCode');
             const closeModalButtons = document.querySelectorAll('#closeModal, #closeModalFooter');
             const paymentOptions = document.querySelectorAll('.rounded-logo');
@@ -151,6 +151,8 @@
 
                     if (selectedPaymentMethod === 'VN pay') {
                         redirectInput.setAttribute('name', 'redirect');
+                    } else if (selectedPaymentMethod === 'Momo') {
+                        redirectInput.setAttribute('name', 'payUrl');
                     } else {
                         redirectInput.removeAttribute('name');
                     }
@@ -160,7 +162,7 @@
             const paymentButton = document.querySelector('.continue-payment');
             paymentButton.addEventListener('click', function (event) {
                 const finalPriceInput = document.querySelector('input[name="final_price"]');
-                console.log("Final Price to submit:", finalPriceInput.value);
+                const finalPromoInput = document.querySelector('input[name="promo_code"]');
 
                 if (selectedPaymentMethod) {
                     document.getElementById('payment-form').submit();
@@ -187,60 +189,44 @@
             });
 
             applyPromoCodeButton.addEventListener('click', function () {
-                const promoCode = promoCodeInput.value.trim();
+                const promoCode = promoCodeTextInput.value.trim();
                 let promoFound = false;
 
-                try {
-                    if (promoCode) {
-                        const promos = document.querySelectorAll('input[name="promo"]');
-                        promos.forEach((promo) => {
-                            if (promo.value === promoCode) {
-                                discount = parseFloat(promo.dataset.discount);
-                                promoFound = true;
-                            }
-                        });
+                if (promoCode) {
+                    const promos = document.querySelectorAll('input[name="promo"]');
+                    promos.forEach((promo) => {
+                        if (promo.value === promoCode) {
+                            discount = parseFloat(promo.dataset.discount);
+                            promoFound = true;
+                            document.getElementById('promoCodeInput').value = promoCode;
+                        }
+                    });
 
-                        if (!promoFound) {
-                            alert('Mã giảm giá không hợp lệ.');
-                            discount = 0;
-                        }
-                    } else {
-                        const selectedPromo = document.querySelector('input[name="promo"]:checked');
-                        if (selectedPromo) {
-                            discount = parseFloat(selectedPromo.dataset.discount);
-                        } else {
-                            discount = 0;
-                        }
+                    if (!promoFound) {
+                        alert('Mã giảm giá không hợp lệ.');
+                        discount = 0;
                     }
-
-                    updateTotalPrice(discount);
-                } catch (error) {
-                    console.error("Lỗi trong xử lý mã giảm giá:", error);
+                } else {
+                    const selectedPromo = document.querySelector('input[name="promo"]:checked');
+                    if (selectedPromo) {
+                        discount = parseFloat(selectedPromo.dataset.discount);
+                        document.getElementById('promoCodeInput').value = selectedPromo.value;
+                    } else {
+                        discount = 0;
+                    }
                 }
+
+                updateTotalPrice(discount);
                 promoModal.classList.add('hidden');
             });
 
             function updateTotalPrice(discount) {
                 const totalPriceElement = document.querySelector('.total-price');
-                if (!totalPriceElement) {
-                    console.error("Không tìm thấy phần tử tổng giá tiền.");
-                    return;
-                }
-
                 const packagePrice = parseFloat(totalPriceElement.dataset.price);
                 const finalPrice = packagePrice - discount;
-                totalPriceElement.textContent = `Tổng cộng: ${finalPrice.toLocaleString()} VNĐ`;
-                document.querySelector('input[name="final_price"]').value = finalPrice;
+                totalPriceElement.querySelector('span:last-child').textContent = `${finalPrice.toLocaleString()} VNĐ`;
+                document.getElementById('finalPriceInput').value = finalPrice;
                 document.getElementById('discountInput').value = discount;
-
-                const discountElement = document.querySelector('.discount-info');
-                if (discountElement) {
-                    if (discount > 0) {
-                        discountElement.textContent = `Mã ưu đãi: ${discount.toLocaleString()} VNĐ`;
-                    } else {
-                        discountElement.textContent = '';
-                    }
-                }
             }
         });
     </script>

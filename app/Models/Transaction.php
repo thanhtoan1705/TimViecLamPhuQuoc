@@ -9,8 +9,6 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'transaction_id';
-
     protected $fillable = [
         'employer_id',
         'merchant_id',
