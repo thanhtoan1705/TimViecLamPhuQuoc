@@ -3,7 +3,9 @@
 namespace App\Observers;
 
 use App\Models\JobPostCandidate;
+use App\Models\User;
 use App\Notifications\CandidateApplied;
+use Filament\Notifications\Notification;
 
 
 class JobPostCandidateObserver
@@ -17,10 +19,13 @@ class JobPostCandidateObserver
         $candidate = $jobPostCandidate->candidate;
 
         $employer = $jobPost->employer->user;
-
-        if ($employer) {
-            $employer->notify(new CandidateApplied($jobPost, $candidate));
-        }
+//        if ($employer) {
+//            $employer->notify(new CandidateApplied($jobPost, $candidate));
+//        }
+        Notification::make()
+            ->title("Ứng viên " . $candidate->user->name . " đã nộp CV cho vị trí " . $jobPost->title . " tại công ty của bạn.")
+            ->sendToDatabase($employer)
+            ->success();
 
     }
 

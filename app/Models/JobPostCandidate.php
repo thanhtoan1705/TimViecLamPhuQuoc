@@ -10,7 +10,7 @@ class JobPostCandidate extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['job_post_id', 'candidate_id', 'file', 'status', 'description'];
+    protected $fillable = ['job_post_id', 'candidate_id', 'file', 'status', 'viewed', 'description'];
 
     public function jobPost()
     {

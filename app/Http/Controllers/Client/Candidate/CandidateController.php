@@ -26,14 +26,13 @@ class CandidateController extends Controller
         return view("client.cv.index");
     }
 
-    public function detail($id)
+    public function detail($slug)
     {
-        $candidate = $this->candidateRepository->getOneCandidate($id);
-        $data = [
-            'candidate' => $candidate
-        ];
+        $candidate = $this->candidateRepository->getOneCandidateBySlug($slug);
+        $data = ['candidate' => $candidate];
         return view('client.candidate.detail', $data);
     }
+
 
     public function profile()
     {

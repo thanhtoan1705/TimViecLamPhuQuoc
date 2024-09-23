@@ -93,8 +93,7 @@
                                                 Mức lương mong đợi
                                             </span>
                                             <strong
-                                                class="small-heading">{{ number_format($candidate->salary, 0, ',', '.') }}
-                                                đ
+                                                class="small-heading">{{ $candidate->salary->name}}
                                             </strong></div>
                                     </li>
                                     <li>

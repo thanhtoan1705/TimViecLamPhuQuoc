@@ -43,7 +43,7 @@
                                     N/A
                                 @endif
                             </span>
-                            <span class="price">{{ number_format($candidate->candidate->salary) }} VNĐ</span>
+                            <span class="price">{{ $candidate->candidate->salary->name ?? ''}} VNĐ</span>
                         </div>
                         <div class="details-cv">
                             <span class="cv">

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
 
+            $table->string('slug', 255)->unique()->nullable();
+
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained('users')

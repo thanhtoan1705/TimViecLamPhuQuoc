@@ -29,6 +29,14 @@ class CandidateRepository implements CandidateInterface
             ])->findOrFail($id);
     }
 
+    public function getOneCandidateBySlug($slug)
+    {
+        return $this->candidate->where('slug', $slug)
+            ->with(['addresses.province', 'addresses.district', 'addresses.ward'])
+            ->firstOrFail();
+    }
+
+
     public function update($id, array $data)
     {
         $candidate = $this->candidate->findOrFail($id);

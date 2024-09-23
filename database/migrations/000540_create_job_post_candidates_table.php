@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId('candidate_id')->nullable()->constrained('candidates')->onDelete('set null');
             $table->string('file', 255)->nullable();
             $table->text('description')->nullable();
-            $table->boolean('status')->default(false);
+            $table->string('status')->nullable();
+            $table->boolean('viewed')->default(false);
             $table->timestamps();
         });
     }
