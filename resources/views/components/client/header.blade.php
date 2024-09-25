@@ -28,32 +28,62 @@
                 <div class="burger-icon burger-icon-white"><span class="burger-icon-top"></span><span
                         class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
             </div>
-            @if(auth()->check())
-                <div class="header-right">
+            <div class="header-right d-flex align-items-center">
+                @if(auth()->check())
+                    <div class="dropdown me-3">
+                        <button class="btn btn-grey position-relative" id="notificationButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-bell-fill"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ auth()->user()->unreadNotifications->count() }}
+                        </span>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end p-3" style="width: 500px; max-height: 450px; overflow-y: auto;">
+                            <h5 class="mb-2">Thông báo</h5>
+                            @php
+                                $notifications = auth()->user()->notifications->take(3);
+                            @endphp
+                            @if ($notifications->isEmpty())
+                                <p class="text-muted">Bạn chưa có thông báo nào.</p>
+                            @else
+                                @foreach ($notifications as $notification)
+                                    <li class="d-flex justify-content-between align-items-center" style="background-color: #ffffff; border: none; padding: 20px; border-radius: 10px; margin-bottom: 15px; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05); position: relative; overflow: hidden;">
+                                        <div style="display: flex; align-items: center;">
+                                            <i class="bi bi-bell-fill" style="background-color: #007bff; padding: 10px; border-radius: 50%; font-size: 20px; display: inline-flex; justify-content: center; align-items: center; transition: background-color 0.3s; color: white;"></i>
+                                            <span style="font-size: 14px; color: #495057; font-weight: 500; margin-left: 10px;">{{ $notification->data['message'] }}</span>
+                                        </div>
+                                        <div style="content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 5px; background: linear-gradient(180deg, #00c6ff, #007bff); transition: width 0.3s ease;"></div>
+                                    </li>
+                                @endforeach
+                                    <div class="d-flex justify-content-center mt-3">
+                                        <a href="{{ route('client.candidate.notification') }}" class="btn btn-primary">Xem thêm</a>
+                                    </div>
+                            @endif
+                        </ul>
+
+                    </div>
+
                     <div id="loginContainer" class="login-container">
-                        <button id="loginButton" class='btn btn-default btn-shadow ml-40 hover-up'>Tài khoản</button>
+                        <button id="loginButton" class='btn btn-default btn-shadow hover-up'>Tài khoản</button>
                         <div id="loginButtons" class="login-buttons" style="display: none;">
-                            <a class='btn btn-default btn-shadow ml-40 hover-up'
-                            href="{{route('client.candidate.profile')}}">Hồ sơ</a>
-                            <a class='btn btn-default btn-shadow ml-40 hover-up'
-                            href="{{route('client.candidate.logout')}}">Đăng xuất</a>
+                            <a class='btn btn-default btn-shadow hover-up'
+                               href="{{route('client.candidate.profile')}}">Hồ sơ</a>
+                            <a class='btn btn-default btn-shadow hover-up'
+                               href="{{route('client.candidate.logout')}}">Đăng xuất</a>
                         </div>
                     </div>
-                </div>
-            @else
-                <div class="header-right">
+                @else
                     <div id="loginContainer" class="login-container">
-                        <button id="loginButton" class='btn btn-default btn-shadow ml-40 hover-up'>Đăng nhập</button>
+                        <button id="loginButton" class='btn btn-default btn-shadow hover-up'>Đăng nhập</button>
                         <div id="loginButtons" class="login-buttons" style="display: none;">
-                            <a class='btn btn-default btn-shadow ml-40 hover-up'
+                            <a class='btn btn-default btn-shadow hover-up'
                                href="">Tuyển dụng</a>
-                            <a class='btn btn-default btn-shadow ml-40 hover-up'
+                            <a class='btn btn-default btn-shadow hover-up'
                                href="{{ route('client.candidate.login') }}">Ứng viên</a>
                         </div>
                     </div>
-                </div>
-            @endif
-
+                @endif
+            </div>
         </div>
     </div>
 </header>

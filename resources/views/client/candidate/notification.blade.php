@@ -9,11 +9,40 @@
                 <div class="row">
                     <x-client.sidebar-candidate></x-client.sidebar-candidate>
                     <div class="col-lg-9 col-md-8 col-sm-12 col-12 mb-50">
-                        <div class="content-single p-20 mb-50" style="background-color: #F2F6FD">
+                        <div class="notifications mb-50">
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="tab-my-profile" role="tabpanel"
                                      aria-labelledby="tab-my-profile">
-                                    <h3 class="mt-0 mb-15 color-brand-1 text-center">Bạn chưa có thông báo nào</h3>
+                                    <div class="">
+                                        <h3 class="mb-4">Thông báo của bạn</h3>
+                                        @php
+                                            $notifications = auth()->user()->notifications;
+                                            $displayLimit = 2; // Số thông báo hiện ban đầu
+                                            $remainingNotifications = $notifications->count() - $displayLimit;
+                                        @endphp
+
+                                        @if ($notifications->isEmpty())
+                                            <p class="text-muted">Bạn chưa có thông báo nào.</p>
+                                        @else
+                                            <ul class="list-group">
+                                                @foreach ($notifications->slice(0, $displayLimit) as $notification)
+                                                    <li class="list-group-item notification-item d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center">
+                                                            <i class="bi bi-bell-fill notification-icon text-white me-3"></i>
+                                                            <span class="notification-message">{{ $notification->data['message'] ?? 'Thông báo không có nội dung.' }}</span>
+                                                        </div>
+                                                        <span class="badged bg-gradient-primary">{{ $notification->created_at->diffForHumans() }}</span>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+
+                                            <!-- Nút Xem thêm nếu còn thông báo -->
+                                            @if ($remainingNotifications > 0)
+                                                <button id="showMoreBtn" class="btn btn-primary">Xem thêm ({{ $remainingNotifications }} thông báo)</button>
+                                            @endif
+                                        @endif
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -331,5 +360,102 @@
         </section>
 
     </main>
+    <style>
+        .notifications {
+            background: linear-gradient(135deg, #f2f6fd, #e0eaff);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .notifications h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #343a40;
+        }
+
+        .notification-item {
+            background-color: #ffffff;
+            border: none;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .notification-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification-icon {
+            background-color: #007bff;
+            padding: 10px;
+            border-radius: 50%;
+            font-size: 20px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .notification-item:hover .notification-icon {
+            background-color: #0056b3;
+        }
+
+        .notification-message {
+            font-size: 16px;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .badged {
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 30px;
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .list-group-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .list-group-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 5px;
+            background: linear-gradient(180deg, #00c6ff, #007bff);
+            transition: width 0.3s ease;
+        }
+
+        .list-group-item:hover:before {
+            width: 10px;
+        }
+    </style>
+    <script>
+        document.getElementById('showMoreBtn')?.addEventListener('click', function() {
+            let notificationsList = '';
+            @foreach ($notifications->slice($displayLimit) as $notification)
+                notificationsList += `
+                <li class="list-group-item notification-item d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-bell-fill notification-icon text-white me-3"></i>
+                        <span class="notification-message">{{ $notification->data['message'] ?? 'Thông báo không có nội dung.' }}</span>
+                    </div>
+                    <span class="badged bg-gradient-primary">{{ $notification->created_at->diffForHumans() }}</span>
+                </li>`;
+            @endforeach
+
+            document.querySelector('.list-group').innerHTML += notificationsList;
+            this.style.display = 'none'; // Ẩn nút "Xem thêm" sau khi nhấn
+        });
+    </script>
 
 @endsection

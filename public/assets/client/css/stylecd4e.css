@@ -2417,7 +2417,7 @@ label {
 }
 
 ul li:last-child {
-  padding-bottom: 0px !important;
+  /*padding-bottom: 0px !important;*/
 }
 ul li:last-child .card-list-4 {
   border-bottom: 0px;

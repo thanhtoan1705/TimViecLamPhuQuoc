@@ -8,10 +8,14 @@ use App\Models\JobPostCandidate;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
 
 class CandidateApplyResource extends Resource
 {
@@ -77,11 +81,41 @@ class CandidateApplyResource extends Resource
                     ->options([
                         '1' => 'Phỏng vấn',
                         '2' => 'Trúng tuyển',
-                        '3' => 'Bị từ chối',
+                        '3' => 'Từ chối',
                     ])
-                    ->sortable(),
+                    ->sortable()
+                    ->afterStateUpdated(function ($state, $record) {
+                        $record->status = $state;
+                        $record->save();
 
+                        $statusLabels = [
+                            '1' => 'Phỏng vấn',
+                            '2' => 'Trúng tuyển',
+                            '3' => 'Từ chối',
+                        ];
 
+                        $newStatus = $statusLabels[$record->status] ?? 'Không xác định';
+
+                        $candidate = $record->candidate->user;
+                        $candidate->notify(new \App\Notifications\CandidateStatusChanged($record));
+
+                        try {
+                            Mail::to($candidate->email)->send(new \App\Mail\CandidateStatusMail($record));
+                        } catch (\Exception $e) {
+                            \Log::error('Failed to send email: ' . $e->getMessage());
+                            Notification::make()
+                                ->title('Lỗi gửi email')
+                                ->body('Có lỗi xảy ra khi gửi email thông báo.')
+                                ->danger()
+                                ->send();
+                            return;
+                        }
+                        Notification::make()
+                            ->title('Trạng thái đã được cập nhật')
+                            ->body('Trạng thái của ứng viên đã được thay đổi thành ' . $newStatus)
+                            ->success()
+                            ->send();
+                    }),
 
             ])
             ->actions([

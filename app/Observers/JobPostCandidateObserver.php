@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\JobPostCandidate;
 use App\Models\User;
 use App\Notifications\CandidateApplied;
+use App\Notifications\EmployerViewedProfileNotification;
 use Filament\Notifications\Notification;
 
 
@@ -34,7 +35,10 @@ class JobPostCandidateObserver
      */
     public function updated(JobPostCandidate $jobPostCandidate): void
     {
-        //
+        if ($jobPostCandidate->isDirty('viewed') && $jobPostCandidate->viewed == true) {
+            $candidate = $jobPostCandidate->candidate;
+            $candidate->user->notify(new EmployerViewedProfileNotification($jobPostCandidate->jobPost));
+        }
     }
 
     /**
