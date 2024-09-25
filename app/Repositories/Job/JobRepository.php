@@ -80,5 +80,9 @@ class JobRepository implements JobInterface
             ->first();
     }
 
+    public function findJobById($id)
+    {
+        return $this->jobPost::find($id);
+    }
 
 }

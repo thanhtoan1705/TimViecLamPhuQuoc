@@ -23,6 +23,7 @@ class PostController extends Controller
     {
         $data = [
             'blogs' => $this->blogRepository->getBlogByStatusPaginate(1, 9),
+            'blogTrending' => $this->blogRepository->blogTrending(1, 5),
         ];
 
         return view("client.post.index", $data);

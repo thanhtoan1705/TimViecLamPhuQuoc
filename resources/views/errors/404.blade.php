@@ -13,7 +13,7 @@
                             <p class="font-sm text-muted mb-30">Xin lỗi, nhưng chúng tôi không thể mở trang này.</p>
                         </div>
 
-                        <div class="text-center mt-20"><a href="{{route('index')}}">Quay lại trang chủ</a></div>
+                        <div class="text-center mt-20"><a href="/">Quay lại trang chủ</a></div>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,8 @@ use App\Repositories\Job\JobInterface;
 use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Http\Request;
 use App\Services\Search\SearchService;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Client\ApplyJobNotification;
 
 class JobController extends Controller
 {
@@ -126,7 +128,11 @@ class JobController extends Controller
         $filePath = $request->file('resume')->store('resumes', 'public');
         $this->jobRepository->applyForJob($jobId, auth()->user()->candidate->id, $filePath, $request->input('description'));
 
+        $job = $this->jobRepository->findJobById($jobId);
+        $employer = $job->employer;
+        $candidate = auth()->user()->candidate;
 
+        Mail::to($employer->user->email)->send(new ApplyJobNotification($employer, $candidate, $job, $filePath));
 
         Flasher::success('Đã nộp đơn thành công.');
         return redirect()->back();

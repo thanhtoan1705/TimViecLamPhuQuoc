@@ -21,5 +21,16 @@ class BlogRepository implements BlogInterface
     public function getAllBlog(){
         return $this->blog->get();
     }
+
+    public function blogTrending(int $is_publish = 1, int $paginate = 5)
+    {
+        return $this->blog
+            ->withCount('comments')
+            ->where('is_publish', $is_publish)
+            ->whereYear('created_at', date('Y'))
+            ->orderBy('view', 'desc')
+            ->orderBy('comments_count', 'desc')
+            ->paginate($paginate);
+    }
 }
 

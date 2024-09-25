@@ -93,23 +93,41 @@
                             <div class="sidebar-shadow sidebar-news-small">
                                 <h5 class="sidebar-title">Đang là xu hướng</h5>
                                 <div class="post-list-small">
-                                    @for($i=0; $i < 5; $i++)
-                                        <div class="post-list-small-item d-flex align-items-center">
-                                            <figure class="thumb mr-15"><img
-                                                    src="{{ asset('assets/client/imgs/page/blog/img-trending.png') }}"
-                                                    alt="jobBox"></figure>
-                                            <div class="content">
-                                                <h5>Làm thế nào để tạo một bản lý lịch cho một công việc trong xã
-                                                    hội</h5>
-                                                <div class="post-meta text-muted d-flex align-items-center mb-15">
-                                                    <div class="author d-flex align-items-center mr-20"><img
-                                                            alt="jobBox"
-                                                            src="{{ asset('assets/client/imgs/page/homepage1/user1.png') }}"><span>Duy Trần</span>
+                                    @if(is_object($blogTrending))
+                                        @foreach($blogTrending as $item)
+                                            <div class="post-list-small-item d-flex align-items-center">
+                                                <figure class="thumb mr-15"><img
+                                                        src="{{ asset('storage/' . $item->image) }}"
+                                                        alt="jobBox"></figure>
+                                                <div class="content">
+                                                    <a href="#"><h5>{{$item->title}}</h5></a>
+                                                    <div class="post-meta text-muted d-flex align-items-center mb-15">
+                                                        <div class="author d-flex align-items-center mr-20"><img
+                                                                alt="jobBox"
+                                                                src="{{ asset('storage/'. $item->user->image) }}"><span>{{$item->user->name}}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endfor
+                                        @endforeach
+                                    @endif
+{{--                                    @for($i=0; $i < 5; $i++)--}}
+{{--                                        <div class="post-list-small-item d-flex align-items-center">--}}
+{{--                                            <figure class="thumb mr-15"><img--}}
+{{--                                                    src="{{ asset('assets/client/imgs/page/blog/img-trending.png') }}"--}}
+{{--                                                    alt="jobBox"></figure>--}}
+{{--                                            <div class="content">--}}
+{{--                                                <h5>Làm thế nào để tạo một bản lý lịch cho một công việc trong xã--}}
+{{--                                                    hội</h5>--}}
+{{--                                                <div class="post-meta text-muted d-flex align-items-center mb-15">--}}
+{{--                                                    <div class="author d-flex align-items-center mr-20"><img--}}
+{{--                                                            alt="jobBox"--}}
+{{--                                                            src="{{ asset('assets/client/imgs/page/homepage1/user1.png') }}"><span>Duy Trần</span>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    @endfor--}}
                                 </div>
                             </div>
                             <div class="sidebar-border-bg bg-right"><span class="text-grey">CHÚNG TÔI</span><span

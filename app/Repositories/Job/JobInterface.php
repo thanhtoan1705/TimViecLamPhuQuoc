@@ -19,6 +19,6 @@ interface JobInterface
 
     public function findLastApplication($candidateId, $jobId);
 
-
+    public function findJobById($id);
 }
 
