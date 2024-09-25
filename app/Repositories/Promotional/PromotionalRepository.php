@@ -34,6 +34,7 @@ class PromotionalRepository implements PromotionalInterface
 
         $availablePromotions = Promotion::whereNotIn('id', $usedPromotions)
             ->where('status', 1)
+            ->where('start_time', '<', $now)
             ->where('end_time', '>', $now)
             ->get();
 

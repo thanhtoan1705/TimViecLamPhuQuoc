@@ -14,6 +14,7 @@ class Transaction extends Model
         'merchant_id',
         'amount',
         'transaction_type',
+        'trans_id',
         'status',
     ];
 

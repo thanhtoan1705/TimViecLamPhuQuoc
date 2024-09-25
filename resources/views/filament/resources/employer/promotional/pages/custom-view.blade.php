@@ -65,7 +65,7 @@
             display: flex;
             flex-direction: column;
             padding: 10px;
-            /*flex: 1 1 300px;*/
+            flex: 1 1 300px;
             box-sizing: border-box;
         }
 

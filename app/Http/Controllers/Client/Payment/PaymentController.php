@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client\Payment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Employer\RegisterRequest;
 use App\Models\JobPostPackage;
+use App\Models\Payment;
 use App\Models\Promotion;
 use App\Models\Transaction;
 use App\Repositories\Employer\EmployerInterface;
@@ -12,6 +13,7 @@ use App\Repositories\Promotional\PromotionalInterface;
 use App\Repositories\User\UserInterface;
 use App\Services\Payment\PaymentService;
 use Illuminate\Http\Request;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 
 class PaymentController extends Controller
@@ -62,9 +64,27 @@ class PaymentController extends Controller
         }
 
         $response = $this->paymentService->processPayment($paymentMethod, $package, $employerId, $promo);
-//        if ($paymentMethod === 'VNPay' && $response['code'] === '00') {
-//            return response()->json($response);
-//        }
+    }
+
+    public function handlePaypalCallback(Request $request)
+    {
+        $employerId = $request->get('employer_id');
+        $packageId = $request->get('package_id');
+        $promoId = $request->get('promo_id');
+
+        $package = JobPostPackage::find($packageId);
+        $promo = $promoId ? Promotion::find($promoId) : null;
+
+        $this->paymentService->savePayment($employerId, $package, 'Paypal', '00', $promo, null);
+
+        $paypal = new PayPalClient();
+        $paypal->setApiCredentials(config('paypal'));
+        $token = $paypal->getAccessToken();
+        $paypal->setAccessToken($token);
+
+        $paypal->capturePaymentOrder($request->token);
+
+        return redirect()->route('client.client.index')->with('message', 'Thanh toán thành công!');
     }
 
     public function handleVnPayCallback(Request $request)
@@ -90,9 +110,14 @@ class PaymentController extends Controller
         }
     }
 
-
     public function handleZaloPayCallback(Request $request)
     {
+        $employerId = $request->get('employer_id');
+        $packageId = $request->get('package_id');
+        $promoId = $request->get('promo_id');
+
+        $package = JobPostPackage::find($packageId);
+        $promo = $promoId ? Promotion::find($promoId) : null;
 
         $config = [
             "app_id" => 2553,
@@ -119,7 +144,7 @@ class PaymentController extends Controller
                 if ($transaction) {
                     // Cập nhật trạng thái giao dịch và các bảng liên quan
                     $transaction->update(['status' => 'successful']);
-
+                    $this->paymentService->savePayment($employerId, $package, 'Momo', '00', $promo, null);
                     // Cập nhật trạng thái trong bảng Payment nếu cần
                     Payment::where('transaction_id', $transaction->transaction_id)
                         ->update(['status' => 'successful', 'payment_date' => now()]);
@@ -179,12 +204,10 @@ class PaymentController extends Controller
             $transaction->status = 'success';
             $transaction->save();
 
-            $this->paymentService->savePayment($employerId, $package, 'Momo', '00', $promo, $transaction);
+            $this->paymentService->savePayment($employerId, $package, 'Momo', '00', $promo, $transaction->trans_id);
             return redirect()->route('client.client.index')->with('message', 'Thanh toán thành công!');
         } else {
             return redirect()->route('client.client.index')->with('message', 'Thanh toán không thành công!');
         }
     }
-
-    
 }

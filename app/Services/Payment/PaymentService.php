@@ -9,6 +9,7 @@ use App\Models\Promotion;
 use App\Models\Transaction;
 use App\Models\TransactionLog;
 use App\View\Components\Client\header;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PaymentService
 {
@@ -38,22 +39,52 @@ class PaymentService
         }
     }
 
-    private function processVisaPayment(JobPostPackage $package, $employerId, $discount)
+    private function processVisaPayment(JobPostPackage $package, $employerId, $promo)
     {
-
-        return 'Bạn đã chọn thanh toán bằng Visa.';
+        return redirect()->route('client.client.index');
     }
 
-    private function processMasterCardPayment(JobPostPackage $package, $employerId, $discount)
+    private function processMasterCardPayment(JobPostPackage $package, $employerId, $promo)
     {
-
-        return 'Bạn đã chọn thanh toán bằng MasterCard.';
+        return redirect()->route('client.client.index');
     }
 
-    private function processPayPalPayment(JobPostPackage $package, $employerId, $discount)
+    private function processPayPalPayment(JobPostPackage $package, $employerId, $promo)
     {
+        $finalPrice = $package->price;
 
-        return 'Bạn đã chọn thanh toán bằng PayPal.';
+        if ($promo) {
+            $finalPrice = $package->price - $promo->discount;
+        }
+        $exchangeRate = 23000;
+        $finalPriceUSD = number_format($finalPrice / $exchangeRate, 2, '.', '');
+
+        $paypal = new PayPalClient();
+        $paypal->setApiCredentials(config('paypal'));
+        $token = $paypal->getAccessToken();
+        $paypal->setAccessToken($token);
+
+        $order = $paypal->createOrder([
+            "intent" => "CAPTURE",
+            "purchase_units" => [
+                [
+                    "amount" => [
+                        "currency_code" => "USD",
+                        "value" => "100"
+                    ]
+                ]
+            ],
+            "application_context" => [
+                "return_url" => route('client.employer.paypal.callback', [
+                    'employer_id' => $employerId,
+                    'package_id' => $package->id,
+                    'promo_id' => $promo ? $promo->id : null
+                ]),
+            ]
+        ]);
+
+        header('Location: ' . $order['links'][1]['href']);
+        die();
     }
 
     private function createVnpTransaction(JobPostPackage $package, $employerId, $promo)
@@ -145,17 +176,23 @@ class PaymentService
             $finalPrice = $package->price - $promo->discount;
         }
 
-        $endpoint = 'https://test-payment.momo.vn/v2/gateway/api/create';
+        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
 
-        $accessKey = 'F8BBA842ECF85';
-        $secretKey = 'K951B6PE1waDMi640xX08PD3vg6EkVlz';
-        $partnerCode = 'MOMO';
-        $redirectUrl = route('client.employer.momo.callback'); // Callback của bạn
-        $ipnUrl = route('client.employer.momo.callback'); // Callback của bạn
-        $orderInfo = 'Thanh toán ' . $package->title . ' cho nhà tuyển dụng #' . $employerId;
-        $amount = $finalPrice;
+        $partnerCode = 'MOMOBKUN20180529';
+        $accessKey = 'klm05TvNBzhg7h7j';
+        $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+
+        $orderInfo = "Thanh toán qua MoMo";
         $orderId = time() . "";
+        $redirectUrl = route('client.employer.momo.callback');
+        $ipnUrl = route('client.employer.momo.callback');
+        $serectkey = $secretKey;
+        $orderInfo = "Thanh toán gói " . $package->name . " cho nhà tuyển dụng #" . $employerId;
+        $amount = $finalPrice;
+
         $requestId = time() . "";
+        $requestType = "payWithATM";
+
         $extraData = json_encode([
             'employer_id' => $employerId,
             'package_id' => $package->id,
@@ -171,12 +208,12 @@ class PaymentService
             . "&partnerCode=" . $partnerCode
             . "&redirectUrl=" . $redirectUrl
             . "&requestId=" . $requestId
-            . "&requestType=captureWallet"; // Đây là request type cho QR
-        $signature = hash_hmac("sha256", $rawHash, $secretKey);
-        $data = [
-            'partnerCode' => $partnerCode,
-            'partnerName' => 'MoMo Payment',
-            'storeId' => 'MomoTestStore',
+            . "&requestType=" . $requestType;
+        $signature = hash_hmac("sha256", $rawHash, $serectkey);
+
+        $data = array('partnerCode' => $partnerCode,
+            'partnerName' => "Test",
+            "storeId" => "MomoTestStore",
             'requestId' => $requestId,
             'amount' => $amount,
             'orderId' => $orderId,
@@ -185,10 +222,8 @@ class PaymentService
             'ipnUrl' => $ipnUrl,
             'lang' => 'vi',
             'extraData' => $extraData,
-            'requestType' => 'captureWallet', // Loại thanh toán QR
-            'signature' => $signature
-        ];
-
+            'requestType' => $requestType,
+            'signature' => $signature);
         $result = $this->execPostRequest($endpoint, json_encode($data));
         $jsonResult = json_decode($result, true);
 
@@ -197,9 +232,10 @@ class PaymentService
             header('Location: ' . $jsonResult['payUrl']);
             exit;
         } else {
-            // Nếu không có 'payUrl', hiển thị lỗi
             dd('Lỗi: Không tìm thấy URL thanh toán MoMo.', $jsonResult);
         }
+//        header('Location: ' . $jsonResult['payUrl']);
+        exit;
     }
 
     private function processZaloPayPayment(JobPostPackage $package, $employerId, $promo)
@@ -231,7 +267,11 @@ class PaymentService
             "amount" => $finalPrice,
             "description" => "Thanh toán gói " . $package->name . " cho nhà tuyển dụng #" . $employerId,
             "bank_code" => "zalopayapp",
-            "callback_url" => route('client.employer.zalopay.callback'),
+            "callback_url" => route('client.employer.zalopay.callback', [
+                'employer_id' => $employerId,
+                'package_id' => $package->id,
+                'promo_id' => $promo ? $promo->id : null,
+            ]),
         ];
 
         $data = $order["app_id"] . "|" . $order["app_trans_id"] . "|" . $order["app_user"] . "|" . $order["amount"]
@@ -279,16 +319,18 @@ class PaymentService
         return $result;
     }
 
-    public function savePayment($employerId, $package, $paymentMethod, $vnp_ResponseCode, $promo, Transaction $transaction = null)
+    public function savePayment($employerId, $package, $paymentMethod, $vnp_ResponseCode, $promo, $trans_id = null)
     {
         $finalPrice = $package->price;
 
         if ($promo) {
             $finalPrice = $package->price - $promo->discount;
         }
-        $paymentMethodId = PaymentMethod::where('method_type', $paymentMethod)->first()->id;
 
-        if (!$transaction) {
+        if ($trans_id) {
+            $transaction = Transaction::where('trans_id', $trans_id)->first();
+        } else {
+            // Tạo mới transaction cho VNPay hoặc các phương thức không có transaction_id
             $transaction = Transaction::create([
                 'employer_id' => $employerId,
                 'merchant_id' => 1,
@@ -298,7 +340,29 @@ class PaymentService
             ]);
         }
 
-        // Lưu thông tin vào bảng Payment
+        if ($promo) {
+            $promotion = Promotion::find($promo->id);
+            if ($promotion) {
+                $promotion->number_use = max(0, $promotion->number_use - 1);
+                $promotion->save();
+            }
+        }
+
+        // Lưu thông tin vào bảng TransactionLog
+        TransactionLog::create([
+            'transaction_id' => $transaction->id,
+            'event' => 'Payment processed with ' . $paymentMethod,
+        ]);
+
+        // Lưu hoặc cập nhật phương thức thanh toán
+        PaymentMethod::create([
+            'employer_id' => $employerId,
+            'method_type' => $paymentMethod,
+            'details' => 'Some details about the payment method',
+        ]);
+
+        $paymentMethodId = PaymentMethod::where('method_type', $paymentMethod)->first()->id;
+
         $payment = Payment::create([
             'employer_id' => $employerId,
             'packages_id' => $package->id,
@@ -307,30 +371,7 @@ class PaymentService
             'payment_date' => now(),
             'expiration_date' => now()->addDays(30),
             'payment_method_id' => $paymentMethodId,
-            'transaction_id' => $transaction->transaction_id,
-        ]);
-
-        if ($promo) {
-            $promotion = Promotion::find($promo->id);
-            if ($promotion) {
-                $promotion->number_use -= 1;
-                $promotion->save();
-            }
-        }
-
-        // Lưu thông tin vào bảng TransactionLog
-        TransactionLog::create([
             'transaction_id' => $transaction->id,
-            'event' => 'Payment processed with' . $paymentMethod,
-            'response_code' => $vnp_ResponseCode,
         ]);
-
-        // Lưu hoặc cập nhật phương thức thanh toán
-        PaymentMethod::updateOrCreate(
-            ['employer_id' => $employerId, 'method_type' => $paymentMethod],
-            ['details' => 'Some details about the payment method']
-        );
-
-        return $transaction;
     }
 }

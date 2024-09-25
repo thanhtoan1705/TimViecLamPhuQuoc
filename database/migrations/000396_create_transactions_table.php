@@ -13,7 +13,8 @@ return new class extends Migration {
             $table->foreignId('merchant_id')->constrained('merchants')->onDelete('cascade');
             $table->bigInteger('amount');
             $table->string('transaction_type');
-            $table->string('status');
+            $table->bigInteger('trans_id')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
