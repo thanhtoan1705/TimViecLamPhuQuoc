@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Admin\Degree;
 
 use App\Filament\Resources\Degree\DegreeResource\Pages;
 use App\Models\Degree;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
@@ -16,7 +17,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
-class DegreeResource extends Resource
+class DegreeResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Degree::class;
 
@@ -24,6 +25,18 @@ class DegreeResource extends Resource
     protected static ?string $modelLabel = 'Bằng cấp';
     protected static ?string $navigationGroup = 'Năng lực';
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function form(Form $form): Form
     {

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Admin\Comment;
 
 use App\Filament\Resources\Comment\CommentResource\Pages;
 use App\Filament\Resources\Comment\CommentResource\RelationManagers;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
@@ -17,7 +18,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
-class CommentResource extends Resource
+class CommentResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = \App\Models\Comment::class;
 
@@ -30,6 +31,18 @@ class CommentResource extends Resource
     protected static ?string $navigationGroup = 'Bài viết';
 
     protected static ?int $navigationSort = 3;
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function getNavigationBadge(): ?string
     {

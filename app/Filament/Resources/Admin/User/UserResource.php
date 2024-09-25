@@ -6,6 +6,7 @@ use App\Filament\Resources\Admin\Candidate\CandidateResource\Pages\CreateCandida
 use App\Filament\Resources\Admin\User\UserResource\Pages;
 use App\Filament\Resources\Admin\User\UserResource\RelationManagers;
 use App\Models\User;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -20,7 +21,7 @@ use Filament\Tables\Table;
 use Rmsramos\Activitylog\Actions\ActivityLogTimelineTableAction;
 use Rmsramos\Activitylog\RelationManagers\ActivitylogRelationManager;
 
-class UserResource extends Resource
+class UserResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = User::class;
 
@@ -31,6 +32,18 @@ class UserResource extends Resource
     protected static ?string $navigationGroup = 'Filament Shield';
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function getNavigationBadge(): ?string
     {

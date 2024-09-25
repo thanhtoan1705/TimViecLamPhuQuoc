@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Admin\JobPost;
 
 use App\Filament\Resources\Admin\JobPost\JobPostResource\RelationManagers;
 use App\Models\JobPost;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
@@ -17,7 +18,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
-class JobPostResource extends Resource
+class JobPostResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = JobPost::class;
 
@@ -27,6 +28,18 @@ class JobPostResource extends Resource
     protected static ?string $navigationGroup = 'Công việc';
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function form(Form $form): Form
     {

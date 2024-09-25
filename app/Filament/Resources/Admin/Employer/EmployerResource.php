@@ -9,6 +9,7 @@ use App\Models\District;
 use App\Models\Employer;
 use App\Models\Province;
 use App\Models\Ward;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -28,7 +29,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
-class EmployerResource extends Resource
+class EmployerResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Employer::class;
 
@@ -39,6 +40,18 @@ class EmployerResource extends Resource
     protected static ?string $navigationGroup = 'Tài khoản';
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function getNavigationBadge(): ?string
     {

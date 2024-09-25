@@ -15,6 +15,7 @@ use App\Models\Major;
 use App\Models\Province;
 use App\Models\Salary;
 use App\Models\Ward;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
@@ -35,7 +36,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 
 
-class CandidateResource extends Resource
+class CandidateResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Candidate::class;
 
@@ -357,6 +358,18 @@ class CandidateResource extends Resource
 
         // Associate the address with the candidate
         $candidate->address_id = $address->id;
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
     }
 
 

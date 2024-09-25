@@ -36,7 +36,7 @@ class EmployerPanelProvider extends PanelProvider
     {
         return $panel
             ->id('employer')
-            ->path('panel/employer')
+            ->path('business')
             ->login(EmployerLogin::class)
             ->registration(RegistrationEmployer::class)
             ->passwordReset(RequestPasswordReset::class)
@@ -47,7 +47,7 @@ class EmployerPanelProvider extends PanelProvider
             ->navigationItems([
                 NavigationItem::make('Đăng tin tuyển dụng')
                     ->group('Quản lý tin đăng')
-                    ->url(config('app.url') . '/panel/employer/employer/job-post/job-posts/create')
+                    ->url(config('app.url') . 'business/employer/job-post/job-posts/create')
                     ->sort(1)
                     ->icon('heroicon-o-folder-plus'),
 

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Admin\JobCategory;
 use App\Filament\Resources\JobCategory\JobCategoryResource\Pages;
 use App\Filament\Resources\JobCategory\JobCategoryResource\RelationManagers;
 use App\Models\Job_category;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
@@ -21,7 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Filament\Forms\Components\Hidden;
 
-class JobCategoryResource extends Resource
+class JobCategoryResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Job_category::class;
 
@@ -31,6 +32,18 @@ class JobCategoryResource extends Resource
     protected static ?string $navigationGroup = 'Công việc';
 
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function form(Form $form): Form
     {
