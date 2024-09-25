@@ -50,7 +50,7 @@
                                     <li class="d-flex justify-content-between align-items-center" style="background-color: #ffffff; border: none; padding: 20px; border-radius: 10px; margin-bottom: 15px; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05); position: relative; overflow: hidden;">
                                         <div style="display: flex; align-items: center;">
                                             <i class="bi bi-bell-fill" style="background-color: #007bff; padding: 10px; border-radius: 50%; font-size: 20px; display: inline-flex; justify-content: center; align-items: center; transition: background-color 0.3s; color: white;"></i>
-                                            <span style="font-size: 14px; color: #495057; font-weight: 500; margin-left: 10px;">{{ $notification->data['message'] }}</span>
+                                            <span style="font-size: 14px; color: #495057; font-weight: 500; margin-left: 10px;">{{ $notification->data['message'] ?? '' }}</span>
                                         </div>
                                         <div style="content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 5px; background: linear-gradient(180deg, #00c6ff, #007bff); transition: width 0.3s ease;"></div>
                                     </li>
