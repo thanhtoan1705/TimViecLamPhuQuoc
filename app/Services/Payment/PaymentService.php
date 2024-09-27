@@ -176,11 +176,10 @@ class PaymentService
             $finalPrice = $package->price - $promo->discount;
         }
 
-        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
-
-        $partnerCode = 'MOMOBKUN20180529';
-        $accessKey = 'klm05TvNBzhg7h7j';
-        $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+        $endpoint = config('momo.endpoint');
+        $partnerCode = config('momo.partnerCode');
+        $accessKey = config('momo.accessKey');
+        $secretKey = config('momo.secretKey');
 
         $orderInfo = "Thanh toán qua MoMo";
         $orderId = time() . "";
@@ -191,7 +190,7 @@ class PaymentService
         $amount = $finalPrice;
 
         $requestId = time() . "";
-        $requestType = "payWithATM";
+        $requestType = "captureWallet";
 
         $extraData = json_encode([
             'employer_id' => $employerId,

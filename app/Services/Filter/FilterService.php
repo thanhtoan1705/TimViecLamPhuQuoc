@@ -2,6 +2,8 @@
 
 namespace App\Services\Filter;
 
+use App\Models\Address;
+use App\Models\Employer;
 use App\Models\Job_category;
 use App\Models\JobPost;
 use App\Models\Salary;
@@ -12,12 +14,19 @@ class FilterService
     protected $jobPost;
     protected $jobCategory;
     protected $salary;
+    protected $employer;
 
-    public function __construct(JobPost $jobPost, Job_category $jobCategory, Salary $salary)
+    public function __construct(
+        JobPost      $jobPost,
+        Job_category $jobCategory,
+        Salary       $salary,
+        Employer     $employer
+    )
     {
         $this->jobPost = $jobPost;
         $this->jobCategory = $jobCategory;
         $this->salary = $salary;
+        $this->employer = $employer;
     }
 
     public function getLocations()
@@ -37,7 +46,8 @@ class FilterService
         return $this->jobCategory
             ->withCount('jobPosts')
             ->having('job_posts_count', '>', 0)
-            ->take(5)
+            ->orderBy('job_posts_count', 'desc')
+            ->limit(5)
             ->get();
     }
 
@@ -46,7 +56,8 @@ class FilterService
         return $this->salary
             ->withCount('jobPosts')
             ->having('job_posts_count', '>', 0)
-            ->take(5)
+            ->orderBy('job_posts_count', 'desc')
+            ->limit(5)
             ->get();
     }
 
@@ -74,33 +85,36 @@ class FilterService
     public function getRanks()
     {
         return DB::table('ranks')
-            ->select('ranks.id', 'ranks.name', DB::raw('COUNT(job_posts.id) as job_count'))
             ->leftJoin('job_posts', 'job_posts.rank_id', '=', 'ranks.id')
+            ->select('ranks.id', 'ranks.name', DB::raw('COUNT(job_posts.id) as job_count'))
             ->groupBy('ranks.id', 'ranks.name')
             ->having('job_count', '>', 0)
-            ->take(5)
+            ->orderBy('job_count', 'desc')
+            ->limit(5)
             ->get();
     }
 
     public function getExperiences()
     {
         return DB::table('experiences')
-            ->select('experiences.id', 'experiences.name', DB::raw('COUNT(job_posts.id) as job_count'))
             ->leftJoin('job_posts', 'job_posts.experience_id', '=', 'experiences.id')
+            ->select('experiences.id', 'experiences.name', DB::raw('COUNT(job_posts.id) as job_count'))
             ->groupBy('experiences.id', 'experiences.name')
             ->having('job_count', '>', 0)
-            ->take(5)
+            ->orderBy('job_count', 'desc')
+            ->limit(5)
             ->get();
     }
 
     public function getJobTypes()
     {
         return DB::table('job_types')
-            ->select('job_types.id', 'job_types.name', DB::raw('COUNT(job_posts.id) as job_count'))
             ->leftJoin('job_posts', 'job_posts.job_type_id', '=', 'job_types.id')
+            ->select('job_types.id', 'job_types.name', DB::raw('COUNT(job_posts.id) as job_count'))
             ->groupBy('job_types.id', 'job_types.name')
             ->having('job_count', '>', 0)
-            ->take(5)
+            ->orderBy('job_count', 'desc')
+            ->limit(5)
             ->get();
     }
 
@@ -111,6 +125,45 @@ class FilterService
             '7_days' => $this->jobPost->where('created_at', '>=', now()->subDays(7))->count(),
             '30_days' => $this->jobPost->where('created_at', '>=', now()->subDays(30))->count(),
         ];
+    }
+
+    public function getProvince()
+    {
+        return Address::with('province')
+            ->get()
+            ->pluck('province.name')
+            ->unique()
+            ->values();
+    }
+
+    public function getCompanyTypes()
+    {
+        return $this->employer
+            ->select('company_type', DB::raw('COUNT(id) as company_count'))
+            ->groupBy('company_type')
+            ->orderBy('company_count', 'desc')
+            ->limit(5)
+            ->get();
+    }
+
+    public function getYears()
+    {
+        return $this->employer
+            ->select(DB::raw('YEAR(since) as year'), DB::raw('COUNT(id) as company_count'))
+            ->groupBy(DB::raw('YEAR(since)'))
+            ->orderBy('year', 'desc')
+            ->limit(5)
+            ->get();
+    }
+
+    public function getSizes()
+    {
+        return $this->employer
+            ->select('company_size', DB::raw('COUNT(id) as company_count'))
+            ->groupBy('company_size')
+            ->orderBy('company_count', 'desc')
+            ->limit(5)
+            ->get();
     }
 
     public function filterJobs($selectedCategories, $selectedSalaries, $selectedKeywords, $selectedRanks, $selectedExperiences, $selectedJobTypes, $selectedPostedTime, $selectedLocations)
@@ -164,5 +217,30 @@ class FilterService
         }
 
         return $jobs;
+    }
+
+    public function filterEmployer($selectedLocations, $selectedCompanyTypes, $selectedYears, $selectedSizes)
+    {
+        $employers = $this->employer->query();
+
+        if (!empty($selectedLocations)) {
+            $employers->whereHas('address', function ($query) use ($selectedLocations) {
+                $query->whereIn('province_id', $selectedLocations);
+            });
+        }
+
+        if (!empty($selectedCompanyTypes)) {
+            $employers->whereIn('company_type', $selectedCompanyTypes);
+        }
+
+        if (!empty($selectedYears)) {
+            $employers->whereIn(DB::raw('YEAR(since)'), $selectedYears);
+        }
+
+        if (!empty($selectedSizes)) {
+            $employers->whereIn('company_size', $selectedSizes);
+        }
+
+        return $employers->get();
     }
 }

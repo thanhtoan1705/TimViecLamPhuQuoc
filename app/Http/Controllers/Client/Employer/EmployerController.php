@@ -4,10 +4,15 @@ namespace App\Http\Controllers\Client\Employer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Employer\RegisterRequest;
+use App\Models\Employer;
+use App\Models\JobPost;
 use App\Models\JobPostPackage;
 use App\Repositories\Employer\EmployerInterface;
+use App\Repositories\Filter\FilterInterface;
+use App\Repositories\Filter\FilterRepository;
 use App\Repositories\Promotional\PromotionalInterface;
 use App\Repositories\User\UserInterface;
+use App\Services\Filter\FilterService;
 use App\Services\Payment\PaymentService;
 use Illuminate\Http\Request;
 
@@ -15,10 +20,18 @@ use Illuminate\Http\Request;
 class EmployerController extends Controller
 {
     protected EmployerInterface $employerRepository;
+    protected FilterService $filterService;
 
-    public function __construct(EmployerInterface $employerRepository)
+    protected FilterInterface $filterRepository;
+
+    public function __construct(
+        EmployerInterface $employerRepository,
+        FilterService     $filterService,
+        FilterInterface   $filterRepository)
     {
         $this->employerRepository = $employerRepository;
+        $this->filterService = $filterService;
+        $this->filterRepository = $filterRepository;
     }
 
     public function login()
@@ -31,10 +44,34 @@ class EmployerController extends Controller
         return view('client.employer.register');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $selectedCompanyTypes = $request->query('company_types', []);
+        $selectedYears = $request->query('years', []);
+        $selectedSizes = $request->query('sizes', []);
+        $selectedLocations = $request->query('location', []);
+
+        $filteredEmployers = $this->filterService->filterEmployer(
+            $selectedLocations,
+            $selectedCompanyTypes,
+            $selectedYears,
+            $selectedSizes
+        );
+
+        $filteredData = $this->filterRepository->filterEmployer(
+            $selectedLocations,
+            $selectedCompanyTypes,
+            $selectedYears,
+            $selectedSizes,
+        );
+
         $data = [
             'employers' => $this->employerRepository->getEmployerByStatusPaginate(1, 12),
+            'filteredEmployers' => $filteredEmployers,
+            'locations' => $filteredData['locations'],
+            'companyTypes' => $filteredData['companyTypes'],
+            'years' => $filteredData['years'],
+            'sizes' => $filteredData['sizes'],
         ];
 
         return view('client.employer.index', $data);

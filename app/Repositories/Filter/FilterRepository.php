@@ -48,4 +48,23 @@ class FilterRepository implements FilterInterface
             'locations' => $this->filterService->getLocations(),
         ];
     }
+    public function filterEmployer(
+        $selectedLocations = [],
+        $selectedCompanyTypes = [],
+        $selectedYears = [],
+        $selectedSizes = []
+    ) {
+        return [
+            'locations' => $this->filterService->getProvince(),
+            'companyTypes' => $this->filterService->getCompanyTypes(),
+            'years' => $this->filterService->getYears(),
+            'sizes' => $this->filterService->getSizes(),
+            'employers' => $this->filterService->filterEmployer(
+                $selectedLocations,
+                $selectedCompanyTypes,
+                $selectedYears,
+                $selectedSizes
+            ),
+        ];
+    }
 }

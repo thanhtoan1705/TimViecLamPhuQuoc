@@ -346,11 +346,11 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="box-view-type"><a class='view-type' href='jobs-list.html'>
+                                            <div class="box-view-type"><a class='view-type' href=''>
                                                     <img
                                                         src="{{ asset('assets/client/imgs/template/icons/icon-list.svg') }}"
                                                         alt="jobBox"></a>
-                                                <a class='view-type' href='jobs-grid.html'>
+                                                <a class='view-type' href=''>
                                                     <img
                                                         src="{{ asset('assets/client/imgs/template/icons/icon-grid-hover.svg') }}"
                                                         alt="jobBox"></a>
@@ -360,291 +360,94 @@
                                 </div>
                             </div>
                             <div class="row">
-                                @if(is_object($employers))
-                                    @foreach($employers as $employer)
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-                                        <div class="card-grid-1 hover-up wow animate__animated animate__fadeIn">
-                                            <div class="image-box">
-                                                <a href='company-details.html'>
-                                                    <img style="width: 50px; height: 50px"
-                                                         src="{{ asset('storage/' . $employer->company_logo) }}"
-                                                         alt="jobBox">
-                                                </a>
-                                            </div>
-                                            <div class="info-text mt-10">
-                                                <h5 class="font-bold"><a
-                                                        href='company-details.html'>{{ $employer->company_name }}</a>
-                                                </h5>
-
-                                                <span class="card-location">
-
-                                                    @foreach ($employer->addresses as $address)
-                                                        {{ $address->district->name }},
-                                                        {{ $address->province->name }}
-                                                        <br>
-                                                    @endforeach
-
-                                                </span>
-
-                                                <div class="mt-30"><a class='btn btn-grey-big'
-                                                                      href='jobs-grid.html'><span>{{ $employer->job_post->count() }}</span><span> việc làm</span></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                @if($filteredEmployers && $filteredEmployers->count() > 0)
+                                    @foreach($filteredEmployers as $employer)
+                                        @include('client.employer.employerCard', ['employer' => $employer])
                                     @endforeach
+                                @else
+                                    @if(is_object($employers))
+                                        @foreach($employers as $employer)
+                                            @include('client.employer.employerCard', ['employer' => $employer])
+                                        @endforeach
+                                    @endif
                                 @endif
                             </div>
                         </div>
 
                         {{ $employers->links('vendor.pagination.custom') }}
-
                     </div>
                     <div class="col-lg-3 col-md-12 col-sm-12 col-12">
                         <div class="sidebar-shadow none-shadow mb-30">
                             <div class="sidebar-filters">
                                 <div class="filter-block head-border mb-30">
-                                    <h5>Bộ lọc nâng cao <a class="link-reset" href="#">Trở lại</a></h5>
+                                    <h5>Bộ lọc nâng cao <a class="link-reset"
+                                                           href="{{ route('client.employer.index') }}">Làm mới</a></h5>
                                 </div>
                                 <div class="filter-block mb-30">
                                     <div class="form-group select-style select-style-icon">
-                                        <select class="form-control form-icons select-active">
-                                            <option>Cần Thơ</option>
-                                            <option>Hà Nội</option>
-                                            <option>Hồ Chí Minh</option>
-                                            <option>Đà Nẵng</option>
+                                        <select name="locations[]" id="location-select"
+                                                class="form-control form-icons select-active">
+                                            <option value="">Chọn địa điểm</option>
+                                            @foreach($locations as $location)
+                                                <option value="{{ $location }}">{{ $location }}</option>
+                                            @endforeach
                                         </select><i class="fi-rr-marker"></i>
                                     </div>
                                 </div>
                                 <div class="filter-block mb-20">
-                                    <h5 class="medium-heading mb-15">Ngành nghề</h5>
+                                    <h5 class="medium-heading mb-15">Loại công ty</h5>
                                     <div class="form-group">
                                         <ul class="list-checkbox">
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox" checked="checked"><span class="text-small">Tất
-                                                cả</span><span class="checkmark"></span>
-                                                </label><span class="number-item">180</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Phần mềm</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">12</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Kế toán</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">23</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Kỹ sư</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">43</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Gia sư</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">65</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span
-                                                        class="text-small">Marketing</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">76</span>
-                                            </li>
+                                            @foreach($companyTypes as $type)
+                                                <li>
+                                                    <label class="cb-container">
+                                                        <input type="checkbox" name="company_types[]"
+                                                               value="{{ $type->company_type }}"
+                                                            {{ in_array($type->company_type, request('company_types', [])) ? 'checked' : '' }}>
+                                                        <span class="text-small">{{ $type->company_type }}</span>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                    <span class="number-item">{{ $type->company_count }}</span>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="filter-block mb-20">
-                                    <h5 class="medium-heading mb-25">Phạm vi lương</h5>
-
+                                    <h5 class="medium-heading mb-25">Năm thành lập</h5>
                                     <div class="form-group mb-20">
                                         <ul class="list-checkbox">
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox" checked="checked"><span class="text-small">Tất
-                                                cả</span><span class="checkmark"></span>
-                                                </label><span class="number-item">145</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">5 triệu - 10
-                                                triệu</span><span class="checkmark"></span>
-                                                </label><span class="number-item">56</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">15 triệu - 20
-                                                triệu</span><span class="checkmark"></span>
-                                                </label><span class="number-item">37</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">25 triệu - 30
-                                                triệu</span><span class="checkmark"></span>
-                                                </label><span class="number-item">75</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">30 triệu - 35
-                                                triệu</span><span class="checkmark"></span>
-                                                </label><span class="number-item">98</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">40 triệu - 45
-                                                triệu</span><span class="checkmark"></span>
-                                                </label><span class="number-item">14</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">50 triệu - 100
-                                                triệu</span><span class="checkmark"></span>
-                                                </label><span class="number-item">25</span>
-                                            </li>
+                                            @foreach($years as $year)
+                                                <li>
+                                                    <label class="cb-container">
+                                                        <input type="checkbox" name="years[]"
+                                                               value="{{ $year->year }}"
+                                                            {{ in_array($year->year, request('years', [])) ? 'checked' : '' }}>
+                                                        <span class="text-small">{{ $year->year }}</span>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                    <span class="number-item">{{ $year->company_count }}</span>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="filter-block mb-30">
-                                    <h5 class="medium-heading mb-10">Từ khóa phổ biến</h5>
+                                    <h5 class="medium-heading mb-10">Quy mô công ty</h5>
                                     <div class="form-group">
                                         <ul class="list-checkbox">
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox" checked="checked"><span
-                                                        class="text-small">Software</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">24</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span
-                                                        class="text-small">Developer</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">45</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span
-                                                        class="text-small">Thiết kế Web</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">57</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="filter-block mb-30">
-                                    <h5 class="medium-heading mb-10">Chức vụ</h5>
-                                    <div class="form-group">
-                                        <ul class="list-checkbox">
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Senior</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">12</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox" checked="checked"><span
-                                                        class="text-small">Junior</span><span class="checkmark"></span>
-                                                </label><span class="number-item">35</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Fresher</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">56</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="filter-block mb-30">
-                                    <h5 class="medium-heading mb-10">Cấp độ kinh nghiệm</h5>
-                                    <div class="form-group">
-                                        <ul class="list-checkbox">
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Thực tập</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">56</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox" checked="checked"><span class="text-small">1
-                                                năm</span><span class="checkmark"></span>
-                                                </label><span class="number-item">24</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span
-                                                        class="text-small">2 - 5 năm</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">45</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span
-                                                        class="text-small">Trên 5 năm</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">76</span>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="filter-block mb-30">
-                                    <h5 class="medium-heading mb-10">Loại công việc</h5>
-                                    <div class="form-group">
-                                        <ul class="list-checkbox">
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">Toàn thời
-                                                gian(Fulltime)</span><span class="checkmark"></span>
-                                                </label><span class="number-item">12</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox" checked="checked"><span class="text-small">Bán thời
-                                                gian(Parttime)</span><span class="checkmark"></span>
-                                                </label><span class="number-item">65</span>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="filter-block mb-30">
-                                    <h5 class="medium-heading mb-10">Việc làm đã đăng</h5>
-                                    <div class="form-group">
-                                        <ul class="list-checkbox">
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox" checked="checked"><span class="text-small">Tất
-                                                cả</span><span class="checkmark"></span>
-                                                </label><span class="number-item">78</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">1 ngày</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">65</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">7 ngày</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">24</span>
-                                            </li>
-                                            <li>
-                                                <label class="cb-container">
-                                                    <input type="checkbox"><span class="text-small">30 ngày</span><span
-                                                        class="checkmark"></span>
-                                                </label><span class="number-item">56</span>
-                                            </li>
+                                            @foreach($sizes as $size)
+                                                <li>
+                                                    <label class="cb-container">
+                                                        <input type="checkbox" name="sizes[]"
+                                                               value="{{ $size->company_size }}"
+                                                            {{ in_array($size->company_size, request('sizes', [])) ? 'checked' : '' }}>
+                                                        <span class="text-small">{{ $size->company_size }}</span>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                    <span class="number-item">{{ $size->company_count }}</span>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
@@ -656,4 +459,70 @@
         </section>
         <x-client.blog></x-client.blog>
     </main>
+    <script>
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     console.log('DOM fully loaded and parsed');
+        //
+        //     const locationSelect = document.getElementById('location-select');
+        //     console.log('Location Select Element:', locationSelect);  // Kiểm tra xem có lấy được phần tử không
+        //
+        //     if (locationSelect) {
+        //         locationSelect.addEventListener('change', function() {
+        //             const selectedLocation = this.value;
+        //             console.log('Selected Location:', selectedLocation);  // Kiểm tra giá trị chọn
+        //
+        //             if (selectedLocation) {
+        //                 console.log('Địa điểm đã chọn:', selectedLocation);
+        //             } else {
+        //                 console.log('Không có địa điểm nào được chọn');
+        //             }
+        //         });
+        //
+        //     } else {
+        //         console.error('Element #location-select not found');
+        //     }
+        // });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('JavaScript đã được tải');
+
+            // Hàm để cập nhật bộ lọc dựa trên tên input hoặc select
+            function updateFilter(name) {
+                document.querySelectorAll(`input[name="${name}"], select[name="${name}"]`).forEach(function (element) {
+                    element.addEventListener('change', function () {
+                        console.log('Element changed:', element);
+                        const url = new URL(window.location.href);
+                        const currentParams = new URLSearchParams(url.search);
+                        currentParams.delete(name);
+
+                        if (element.type === 'checkbox') {
+                            document.querySelectorAll(`input[name="${name}"]:checked`).forEach(function (checkedBox) {
+                                console.log(`Checkbox selected: ${checkedBox.value}`);
+                                currentParams.append(name, checkedBox.value);
+                            });
+                        } else if (element.tagName === 'SELECT') {
+                            const selectedValue = element.value; // Lấy giá trị đã chọn từ select
+                            console.log(`Select value: ${selectedValue}`);
+                            if (selectedValue) {
+                                currentParams.set(name, selectedValue); // Cập nhật giá trị của select vào URL
+                                console.log('Location selected:', selectedValue);
+                            } else {
+                                console.log('No location selected');
+                            }
+                        }
+
+                        url.search = currentParams.toString();
+                        console.log('New URL:', url.toString());
+                        window.location.href = url.toString(); // Điều hướng lại trang với URL mới
+                    });
+                });
+            }
+
+            updateFilter('locations[]');
+            updateFilter('company_types[]');
+            updateFilter('years[]');
+            updateFilter('sizes[]');
+        });
+    </script>
 @endsection
