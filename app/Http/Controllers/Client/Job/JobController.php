@@ -93,9 +93,9 @@ class JobController extends Controller
         return view('client.job.index', $data);
     }
 
-    public function single($employerSlug, $jobSlug)
+    public function single($jobSlug)
     {
-        $job = $this->jobRepository->findBySlugs($employerSlug, $jobSlug);
+        $job = $this->jobRepository->findBySlug($jobSlug);
         $jobsInCompany = $this->jobRepository->findJobsByEmployer($job->employer_id);
         $jobsCount = $jobsInCompany->count();
         $otherJobs = $this->jobRepository->findOtherJobsByEmployer($job->employer_id, $job->id);

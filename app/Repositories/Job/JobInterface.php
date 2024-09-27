@@ -20,5 +20,11 @@ interface JobInterface
     public function findLastApplication($candidateId, $jobId);
 
     public function findJobById($id);
+
+    public function findJobsByMajorAndSkills($candidate);
+
+    public function findBySlug(string $jobSlug);
+
+
 }
 

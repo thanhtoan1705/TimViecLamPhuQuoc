@@ -92,12 +92,12 @@
                                                             src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
                                                             alt="jobBox"></div>
                                                     <div class="right-info"><a class='name-job'
-                                                                            href="{{route('client.job.single', ['employerSlug' => $item->employer->slug, 'jobSlug' => $item->slug])}}">
+                                                                            href="{{route('client.job.single', ['jobSlug' => $item->slug])}}">
                                                                             {{ $item->employer->company_name }}</a><span
                                                             class="location-small">{{ $item->address }}</span></div>
                                                 </div>
                                                 <div class="card-block-info">
-                                                    <h6><a href="{{route('client.job.single', ['employerSlug' => $item->employer->slug, 'jobSlug' => $item->slug])}}">{{ $item->title }}</a></h6>
+                                                    <h6><a href="{{route('client.job.single', ['jobSlug' => $item->slug])}}">{{ $item->title }}</a></h6>
                                                     <div class="mt-5"><span
                                                             class="card-briefcase">{{ $item->jobType->name }}</span>
                                                         <span
@@ -141,12 +141,12 @@
                                                         src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
                                                         alt="jobBox"></div>
                                                 <div class="right-info"><a class='name-job'
-                                                                           href="{{route('client.job.single', ['employerSlug' => $item->employer->slug, 'jobSlug' => $item->slug])}}">
+                                                                           href="{{route('client.job.single', ['jobSlug' => $item->slug])}}">
                                                                            {{ $item->employer->company_name }}</a><span
                                                         class="location-small">{{ $item->address }}</span></div>
                                             </div>
                                             <div class="card-block-info">
-                                                <h6><a href="{{route('client.job.single', ['employerSlug' => $item->employer->slug, 'jobSlug' => $item->slug])}}">{{ $item->title }}</a></h6>
+                                                <h6><a href="{{route('client.job.single', ['jobSlug' => $item->slug])}}">{{ $item->title }}</a></h6>
                                                 <div class="mt-5"><span
                                                         class="card-briefcase">{{ $item->jobType->name }}</span>
                                                     <span

@@ -85,4 +85,26 @@ class JobRepository implements JobInterface
         return $this->jobPost::find($id);
     }
 
+    public function findJobsByMajorAndSkills($candidate)
+    {
+        $majorId = $candidate->major_id;
+
+
+        $skillIds = $candidate->skills->pluck('id')->toArray();
+
+        $jobs = $this->jobPost::where('major_id', $majorId)
+            ->whereHas('skills', function ($query) use ($skillIds) {
+                $query->whereIn('skills.id', $skillIds);
+            })
+            ->get();
+
+        return $jobs;
+    }
+    public function findBySlug(string $jobSlug)
+    {
+        return $this->jobPost::where('slug', $jobSlug)->first();
+    }
+
+
+
 }

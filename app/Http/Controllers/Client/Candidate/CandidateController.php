@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client\Candidate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Candidate\UpdatePasswordRequest;
 use App\Repositories\Candidate\CandidateRepository;
+use App\Repositories\Job\JobInterface;
 use App\Repositories\Location\LocationInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,10 +15,14 @@ class CandidateController extends Controller
     protected $candidateRepository;
     protected $locationRepository;
 
-    public function __construct(CandidateRepository $candidateRepository, LocationInterface $locationRepository)
+    protected $jobRepository;
+
+
+    public function __construct(CandidateRepository $candidateRepository, LocationInterface $locationRepository, JobInterface $jobRepository)
     {
         $this->candidateRepository = $candidateRepository;
         $this->locationRepository = $locationRepository;
+        $this->jobRepository = $jobRepository;
     }
 
 
@@ -70,7 +75,15 @@ class CandidateController extends Controller
 
     public function notification()
     {
-        return view("client.candidate.notification");
+        $candidate = auth()->user()->candidate;
+
+        $suggestedJobs = $this->jobRepository->findJobsByMajorAndSkills($candidate);
+
+        $data = [
+            'suggestedJobs' => $suggestedJobs,
+        ];
+
+        return view("client.candidate.notification", $data);
     }
 
     public function viewSavedJobs()

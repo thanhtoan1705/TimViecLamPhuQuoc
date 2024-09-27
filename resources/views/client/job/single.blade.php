@@ -205,9 +205,7 @@
                                                 </div>
                                                 <div class="info-text">
                                                     <h5 class="font-md font-bold color-brand-1">
-                                                        <a href="{{ route('client.job.single', ['employerSlug' => $job->employer->slug, 'jobSlug' => $otherJob->slug]) }}">
-                                                            {{ $otherJob->title }}
-                                                        </a>
+                                                        <a href="{{ route('client.job.single', ['jobSlug' => $otherJob->slug]) }}">{{$otherJob->title}}</a>
                                                     </h5>
                                                     <div class="mt-0">
                                                         <span
@@ -263,7 +261,7 @@
                                             </div>
                                             <div class="card-block-info">
                                                 <h6>
-                                                    <a href='{{ route('client.job.single', ['employerSlug' => $relatedJob->employer->slug, 'jobSlug' => $relatedJob->slug]) }}'>{{$relatedJob->title}}</a>
+                                                    <a href="{{ route('client.job.single', ['jobSlug' => $relatedJob->slug]) }}">{{$relatedJob->title}}</a>
                                                 </h6>
                                                 <div class="mt-5"><span
                                                         class="card-briefcase">{{$relatedJob->jobType->name}}</span>
