@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Admin\Experience;
 use App\Filament\Resources\Experience\ExperienceResource\Pages;
 use App\Filament\Resources\Experience\ExperienceResource\RelationManagers;
 use App\Models\Experience;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
@@ -18,7 +19,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
-class ExperienceResource extends Resource
+class ExperienceResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Experience::class;
 
@@ -29,6 +30,18 @@ class ExperienceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-scale';
     protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function getNavigationBadge(): ?string
     {

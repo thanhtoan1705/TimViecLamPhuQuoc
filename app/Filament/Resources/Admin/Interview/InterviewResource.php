@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Admin\Interview;
 use App\Filament\Resources\Interview\InterviewResource\Pages;
 use App\Filament\Resources\Interview\InterviewResource\RelationManagers;
 use App\Models\Interview;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
@@ -16,7 +17,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
-class InterviewResource extends Resource
+class InterviewResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Interview::class;
 
@@ -26,6 +27,18 @@ class InterviewResource extends Resource
     protected static ?string $navigationGroup = 'Phỏng vấn';
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-oval-left';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
 
     public static function form(Form $form): Form

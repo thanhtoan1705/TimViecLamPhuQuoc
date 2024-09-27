@@ -47,7 +47,7 @@ class EmployerPanelProvider extends PanelProvider
             ->navigationItems([
                 NavigationItem::make('Đăng tin tuyển dụng')
                     ->group('Quản lý tin đăng')
-                    ->url(config('app.url') . 'business/employer/job-post/job-posts/create')
+                    ->url(config('app.url') . '/business/employer/job-post/job-posts/create')
                     ->sort(1)
                     ->icon('heroicon-o-folder-plus'),
 

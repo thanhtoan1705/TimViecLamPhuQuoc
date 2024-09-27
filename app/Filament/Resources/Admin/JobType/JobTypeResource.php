@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Admin\JobType;
 //use App\Filament\Resources\JobType\JobTypeResource\Pages;
 //use App\Filament\Resources\JobType\JobTypeResource\RelationManagers;
 use App\Models\JobType;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
-class JobTypeResource extends Resource
+class JobTypeResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = JobType::class;
 
@@ -30,6 +31,18 @@ class JobTypeResource extends Resource
     protected static ?string $modelLabel = 'Loại công việc';
 
     protected static ?string $navigationGroup = 'Công việc';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function getNavigationBadge(): ?string
     {

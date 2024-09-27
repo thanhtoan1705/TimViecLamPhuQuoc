@@ -26,9 +26,9 @@ class JobCategoryResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Job_category::class;
 
-    protected static ?string $navigationLabel = 'Danh mục công việc';
+    protected static ?string $navigationLabel = 'Ngành nghề';
 
-    protected static ?string $modelLabel = 'Danh mục công việc';
+    protected static ?string $modelLabel = 'Ngành nghề';
     protected static ?string $navigationGroup = 'Công việc';
 
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';

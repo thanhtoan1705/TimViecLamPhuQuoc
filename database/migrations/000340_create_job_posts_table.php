@@ -50,6 +50,14 @@ return new class extends Migration
             $table->bigInteger('salary_min')->nullable();
             $table->bigInteger('salary_max')->nullable();
             $table->bigInteger('quantity')->nullable();
+
+            $table->string('email', 255)->nullable();
+            $table->string('phone', 50)->nullable();
+            $table->string('gender', 255)->nullable();
+            $table->string('department', 255)->nullable();
+            $table->text('job_requirement')->nullable();
+            $table->text('cv_requirement')->nullable();
+
             $table->boolean('status')->default(0);
             $table->boolean('premium')->default(0);
             $table->string('address', 255)->nullable();

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Admin\JobPostPackage;
 
 use App\Filament\Resources\JobPostPackage\JobPostPackageResource\Pages;
 use App\Models\JobPostPackage;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
@@ -18,7 +19,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
-class JobPostPackageResource extends Resource
+class JobPostPackageResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = JobPostPackage::class;
 
@@ -26,6 +27,18 @@ class JobPostPackageResource extends Resource
     protected static ?string $modelLabel = 'Gói đăng tin';
     protected static ?string $navigationGroup = 'Dịch vụ';
     protected static ?string $navigationIcon = 'heroicon-o-cube';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function getNavigationBadge(): ?string
     {
