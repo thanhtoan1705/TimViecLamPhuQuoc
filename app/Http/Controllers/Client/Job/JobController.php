@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Services\Search\SearchService;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Client\ApplyJobNotification;
+use App\Jobs\Client\EmployerNotification;
 
 class JobController extends Controller
 {
@@ -115,10 +116,10 @@ class JobController extends Controller
     {
         $lastApplication = $this->jobRepository->findLastApplication(auth()->user()->candidate->id, $jobId);
 
-        if ($lastApplication && \Carbon\Carbon::parse($lastApplication->created_at)->diffInHours(now()) < 24) {
-            Flasher::error('Bạn đã nộp CV cho bài đăng này. Vui lòng đợi 24 giờ để nộp lại.');
-            return redirect()->back();
-        }
+        // if ($lastApplication && \Carbon\Carbon::parse($lastApplication->created_at)->diffInHours(now()) < 24) {
+        //     Flasher::error('Bạn đã nộp CV cho bài đăng này. Vui lòng đợi 24 giờ để nộp lại.');
+        //     return redirect()->back();
+        // }
 
         $request->validate([
             'resume' => 'required|file|mimes:pdf,doc,docx|max:5120',
@@ -132,7 +133,8 @@ class JobController extends Controller
         $employer = $job->employer;
         $candidate = auth()->user()->candidate;
 
-        Mail::to($employer->user->email)->send(new ApplyJobNotification($employer, $candidate, $job, $filePath));
+
+        dispatch(new EmployerNotification($employer, $candidate, $job, $filePath))->handle();
 
         Flasher::success('Đã nộp đơn thành công.');
         return redirect()->back();

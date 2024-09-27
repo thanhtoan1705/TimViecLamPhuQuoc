@@ -35,21 +35,34 @@
 
                                 @if(is_object($blogs))
                                     @foreach($blogs as $value)
+                                        @php
+                                            if (isset($value->user->avatar_url)) {
+                                                $user_img = asset('storage/' . $value->user->avatar_url);
+                                            } else {
+                                                $user_img = asset('default/user.png');
+                                            }
+
+                                            if (isset($value->image)) {
+                                                $blog_img = asset('storage/' . $value->image);
+                                            } else {
+                                                $blog_img = asset('default/blog.jpg');
+                                            }
+                                        @endphp
                                         <div class="col-lg-6 mb-30">
 
                                             <div class="card-grid-3 hover-up">
-                                                <div class="text-center card-grid-3-image"><a href='blog-details.html'>
+                                                <div class="text-center card-grid-3-image"><a href="{{route('client.post.detail' , $value->slug)}}">
                                                         <figure><img alt="jobBox" style="max-width: 100%;
                                                                                         max-height: 220px;
                                                                                         object-fit: cover;"
-                                                                     src="{{ asset('storage/' . $value->image) }}">
+                                                                     src="{{ $blog_img }}">
                                                         </figure>
                                                     </a></div>
                                                 <div class="card-block-info">
                                                     <div class="tags mb-15"><a class='btn btn-tag'
-                                                                               href='blog-grid.html'>{{ $value->category->name }}</a>
+                                                                               href="{{route('client.post.detail' , $value->slug)}}">{{ $value->category->name }}</a>
                                                     </div>
-                                                    <h5><a href='blog-details.html'>{{ $value->title }}</a></h5>
+                                                    <h5><a href="{{route('client.post.detail' , $value->slug)}}">{{ $value->title }}</a></h5>
                                                     <p class="mt-10 color-text-paragraph font-sm">
                                                         {{ \Illuminate\Support\Str::limit($value->content, 100, '...') }}
                                                     </p>
@@ -57,7 +70,7 @@
                                                         <div class="row">
                                                             <div class="col-lg-6 col-6">
                                                                 <div class="d-flex"><img class="img-rounded"
-                                                                                         src="{{ asset('storage/'. $value->user->image) }}">
+                                                                                         src="{{ $user_img }}">
                                                                     <div class="info-right-img"><span
                                                                             class="font-sm font-bold color-brand-1 op-70">{{ $value->user->name }}</span><br><span
                                                                             class="font-xs color-text-paragraph-2">{{ $value->created_at->format('d-m-Y') }}</span>
@@ -95,39 +108,37 @@
                                 <div class="post-list-small">
                                     @if(is_object($blogTrending))
                                         @foreach($blogTrending as $item)
+                                            @php
+                                                if (isset($item->user->avatar_url)) {
+                                                    $user_img = asset('storage/' . $item->user->avatar_url);
+                                                } else {
+                                                    $user_img = asset('default/user.png');
+                                                }
+
+                                                if (isset($item->image)) {
+                                                    $blog_img = asset('storage/' . $item->image);
+                                                } else {
+                                                    $blog_img = asset('default/blog.jpg');
+                                                }
+                                            @endphp
                                             <div class="post-list-small-item d-flex align-items-center">
                                                 <figure class="thumb mr-15"><img
-                                                        src="{{ asset('storage/' . $item->image) }}"
+                                                        src="{{ $blog_img }}"
                                                         alt="jobBox"></figure>
                                                 <div class="content">
                                                     <a href="#"><h5>{{$item->title}}</h5></a>
                                                     <div class="post-meta text-muted d-flex align-items-center mb-15">
                                                         <div class="author d-flex align-items-center mr-20"><img
                                                                 alt="jobBox"
-                                                                src="{{ asset('storage/'. $item->user->image) }}"><span>{{$item->user->name}}</span>
+                                                                src="{{$user_img}}"><span>{{$item->user->name}}</span>
                                                         </div>
+                                                        <div class="date"><span>{{ $item->created_at->diffForHumans() }}</span></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         @endforeach
                                     @endif
-{{--                                    @for($i=0; $i < 5; $i++)--}}
-{{--                                        <div class="post-list-small-item d-flex align-items-center">--}}
-{{--                                            <figure class="thumb mr-15"><img--}}
-{{--                                                    src="{{ asset('assets/client/imgs/page/blog/img-trending.png') }}"--}}
-{{--                                                    alt="jobBox"></figure>--}}
-{{--                                            <div class="content">--}}
-{{--                                                <h5>Làm thế nào để tạo một bản lý lịch cho một công việc trong xã--}}
-{{--                                                    hội</h5>--}}
-{{--                                                <div class="post-meta text-muted d-flex align-items-center mb-15">--}}
-{{--                                                    <div class="author d-flex align-items-center mr-20"><img--}}
-{{--                                                            alt="jobBox"--}}
-{{--                                                            src="{{ asset('assets/client/imgs/page/homepage1/user1.png') }}"><span>Duy Trần</span>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    @endfor--}}
+
                                 </div>
                             </div>
                             <div class="sidebar-border-bg bg-right"><span class="text-grey">CHÚNG TÔI</span><span
@@ -172,30 +183,6 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section-box mt-50 mb-20">
-            <div class="container">
-                <div class="box-newsletter">
-                    <div class="row">
-                        <div class="col-xl-3 col-12 text-center d-none d-xl-block"><img
-                                src="{{ asset('assets/client/imgs/template/newsletter-left.png') }}" alt="joxBox"></div>
-                        <div class="col-lg-12 col-xl-6 col-12">
-                            <h2 class="text-md-newsletter text-center">Những điều mới sẽ luôn<br> được cập nhật thường
-                                xuyên</h2>
-                            <div class="box-form-newsletter mt-40">
-                                <form class="form-newsletter">
-                                    <input class="input-newsletter" type="text" value=""
-                                           placeholder="Nhập email của bạn ở đây">
-                                    <button class="btn btn-default font-heading icon-send-letter">Subscribe</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-12 text-center d-none d-xl-block"><img
-                                src="{{ asset('assets/client/imgs/template/newsletter-right.png') }}" alt="joxBox">
                         </div>
                     </div>
                 </div>
