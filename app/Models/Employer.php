@@ -54,6 +54,6 @@ class Employer extends Model
 
     public function addresses()
     {
-        return $this->hasMany(Address::class, 'id');
+        return $this->hasMany(Address::class);
     }
 }

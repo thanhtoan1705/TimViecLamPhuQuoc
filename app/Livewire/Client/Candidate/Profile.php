@@ -105,6 +105,9 @@ class Profile extends Component
         }
 
         flash()->success('Thông tin tài khoản đã được cập nhật.');
+
+        return redirect()->to(request()->header('Referer'));
+
     }
 
     public function render()

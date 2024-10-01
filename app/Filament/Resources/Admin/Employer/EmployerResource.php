@@ -13,6 +13,7 @@ use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Livewire;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
@@ -110,7 +111,22 @@ class EmployerResource extends Resource implements HasShieldPermissions
                                             ->afterStateUpdated(function (string $operation, $state, Set $set) {
                                                 if ($operation === 'create' || $operation === 'update') {
                                                     $slug = Str::slug($state);
-                                                    $set('slug', $slug);
+
+                                                    // Kiểm tra nếu slug đã tồn tại
+                                                    $slugExists = Employer::where('slug', $slug)->exists();
+
+                                                    // Nếu slug đã tồn tại, thêm số vào cuối slug
+                                                    $counter = 1;
+                                                    $newSlug = $slug;
+
+                                                    while ($slugExists) {
+                                                        $newSlug = $slug . '-' . $counter;
+                                                        $slugExists = Employer::where('slug', $newSlug)->exists();
+                                                        $counter++;
+                                                    }
+
+                                                    // Cập nhật slug trong state
+                                                    $set('slug', $newSlug);
                                                 }
                                             })
                                             ->label('Tên công ty'),
@@ -118,7 +134,8 @@ class EmployerResource extends Resource implements HasShieldPermissions
                                         TextInput::make('slug')
                                             ->label('Đường dẫn')
                                             ->maxLength(255)
-                                            ->unique(Employer::class, 'slug', ignoreRecord: true),
+                                            ->unique(Employer::class, 'slug', ignoreRecord: true), // Đảm bảo tính duy nhất cho slug
+
 
                                         RichEditor::make('description')
                                             ->label('Mô tả')
@@ -151,51 +168,59 @@ class EmployerResource extends Resource implements HasShieldPermissions
 
                                 Section::make('Thông tin địa chỉ')
                                     ->schema([
+                                        Select::make('province_id')
+                                            ->label('Tỉnh/Thành phố')
+                                            ->searchable()
+                                            ->options(Province::pluck('name', 'id')->toArray())
+                                            ->reactive()
+                                            ->required()
+                                            ->afterStateUpdated(function (callable $set, $state) {
+                                                $districts = District::where('province_id', $state)->pluck('name', 'id')->toArray();
+                                                $set('district_id', null);
+                                                $set('ward_id', null);
+                                                $set('district_options', $districts);
+                                            }),
 
-                                        Repeater::make('addresses')
-                                            ->relationship('addresses')
-                                            ->label('Nhập địa chỉ (nếu có)')
-                                            ->schema([
+                                        Select::make('district_id')
+                                            ->label('Quận/Huyện')
+                                            ->searchable()
+                                            ->required()
+                                            ->options(fn($get) => District::where('province_id', $get('province_id'))->pluck('name', 'id')->toArray())
+                                            ->reactive()
+                                            ->afterStateUpdated(function (callable $set, $state) {
+                                                $wards = Ward::where('district_id', $state)->pluck('name', 'id')->toArray();
+                                                $set('ward_id', null);
+                                                $set('ward_options', $wards);
+                                            }),
 
-                                                Select::make('province_id')
-                                                    ->label('Tỉnh/Thành phố')
-                                                    ->searchable()
-                                                    ->options(Province::pluck('name', 'id')->toArray())
-                                                    ->reactive()
-                                                    ->required()
-                                                    ->afterStateUpdated(function (callable $set, $state) {
-                                                        $districts = District::where('province_id', $state)->pluck('name', 'id')->toArray();
-                                                        $set('district_id', null);
-                                                        $set('ward_id', null);
-                                                        $set('district_options', $districts);
-                                                    }),
+                                        Select::make('ward_id')
+                                            ->label('Xã/Phường')
+                                            ->required()
+                                            ->options(fn($get) => Ward::where('district_id', $get('district_id'))->pluck('name', 'id')->toArray()),
 
-                                                Select::make('district_id')
-                                                    ->label('Quận/Huyện')
-                                                    ->searchable()
-                                                    ->required()
-                                                    ->options(fn($get) => District::where('province_id', $get('province_id'))->pluck('name', 'id')->toArray())
-                                                    ->reactive()
-                                                    ->afterStateUpdated(function (callable $set, $state) {
-                                                        $wards = Ward::where('district_id', $state)->pluck('name', 'id')->toArray();
-                                                        $set('ward_id', null);
-                                                        $set('ward_options', $wards);
-                                                    }),
+                                        TextInput::make('street')
+                                            ->label('Địa chỉ')
+                                            ->maxLength(255),
 
-                                                Select::make('ward_id')
-                                                    ->label('Xã/Phường')
-//                                                    ->searchable()
-                                                    ->required()
-                                                    ->relationship('ward', 'name')
-                                                    ->options(fn($get) => Ward::where('district_id', $get('district_id'))->pluck('name', 'id')->toArray()),
+                                        Grid::make(2)
+                                        ->schema([
+                                            TextInput::make('latitude')
+                                                ->label('Vĩ độ')
+                                                ->default(fn(Page $livewire) => $livewire->latitude ?? 10.0452),
 
-                                                TextInput::make('street')
-                                                    ->label('Địa chỉ')
-                                                    ->maxLength(255),
+                                            TextInput::make('longitude')
+                                                ->label('Kinh độ')
+                                                ->default(fn(Page $livewire) => $livewire->longitude ?? 105.7469),
+                                        ]),
 
-                                            ])->columns(1),
-                                    ])->columnSpanFull(),
-                            ])
+                                        Placeholder::make('map')
+                                        ->label('Bản đồ')
+                                        ->view('livewire.admin.employer.map-component')
+
+                                    ])
+                                    ->columnSpanFull(),
+
+        ])
                             ->columnSpan(2),
 
                         Grid::make(1)
@@ -205,14 +230,14 @@ class EmployerResource extends Resource implements HasShieldPermissions
                                         FileUpload::make('company_logo')
                                             ->label('Logo công ty')
                                             ->image()
-                                            ->required()
+//                                            ->required()
                                             ->disk('public')
                                             ->directory('images/employer/logo'),
 
                                         FileUpload::make('company_photo_cover')
                                             ->label('Ảnh bìa công ty')
                                             ->image()
-                                            ->required()
+//                                            ->required()
                                             ->disk('public')
                                             ->directory('images/employer/banner'),
                                     ]),
@@ -221,7 +246,7 @@ class EmployerResource extends Resource implements HasShieldPermissions
                                     ->schema([
                                         TextInput::make('company_phone')
                                             ->label('Số điện thoại công ty')
-                                            ->required()
+//                                            ->required()
                                             ->maxLength(20),
 
                                         TextInput::make('facebook_url')
