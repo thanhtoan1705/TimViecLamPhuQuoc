@@ -65,7 +65,7 @@ class RegistrationEmployer extends Register
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
             'role' => 'employer', // Assign the employer role
         ]);
 
@@ -114,7 +114,7 @@ class RegistrationEmployer extends Register
             ->label(__('Logo công ty'))
             ->imageEditor()
             ->disk('public')
-            ->required()
+//            ->required()
             ->directory('images/employer')
             ->image();
     }

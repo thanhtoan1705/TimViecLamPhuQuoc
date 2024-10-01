@@ -4,9 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Auth\EmployerLogin;
 use App\Filament\Pages\Auth\Employer\RequestPasswordReset;
-use App\Filament\Resources\Employer\JobPost\JobPostResource;
 use App\Filament\Resources\Employer\Notification\NotificationResource\Pages\NotificationsPage;
-use App\Filament\Resources\Employer\Notification\NotificationResource\Widgets\EmployerNotificationsWidget;
 use App\Filament\Resources\Pages\RegistrationEmployer;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -91,6 +89,11 @@ class EmployerPanelProvider extends PanelProvider
                     ->setNavigationGroup('Tài khoản')
                     ->shouldRegisterNavigation(true)
                     ->shouldShowDeleteAccountForm(false)
+                    ->shouldShowEditProfileForm(false)
+                    ->customProfileComponents([
+                        \App\Livewire\FilamentEmployerUserProfile::class,
+                        \App\Livewire\Filament\Employer\EmployerProfile::class,
+                    ])
                     ->shouldShowAvatarForm(
                         value: true,
                         directory: 'avatars',

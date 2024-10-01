@@ -6,6 +6,7 @@ use App\Filament\Resources\Payment\PaymentResource\Pages;
 use App\Models\Employer;
 use App\Models\JobPostPackage;
 use App\Models\Payment;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
@@ -24,7 +25,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
-class PaymentResource extends Resource
+class PaymentResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Payment::class;
 
@@ -32,6 +33,18 @@ class PaymentResource extends Resource
     protected static ?string $modelLabel = 'Thanh toán';
     protected static ?string $navigationGroup = 'Quản lý thanh toán';
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function getNavigationBadge(): ?string
     {

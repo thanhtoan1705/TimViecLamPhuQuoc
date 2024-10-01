@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Admin\Major;
 use App\Filament\Resources\Major\MajorResource\Pages;
 use App\Filament\Resources\Major\MajorResource\RelationManagers;
 use App\Models\Major;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
@@ -19,7 +20,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
-class MajorResource extends Resource
+class MajorResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Major::class;
 
@@ -31,6 +32,18 @@ class MajorResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-beaker';
     protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function getNavigationBadge(): ?string
     {

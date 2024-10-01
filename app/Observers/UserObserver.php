@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\User;
+use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 
 class UserObserver
@@ -31,9 +32,16 @@ class UserObserver
 
         } elseif ($user->role === 'employer') {
             Notification::make()
-                ->title("Tài khoản nhà tuyển dụng đã được tạo thành công")
-                ->sendToDatabase($user)
-                ->success();
+                ->success()
+                ->title("Đăng ký tài khoản nhà tuyển dụng thành công")
+                ->body('Vui lòng cập nhật đầy đủ thông tin tài khoản của bạn')
+                ->actions([
+                    Action::make('view')
+                        ->label('Cập nhật ngay')
+                        ->button()
+                        ->url(route('filament.employer.pages.edit-profile'))
+                ])
+                ->sendToDatabase($user);
 
             // Gửi thông báo cho tất cả người dùng admin
             foreach ($adminUsers as $admin) {
