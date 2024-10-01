@@ -32,6 +32,17 @@ class EmployerRepository implements EmployerInterface
             ->firstOrFail();
     }
 
+    public function getAllEmployersPaginate($query, $sortBy, int $perPage)
+    {
+        if ($sortBy === 'newest') {
+            $query->orderBy('created_at', 'desc');
+        } elseif ($sortBy === 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        }
+
+        return $query->paginate($perPage);
+    }
+
     public function getJobPostsByEmployerSlug($slug, $perPage = 2)
     {
         $employer = $this->employer->where('slug', $slug)->firstOrFail();

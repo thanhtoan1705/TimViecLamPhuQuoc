@@ -6,6 +6,8 @@ interface EmployerInterface
 {
     public function getAllEmployers();
 
+    public function getAllEmployersPaginate($query, $sortBy, int $perPage);
+
     public function getJobPostsByEmployerSlug($slug, $perPage = 2);
 
     public function getEmployerByStatusPaginate(int $status, int $paginate);

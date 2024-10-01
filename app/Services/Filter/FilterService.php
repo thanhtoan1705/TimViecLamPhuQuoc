@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\Employer;
 use App\Models\Job_category;
 use App\Models\JobPost;
+use App\Models\Province;
 use App\Models\Salary;
 use Illuminate\Support\Facades\DB;
 
@@ -29,17 +30,14 @@ class FilterService
         $this->employer = $employer;
     }
 
-    public function getLocations()
+    public function getProvince()
     {
-        return $this->jobPost
-            ->select('address')
-            ->distinct()
-            ->pluck('address')
-            ->sort()
-            ->take(5)
+        return Province::with('districts')
+        ->get()
+            ->pluck('name')
+            ->unique()
             ->values();
     }
-
 
     public function getJobCategories()
     {
@@ -127,15 +125,6 @@ class FilterService
         ];
     }
 
-    public function getProvince()
-    {
-        return Address::with('province')
-            ->get()
-            ->pluck('province.name')
-            ->unique()
-            ->values();
-    }
-
     public function getCompanyTypes()
     {
         return $this->employer
@@ -166,12 +155,12 @@ class FilterService
             ->get();
     }
 
-    public function filterJobs($selectedCategories, $selectedSalaries, $selectedKeywords, $selectedRanks, $selectedExperiences, $selectedJobTypes, $selectedPostedTime, $selectedLocations)
+    public function filterJobs($selectedCategories, $selectedSalaries, $selectedKeywords, $selectedRanks, $selectedExperiences, $selectedJobTypes, $selectedPostedTime, $selectedLocation)
     {
         $jobs = $this->jobPost->query();
 
-        if (!empty($selectedLocations)) {
-            $jobs->whereIn('address', $selectedLocations);
+        if (!empty($selectedLocation)) {
+            $jobs->where('address', 'LIKE', '%' . $selectedLocation . '%');
         }
 
         if (!empty($selectedCategories)) {
@@ -219,28 +208,28 @@ class FilterService
         return $jobs;
     }
 
-    public function filterEmployer($selectedLocations, $selectedCompanyTypes, $selectedYears, $selectedSizes)
+    public function filterEmployer($selectedLocation, $selectedCompanyTypes, $selectedYears, $selectedSizes)
     {
-        $employers = $this->employer->query();
+        $query = $this->employer->query();
 
-        if (!empty($selectedLocations)) {
-            $employers->whereHas('address', function ($query) use ($selectedLocations) {
-                $query->whereIn('province_id', $selectedLocations);
+        if (!empty($selectedLocation)) {
+            $query->whereHas('address.province', function ($query) use ($selectedLocation) {
+                $query->where('name', 'LIKE', '%' . $selectedLocation . '%');
             });
         }
 
         if (!empty($selectedCompanyTypes)) {
-            $employers->whereIn('company_type', $selectedCompanyTypes);
+            $query->whereIn('company_type', $selectedCompanyTypes);
         }
 
         if (!empty($selectedYears)) {
-            $employers->whereIn(DB::raw('YEAR(since)'), $selectedYears);
+            $query->whereIn(DB::raw('YEAR(since)'), $selectedYears);
         }
 
         if (!empty($selectedSizes)) {
-            $employers->whereIn('company_size', $selectedSizes);
+            $query->whereIn('company_size', $selectedSizes);
         }
 
-        return $employers->get();
+        return $query;
     }
 }

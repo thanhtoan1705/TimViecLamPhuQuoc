@@ -49,25 +49,30 @@ class EmployerController extends Controller
         $selectedCompanyTypes = $request->query('company_types', []);
         $selectedYears = $request->query('years', []);
         $selectedSizes = $request->query('sizes', []);
-        $selectedLocations = $request->query('location', []);
+        $selectedLocation = $request->query('location', '');
+        $sortBy = $request->input('sortBy', 'newest');
+        $perPage = $request->input('perPage', 10);
 
         $filteredEmployers = $this->filterService->filterEmployer(
-            $selectedLocations,
+            $selectedLocation,
             $selectedCompanyTypes,
             $selectedYears,
             $selectedSizes
         );
 
+        $employers = $this->employerRepository->getAllEmployersPaginate($filteredEmployers, $sortBy, $perPage);
+
         $filteredData = $this->filterRepository->filterEmployer(
-            $selectedLocations,
+            $selectedLocation,
             $selectedCompanyTypes,
             $selectedYears,
             $selectedSizes,
         );
 
         $data = [
-            'employers' => $this->employerRepository->getEmployerByStatusPaginate(1, 12),
-            'filteredEmployers' => $filteredEmployers,
+            'sortBy' => $sortBy,
+            'perPage' => $perPage,
+            'employers' => $employers,
             'locations' => $filteredData['locations'],
             'companyTypes' => $filteredData['companyTypes'],
             'years' => $filteredData['years'],

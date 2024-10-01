@@ -37,13 +37,13 @@ class JobController extends Controller
         $selectedExperiences = $request->input('experiences', []);
         $selectedJobTypes = $request->input('job_types', []);
         $selectedPostedTime = $request->input('posted_time', null);
-        $selectedLocations = $request->input('locations', []);
+        $selectedLocation = $request->input('location', null);
 
         $perPage = $request->query('per_page', 12);
         $sortBy = $request->query('sort_by', 'created_at');
         $sortOrder = $request->query('sort_order', 'desc');
 
-        $validSortBy = ['created_at', 'rating'];
+        $validSortBy = ['created_at'];
         $validSortOrders = ['asc', 'desc'];
 
         if (!in_array($sortBy, $validSortBy)) {
@@ -61,7 +61,7 @@ class JobController extends Controller
             $selectedExperiences,
             $selectedJobTypes,
             $selectedPostedTime,
-            $selectedLocations,
+            $selectedLocation,
         );
 
         $filteredJobsQuery = $filteredData['jobs'];
@@ -71,8 +71,14 @@ class JobController extends Controller
         $searchJob = $request->only(['category', 'location', 'salary', 'experience', 'keyword']);
         $jobResult = $this->searchService->searchJobs($searchJob);
 
+        if (!empty($searchJob['category']) || !empty($searchJob['location']) || !empty($searchJob['salary']) || !empty($searchJob['experience']) || !empty($searchJob['keyword'])) {
+            $jobs = $jobResult;
+        } else {
+            $jobs = $filteredJobs;
+        }
+
         $data = [
-            'jobs' => $filteredJobs,
+            'jobs' => $jobs,
             'totalJobs' => $filteredJobs->total(),
             'perPage' => $perPage,
             'sortBy' => $sortBy,
@@ -87,11 +93,12 @@ class JobController extends Controller
             'jobsCount7Days' => $filteredData['jobsCount7Days'],
             'jobsCount30Days' => $filteredData['jobsCount30Days'],
             'locations' => $filteredData['locations'],
-            'jobResult' => $jobResult,
         ];
 
         return view('client.job.index', $data);
     }
+
+
 
     public function single($jobSlug)
     {

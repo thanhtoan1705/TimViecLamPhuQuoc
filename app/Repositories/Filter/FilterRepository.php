@@ -22,10 +22,10 @@ class FilterRepository implements FilterInterface
         $selectedExperiences = [],
         $selectedJobTypes = [],
         $selectedPostedTime = null,
-        $selectedLocations = []
+        $selectedLocation = null,
     )
     {
-        return [
+        $filteredData = [
             'categories' => $this->filterService->getJobCategories(),
             'salaries' => $this->filterService->getSalaries(),
             'keywords' => $this->filterService->getKeywords()->values()->all(),
@@ -35,32 +35,38 @@ class FilterRepository implements FilterInterface
             'jobsCount1Day' => $this->filterService->getJobsCountByTime()['1_day'],
             'jobsCount7Days' => $this->filterService->getJobsCountByTime()['7_days'],
             'jobsCount30Days' => $this->filterService->getJobsCountByTime()['30_days'],
-            'jobs' => $this->filterService->filterJobs(
-                $selectedCategories,
-                $selectedSalaries,
-                $selectedKeywords,
-                $selectedRanks,
-                $selectedExperiences,
-                $selectedJobTypes,
-                $selectedPostedTime,
-                $selectedLocations
-            ),
-            'locations' => $this->filterService->getLocations(),
+            'locations' => $this->filterService->getProvince(),
         ];
+
+        $filteredData['jobs'] = $this->filterService->filterJobs(
+            $selectedCategories,
+            $selectedSalaries,
+            $selectedKeywords,
+            $selectedRanks,
+            $selectedExperiences,
+            $selectedJobTypes,
+            $selectedPostedTime,
+            $selectedLocation
+        );
+
+        return $filteredData;
     }
-    public function filterEmployer(
-        $selectedLocations = [],
+
+    public
+    function filterEmployer(
+        $selectedLocation = null,
         $selectedCompanyTypes = [],
         $selectedYears = [],
         $selectedSizes = []
-    ) {
+    )
+    {
         return [
             'locations' => $this->filterService->getProvince(),
             'companyTypes' => $this->filterService->getCompanyTypes(),
             'years' => $this->filterService->getYears(),
             'sizes' => $this->filterService->getSizes(),
             'employers' => $this->filterService->filterEmployer(
-                $selectedLocations,
+                $selectedLocation,
                 $selectedCompanyTypes,
                 $selectedYears,
                 $selectedSizes
