@@ -13,12 +13,12 @@
                                         class="ri-arrow-left-s-line"></i></a>
                             </div>
                             <div class="me-3 ms-0">
-                                <img src="assets/images/users/avatar-4.jpg" class="rounded-circle avatar-xs"
+                                <img src="{{asset('assets/chat/images/users/avatar-4.jpg')}}" class="rounded-circle avatar-xs"
                                     alt="">
                             </div>
                             <div class="flex-grow-1 overflow-hidden">
                                 <h5 class="font-size-16 mb-0 text-truncate"><a href="#"
-                                        class="text-reset user-profile-show">Doris Brown</a> <i
+                                        class="text-reset user-profile-show">Trần Thị C</a> <i
                                         class="ri-record-circle-fill font-size-10 text-success d-inline-block ms-1"></i>
                                 </h5>
                             </div>
@@ -35,7 +35,7 @@
                                     <div class="dropdown-menu p-0 dropdown-menu-end dropdown-menu-md">
                                         <div class="search-box p-2">
                                             <input type="text" class="form-control bg-light border-0"
-                                                placeholder="Search..">
+                                                placeholder="Tìm kiếm..">
                                         </div>
                                     </div>
                                 </div>
@@ -68,19 +68,18 @@
                                         <i class="ri-more-fill"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item d-block d-lg-none user-profile-show" href="#">View
-                                            profile <i class="ri-user-2-line float-end text-muted"></i></a>
+                                        <a class="dropdown-item d-block d-lg-none user-profile-show" href="#">Xem hồ sơ <i class="ri-user-2-line float-end text-muted"></i></a>
                                         <a class="dropdown-item d-block d-lg-none" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#audiocallModal">Audio <i
+                                            data-bs-target="#audiocallModal">Âm thanh <i
                                                 class="ri-phone-line float-end text-muted"></i></a>
                                         <a class="dropdown-item d-block d-lg-none" href="#" data-bs-toggle="modal"
                                             data-bs-target="#videocallModal">Video <i
                                                 class="ri-vidicon-line float-end text-muted"></i></a>
-                                        <a class="dropdown-item" href="#">Archive <i
+                                        <a class="dropdown-item" href="#">Lưu trữ <i
                                                 class="ri-archive-line float-end text-muted"></i></a>
-                                        <a class="dropdown-item" href="#">Muted <i
+                                        <a class="dropdown-item" href="#">Tắt tiếng <i
                                                 class="ri-volume-mute-line float-end text-muted"></i></a>
-                                        <a class="dropdown-item" href="#">Delete <i
+                                        <a class="dropdown-item" href="#">Xóa <i
                                                 class="ri-delete-bin-line float-end text-muted"></i></a>
                                     </div>
                                 </div>
@@ -97,14 +96,14 @@
                     <li>
                         <div class="conversation-list">
                             <div class="chat-avatar">
-                                <img src="assets/images/users/avatar-4.jpg" alt="">
+                                <img src="{{asset('assets/chat/images/users/avatar-4.jpg')}}" alt="">
                             </div>
 
                             <div class="user-chat-content">
                                 <div class="ctext-wrap">
                                     <div class="ctext-wrap-content">
                                         <p class="mb-0">
-                                            Good morning
+                                            Chào buổi sáng
                                         </p>
                                         <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span
                                                 class="align-middle">10:00</span></p>
@@ -115,18 +114,18 @@
                                             <i class="ri-more-2-fill"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Copy <i
+                                            <a class="dropdown-item" href="#">Sao chép <i
                                                     class="ri-file-copy-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Save <i
+                                            <a class="dropdown-item" href="#">Lưu <i
                                                     class="ri-save-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Forward <i
+                                            <a class="dropdown-item" href="#">Chuyển tiếp <i
                                                     class="ri-chat-forward-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Delete <i
+                                            <a class="dropdown-item" href="#">Xóa <i
                                                     class="ri-delete-bin-line float-end text-muted"></i></a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="conversation-name">Doris Brown</div>
+                                <div class="conversation-name">Trần Thị C</div>
                             </div>
                         </div>
                     </li>
@@ -134,7 +133,7 @@
                     <li class="right">
                         <div class="conversation-list">
                             <div class="chat-avatar">
-                                <img src="assets/images/users/avatar-1.jpg" alt="">
+                                <img src="{{asset('assets/chat/images/users/avatar-1.jpg')}}" alt="">
                             </div>
 
                             <div class="user-chat-content">
@@ -153,33 +152,33 @@
                                             <i class="ri-more-2-fill"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Copy <i
+                                            <a class="dropdown-item" href="#">Sao chép <i
                                                     class="ri-file-copy-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Save <i
+                                            <a class="dropdown-item" href="#">Lưu <i
                                                     class="ri-save-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Forward <i
+                                            <a class="dropdown-item" href="#">Chuyển tiếp <i
                                                     class="ri-chat-forward-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Delete <i
+                                            <a class="dropdown-item" href="#">Xóa <i
                                                     class="ri-delete-bin-line float-end text-muted"></i></a>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="conversation-name">Patricia Smith</div>
+                                <div class="conversation-name">Trần Văn A</div>
                             </div>
                         </div>
                     </li>
 
                     <li>
                         <div class="chat-day-title">
-                            <span class="title">Today</span>
+                            <span class="title">Hôm nay</span>
                         </div>
                     </li>
 
                     <li>
                         <div class="conversation-list">
                             <div class="chat-avatar">
-                                <img src="assets/images/users/avatar-4.jpg" alt="">
+                                <img src="{{asset('')}}assets/chat/images/users/avatar-4.jpg" alt="">
                             </div>
 
                             <div class="user-chat-content">
@@ -198,13 +197,13 @@
                                             <i class="ri-more-2-fill"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Copy <i
+                                            <a class="dropdown-item" href="#">Sao chép <i
                                                     class="ri-file-copy-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Save <i
+                                            <a class="dropdown-item" href="#">Lưu <i
                                                     class="ri-save-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Forward <i
+                                            <a class="dropdown-item" href="#">Chuyển tiếp <i
                                                     class="ri-chat-forward-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Delete <i
+                                            <a class="dropdown-item" href="#">Xóa <i
                                                     class="ri-delete-bin-line float-end text-muted"></i></a>
                                         </div>
                                     </div>
@@ -224,19 +223,19 @@
                                             <i class="ri-more-2-fill"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Copy <i
+                                            <a class="dropdown-item" href="#">Sao chép <i
                                                     class="ri-file-copy-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Save <i
+                                            <a class="dropdown-item" href="#">Lưu <i
                                                     class="ri-save-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Forward <i
+                                            <a class="dropdown-item" href="#">Chuyển tiếp <i
                                                     class="ri-chat-forward-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Delete <i
+                                            <a class="dropdown-item" href="#">Xóa <i
                                                     class="ri-delete-bin-line float-end text-muted"></i></a>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="conversation-name">Doris Brown</div>
+                                <div class="conversation-name">Trần Thị C</div>
                             </div>
 
                         </div>
@@ -245,7 +244,7 @@
                     <li class="right">
                         <div class="conversation-list">
                             <div class="chat-avatar">
-                                <img src="assets/images/users/avatar-1.jpg" alt="">
+                                <img src="{{asset('assets/chat/images/users/avatar-1.jpg')}}" alt="">
                             </div>
 
                             <div class="user-chat-content">
@@ -263,19 +262,19 @@
                                             <i class="ri-more-2-fill"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Copy <i
+                                            <a class="dropdown-item" href="#">Sao chép <i
                                                     class="ri-file-copy-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Save <i
+                                            <a class="dropdown-item" href="#">Lưu <i
                                                     class="ri-save-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Forward <i
+                                            <a class="dropdown-item" href="#">Chuyển tiếp <i
                                                     class="ri-chat-forward-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Delete <i
+                                            <a class="dropdown-item" href="#">Xóa <i
                                                     class="ri-delete-bin-line float-end text-muted"></i></a>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="conversation-name">Patricia Smith</div>
+                                <div class="conversation-name">Trần Văn A</div>
                             </div>
 
                         </div>
@@ -284,7 +283,7 @@
                     <li>
                         <div class="conversation-list">
                             <div class="chat-avatar">
-                                <img src="assets/images/users/avatar-4.jpg" alt="">
+                                <img src="{{asset('assets/chat/images/users/avatar-4.jpg')}}" alt="">
                             </div>
 
                             <div class="user-chat-content">
@@ -295,8 +294,8 @@
                                             <li class="list-inline-item message-img-list me-2 ms-0">
                                                 <div>
                                                     <a class="popup-img d-inline-block m-1"
-                                                        href="assets/images/small/img-1.jpg" title="Project 1">
-                                                        <img src="assets/images/small/img-1.jpg" alt=""
+                                                        href="{{asset('assets/chat/images/small/img-1.jpg')}}" title="Project 1">
+                                                        <img src="{{asset('assets/chat/images/small/img-1.jpg')}}" alt=""
                                                             class="rounded border">
                                                     </a>
                                                 </div>
@@ -304,7 +303,7 @@
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <a download="img-1.jpg"
-                                                                href="assets/images/small/img-1.jpg"
+                                                                href="{{asset('assets/chat/images/small/img-1.jpg')}}"
                                                                 class="fw-medium">
                                                                 <i class="ri-download-2-line"></i>
                                                             </a>
@@ -316,13 +315,13 @@
                                                                 <i class="ri-more-fill"></i>
                                                             </a>
                                                             <div class="dropdown-menu">
-                                                                <a class="dropdown-item" href="#">Copy <i
+                                                                <a class="dropdown-item" href="#">Sao chép <i
                                                                         class="ri-file-copy-line float-end text-muted"></i></a>
-                                                                <a class="dropdown-item" href="#">Save <i
+                                                                <a class="dropdown-item" href="#">Lưu <i
                                                                         class="ri-save-line float-end text-muted"></i></a>
-                                                                <a class="dropdown-item" href="#">Forward <i
+                                                                <a class="dropdown-item" href="#">Chuyển tiếp <i
                                                                         class="ri-chat-forward-line float-end text-muted"></i></a>
-                                                                <a class="dropdown-item" href="#">Delete <i
+                                                                <a class="dropdown-item" href="#">Xóa <i
                                                                         class="ri-delete-bin-line float-end text-muted"></i></a>
                                                             </div>
                                                         </li>
@@ -333,8 +332,8 @@
                                             <li class="list-inline-item message-img-list">
                                                 <div>
                                                     <a class="popup-img d-inline-block m-1"
-                                                        href="assets/images/small/img-2.jpg" title="Project 2">
-                                                        <img src="assets/images/small/img-2.jpg" alt=""
+                                                        href="{{asset('assets/chat/images/small/img-2.jpg')}}" title="Project 2">
+                                                        <img src="{{asset('assets/chat/images/small/img-2.jpg')}}" alt=""
                                                             class="rounded border">
                                                     </a>
                                                 </div>
@@ -342,7 +341,7 @@
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <a download="img-2.jpg"
-                                                                href="assets/images/small/img-2.jpg"
+                                                                href="{{asset('assets/chat/images/small/img-2.jpg')}}"
                                                                 class="fw-medium">
                                                                 <i class="ri-download-2-line"></i>
                                                             </a>
@@ -354,13 +353,13 @@
                                                                 <i class="ri-more-fill"></i>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="#">Copy <i
+                                                                <a class="dropdown-item" href="#">Sao chép <i
                                                                         class="ri-file-copy-line float-end text-muted"></i></a>
-                                                                <a class="dropdown-item" href="#">Save <i
+                                                                <a class="dropdown-item" href="#">Lưu <i
                                                                         class="ri-save-line float-end text-muted"></i></a>
-                                                                <a class="dropdown-item" href="#">Forward <i
+                                                                <a class="dropdown-item" href="#">Chuyển tiếp <i
                                                                         class="ri-chat-forward-line float-end text-muted"></i></a>
-                                                                <a class="dropdown-item" href="#">Delete <i
+                                                                <a class="dropdown-item" href="#">Xóa <i
                                                                         class="ri-delete-bin-line float-end text-muted"></i></a>
                                                             </div>
                                                         </li>
@@ -378,20 +377,20 @@
                                             <i class="ri-more-2-fill"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Copy <i
+                                            <a class="dropdown-item" href="#">Sao chép <i
                                                     class="ri-file-copy-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Save <i
+                                            <a class="dropdown-item" href="#">Lưu <i
                                                     class="ri-save-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Forward <i
+                                            <a class="dropdown-item" href="#">Chuyển tiếp <i
                                                     class="ri-chat-forward-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Delete <i
+                                            <a class="dropdown-item" href="#">Xóa <i
                                                     class="ri-delete-bin-line float-end text-muted"></i></a>
                                         </div>
                                     </div>
 
                                 </div>
 
-                                <div class="conversation-name">Doris Brown</div>
+                                <div class="conversation-name">Trần Thị C</div>
                             </div>
 
                         </div>
@@ -400,7 +399,7 @@
                     <li class="right">
                         <div class="conversation-list">
                             <div class="chat-avatar">
-                                <img src="assets/images/users/avatar-1.jpg" alt="">
+                                <img src="{{asset('assets/chat/images/users/avatar-1.jpg')}}" alt="">
                             </div>
 
                             <div class="user-chat-content">
@@ -426,7 +425,7 @@
                                                     <div class="d-flex gap-2 font-size-20 d-flex align-items-start">
                                                         <div>
                                                             <a download="admin_v1.0.zip"
-                                                                href="assets/images/small/admin_v1.0.zip"
+                                                                href="{{asset('assets/chat/images/small/admin_v1.0.zip')}}"
                                                                 class="fw-medium">
                                                                 <i class="ri-download-2-line"></i>
                                                             </a>
@@ -440,7 +439,7 @@
                                                             <div class="dropdown-menu dropdown-menu-end">
                                                                 <a class="dropdown-item" href="#">Share <i
                                                                         class="ri-share-line float-end text-muted"></i></a>
-                                                                <a class="dropdown-item" href="#">Delete <i
+                                                                <a class="dropdown-item" href="#">Xóa <i
                                                                         class="ri-delete-bin-line float-end text-muted"></i></a>
                                                             </div>
                                                         </div>
@@ -459,20 +458,20 @@
                                             <i class="ri-more-2-fill"></i>
                                         </a>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#">Copy <i
+                                            <a class="dropdown-item" href="#">Sao chép <i
                                                     class="ri-file-copy-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Save <i
+                                            <a class="dropdown-item" href="#">Lưu <i
                                                     class="ri-save-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Forward <i
+                                            <a class="dropdown-item" href="#">Chuyển tiếp <i
                                                     class="ri-chat-forward-line float-end text-muted"></i></a>
-                                            <a class="dropdown-item" href="#">Delete <i
+                                            <a class="dropdown-item" href="#">Xóa <i
                                                     class="ri-delete-bin-line float-end text-muted"></i></a>
                                         </div>
                                     </div>
 
                                 </div>
 
-                                <div class="conversation-name">Patricia Smith</div>
+                                <div class="conversation-name">Trần Văn A</div>
                             </div>
 
                         </div>
@@ -481,14 +480,14 @@
                     <li>
                         <div class="conversation-list">
                             <div class="chat-avatar">
-                                <img src="assets/images/users/avatar-4.jpg" alt="">
+                                <img src="{{asset('assets/chat/images/users/avatar-4.jpg')}}" alt="">
                             </div>
 
                             <div class="user-chat-content">
                                 <div class="ctext-wrap">
                                     <div class="ctext-wrap-content">
                                         <p class="mb-0">
-                                            typing
+                                            Đang soạn tin
                                             <span class="animate-typing">
                                                 <span class="dot"></span>
                                                 <span class="dot"></span>
@@ -498,7 +497,7 @@
                                     </div>
                                 </div>
 
-                                <div class="conversation-name">Doris Brown</div>
+                                <div class="conversation-name">Trần Thị C</div>
                             </div>
 
                         </div>
@@ -562,21 +561,22 @@
 
             <div class="text-center p-4 border-bottom">
                 <div class="mb-4">
-                    <img src="assets/images/users/avatar-4.jpg" class="rounded-circle avatar-lg img-thumbnail"
-                        alt="">
+                    <img src="{{asset('assets/chat/images/users/avatar-4.jpg')}}" class="rounded-circle avatar-lg img-thumbnail"
+                        alt="user">
                 </div>
 
-                <h5 class="font-size-16 mb-1 text-truncate">Doris Brown</h5>
+                <h5 class="font-size-16 mb-1 text-truncate">Trần Thị C</h5>
                 <p class="text-muted text-truncate mb-1"><i
-                        class="ri-record-circle-fill font-size-10 text-success me-1 ms-0"></i> Active</p>
+                        class="ri-record-circle-fill font-size-10 text-success me-1 ms-0"></i> Hoạt động</p>
             </div>
             <!-- End profile user -->
 
             <!-- Start user-profile-desc -->
             <div class="p-4 user-profile-desc" data-simplebar>
                 <div class="text-muted">
-                    <p class="mb-4">If several languages coalesce, the grammar of the resulting language is more
-                        simple and regular than that of the individual.</p>
+                    <p class="mb-4">
+                        Nếu nhiều ngôn ngữ kết hợp lại, ngữ pháp của ngôn ngữ kết quả sẽ đơn giản và có quy tắc hơn so với ngôn ngữ riêng lẻ.
+                    </p>
                 </div>
 
                 <div class="accordion" id="myprofile">
@@ -586,7 +586,7 @@
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#aboutprofile" aria-expanded="true" aria-controls="aboutprofile">
                                 <h5 class="font-size-14 m-0">
-                                    <i class="ri-user-2-line me-2 ms-0 align-middle d-inline-block"></i> About
+                                    <i class="ri-user-2-line me-2 ms-0 align-middle d-inline-block"></i> Giới thiệu
                                 </h5>
                             </button>
                         </div>
@@ -594,8 +594,8 @@
                             data-bs-parent="#myprofile">
                             <div class="accordion-body">
                                 <div>
-                                    <p class="text-muted mb-1">Name</p>
-                                    <h5 class="font-size-14">Doris Brown</h5>
+                                    <p class="text-muted mb-1">Tên</p>
+                                    <h5 class="font-size-14">Trần Thị C</h5>
                                 </div>
 
                                 <div class="mt-4">
@@ -604,13 +604,13 @@
                                 </div>
 
                                 <div class="mt-4">
-                                    <p class="text-muted mb-1">Time</p>
+                                    <p class="text-muted mb-1">Thời gian</p>
                                     <h5 class="font-size-14">11:40 AM</h5>
                                 </div>
 
                                 <div class="mt-4">
-                                    <p class="text-muted mb-1">Location</p>
-                                    <h5 class="font-size-14 mb-0">California, USA</h5>
+                                    <p class="text-muted mb-1">Địa chỉ</p>
+                                    <h5 class="font-size-14 mb-0">Cần Thơ, Việt Nam</h5>
                                 </div>
                             </div>
                         </div>
@@ -621,8 +621,8 @@
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#attachprofile" aria-expanded="false" aria-controls="attachprofile">
                                 <h5 class="font-size-14 m-0">
-                                    <i class="ri-attachment-line me-2 ms-0 align-middle d-inline-block"></i> Attached
-                                    Files
+                                    <i class="ri-attachment-line me-2 ms-0 align-middle d-inline-block"></i>
+                                    Tệp đính kèm
                                 </h5>
                             </button>
                         </div>
@@ -661,7 +661,7 @@
                                                         <a class="dropdown-item" href="#">Action</a>
                                                         <a class="dropdown-item" href="#">Another action</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">Delete</a>
+                                                        <a class="dropdown-item" href="#">Xóa</a>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -701,7 +701,7 @@
                                                         <a class="dropdown-item" href="#">Action</a>
                                                         <a class="dropdown-item" href="#">Another action</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">Delete</a>
+                                                        <a class="dropdown-item" href="#">Xóa</a>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -741,7 +741,7 @@
                                                         <a class="dropdown-item" href="#">Action</a>
                                                         <a class="dropdown-item" href="#">Another action</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">Delete</a>
+                                                        <a class="dropdown-item" href="#">Xóa</a>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -781,7 +781,7 @@
                                                         <a class="dropdown-item" href="#">Action</a>
                                                         <a class="dropdown-item" href="#">Another action</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">Delete</a>
+                                                        <a class="dropdown-item" href="#">Xóa</a>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -800,3 +800,79 @@
     </div>
 </div>
 <!-- End User chat -->
+
+<!-- audiocall Modal -->
+<div class="modal fade" id="audiocallModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center p-4">
+                    <div class="avatar-lg mx-auto mb-4">
+                        <img src="{{asset('assets/chat/images/users/avatar-4.jpg')}}" alt="" class="img-thumbnail rounded-circle">
+                    </div>
+
+                    <h5 class="text-truncate">Doris Brown</h5>
+                    <p class="text-muted">Start Audio Call</p>
+
+                    <div class="mt-5">
+                        <ul class="list-inline mb-1">
+                            <li class="list-inline-item px-2 me-2 ms-0">
+                                <button type="button" class="btn btn-danger avatar-sm rounded-circle" data-bs-dismiss="modal">
+                                    <span class="avatar-title bg-transparent font-size-20">
+                                        <i class="ri-close-fill"></i>
+                                    </span>
+                                </button>
+                            </li>
+                            <li class="list-inline-item px-2">
+                                <button type="button" class="btn btn-success avatar-sm rounded-circle">
+                                    <span class="avatar-title bg-transparent font-size-20">
+                                        <i class="ri-phone-fill"></i>
+                                    </span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>                        
+        </div>
+    </div>
+</div>
+<!-- audiocall Modal -->
+
+<!-- videocall Modal -->
+<div class="modal fade" id="videocallModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center p-4">
+                    <div class="avatar-lg mx-auto mb-4">
+                        <img src="{{asset('assets/chat/images/users/avatar-4.jpg')}}" alt="" class="img-thumbnail rounded-circle">
+                    </div>
+
+                    <h5 class="text-truncate">Doris Brown</h5>
+                    <p class="text-muted mb-0">Start Video Call</p>
+
+                    <div class="mt-5">
+                        <ul class="list-inline mb-1">
+                            <li class="list-inline-item px-2 me-2 ms-0">
+                                <button type="button" class="btn btn-danger avatar-sm rounded-circle" data-bs-dismiss="modal">
+                                    <span class="avatar-title bg-transparent font-size-20">
+                                        <i class="ri-close-fill"></i>
+                                    </span>
+                                </button>
+                            </li>
+                            <li class="list-inline-item px-2">
+                                <button type="button" class="btn btn-success avatar-sm rounded-circle">
+                                    <span class="avatar-title bg-transparent font-size-20">
+                                        <i class="ri-vidicon-fill"></i>
+                                    </span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal -->

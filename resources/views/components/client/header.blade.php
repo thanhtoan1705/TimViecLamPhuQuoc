@@ -9,19 +9,19 @@
             <div class="header-nav">
                 <nav class="nav-main-menu">
                     <ul class="main-menu">
-                        <li><a class='active' href='/'>Trang chủ</a>
+                        <li><a class="{{ request()->is('/') ? 'active' : '' }}" href='/'>Trang chủ</a>
                         </li>
-                        <li><a href='{{route('client.job.index')}}'>Việc làm</a>
+                        <li><a class="{{ request()->routeIs('client.job.index') ? 'active' : '' }}" href='{{route('client.job.index')}}'>Việc làm</a>
                         </li>
-                        <li><a href='{{route('client.employer.index')}}'>Công ty</a>
+                        <li><a class="{{ request()->routeIs('client.employer.index') ? 'active' : '' }}" href='{{route('client.employer.index')}}'>Công ty</a>
                         </li>
-                        <li><a href='{{route('client.candidate.hot')}}'>Ứng viên</a>
+                        <li><a class="{{ request()->routeIs('client.candidate.hot') ? 'active' : '' }}" href='{{route('client.candidate.hot')}}'>Ứng viên</a>
                         </li>
-                        <li><a href='{{route('client.post.index')}}'>Tin tức</a>
+                        <li><a class="{{ request()->routeIs('client.post.index') ? 'active' : '' }}" href='{{route('client.post.index')}}'>Tin tức</a>
                         </li>
-                        <li><a href='{{route('client.client.about')}}'>Giới thiệu</a>
+                        <li><a class="{{ request()->routeIs('client.client.about') ? 'active' : '' }}" href='{{route('client.client.about')}}'>Giới thiệu</a>
                         </li>
-                        <li><a href='{{route('client.pricing.index')}}'>Bảng giá</a>
+                        <li><a class="{{ request()->routeIs('client.pricing.index') ? 'active' : '' }}" href='{{route('client.pricing.index')}}'>Bảng giá</a>
                         </li>
                     </ul>
                 </nav>
@@ -102,17 +102,17 @@
                     <!-- mobile menu start-->
                     <nav>
                         <ul class="mobile-menu font-heading">
-                            <li class="has-children"><a class='active' href='index.html'>Trang chủ</a>
+                            <li class="has-children"><a class='active' href='/'>Trang chủ</a>
                             </li>
-                            <li class="has-children"><a href='jobs-grid.html'>Việc làm</a>
+                            <li class="has-children"><a href='{{route('client.job.index')}}'>Việc làm</a>
                             </li>
-                            <li class="has-children"><a href='companies-grid.html'>Công ty</a>
+                            <li class="has-children"><a href='{{route('client.employer.index')}}'>Công ty</a>
                             </li>
-                            <li class="has-children"><a href='candidates-grid.html'>Bài viết</a>
+                            <li class="has-children"><a href='{{route('client.post.index')}}'>Tin tức</a>
                             </li>
-                            <li class="has-children"><a href='blog-grid.html'>Giới thiệu</a>
+                            <li class="has-children"><a href='{{route('client.client.about')}}'>Giới thiệu</a>
                             </li>
-                            <li class="has-children"><a href='blog-grid.html'>Bảng giá</a>
+                            <li class="has-children"><a href='{{route('client.pricing.index')}}'>Bảng giá</a>
                             </li>
                         </ul>
                     </nav>
@@ -145,21 +145,21 @@
                         <ul class="mobile-menu font-heading">
                             <li class="has-children"><a class='active' href='index.html'>Trang chủ</a>
                             </li>
-                            <li class="has-children"><a href='jobs-grid.html'>Việc làm</a>
+                            <li class="has-children"><a href='{{route('client.job.index')}}'>Việc làm</a>
                             </li>
-                            <li class="has-children"><a href='companies-grid.html'>Công ty</a>
+                            <li class="has-children"><a href='{{route('client.employer.index')}}'>Công ty</a>
                             </li>
-                            <li class="has-children"><a href='candidates-grid.html'>Bài viết</a>
+                            <li class="has-children"><a href='{{route('client.post.index')}}'>Tin tức</a>
                             </li>
-                            <li class="has-children"><a href='blog-grid.html'>Giới thiệu</a>
+                            <li class="has-children"><a href='{{route('client.client.about')}}'>Giới thiệu</a>
                             </li>
-                            <li class="has-children"><a href='blog-grid.html'>Bảng giá</a>
+                            <li class="has-children"><a href='{{route('client.pricing.index')}}'>Bảng giá</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
                 <div class="mobile-account">
-                    <h6 class="mb-10">Tài khoản của bản</h6>
+                    <h6 class="mb-10">Tài khoản của bạn</h6>
                     <ul class="mobile-menu font-heading">
                         <li><a href="#">Hồ sơ</a></li>
                         <li><a href="#">Công việc</a></li>

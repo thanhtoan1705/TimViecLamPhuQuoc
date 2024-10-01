@@ -22,6 +22,7 @@
 
     <link rel="stylesheet" href="{{asset('assets/chat/libs/owl.carousel/assets/owl.theme.default.min.css')}}">
 
+    {{-- @livewireStyles --}}
     <!-- Bootstrap Css -->
     <link href="{{asset('assets/chat/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -38,6 +39,7 @@
     <div class="layout-wrapper d-lg-flex">
 
         <x-chat.sidebar></x-chat.sidebar>
+        {{-- @livewire('chat.sidebar-menu') --}}
 
         <div class="chat-leftsidebar me-lg-1 ms-lg-0">
             <div class="tab-content">
@@ -49,7 +51,7 @@
 
     </div>
     <!-- end  layout wrapper -->
-
+    {{-- @livewireScripts --}}
     <!-- JAVASCRIPT -->
     <script src="{{asset('assets/chat/libs/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('assets/chat/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

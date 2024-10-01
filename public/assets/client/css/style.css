@@ -31,3 +31,97 @@
     display: flex; /* Show dropdown on hover */
 }
 
+/* Định dạng cho widget container và button chính */
+.widget-container {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.main-button {
+    width: 48px;
+    height: 48px;
+    background-color: #3c65f5;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 30px;
+    z-index: 1002;
+}
+.widget-container .main-button span {
+    padding-bottom: 5px;
+}
+.sub-widgets {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+}
+
+.widget {
+    width: 50px;
+    height: 50px;
+    background-color: #3c65f5;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.widget:hover {
+    transform: scale(1.1);
+}
+
+.widget i {
+    font-size: 24px;
+}
+
+/* Widget box để hiển thị nội dung */
+.widget-box {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+.widget-content {
+    padding: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1001;
+}
+
+#closeWidget {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#closeWidget:hover {
+    background-color: #0056b3;
+}

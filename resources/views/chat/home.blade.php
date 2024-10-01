@@ -1,5 +1,5 @@
 @extends('chat.layouts.master')
-@section('title', 'Chat')
+@section('title', 'Tin nhắn')
 @section('content')
 
 <!-- Start chats tab-pane -->
@@ -7,7 +7,7 @@
     <!-- Start chats content -->
     <div>
         <div class="px-4 pt-4">
-            <h4 class="mb-4">Chats</h4>
+            <h4 class="mb-4">Tin nhắn</h4>
             <div class="search-box chat-search-box">
                 <div class="input-group mb-3 rounded-3">
                     <span class="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">

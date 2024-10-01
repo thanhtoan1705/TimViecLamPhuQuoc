@@ -3,7 +3,7 @@
 @section('content')
     
 <!-- Start contacts tab-pane -->
-<div class="tab-pane" id="pills-contacts" role="tabpanel" aria-labelledby="pills-contacts-tab">
+<div class="tab-pane fade show active" id="pills-contacts" role="tabpanel" aria-labelledby="pills-contacts-tab">
     <!-- Start Contact content -->
     <div>
         <div class="p-4">
@@ -15,7 +15,7 @@
                     </button>
                 </div>
             </div>
-            <h4 class="mb-4">Contacts</h4>
+            <h4 class="mb-4">Liên hệ</h4>
 
             <!-- Start Add contact Modal -->
             <div class="modal fade" id="addContact-exampleModal" tabindex="-1" role="dialog" aria-labelledby="addContact-exampleModalLabel" aria-hidden="true">
@@ -54,7 +54,7 @@
                             <i class="ri-search-line search-icon font-size-18"></i>
                         </button>
                     </div>
-                    <input type="text" class="form-control bg-light" placeholder="Search users..">
+                    <input type="text" class="form-control bg-light" placeholder="Tìm kiếm..">
                 </div>
             </div>
             <!-- End search-box -->

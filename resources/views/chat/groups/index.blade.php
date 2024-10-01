@@ -3,7 +3,7 @@
 @section('content')
     
 <!-- Start groups tab-pane -->
-<div class="tab-pane" id="pills-groups" role="tabpanel" aria-labelledby="pills-groups-tab">
+<div class="tab-pane fade show active" id="pills-groups" role="tabpanel" aria-labelledby="pills-groups-tab">
     <!-- Start Groups content -->
     <div>
         <div class="p-4">
@@ -16,7 +16,7 @@
                 </div>
 
             </div>
-            <h4 class="mb-4">Groups</h4>
+            <h4 class="mb-4">Nhóm</h4>
 
             <!-- Start add group Modal -->
             <div class="modal fade" id="addgroup-exampleModal" tabindex="-1" role="dialog" aria-labelledby="addgroup-exampleModalLabel" aria-hidden="true">
@@ -244,7 +244,7 @@
                     <span class="input-group-text text-muted bg-light pe-1 ps-3" id="basic-addon1">
                         <i class="ri-search-line search-icon font-size-18"></i>
                     </span>
-                    <input type="text" class="form-control bg-light" placeholder="Search groups..." aria-label="Search groups..." aria-describedby="basic-addon1">
+                    <input type="text" class="form-control bg-light" placeholder="Tìm nhóm..." aria-label="Search groups..." aria-describedby="basic-addon1">
                 </div> 
             </div> <!-- Search Box-->
         </div>

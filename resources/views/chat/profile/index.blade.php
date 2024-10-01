@@ -3,7 +3,7 @@
 @section('content')
     
 <!-- Start Profile tab-pane -->
-<div class="tab-pane" id="pills-user" role="tabpanel" aria-labelledby="pills-user-tab">
+<div class="tab-pane fade show active" id="pills-user" role="tabpanel" aria-labelledby="pills-user-tab">
     <!-- Start profile content -->
     <div>
         <div class="px-4 pt-4">
@@ -13,30 +13,32 @@
                         <i class="ri-more-2-fill"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="#">Edit</a>
-                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Sửa</a>
+                        <a class="dropdown-item" href="#">Hoạt động</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Khác</a>
                     </div>
                 </div>
             </div>
-            <h4 class="mb-0">My Profile</h4>
+            <h4 class="mb-0">Hồ sơ</h4>
         </div>
 
         <div class="text-center p-4 border-bottom">
             <div class="mb-4">
-                <img src="assets/images/users/avatar-1.jpg" class="rounded-circle avatar-lg img-thumbnail" alt="">
+                <img src="{{asset('assets/chat/images/users/avatar-1.jpg')}}" class="rounded-circle avatar-lg img-thumbnail" alt="">
             </div>
 
-            <h5 class="font-size-16 mb-1 text-truncate">Patricia Smith</h5>
-            <p class="text-muted text-truncate mb-1"><i class="ri-record-circle-fill font-size-10 text-success me-1 ms-0 d-inline-block"></i> Active</p>
+            <h5 class="font-size-16 mb-1 text-truncate">Trần Văn A</h5>
+            <p class="text-muted text-truncate mb-1"><i class="ri-record-circle-fill font-size-10 text-success me-1 ms-0 d-inline-block"></i> Hoạt động</p>
         </div>
         <!-- End profile user -->
 
         <!-- Start user-profile-desc -->
         <div class="p-4 user-profile-desc" data-simplebar>
             <div class="text-muted">
-                <p class="mb-4">If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual.</p>
+                <p class="mb-4">
+                    Nếu nhiều ngôn ngữ kết hợp lại, ngữ pháp của ngôn ngữ kết quả sẽ đơn giản và có quy tắc hơn so với ngôn ngữ riêng lẻ.
+                </p>
             </div>
 
 
@@ -45,15 +47,15 @@
                     <div class="accordion-header" id="about2">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#about" aria-expanded="true" aria-controls="about">
                             <h5 class="font-size-14 m-0">
-                                <i class="ri-user-2-line me-2 ms-0 ms-0 align-middle d-inline-block"></i> About
+                                <i class="ri-user-2-line me-2 ms-0 ms-0 align-middle d-inline-block"></i> Giới thiệu
                             </h5>
                         </button>
                     </div>
                     <div id="about" class="accordion-collapse collapse show" aria-labelledby="about2" data-bs-parent="#tabprofile">
                         <div class="accordion-body">
                             <div>
-                                <p class="text-muted mb-1">Name</p>
-                                <h5 class="font-size-14">Patricia Smith</h5>
+                                <p class="text-muted mb-1">Tên</p>
+                                <h5 class="font-size-14">Trần Văn A</h5>
                             </div>
 
                             <div class="mt-4">
@@ -62,13 +64,13 @@
                             </div>
 
                             <div class="mt-4">
-                                <p class="text-muted mb-1">Time</p>
+                                <p class="text-muted mb-1">Thời gian</p>
                                 <h5 class="font-size-14">11:40 AM</h5>
                             </div>
 
                             <div class="mt-4">
-                                <p class="text-muted mb-1">Location</p>
-                                <h5 class="font-size-14 mb-0">California, USA</h5>
+                                <p class="text-muted mb-1">Địa chỉ</p>
+                                <h5 class="font-size-14 mb-0">Cần Thơ, Việt Nam</h5>
                             </div>
                         </div>
                     </div>
@@ -79,7 +81,7 @@
                     <div class="accordion-header" id="attachfile2">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#attachfile" aria-expanded="false" aria-controls="attachfile">
                             <h5 class="font-size-14 m-0">
-                                <i class="ri-attachment-line me-2 ms-0 ms-0 align-middle d-inline-block"></i> Attached Files
+                                <i class="ri-attachment-line me-2 ms-0 ms-0 align-middle d-inline-block"></i> Tệp đính kèm
                             </h5>
                         </button>
                     </div>
