@@ -123,10 +123,10 @@ class JobController extends Controller
     {
         $lastApplication = $this->jobRepository->findLastApplication(auth()->user()->candidate->id, $jobId);
 
-        // if ($lastApplication && \Carbon\Carbon::parse($lastApplication->created_at)->diffInHours(now()) < 24) {
-        //     Flasher::error('Bạn đã nộp CV cho bài đăng này. Vui lòng đợi 24 giờ để nộp lại.');
-        //     return redirect()->back();
-        // }
+//         if ($lastApplication && \Carbon\Carbon::parse($lastApplication->created_at)->diffInHours(now()) < 24) {
+//             Flasher::error('Bạn đã nộp CV cho bài đăng này. Vui lòng đợi 24 giờ để nộp lại.');
+//             return redirect()->back();
+//         }
 
         $request->validate([
             'resume' => 'required|file|mimes:pdf,doc,docx|max:5120',

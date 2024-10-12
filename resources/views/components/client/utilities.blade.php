@@ -7,7 +7,7 @@
             <i class="fa fa-comment"></i>
         </div>
         <div class="widget facebook-widget" data-widget="facebook">
-            <i class="fa fa-facebook"></i>
+            <i class="bi bi-facebook"></i>
         </div>
         <div class="widget call-widget" data-widget="call">
             <i class="fa fa-phone"></i>

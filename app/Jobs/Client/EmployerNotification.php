@@ -30,7 +30,7 @@ class EmployerNotification implements ShouldQueue
 
     public function handle()
     {
-        Mail::to($this->employer->user->email)->send(new ApplyJobNotification($this->employer, $this->candidate, $this->job, $this->filePath));
+        Mail::to($this->employer->user->email)->queue(new ApplyJobNotification($this->employer, $this->candidate, $this->job, $this->filePath));
     }
 }
 
