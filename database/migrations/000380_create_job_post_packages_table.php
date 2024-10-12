@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->boolean('display_best')->default(false);
             $table->boolean('display_haste')->default(false);
             $table->text('descriptions');
-            $table->boolean('label')->nullable()->change()->default(false);
+            $table->boolean('label')->nullable()->default(false);
             $table->boolean('status')->default(false);
 
             $table->timestamps();
