@@ -45,7 +45,7 @@ class CandidateRepository implements CandidateInterface
     }
 
 
-    public function updatePassword(User $user, string $newPassword)
+    public function updatePassword($user, string $newPassword)
     {
         $user->password = Hash::make($newPassword);
         $user->save();

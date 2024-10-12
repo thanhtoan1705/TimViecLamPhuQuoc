@@ -2,7 +2,7 @@
     <div class="container">
         <div class="main-header">
             <div class="header-left">
-                <div class="header-logo"><a class='d-flex' href='index.html'><img alt="jobBox"
+                <div class="header-logo"><a class='d-flex' href="{{ route('client.client.index') }}"><img alt="jobBox"
                                                                                   src="{{ asset('assets/client/imgs/template/jobhub-logo.svg') }}"></a>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                         class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
             </div>
             <div class="header-right d-flex align-items-center">
-                @if(auth()->check())
+                @if(auth()->check() && auth()->user()->role == 'candidate')
                     <div class="dropdown me-3">
                         <button class="btn btn-grey position-relative" id="notificationButton" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-bell-fill"></i>

@@ -80,6 +80,10 @@ class AdminPanelProvider extends PanelProvider
                     ->setNavigationLabel('Hồ sơ')
                     ->shouldRegisterNavigation(true)
                     ->shouldShowDeleteAccountForm(false)
+                    ->shouldShowEditProfileForm(false)
+                    ->customProfileComponents([
+                        \App\Livewire\FilamentEmployerUserProfile::class,
+                    ])
                     ->shouldShowAvatarForm(
                         value: true,
                         directory: 'avatars',

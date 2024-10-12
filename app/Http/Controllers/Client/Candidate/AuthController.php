@@ -38,6 +38,7 @@ class AuthController extends Controller
             'name' => $request->input('name'),
             'password' => Hash::make($request->input('passwords')),
             'avatar_url' => 'https://topcode.vn/assets/images/avanta2.png',
+            'role' => 'candidate',
             'email_verified_at' => now(),
         ]);
 
@@ -99,7 +100,8 @@ class AuthController extends Controller
                 'email' => $googleUser->email,
                 'google_id' => $googleUser->id,
                 'avatar_url' => $googleUser->avatar,
-                'password' => encrypt('password')
+                'password' => encrypt('password'),
+                'role' => 'candidate',
             ]);
 
             Auth::login($user);

@@ -62,6 +62,10 @@ return Application::configure(basePath: dirname(__DIR__))
                     ->name('employer.')
                      ->group(base_path("routes/employer/{$route}"));
             }
+
+            // Login chat
+            Route::middleware('web')
+                ->group(base_path("routes/chatify/auth.php"));
         },
     )
     ->withMiddleware(function (Middleware $middleware){
