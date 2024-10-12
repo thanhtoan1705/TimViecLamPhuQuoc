@@ -14,9 +14,12 @@ interface CandidateInterface
     public function getSavedJobs();
 
     public function saveJob($job_id);
+
+    public function unSaveJob($job_id);
+
     public function updatePassword(User $user, string $newPassword);
 
     public function update($id, array $data);
 
-    public function getAllCandidates($sortBy, $perPage);
+    public function getAllCandidates($query, $sortBy, $perPage);
 }

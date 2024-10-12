@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="msapplication-TileColor" content="#0E0E0E">
     <meta name="template-color" content="#0E0E0E">
-{{--    <link rel="manifest" href="manifest.html" crossorigin>--}}
+    {{--    <link rel="manifest" href="manifest.html" crossorigin>--}}
     <meta name="msapplication-config" content="browserconfig.html">
     <meta name="description" content="Index page">
     <meta name="keywords" content="index, page">
@@ -19,8 +19,10 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/client/imgs/template/favicon.svg') }}">
     <link href="{{ asset('assets/client/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/client/css/stylecd4e.css?version=4.1') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     @viteReactRefresh
@@ -32,42 +34,33 @@
     <title>@yield('title', 'Trang chủ')</title>
 </head>
 <body>
-    <x-client.utilities></x-client.utilities>
-{{--    <div id="preloader-active">--}}
-{{--        <div class="preloader d-flex align-items-center justify-content-center">--}}
-{{--            <div class="preloader-inner position-relative">--}}
-{{--                <div class="text-center"><img src="{{ asset('assets/client/imgs/template/loading.gif') }}"--}}
-{{--                        alt="jobBox"></div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
 
-    <x-client.header></x-client.header>
-    <script src="{{ asset('assets/client/js/app.js')}}"></script>
-    @yield('content')
-    <x-client.newsletter></x-client.newsletter>
-    <x-client.footer></x-client.footer>
+<x-client.header></x-client.header>
+<script src="{{ asset('assets/client/js/app.js')}}"></script>
+@yield('content')
+<x-client.newsletter></x-client.newsletter>
+<x-client.footer></x-client.footer>
 
-    @stack('script')
+@stack('script')
 
-{{--    @livewireScripts--}}
+@livewireScripts
 {{--    <script src="//unpkg.com/alpinejs" defer></script>--}}
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <script src="{{ asset('vendor/livewire/livewire.js') }}"></script>
-    <script src="{{ asset('assets/client/js/vendor/modernizr-3.6.0.min.js') }}"></script>
-    <script src="{{ asset('assets/client/js/vendor/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('assets/client/js/vendor/modernizr-3.6.0.min.js') }}"></script>
+<script src="{{ asset('assets/client/js/vendor/jquery-3.6.0.min.js') }}"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="{{ asset('vendor/livewire/livewire.js') }}"></script>
 {{--    <script src="{{ asset('assets/client/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>--}}
-    <script src="{{ asset('assets/client/js/vendor/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/client/js/plugins/waypoints.js') }}"></script>
-    <script src="{{ asset('assets/client/js/plugins/wow.js') }}"></script>
-    <script src="{{ asset('assets/client/js/plugins/magnific-popup.js') }}"></script>
-    <script src="{{ asset('assets/client/js/plugins/perfect-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('assets/client/js/plugins/select2.min.js') }}"></script>
-    <script src="{{ asset('assets/client/js/plugins/isotope.js') }}"></script>
-    <script src="{{ asset('assets/client/js/plugins/scrollup.js') }}"></script>
-    <script src="{{ asset('assets/client/js/plugins/swiper-bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/client/js/plugins/counterup.js') }}"></script>
-    <script src="{{ asset('assets/client/js/main8c94.js?v=4.1') }}"></script>
+<script src="{{ asset('assets/client/js/vendor/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/client/js/plugins/waypoints.js') }}"></script>
+<script src="{{ asset('assets/client/js/plugins/wow.js') }}"></script>
+<script src="{{ asset('assets/client/js/plugins/magnific-popup.js') }}"></script>
+<script src="{{ asset('assets/client/js/plugins/perfect-scrollbar.min.js') }}"></script>
+<script src="{{ asset('assets/client/js/plugins/select2.min.js') }}"></script>
+<script src="{{ asset('assets/client/js/plugins/isotope.js') }}"></script>
+<script src="{{ asset('assets/client/js/plugins/scrollup.js') }}"></script>
+<script src="{{ asset('assets/client/js/plugins/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('assets/client/js/plugins/counterup.js') }}"></script>
+<script src="{{ asset('assets/client/js/main8c94.js?v=4.1') }}"></script>
 {{--    <script src="{{ asset('assets/js/noUISlider.js') }}"></script>--}}
 {{--    <script src="{{ asset('assets/js/slider.js') }}"></script>--}}
 </body>

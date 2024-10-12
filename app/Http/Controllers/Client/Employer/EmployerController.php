@@ -3,17 +3,9 @@
 namespace App\Http\Controllers\Client\Employer;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Client\Employer\RegisterRequest;
-use App\Models\Employer;
-use App\Models\JobPost;
-use App\Models\JobPostPackage;
 use App\Repositories\Employer\EmployerInterface;
 use App\Repositories\Filter\FilterInterface;
-use App\Repositories\Filter\FilterRepository;
-use App\Repositories\Promotional\PromotionalInterface;
-use App\Repositories\User\UserInterface;
 use App\Services\Filter\FilterService;
-use App\Services\Payment\PaymentService;
 use Illuminate\Http\Request;
 
 
@@ -21,7 +13,6 @@ class EmployerController extends Controller
 {
     protected EmployerInterface $employerRepository;
     protected FilterService $filterService;
-
     protected FilterInterface $filterRepository;
 
     public function __construct(

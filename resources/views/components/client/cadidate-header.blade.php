@@ -4,17 +4,19 @@
                 src="{{ asset('assets/client/imgs/page/candidates/img.png') }}"
                 alt="jobbox"><a class="btn-editor" href="#"></a></div>
         <div class="box-company-profile">
-            <div class="image-compay">
+            <div class="image-compay" style="width: 85px !important;">
                 @if(isset($candidate->image) && $candidate->user->image)
                     <img alt="jobBox" width="50px" src="{{ asset('storage/' . $candidate->user->image) }}">
                 @else
-                    <img alt="jobBox" width="50px" src="{{ asset('path/to/default/image.png') }}">
+                    <img alt="jobBox" width="50px" src="{{ asset('storage/images/default.jpeg') }}">
                 @endif
             </div>
             <div class="row mt-10">
                 <div class="col-lg-8 col-md-12">
 
-                    <p class="mt-0 font-md color-text-paragraph-2 mb-15">{{$candidate->major->name}}</p>
+                    <p class="mt-0 font-md color-text-paragraph-2 mb-15">
+                        {{ isset($candidate->major->name) ? $candidate->major->name : 'bạn chưa có chuyên ngành' }}
+                    </p>
                 </div>
                 <div class="col-lg-4 col-md-12 text-lg-end"><a
                         class='btn btn-download-icon btn-apply btn-apply-big'

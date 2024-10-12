@@ -3,7 +3,6 @@
 namespace App\Repositories\Candidate;
 
 use App\Models\Candidate;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -83,10 +82,25 @@ class CandidateRepository implements CandidateInterface
         return true;
     }
 
-    public function getAllCandidates($sortBy, $perPage)
+    public function unSaveJob($job_id)
     {
-        $query = $this->candidate->newQuery();
+        $candidate = Auth::user()->candidate;
 
+        if (!$candidate) {
+            return false;
+        }
+
+        if (!$candidate->savedJobs->contains($job_id)) {
+            return false;
+        }
+
+        $candidate->savedJobs()->detach($job_id);
+        return true;
+    }
+
+
+    public function getAllCandidates($query, $sortBy, $perPage)
+    {
         if ($sortBy === 'newest') {
             $query->orderBy('created_at', 'desc');
         } elseif ($sortBy === 'oldest') {
@@ -94,5 +108,4 @@ class CandidateRepository implements CandidateInterface
         }
         return $query->paginate($perPage);
     }
-
 }

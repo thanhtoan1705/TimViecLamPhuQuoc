@@ -15,13 +15,14 @@ return new class extends Migration {
 
             $table->string('title', 255);
             $table->bigInteger('price');
-            $table->string('period', 255);
+            $table->bigInteger('period')->default(7);
             $table->bigInteger('quantity');
             $table->bigInteger('limit_job_post');
             $table->boolean('display_top')->default(false);
             $table->boolean('display_best')->default(false);
             $table->boolean('display_haste')->default(false);
             $table->text('descriptions');
+            $table->boolean('label')->nullable()->change()->default(false);
             $table->boolean('status')->default(false);
 
             $table->timestamps();

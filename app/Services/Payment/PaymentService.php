@@ -8,7 +8,8 @@ use App\Models\PaymentMethod;
 use App\Models\Promotion;
 use App\Models\Transaction;
 use App\Models\TransactionLog;
-use App\View\Components\Client\header;
+use App\Models\UserJobPackage;
+use Carbon\Carbon;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PaymentService
@@ -329,7 +330,6 @@ class PaymentService
         if ($trans_id) {
             $transaction = Transaction::where('trans_id', $trans_id)->first();
         } else {
-            // Tạo mới transaction cho VNPay hoặc các phương thức không có transaction_id
             $transaction = Transaction::create([
                 'employer_id' => $employerId,
                 'merchant_id' => 1,
@@ -347,13 +347,11 @@ class PaymentService
             }
         }
 
-        // Lưu thông tin vào bảng TransactionLog
         TransactionLog::create([
             'transaction_id' => $transaction->id,
             'event' => 'Payment processed with ' . $paymentMethod,
         ]);
 
-        // Lưu hoặc cập nhật phương thức thanh toán
         PaymentMethod::create([
             'employer_id' => $employerId,
             'method_type' => $paymentMethod,
@@ -372,5 +370,34 @@ class PaymentService
             'payment_method_id' => $paymentMethodId,
             'transaction_id' => $transaction->id,
         ]);
+
+        $userJobPackage = UserJobPackage::where('employer_id', $employerId)
+            ->where('packages_id', $package->id)
+            ->first();
+
+        if ($userJobPackage) {
+            // Nếu đã có, cập nhật số lượng bài đăng còn lại và thời hạn
+            $userJobPackage->remaining_posts += $package->limit_job_post;
+
+            $expiresAt = Carbon::parse($userJobPackage->expires_at);
+
+            // Kiểm tra nếu thời gian hết hạn vẫn còn hiệu lực
+            if ($expiresAt > now()) {
+                // Gia hạn thêm 30 ngày từ ngày hết hạn hiện tại
+                $userJobPackage->expires_at = $expiresAt->addDays($package->period);
+            } else {
+                // Nếu đã hết hạn, bắt đầu lại từ thời điểm hiện tại
+                $userJobPackage->expires_at = now()->addDays($package->period);
+            }
+
+            $userJobPackage->save();
+        } else {
+            UserJobPackage::create([
+                'employer_id' => $employerId,
+                'packages_id' => $package->id,
+                'remaining_posts' => $package->limit_job_post,
+                'expires_at' => now()->addDays($package->period),
+            ]);
+        }
     }
 }

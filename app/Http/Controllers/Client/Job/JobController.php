@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Client\Job;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\Client\EmployerNotification;
 use App\Repositories\Filter\FilterInterface;
 use App\Repositories\Job\JobInterface;
+use App\Services\Search\SearchService;
 use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Http\Request;
-use App\Services\Search\SearchService;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\Client\ApplyJobNotification;
-use App\Jobs\Client\EmployerNotification;
 
 class JobController extends Controller
 {
@@ -37,7 +35,7 @@ class JobController extends Controller
         $selectedExperiences = $request->input('experiences', []);
         $selectedJobTypes = $request->input('job_types', []);
         $selectedPostedTime = $request->input('posted_time', null);
-        $selectedLocation = $request->input('location', null);
+        $selectedLocation = $request->input('locations', null);
 
         $perPage = $request->query('per_page', 12);
         $sortBy = $request->query('sort_by', 'created_at');

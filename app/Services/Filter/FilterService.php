@@ -2,7 +2,7 @@
 
 namespace App\Services\Filter;
 
-use App\Models\Address;
+use App\Models\Candidate;
 use App\Models\Employer;
 use App\Models\Job_category;
 use App\Models\JobPost;
@@ -16,18 +16,21 @@ class FilterService
     protected $jobCategory;
     protected $salary;
     protected $employer;
+    protected $candidate;
 
     public function __construct(
         JobPost      $jobPost,
         Job_category $jobCategory,
         Salary       $salary,
-        Employer     $employer
+        Employer  $employer,
+        Candidate $candidate,
     )
     {
         $this->jobPost = $jobPost;
         $this->jobCategory = $jobCategory;
         $this->salary = $salary;
         $this->employer = $employer;
+        $this->candidate = $candidate;
     }
 
     public function getProvince()
@@ -155,6 +158,55 @@ class FilterService
             ->get();
     }
 
+    public function getCandidateExperiences()
+    {
+        return DB::table('experiences')
+            ->leftJoin('candidates', 'candidates.experience_id', '=', 'experiences.id') // Kết nối với bảng candidates
+            ->select('experiences.id', 'experiences.name', DB::raw('COUNT(candidates.id) as candidate_count')) // Đếm số ứng viên
+            ->groupBy('experiences.id', 'experiences.name')
+            ->having('candidate_count', '>', 0)
+            ->orderBy('candidate_count', 'desc')
+            ->limit(5)
+            ->get();
+    }
+
+
+    public function getCandidateMajors()
+    {
+        return DB::table('majors')
+            ->leftJoin('candidates', 'candidates.major_id', '=', 'majors.id')
+            ->select('majors.id', 'majors.name', DB::raw('COUNT(candidates.id) as candidate_count'))
+            ->groupBy('majors.id', 'majors.name')
+            ->having('candidate_count', '>', 0)
+            ->orderBy('candidate_count', 'desc')
+            ->limit(5)
+            ->get();
+    }
+
+    public function getEducations()
+    {
+        return DB::table('education')
+            ->leftJoin('candidates', 'candidates.education_id', '=', 'education.id')
+            ->select('education.id', 'education.name', DB::raw('COUNT(candidates.id) as candidate_count'))
+            ->groupBy('education.id', 'education.name')
+            ->having('candidate_count', '>', 0)
+            ->orderBy('candidate_count', 'desc')
+            ->limit(5)
+            ->get();
+    }
+
+    public function getCandidateSalaries()
+    {
+        return DB::table('salaries')
+            ->leftJoin('candidates', 'candidates.salary_id', '=', 'salaries.id')
+            ->select('salaries.id', 'salaries.name', DB::raw('COUNT(candidates.id) as candidate_count'))
+            ->groupBy('salaries.id', 'salaries.name')
+            ->having('candidate_count', '>', 0)
+            ->orderBy('candidate_count', 'desc')
+            ->limit(5)
+            ->get();
+    }
+
     public function filterJobs($selectedCategories, $selectedSalaries, $selectedKeywords, $selectedRanks, $selectedExperiences, $selectedJobTypes, $selectedPostedTime, $selectedLocation)
     {
         $jobs = $this->jobPost->query();
@@ -228,6 +280,49 @@ class FilterService
 
         if (!empty($selectedSizes)) {
             $query->whereIn('company_size', $selectedSizes);
+        }
+
+        return $query;
+    }
+
+    public function filterCandidate($selectedLocation, $selectedMajors, $selectedExperiences, $selectedEducations, $selectedSalaries)
+    {
+        $query = $this->candidate->query();
+
+        if (!empty($selectedLocation)) {
+            if (is_array($selectedLocation)) {
+                $query->whereHas('address.province', function ($q) use ($selectedLocation) {
+                    $q->whereIn('name', $selectedLocation);
+                });
+            } else {
+                $query->whereHas('address.province', function ($q) use ($selectedLocation) {
+                    $q->where('name', 'LIKE', '%' . $selectedLocation . '%');
+                });
+            }
+        }
+
+        if (!empty($selectedMajors)) {
+            $query->whereIn('major_id', (array)$selectedMajors);
+        }
+
+        if (!empty($selectedExperiences)) {
+            $query->whereHas('experience', function ($query) use ($selectedExperiences) {
+                $query->whereIn('id', (array)$selectedExperiences);
+            });
+        }
+
+        if (!empty($selectedEducations)) {
+            $query->whereIn('education_id', (array)$selectedEducations);
+        }
+
+        if (!empty($selectedSalaries) && is_array($selectedSalaries)) {
+            $query->whereHas('salary', function ($query) use ($selectedSalaries) {
+                $query->whereIn('id', $selectedSalaries);
+            });
+        } elseif (!empty($selectedSalaries)) {
+            $query->whereHas('salary', function ($query) use ($selectedSalaries) {
+                $query->where('id', $selectedSalaries);
+            });
         }
 
         return $query;

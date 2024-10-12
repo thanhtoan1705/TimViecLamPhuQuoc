@@ -11,6 +11,7 @@ Route::prefix('/ung-vien')->name('candidate.')->group(function(){
     Route::get('/quan-ly-cv', [CandidateController::class, 'index'])->name('cv.management');
     Route::get('/viec-lam-da-luu', [CandidateController::class, 'viewSavedJobs'])->name('viewSavedJobs');
     Route::post('/save-job/{job_id}', [CandidateController::class, 'saveJob'])->name('saveJob');
+    Route::post('/unsave-job/{job_id}', [CandidateController::class, 'unsaveJob'])->name('unsave');
     Route::get('/doi-mat-khau', [CandidateController::class, 'editPassword'])->name('change-password');
     Route::put('/doi-mat-khau', [CandidateController::class, 'updatePassword'])->name('update_password');
 });

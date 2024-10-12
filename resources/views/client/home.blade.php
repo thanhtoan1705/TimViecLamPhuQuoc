@@ -65,12 +65,12 @@
                                         <a class="m-1" href=''>
                                             <div class="item-logo">
                                                 <div class="image-left">
-                                                    @if(isset($category->image))
+                                                    @if(!empty($category->image))
                                                         <img alt="jobBox" width="50px"
                                                              src="{{ asset('storage/' . $category->image) }}">
                                                     @else
                                                         <img alt="jobBox" width="50px"
-                                                             src="{{ asset('path/to/default/image.png') }}">
+                                                             src="{{ asset('default/logo.svg') }}">
                                                     @endif
                                                 </div>
                                                 <div class="text-info-right">
@@ -128,7 +128,7 @@
                                                  src="{{ asset('storage/' . $item->job_category->image) }}">
                                         @else
                                             <img alt="jobBox" width="50px"
-                                                 src="{{ asset('path/to/default/image.png') }}">
+                                                 src="{{ asset('storage/images/employer/logo/default.svg') }}">
                                         @endif
                                         {{ $categoryName }}
                                     </a>
@@ -146,58 +146,80 @@
                                 <div class="row">
                                     @foreach($posts as $post)
                                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12">
-                                            <div class="card-grid-2 hover-up">
-                                                <div class="card-grid-2-image-left"><span class="flash"></span>
-                                                    <div class="image-box">
-                                                        @if(isset($posts->first()->job_category->image))
-                                                            <img alt="jobBox" width="50px"
-                                                                 src="{{ asset('storage/' . $posts->first()->job_category->image) }}">
-                                                        @else
-                                                            <img alt="jobBox" width="50px"
-                                                                 src="{{ asset('path/to/default/image.png') }}">
-                                                        @endif
-                                                    </div>
-                                                    <div class="right-info"><a class='name-job'
-                                                                               href='company-details.html'>{{ $categoryName }}</a><span
-                                                            class="location-small">
+                                            <a href="{{route('client.job.single', ['jobSlug' => $post->slug])}}">
+                                                <div class="card-grid-2 hover-up">
+                                                    <div class="card-grid-2-image-left">
+                                                        {{--VLgap--}}
+                                                        <span class="label-jobbox VLgap">Việc làm hot</span>
+                                                        <div class="image-box">
+                                                            @if(!empty($posts->first()->job_category->image))
+                                                                <img alt="jobBox" width="50px"
+                                                                     src="{{ asset('storage/' . $posts->first()->job_category->image) }}">
+                                                            @else
+                                                                <img alt="jobBox" width="50px"
+                                                                     src="{{ asset('default/logo.svg') }}">
+                                                            @endif
+                                                        </div>
+                                                        <div class="right-info">
+                                                            <a class='name-job' href=''>{{ $categoryName }}</a>
+                                                            <span class="location-small">
                                                             {{ $post->address }}
-                                                        </span></div>
-                                                </div>
-                                                <div class="card-block-info">
-                                                    <h6><a href='job-details.html'>{{ $post->title }}</a></h6>
-                                                    <div class="mt-5"><span
-                                                            class="card-briefcase">{{ $post->jobType->name  }}</span><span
-                                                            class="card-time">{{ \Carbon\Carbon::parse($post['created_at'])->diffForHumans() }}</span>
+                                                            </span>
+                                                        </div>
                                                     </div>
-                                                    <p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal;"
-                                                       class="font-sm color-text-paragraph mt-15">
-                                                        {{ $post->description }}
-                                                    </p>
-                                                    <div class="mt-30">
-                                                        @foreach($post->skills as $key => $skill)
-                                                            <a class='btn btn-grey-small mr-5'
-                                                               href=''>{{ $skill->name }}</a>
-                                                        @endforeach
-                                                    </div>
-                                                    <div class="card-2-bottom mt-30">
-                                                        <div class="row">
-                                                            {{--                                                            card-text-price--}}
-                                                            <div class="col-lg-7 col-7"><span class=" text-sm">
+                                                    <div class="card-block-info">
+                                                        <h6><a href='job-details.html'>{{ $post->title }}</a></h6>
+                                                        <div class="mt-5"><span
+                                                                class="card-briefcase">{{ $post->jobType->name  }}</span><span
+                                                                class="card-time">{{ \Carbon\Carbon::parse($post['created_at'])->diffForHumans() }}</span>
+                                                        </div>
+                                                        <p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal;"
+                                                           class="font-sm color-text-paragraph mt-15">
+                                                            {{ $post->description }}
+                                                        </p>
+                                                        <div class="mt-30">
+                                                            @foreach($post->skills as $key => $skill)
+                                                                <a class='btn btn-grey-small mr-5'
+                                                                   href=''>{{ $skill->name }}</a>
+                                                            @endforeach
+                                                        </div>
+                                                        <div class="card-2-bottom mt-30">
+                                                            <div class="row">
+                                                                {{--                                                            card-text-price--}}
+                                                                <div class="col-lg-6 col-6 align-content-center">
+                                                                    <span class=" text-sm">
                                                                     @if($post->salary_min == $post->salary_max || $post->salary_min <= 1000000 || $post->salary_max <= 1000000)
-                                                                        {{ formatSalary($post->salary_min) }}
-                                                                    @else
-                                                                        {{ formatSalary($post->salary_min) }} - {{ formatSalary($post->salary_max) }}
-                                                                    @endif
-                                                                </span></div>
-                                                            <div class="col-lg-5 col-5 text-end">
-                                                                <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                                     data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                                            {{ formatSalary($post->salary_min) }}
+                                                                        @else
+                                                                            {{ formatSalary($post->salary_min) }}
+                                                                            - {{ formatSalary($post->salary_max) }}
+                                                                        @endif
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-lg-1 col-1 p-0 align-content-center">
+                                                                    <form
+                                                                        action="{{ route('client.candidate.saveJob', ['job_id' => $post->id]) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <button
+                                                                            style="border: 0; background-color: white"
+                                                                            type="submit"><i
+                                                                                class="bi bi-heart"
+                                                                                style="font-size: 16px; margin: 0"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                                <div class="col-lg-3 col-3 text-end">
+                                                                    <div class="btn btn-apply-now"
+                                                                         data-bs-toggle="modal"
+                                                                         data-bs-target="#ModalApplyJobForm">Ứng tuyển
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     @endforeach
                                 </div>
@@ -298,8 +320,14 @@
                                 @foreach($topEmployers as $topEmployer)
                                     <div class="item-5 hover-up wow animate__animated animate__fadeIn"><a href="#">
                                             <div class="item-logo">
-                                                <div class="image-left"><img alt="jobBox"
-                                                                             src="{{ asset('storage/' . $topEmployer->company_logo) }}">
+                                                <div class="image-left">
+                                                    @if(!empty($topEmployer->company_logo))
+                                                        <img alt="jobBox"
+                                                             src="{{ asset('storage/' . $topEmployer->company_logo) }}">
+                                                    @else
+                                                        <img alt="jobBox" src="{{ asset('default/logo.svg') }}">
+                                                    @endif
+
                                                 </div>
                                                 <div class="text-info-right">
                                                     <h4>{{$topEmployer['company_name']}}</h4><img alt="jobBox"
@@ -317,7 +345,9 @@
                                                 <div class="text-info-bottom mt-5"><span
                                                         class="font-xs color-text-mutted icon-location">
                                                         @if(isset($topEmployer->employer->address->ward->name))
-                                                            {{$topEmployer->employer->address->ward->name}}, {{$topEmployer->employer->address->district->name}}, {{$topEmployer->employer->address->district->province->name}}
+                                                            {{$topEmployer->employer->address->ward->name}}
+                                                            , {{$topEmployer->employer->address->district->name}}
+                                                            , {{$topEmployer->employer->address->district->province->name}}
                                                         @endif
 
                                                     </span><span
@@ -389,6 +419,44 @@
             </div>
         </section>
         <x-client.blog></x-client.blog>
-        <script src="</main>{{ asset('assets/client/js/plugins/counterup.js"></script>
+        <script src="{{ asset('assets/client/js/plugins/counterup.js') }}"></script>
     </main>
+    <style>
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-xl-3, .col-lg-4, .col-md-6 {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-grid-2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+        }
+
+        .card-grid-2 .label-jobbox {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .card-grid-2 .VLgap {
+            background-color: orangered;
+            color: white;
+            padding: 1px 8px;
+            border-radius: 15px;
+        }
+
+        .card-grid-2 .VLhot {
+            background-color: #fdd5ce;
+            color: red;
+            padding: 1px 8px;
+            border-radius: 5px;
+        }
+    </style>
 @endsection

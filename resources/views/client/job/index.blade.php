@@ -97,11 +97,16 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="box-view-type"><a class='view-type' href='jobs-list.html'><img
+                                            <div class="box-view-type">
+                                                <a class='view-type' href='jobs-list.html'>
+                                                    <img
                                                         src="{{ asset('assets/client/imgs/template/icons/icon-list.svg') }}"
-                                                        alt="jobBox"></a><a class='view-type' href='jobs-grid.html'><img
+                                                        alt="jobBox"></a>
+                                                <a class='view-type' href='jobs-grid.html'>
+                                                    <img
                                                         src="{{ asset('assets/client/imgs/template/icons/icon-grid-hover.svg') }}"
-                                                        alt="jobBox"></a></div>
+                                                        alt="jobBox"></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -140,10 +145,22 @@
                                                     </div>
                                                     <div class="card-2-bottom mt-30">
                                                         <div class="row">
-                                                            <div class="col-lg-7 col-7"><span
+                                                            <div class="col-lg-6 col-6 align-content-center"><span
                                                                     class="card-text-price">{{ $item->salary->name }}</span>
                                                             </div>
-                                                            <div class="col-lg-5 col-5 text-end">
+                                                            <div class="col-lg-1 col-1 p-0 align-content-center">
+                                                                <form
+                                                                    action="{{ route('client.candidate.saveJob', ['job_id' => $item->id]) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <button style="border: 0; background-color: white"
+                                                                            type="submit"><i
+                                                                            class="bi bi-heart"
+                                                                            style="font-size: 16px; margin: 0"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                            <div class="col-lg-4 col-4 text-end">
                                                                 <div class="btn btn-apply-now" data-bs-toggle="modal"
                                                                      data-bs-target="#ModalApplyJobForm">Ứng tuyển
                                                                 </div>
@@ -364,15 +381,20 @@
     @push('script')
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                const locationElement = document.querySelector('select[name="locations"]');
                 const sortDropdowns = document.querySelectorAll('.dropdown-menu a');
-                const jobListContainer = document.querySelector('#job-list-container');
 
                 sortDropdowns.forEach(dropdown => {
                     dropdown.addEventListener('click', function (event) {
                         event.preventDefault();
                         const url = new URL(window.location.href);
                         const currentParams = new URLSearchParams(url.search);
+
+                        const paramsToRemove = ['category', 'location', 'salary', 'experience', 'keyword'];
+
+                        paramsToRemove.forEach(param => {
+                            currentParams.delete(param);
+                        });
+
                         const perPage = document.querySelector('#dropdownSort').textContent.trim();
                         const sortBy = this.getAttribute('data-sort-by');
                         const sortOrder = this.getAttribute('data-sort-order');
@@ -394,6 +416,11 @@
                             const url = new URL(window.location.href);
                             const currentParams = new URLSearchParams(url.search);
 
+                            const paramsToRemove = ['category', 'location', 'salary', 'experience', 'keyword'];
+
+                            paramsToRemove.forEach(param => {
+                                currentParams.delete(param);
+                            });
                             currentParams.delete(name);
 
                             if (element.type === 'checkbox') {
@@ -430,9 +457,15 @@
                             const url = new URL(window.location.href);
                             const currentParams = new URLSearchParams(url.search);
 
+                            const paramsToRemove = ['category', 'location', 'salary', 'experience', 'keyword'];
+
+                            paramsToRemove.forEach(param => {
+                                currentParams.delete(param);
+                            });
                             currentParams.delete('locations');
+
                             if (locationElement.value) {
-                                currentParams.set('location', locationElement.value);
+                                currentParams.set('locations', locationElement.value);
                             }
 
                             url.search = currentParams.toString();
@@ -447,5 +480,4 @@
             });
         </script>
     @endpush
-
 @endsection

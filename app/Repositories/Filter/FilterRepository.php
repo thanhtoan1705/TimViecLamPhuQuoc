@@ -3,7 +3,6 @@
 namespace App\Repositories\Filter;
 
 use App\Services\Filter\FilterService;
-use App\Repositories\Filter\FilterInterface;
 
 class FilterRepository implements FilterInterface
 {
@@ -52,8 +51,7 @@ class FilterRepository implements FilterInterface
         return $filteredData;
     }
 
-    public
-    function filterEmployer(
+    public function filterEmployer(
         $selectedLocation = null,
         $selectedCompanyTypes = [],
         $selectedYears = [],
@@ -70,6 +68,30 @@ class FilterRepository implements FilterInterface
                 $selectedCompanyTypes,
                 $selectedYears,
                 $selectedSizes
+            ),
+        ];
+    }
+
+    public function filterCandidate(
+        $selectedLocation = null,
+        $selectedMajors = [],
+        $selectedExperiences = [],
+        $selectedEducations = [],
+        $selectedSalaries = []
+    )
+    {
+        return [
+            'locations' => $this->filterService->getProvince(),
+            'salaries' => $this->filterService->getCandidateSalaries(),
+            'experiences' => $this->filterService->getCandidateExperiences(),
+            'majors' => $this->filterService->getCandidateMajors(),
+            'educations' => $this->filterService->getEducations(),
+            'candidates' => $this->filterService->filterCandidate(
+                $selectedLocation,
+                $selectedMajors,
+                $selectedExperiences,
+                $selectedEducations,
+                $selectedSalaries
             ),
         ];
     }

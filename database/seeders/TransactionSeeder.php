@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
 
 class TransactionSeeder extends Seeder
 {
@@ -21,7 +19,7 @@ class TransactionSeeder extends Seeder
                 'merchant_id' => 1,
                 'amount' => 100000,
                 'transaction_type' => 'payment',
-                'trans_id' => 'trans_id',
+                'trans_id' => '1666666',
                 'status' => 'completed',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -31,7 +29,7 @@ class TransactionSeeder extends Seeder
                 'merchant_id' => 2,
                 'amount' => 50000,
                 'transaction_type' => 'refund',
-                'trans_id' => 'trans_id',
+                'trans_id' => '1233456',
                 'status' => 'pending',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

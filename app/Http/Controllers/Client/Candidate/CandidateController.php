@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Client\Candidate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Candidate\UpdatePasswordRequest;
 use App\Repositories\Candidate\CandidateRepository;
+use App\Repositories\Filter\FilterRepository;
 use App\Repositories\Job\JobInterface;
 use App\Repositories\Location\LocationInterface;
+use App\Services\Filter\FilterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,15 +16,24 @@ class CandidateController extends Controller
 {
     protected $candidateRepository;
     protected $locationRepository;
-
+    protected FilterService $filterService;
     protected $jobRepository;
+    protected $filterRepository;
 
 
-    public function __construct(CandidateRepository $candidateRepository, LocationInterface $locationRepository, JobInterface $jobRepository)
+    public function __construct(
+        CandidateRepository $candidateRepository,
+        LocationInterface   $locationRepository,
+        JobInterface        $jobRepository,
+        FilterService       $filterService,
+        FilterRepository    $filterRepository
+    )
     {
         $this->candidateRepository = $candidateRepository;
         $this->locationRepository = $locationRepository;
+        $this->filterService = $filterService;
         $this->jobRepository = $jobRepository;
+        $this->filterRepository = $filterRepository;
     }
 
 
@@ -107,15 +118,66 @@ class CandidateController extends Controller
         return redirect()->back()->with('success', 'Công việc đã được lưu.');
     }
 
+    public function unsaveJob(Request $request, $job_id)
+    {
+        if (!auth()->check()) {
+            return redirect()->back()->with('error', 'Bạn cần đăng nhập để bỏ lưu công việc.');
+        }
+
+        $isUnsaved = $this->candidateRepository->unSaveJob($job_id);
+
+        if (!$isUnsaved) {
+            return redirect()->back()->with('error', 'Công việc này chưa được lưu hoặc không tìm thấy ứng viên.');
+        }
+
+        return redirect()->back()->with('success', 'Công việc đã được bỏ lưu.');
+    }
+
+
     public function hot(Request $request)
     {
+        $selectedSalaries = $request->input('salaries', []);
+        $selectedExperiences = $request->input('experiences', []);
+        $selectedMajors = $request->input('majors', []);
+        $selectedEducations = $request->input('educations', []);
+        $selectedLocation = $request->input('locations', null);
+
         $sortBy = $request->input('sortBy', 'newest');
         $perPage = $request->input('perPage', 10);
 
-        $candidates = $this->candidateRepository->getAllCandidates($sortBy, $perPage);
+        $filteredCandidatesQuery = $this->filterService->filterCandidate(
+            $selectedLocation,
+            $selectedMajors,
+            $selectedExperiences,
+            $selectedEducations,
+            $selectedSalaries
+        );
 
-        return view('client.candidate.hot', compact('candidates', 'sortBy', 'perPage'));
+        $filteredCandidates = $this->candidateRepository->getAllCandidates($filteredCandidatesQuery, $sortBy, $perPage);
+
+        $filteredData = $this->filterRepository->filterCandidate(
+            $selectedSalaries,
+            $selectedExperiences,
+            $selectedMajors,
+            $selectedEducations,
+            $selectedLocation
+        );
+
+        $data = [
+            'candidates' => $filteredCandidates,
+            'totalCandidates' => $filteredCandidates->total(),
+            'perPage' => $perPage,
+            'sortBy' => $sortBy,
+            'salaries' => $filteredData['salaries'],
+            'experiences' => $filteredData['experiences'],
+            'majors' => $filteredData['majors'],
+            'educations' => $filteredData['educations'],
+            'locations' => $filteredData['locations'],
+        ];
+
+        return view('client.candidate.hot', $data);
     }
+
 
     public function editPassword()
     {

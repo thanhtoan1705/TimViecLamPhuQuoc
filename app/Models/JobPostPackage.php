@@ -20,6 +20,7 @@ class JobPostPackage extends Model
         'display_best',
         'display_haste',
         'descriptions',
+        'label',
         'status',
     ];
 

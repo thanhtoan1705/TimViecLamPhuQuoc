@@ -17,38 +17,37 @@
 
 <div class="widget-box" id="widgetBox">
     <div class="widget-content" id="widgetContent">
-        <!-- Nội dung của các tiện ích -->
     </div>
     <button id="closeWidget">Đóng</button>
 </div>
 
+<script> window.chtlConfig = {chatbotId: "1266831931"} </script>
+<script async data-id="1266831931" id="chatling-embed-script" type="text/javascript"
+        src="https://chatling.ai/js/embed.js"></script>
+
 <script>
-    // Lấy các phần tử cần thiết
-const mainButton = document.getElementById('mainButton');
-const subWidgets = document.getElementById('subWidgets');
-const widgetBox = document.getElementById('widgetBox');
-const widgetContent = document.getElementById('widgetContent');
-const closeWidgetButton = document.getElementById('closeWidget');
+    const mainButton = document.getElementById('mainButton');
+    const subWidgets = document.getElementById('subWidgets');
+    const widgetBox = document.getElementById('widgetBox');
+    const widgetContent = document.getElementById('widgetContent');
+    const closeWidgetButton = document.getElementById('closeWidget');
 
-// Hiển thị/ẩn các sub-widget khi ấn vào button chính
-mainButton.addEventListener('click', function() {
-    if (subWidgets.style.display === 'none' || subWidgets.style.display === '') {
-        subWidgets.style.display = 'flex';
-    } else {
-        subWidgets.style.display = 'none';
-    }
-});
-
-// Xử lý khi nhấn vào các sub-widget
-const widgets = document.querySelectorAll('.widget');
-widgets.forEach(widget => {
-    widget.addEventListener('click', function() {
-        const widgetType = widget.getAttribute('data-widget');
-        showWidgetContent(widgetType);
+    mainButton.addEventListener('click', function () {
+        if (subWidgets.style.display === 'none' || subWidgets.style.display === '') {
+            subWidgets.style.display = 'flex';
+        } else {
+            subWidgets.style.display = 'none';
+        }
     });
-});
 
-// Hiển thị nội dung tương ứng của widget
+    const widgets = document.querySelectorAll('.widget');
+    widgets.forEach(widget => {
+        widget.addEventListener('click', function () {
+            const widgetType = widget.getAttribute('data-widget');
+            showWidgetContent(widgetType);
+        });
+    });
+
 function showWidgetContent(widgetType) {
     switch(widgetType) {
         case 'chat':
@@ -56,6 +55,7 @@ function showWidgetContent(widgetType) {
             break;
         case 'facebook':
             widgetContent.innerHTML = '<h3>Facebook</h3><p>Facebook chat hoặc thông tin sẽ hiện ra ở đây.</p>';
+            window.open('https://www.messenger.com/t/473205499198988', '_blank');
             break;
         case 'call':
             widgetContent.innerHTML = '<h3>Gọi điện</h3><p>Chức năng gọi điện sẽ hiện ra ở đây.</p>';
@@ -63,13 +63,12 @@ function showWidgetContent(widgetType) {
         default:
             widgetContent.innerHTML = '<h3>Tiện ích</h3><p>Nội dung của tiện ích này.</p>';
     }
-    widgetBox.style.display = 'flex'; // Hiển thị widget box
-    subWidgets.style.display = 'none'; // Ẩn các sub-widget
+    widgetBox.style.display = 'flex';
+    subWidgets.style.display = 'none';
 }
 
-// Đóng widget box khi nhấn nút đóng
-closeWidgetButton.addEventListener('click', function() {
-    widgetBox.style.display = 'none';
-});
+    closeWidgetButton.addEventListener('click', function () {
+        widgetBox.style.display = 'none';
+    });
 
 </script>

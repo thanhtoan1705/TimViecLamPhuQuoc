@@ -38,7 +38,7 @@
         </div>
 
         <div class="email-body mt-3">
-            <p><strong>vieclamphuquoc.vn</strong> trân trọng thông báo:</p>
+            <p><strong>vieclamphuquoc.com.vn</strong> trân trọng thông báo:</p>
             <p>Quý công ty vừa nhận được một hồ sơ ứng tuyển vào vị trí <strong>{{ $job->title }}</strong> từ ứng viên <strong>{{ $candidate->user->name }}</strong>.</p>
 
             <div class="box-info border border-primary">

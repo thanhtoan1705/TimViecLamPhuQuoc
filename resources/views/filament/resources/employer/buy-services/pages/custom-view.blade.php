@@ -24,7 +24,7 @@
             font-size: 16px;
         }
 
-        .pricing-title-a{
+        .pricing-title-a {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -120,24 +120,116 @@
         }
     </style>
     <div>
-        <h1 class="pricing-title-h1">Bảng giá đăng tin VIP</h1>
+        <h1 class="pricing-title-h1">Bảng giá đăng tin VIP 1 tuần</h1>
         <p class="pricing-title-p">Chọn gói phù hợp và tốt nhất dành cho doanh nghiệp của bạn</p>
     </div>
     <div class="card">
         @foreach($packages as $package)
-            <div class="main">
-                <h2>{{ $package->title }}</h2>
-                <div class="price">{{ number_format($package->price) }}<span>đ/tháng</span></div>
-                <div class="description">{{ $package->descriptions }}</div>
-                <ul class="features">
-                    <li>Cập nhật tin không giới hạn</li>
-                    <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
-                </ul>
-                <form action="{{ route('client.employer.payment') }}" method="GET">
-                    <input type="hidden" name="package_id" value="{{ $package->id }}">
-                    <button type="submit" class="subscribe-btn">Đăng ký</button>
-                </form>
-            </div>
+            @if ($package->period == 7)
+                <div class="main">
+                    <h2>{{ $package->title }}</h2>
+                    <div class="price">{{ number_format($package->price) }}<span>đ</span></div>
+                    <ul class="features">
+                        <li>Được bảo hành dịch vụ</li>
+                        @if ($package->label != 0)
+                            <li>
+                                @if ($package->label == 1)
+                                    Tin tuyển dụng được gắn nhãn GẤP vào tiêu đề tin.
+                                @elseif ($package->label == 2)
+                                    Tin tuyển dụng được gắn nhãn HOT vào tiêu đề tin.
+                                @endif
+                            </li>
+                        @endif
+                        @if (!($package->display_haste == 0 && $package->display_best == 0 && $package->display_top == 0))
+                            <li>
+                                @if ($package->display_top == 1)
+                                    Đăng tin tuyển dụng với vị trí nổi bật.
+                                @elseif ($package->display_best == 1)
+                                    Đăng tin tuyển dụng với vị trí tốt nhất.
+                                @elseif ($package->display_haste == 1)
+                                    Đăng tin tuyển dụng với vị trí hàng đầu.
+                                @endif
+                            </li>
+                        @endif
+                        <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
+                    </ul>
+                    <form action="{{ route('client.employer.payment') }}" method="GET">
+                        <input type="hidden" name="package_id" value="{{ $package->id }}">
+                        <button type="submit" class="subscribe-btn">Đăng ký</button>
+                    </form>
+                </div>
+            @endif
+        @endforeach
+    </div>
+    <div>
+        <h1 class="pricing-title-h1">Bảng giá đăng tin VIP 1 tháng</h1>
+        <p class="pricing-title-p">Chọn gói phù hợp và tốt nhất dành cho doanh nghiệp của bạn</p>
+    </div>
+    <div class="card">
+        @foreach($packages as $package)
+            @if ($package->period == 30 && ($package->display_top == 1 || $package->display_best == 1 || $package->display_haste == 1))
+                <div class="main">
+                    <h2>{{ $package->title }}</h2>
+                    <div class="price">{{ number_format($package->price) }}<span>đ</span></div>
+                    <ul class="features">
+                        <li>Được bảo hành dịch vụ</li>
+                        @if ($package->label != 0)
+                            <li>
+                                @if ($package->label == 1)
+                                    Tin tuyển dụng được gắn nhãn GẤP vào tiêu đề tin.
+                                @elseif ($package->label == 2)
+                                    Tin tuyển dụng được gắn nhãn HOT vào tiêu đề tin.
+                                @endif
+                            </li>
+                        @endif
+                        @if (!($package->display_haste == 0 && $package->display_best == 0 && $package->display_top == 0))
+                            <li>
+                                @if ($package->display_top == 1)
+                                    Đăng tin tuyển dụng với vị trí nổi bật.
+                                @elseif ($package->display_best == 1)
+                                    Đăng tin tuyển dụng với vị trí tốt nhất.
+                                @elseif ($package->display_haste == 1)
+                                    Đăng tin tuyển dụng với vị trí hàng đầu.
+                                @endif
+                            </li>
+                        @endif
+                        <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
+                    </ul>
+                    <form action="{{ route('client.employer.payment') }}" method="GET">
+                        <input type="hidden" name="package_id" value="{{ $package->id }}">
+                        <button type="submit" class="subscribe-btn">Đăng ký</button>
+                    </form>
+                </div>
+            @endif
+        @endforeach
+    </div>
+    <div>
+        <h1 class="pricing-title-h1">Dịch vụ cộng thêm</h1>
+        <p class="pricing-title-p">Thêm tùy chọn giúp tin tuyển dụng nổi bật hơn với ứng viên</p>
+    </div>
+    <div class="card">
+        @foreach($packages as $package)
+            @if ($package->label != 0 && ($package->display_top == 0 && $package->display_best == 0 && $package->display_haste == 0))
+                <div class="main">
+                    <h2>{{ $package->title }}</h2>
+                    <div class="price">{{ number_format($package->price) }}<span>đ/tháng</span></div>
+                    <ul class="features">
+                        <li>Được bảo hành dịch vụ</li>
+                        <li>
+                            @if ($package->label == 1)
+                                Tin tuyển dụng được gắn nhãn GẤP vào tiêu đề tin.
+                            @elseif ($package->label == 2)
+                                Tin tuyển dụng được gắn nhãn HOT vào tiêu đề tin.
+                            @endif
+                        </li>
+                        <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
+                    </ul>
+                    <form action="{{ route('client.employer.payment') }}" method="GET">
+                        <input type="hidden" name="package_id" value="{{ $package->id }}">
+                        <button type="submit" class="subscribe-btn">Đăng ký</button>
+                    </form>
+                </div>
+            @endif
         @endforeach
     </div>
     <div>
