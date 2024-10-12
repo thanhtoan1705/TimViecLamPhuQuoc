@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Candidate;
+use App\Models\UserCvData;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -36,7 +37,7 @@ class DatabaseSeeder extends Seeder
             JobCategoryTableSeeder::class,
             RankTableSeeder::class,
             JobPostTableSeeder::class,
-            InterviewTableSeeder::class,
+//            InterviewTableSeeder::class,
             JobPostPackagesTableSeeder::class,
             PromotionSeeder::class,
             MerchantSeeder::class,
@@ -48,6 +49,10 @@ class DatabaseSeeder extends Seeder
             JobPostCandidateTableSeeder::class,
             SavedJobSeeder::class,
             AssignEmployerPermissionsSeeder::class,
+            CvTemplateTableSeeder::class,
+            CvFieldTableSeeder::class,
+            UserCvTableSeeder::class,
+            UserCvDataTableSeeder::class,
         ]);
     }
 }

@@ -1,0 +1,96 @@
+.flex-input {
+    border: none !important;
+    background: transparent;
+    width: 100%;
+    padding: 0.25rem;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+}
+
+.flex-input:hover, .flex-input:focus {
+    border: 1px dashed #007bff !important;
+}
+
+.section-container {
+    position: relative;
+    padding-top: 10px;
+}
+
+.section-controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.section-container:hover .section-controls {
+    display: flex;
+}
+
+.section-controls button,
+.item-control,
+.btn-add {
+    padding: 0.1rem 0.3rem;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    border-radius: 0.2rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.section-controls button:hover,
+.item-control:hover,
+.btn-add:hover {
+    opacity: 1;
+}
+
+.item-container {
+    position: relative;
+    padding-right: 25px;
+}
+
+.item-control {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+}
+
+.item-container:hover .item-control {
+    display: inline-block;
+}
+
+.btn-add {
+    opacity: 0;
+}
+
+.section-container:hover .btn-add {
+    opacity: 0.7;
+}
+
+.btn-add:hover {
+    opacity: 1;
+}
+
+.editable-field {
+    display: inline-block;
+    min-width: 20px;
+    min-height: 1em;
+    cursor: pointer;
+}
+
+.editable-field:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.editable-field input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+    width: 100%;
+}

@@ -1,0 +1,171 @@
+.add-item, .remove-item {
+    background-color: #f0f0f0 !important;
+    border: none !important;
+    padding: 5px 10px !important;
+    margin: 2px !important;
+    cursor: pointer !important;
+    font-size: 0.8em !important;
+    transition: all 0.3s ease;
+}
+
+.add-item:hover, .remove-item:hover {
+    transform: scale(1.05);
+    background-color: #e0e0e0 !important;
+}
+
+.remove-item {
+    color: red !important;
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.75rem !important;
+    margin-right: auto; /* Push the remove button to the left */
+}
+
+.add-item {
+    margin-top: 0.5rem !important;
+}
+
+.editable-section {
+    position: relative;
+    padding: 10px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.editable-section:hover {
+    border-color: #007bff;
+}
+
+.remove-section {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.editable-section:hover .remove-section {
+    opacity: 1;
+}
+
+.add-item {
+    display: block;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.editable-section:hover .add-item {
+    opacity: 1;
+}
+
+.editable-item {
+    position: relative;
+    padding-right: 100px;
+    padding: 5px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.editable-item:hover {
+    border: 1px dashed #6C757D !important;
+}
+
+.editable-item .action-buttons {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.editable-item:hover .action-buttons {
+    display: flex; /* Show on hover */
+}
+
+.action-buttons .btn {
+    padding: 2px 5px;
+    font-size: 0.75em;
+}
+
+.editable {
+    position: relative;
+    display: inline-block;
+    padding: 2px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.editable:hover {
+    border: 1px dashed #6C757D;
+}
+
+.editable-section {
+    position: relative;
+}
+
+.editable-section .add-section {
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.editable-section:hover .add-section {
+    opacity: 1;
+}
+
+.drag-handle {
+    cursor: move;
+    padding: 5px;
+    margin-bottom: 0px;
+    background-color: #f0f0f0;
+    text-align: center;
+}
+
+.editable-item .action-buttons {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    gap: 5px;
+}
+
+.editable-item:hover .action-buttons {
+    display: flex;
+}
+
+.action-buttons .btn {
+    padding: 2px 5px;
+    font-size: 0.75em
+}
+
+.avatar-container {
+    position: relative;
+    display: inline-block;
+}
+
+.change-avatar-btn {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.avatar-container:hover .change-avatar-btn {
+    opacity: 1;
+}
+
+
+
+
+
+

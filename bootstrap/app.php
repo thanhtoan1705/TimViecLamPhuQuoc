@@ -25,7 +25,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 'post.php',
                 'auth.php',
                 'pricing.php',
-                'chat.php'
+                'chat.php',
+                'cv.php',
             ];
 
             $employerRoutes = [
