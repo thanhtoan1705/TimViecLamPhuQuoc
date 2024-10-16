@@ -11,5 +11,5 @@ Route::prefix('tin-tuyen-dung')
 //        Route::get('/chi-tiet/{employerSlug}/{jobSlug}', [JobController::class, 'single'])->name('single');
         Route::post('jobs/{id}/apply', [JobController::class, 'applyForJob'])->name('apply');
     });
-Route::get('/{jobSlug}', [JobController::class, 'single'])->name('job.single');
+Route::get('/{jobSlug}.html', [JobController::class, 'single'])->name('job.single');
 

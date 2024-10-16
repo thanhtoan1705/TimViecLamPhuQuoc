@@ -5,14 +5,35 @@ namespace App\Http\Controllers\Client\CV;
 use App\Http\Controllers\Controller;
 use App\Models\CvTemplate;
 use App\Models\UserCv;
-use App\Models\UserCvData;
-use App\Models\CvField;
+use App\Repositories\CV\CVRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class CvTemplateController extends Controller
 {
+    protected $cvRepository;
+
+    public function __construct(CVRepository $cvRepository)
+    {
+        $this->cvRepository = $cvRepository;
+    }
+
+    public function index(Request $request)
+    {
+        $perPage = $request->input('perPage', 12);
+        $sortBy = $request->input('sortBy', 'newest');
+
+        $templates = $this->cvRepository->getAllTemplates($perPage, $sortBy);
+
+        $data = [
+            'templates' => $templates,
+            'perPage' => $perPage,
+            'sortBy' => $sortBy
+        ];
+
+        return view('client.cv.list', $data);
+    }
+
     public function preview(CvTemplate $cvTemplate)
     {
         return view('client.cv.cv-preview', compact('cvTemplate'));
@@ -81,5 +102,6 @@ class CvTemplateController extends Controller
             'userCv' => $userCv
         ]);
     }
+
 
 }

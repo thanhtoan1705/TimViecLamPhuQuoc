@@ -11,8 +11,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use FilamentTiptapEditor\TiptapEditor;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CvTemplateResource extends Resource
 {
@@ -40,6 +38,9 @@ class CvTemplateResource extends Resource
 
                         Forms\Components\FileUpload::make('template_image')
                             ->label('Hình ảnh mẫu CV')
+                            ->disk('public')
+                            ->required()
+                            ->directory('images/cv')
                             ->columnSpan(1),
 
                         Forms\Components\Textarea::make('template_description')
