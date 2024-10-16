@@ -33,7 +33,64 @@
                         <div class="col-lg-8">
                             <div class="row">
 
-                                @if(is_object($blogs))
+                                @if(isset($searchResult) && !$searchResult->isEmpty())
+                                    @foreach($searchResult as $value)
+                                        @php
+                                            if (isset($value->user->avatar_url)) {
+                                                $user_img = asset('storage/' . $value->user->avatar_url);
+                                            } else {
+                                                $user_img = asset('default/user.png');
+                                            }
+
+                                            if (isset($value->image)) {
+                                                $blog_img = asset('storage/' . $value->image);
+                                            } else {
+                                                $blog_img = asset('default/blog.jpg');
+                                            }
+                                        @endphp
+                                        <div class="col-lg-6 mb-30">
+
+                                            <div class="card-grid-3 hover-up">
+                                                <div class="text-center card-grid-3-image"><a href="{{route('client.post.detail' , $value->slug)}}">
+                                                        <figure><img alt="jobBox" style="max-width: 100%;
+                                                                                        max-height: 220px;
+                                                                                        object-fit: cover;"
+                                                                     src="{{ $blog_img }}">
+                                                        </figure>
+                                                    </a></div>
+                                                <div class="card-block-info">
+                                                    <div class="tags mb-15"><a class='btn btn-tag'
+                                                                               href="{{route('client.post.detail' , $value->slug)}}">{{ $value->category->name }}</a>
+                                                    </div>
+                                                    <h5><a href="{{route('client.post.detail' , $value->slug)}}">{{ $value->title }}</a></h5>
+                                                    <p class="mt-10 color-text-paragraph font-sm">
+                                                        {!! \Illuminate\Support\Str::limit($value->content, 100, '...')   !!}
+                                                    </p>
+                                                    <div class="card-2-bottom mt-20">
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-6">
+                                                                <div class="d-flex"><img class="img-rounded"
+                                                                                         src="{{ $user_img }}">
+                                                                    <div class="info-right-img"><span
+                                                                            class="font-sm font-bold color-brand-1 op-70">{{ $value->user->name }}</span><br><span
+                                                                            class="font-xs color-text-paragraph-2">{{ $value->created_at->format('d-m-Y') }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6 text-end col-6 pt-15"><span
+                                                                    class="color-text-paragraph-2 font-xs">{{ $value->created_at->diffForHumans() }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @elseif($searchResult->isEmpty())
+                                    <div class="no-results">
+                                        <h6>Không có kết quả tìm kiếm phù hợp</h6>
+                                    </div>
+                                @else
                                     @foreach($blogs as $value)
                                         @php
                                             if (isset($value->user->avatar_url)) {
@@ -64,7 +121,7 @@
                                                     </div>
                                                     <h5><a href="{{route('client.post.detail' , $value->slug)}}">{{ $value->title }}</a></h5>
                                                     <p class="mt-10 color-text-paragraph font-sm">
-                                                        {{ \Illuminate\Support\Str::limit($value->content, 100, '...') }}
+                                                        {!! \Illuminate\Support\Str::limit($value->content, 100, '...')   !!}
                                                     </p>
                                                     <div class="card-2-bottom mt-20">
                                                         <div class="row">
@@ -97,8 +154,8 @@
                         <div class="col-lg-4 col-md-12 col-sm-12 col-12 pl-40 pl-lg-15 mt-lg-30">
                             <div class="widget_search mb-40">
                                 <div class="search-form">
-                                    <form action="#">
-                                        <input type="text" placeholder="Tìm kiếm...">
+                                    <form action="{{route('client.post.index')}}" method="GET">
+                                        <input type="text" placeholder="Tìm kiếm..." name="keyword">
                                         <button type="submit"><i class="fi-rr-search"></i></button>
                                     </form>
                                 </div>

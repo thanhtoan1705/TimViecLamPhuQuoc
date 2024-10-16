@@ -23,4 +23,15 @@ class PostRepository implements PostInterface
 
         return $postDetail;
     }
+
+    public function searchBlogs($keyword)
+    {
+        $searchResult = $this->postRepository
+            ->where('title', 'LIKE', "%{$keyword}%")
+            ->orWhere('content', 'LIKE', "%{$keyword}%")
+            ->where('is_publish', 1)
+            ->paginate(6);
+
+        return $searchResult;
+    }
 }

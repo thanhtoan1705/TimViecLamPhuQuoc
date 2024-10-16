@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client\Post;
 use App\Http\Controllers\Controller;
 use App\Repositories\Blog\BlogInterface;
 use App\Repositories\Post\PostInterface;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -19,11 +20,15 @@ class PostController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
+        $keyword = $request->input('keyword');
+        $searchResult = $this->post->searchBlogs($keyword);
+
         $data = [
             'blogs' => $this->blogRepository->getBlogByStatusPaginate(1, 9),
             'blogTrending' => $this->blogRepository->blogTrending(1, 5),
+            'searchResult' => $searchResult,
         ];
 
         return view("client.post.index", $data);
