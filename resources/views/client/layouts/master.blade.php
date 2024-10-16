@@ -32,6 +32,13 @@
     @livewireStyles
     @stack('css')
     <title>@yield('title', 'Trang chủ')</title>
+
+    <!-- SEO -->
+
+    @include('client.partials.seo')
+
+    <!-- End SEO -->
+
 </head>
 <body>
 <x-client.contact></x-client.contact>

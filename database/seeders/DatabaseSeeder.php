@@ -53,6 +53,8 @@ class DatabaseSeeder extends Seeder
             CvFieldTableSeeder::class,
             UserCvTableSeeder::class,
             UserCvDataTableSeeder::class,
+
+            SiteSettingTableSeeder::class,
         ]);
     }
 }

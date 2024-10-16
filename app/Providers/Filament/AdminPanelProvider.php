@@ -9,6 +9,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -39,7 +40,15 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
-            ->favicon('assets/client/imgs/template/favicon.svg')
+            ->navigationItems([
+                NavigationItem::make('Cấu hình hệ thống')
+                    ->group('Cấu hình chung')
+                    ->url(config('app.url') . '/admin/setting/1/edit')
+                    ->sort(2)
+                    ->icon('heroicon-o-cog-6-tooth'),
+
+            ])
+            ->favicon(asset('assets/client/imgs/template/favicon.svg'))
 
             ->discoverResources(in: app_path('Filament/Resources/Admin'), for: 'App\\Filament\\Resources\\Admin')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

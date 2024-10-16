@@ -39,6 +39,7 @@ use Filament\Tables\Table;
 class CandidateResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Candidate::class;
+    protected static ?string $slug = 'candidate';
 
     protected static ?string $navigationLabel = 'Ứng viên';
     protected static ?string $modelLabel = 'Ứng viên';
