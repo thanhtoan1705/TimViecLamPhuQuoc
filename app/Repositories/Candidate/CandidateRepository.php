@@ -57,14 +57,17 @@ class CandidateRepository implements CandidateInterface
 
     public function getSavedJobs()
     {
-        $candidate = Auth::user()->candidate;
+        $user = Auth::user();
 
-        if (!$candidate) {
-            return collect();
+        if (!$user || !$user->candidate) {
+            return collect(); // Trả về một collection rỗng
         }
+
+        $candidate = $user->candidate;
 
         return $candidate->savedJobs()->paginate(9);
     }
+
 
     public function saveJob($job_id)
     {

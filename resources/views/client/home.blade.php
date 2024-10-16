@@ -149,8 +149,8 @@
                                             <a href="{{route('client.job.single', ['jobSlug' => $post->slug])}}">
                                                 <div class="card-grid-2 hover-up">
                                                     <div class="card-grid-2-image-left">
-                                                        {{--VLgap--}}
-                                                        <span class="label-jobbox VLgap">Việc làm hot</span>
+                                                        {{--VLgap VLhot--}}
+                                                        <span class="label-jobbox VLhot">Việc làm hot</span>
                                                         <div class="image-box">
                                                             @if(!empty($posts->first()->job_category->image))
                                                                 <img alt="jobBox" width="50px"

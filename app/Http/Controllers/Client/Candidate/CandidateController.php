@@ -190,7 +190,8 @@ class CandidateController extends Controller
 
         $this->candidateRepository->updatePassword($user, $request->input('new_password'));
 
-        flash()->success('Cập nhật mật khẩu thành công');
+//        flash()->success('Cập nhật mật khẩu thành công');
+        flash('Cập nhật mật khẩu thành công.', 'Thành công!');
 
         return redirect()->back();
     }

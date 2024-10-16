@@ -106,7 +106,7 @@ class ServiceTrackingResource extends Resource
                     } else {
                         return "Hết hạn sau 1 giờ";
                     }
-                })
+                }),
         ])
         ->filters([
             //

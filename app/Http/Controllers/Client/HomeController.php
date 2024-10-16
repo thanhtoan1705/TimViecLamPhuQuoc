@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Employer\EmployerInterface;
 use App\Repositories\JobCategory\JobCategoryInterface;
 use App\Repositories\JobPost\JobPostInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller{
 

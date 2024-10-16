@@ -47,7 +47,8 @@ class AuthController extends Controller
             'user_id' => $user->id,
         ]);
 
-        flash()->success('Tài khoản của bạn đã được đăng ký thành công.');
+//        flash()->success('Tài khoản của bạn đã được đăng ký thành công.');
+        flash('Tài khoản của bạn đã được đăng ký thành công.', 'Thành công!');
 
         return redirect()->route('client.candidate.login')
             ->with('msg-success', 'Đăng ký thành công, bây giờ bạn có thể đăng  nhập');
@@ -68,20 +69,22 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             if (!empty(Auth::user()->email_verified_at)) {
                 $request->session()->regenerate();
-                flash()->success('Đăng nhập thành công.');
+//                flash()->success('Đăng nhập thành công.');
+                flash('Đăng nhập thành công.', 'Thành công!');
                 return redirect()->route('client.client.index');
             }
         }
 
-        flash()->error('Email hoặc mật khẩu không chính xác');
+//        flash()->error('Email hoặc mật khẩu không chính xác');
+        flash('Email hoặc mật khẩu không chính xác.', 'Thất bại!');
         return redirect()->back();
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
-        flash()->success('Đăng xuất thành công.');
-
+//        flash()->success('Đăng xuất thành công.');
+        flash('Đăng xuất thành công.', 'Thành công!');
         return redirect()->route('client.candidate.login');
     }
 

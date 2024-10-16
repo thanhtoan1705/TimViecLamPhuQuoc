@@ -26,7 +26,8 @@ class FacebookController extends Controller
 
             if ($finduser) {
                 Auth::login($finduser);
-                flash()->success('Đăng nhập thành công!');
+//                flash()->success('Đăng nhập thành công!');
+                flash('Đăng nhập thành công.', 'Thành công!');
                 return redirect()->intended('/');
             } else {
                 $newUser = User::create([
@@ -39,7 +40,8 @@ class FacebookController extends Controller
                 ]);
 
                 Auth::login($newUser);
-                flash()->success('Đăng nhập thành công!');
+//                flash()->success('Đăng nhập thành công!');
+                flash('Đăng nhập thành công.', 'Thành công!');
                 return redirect()->intended('/');
             }
         } catch (\Exception $e) {

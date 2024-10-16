@@ -34,7 +34,7 @@
     <title>@yield('title', 'Trang chủ')</title>
 </head>
 <body>
-
+<x-client.contact></x-client.contact>
 <x-client.header></x-client.header>
 <script src="{{ asset('assets/client/js/app.js')}}"></script>
 @yield('content')

@@ -36,10 +36,11 @@
         .card {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
-            align-items: center;
+            gap: 20px;
+            justify-content: center; /* Căn giữa các card */
+            align-items: stretch; /* Đảm bảo chiều cao các thẻ đều nhau */
             max-width: 1000px;
-            margin: 0 auto;
+            margin: 20px auto 0;
         }
 
         .main {
@@ -51,7 +52,16 @@
             padding: 20px;
             text-align: center;
             margin: 10px; /* Tạo khoảng cách giữa các thẻ */
-            min-height: 350px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+            transition: transform 0.3s;
+        }
+
+        .main:hover {
+            transform: translateY(-5px); /* Hiệu ứng nổi lên khi hover */
         }
 
         .card h2 {
@@ -61,9 +71,10 @@
         }
 
         .price {
-            font-size: 36px;
-            color: #2d7ef7;
+            font-size: 1.5rem;
+            color: #e74c3c;
             margin: 10px 0;
+            text-align: center;
         }
 
         .price span {
@@ -71,22 +82,12 @@
             color: #888;
         }
 
-        .description {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 20px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3; /* Số dòng bạn muốn hiển thị */
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
         .features {
             list-style: none;
             padding: 0;
             margin: 20px 0;
             text-align: left;
+            flex-grow: 1;
         }
 
         .features li {
@@ -112,6 +113,7 @@
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
+            align-self: center;
         }
 
         .subscribe-btn:hover {
@@ -153,9 +155,16 @@
                         @endif
                         <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
                     </ul>
+                    @php
+                        $userpackages = $this->userpackages;
+                        $purchased = $userpackages->where('packages_id', $package->id)->isNotEmpty();
+                    @endphp
+
                     <form action="{{ route('client.employer.payment') }}" method="GET">
                         <input type="hidden" name="package_id" value="{{ $package->id }}">
-                        <button type="submit" class="subscribe-btn">Đăng ký</button>
+                        <button type="submit" class="subscribe-btn">
+                            {{ $purchased ? 'Gia hạn' : 'Đăng ký' }}
+                        </button>
                     </form>
                 </div>
             @endif
@@ -195,9 +204,16 @@
                         @endif
                         <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
                     </ul>
+                    @php
+                        $userpackages = $this->userpackages;
+                        $purchased = $userpackages->where('packages_id', $package->id)->isNotEmpty();
+                    @endphp
+
                     <form action="{{ route('client.employer.payment') }}" method="GET">
                         <input type="hidden" name="package_id" value="{{ $package->id }}">
-                        <button type="submit" class="subscribe-btn">Đăng ký</button>
+                        <button type="submit" class="subscribe-btn">
+                            {{ $purchased ? 'Gia hạn' : 'Đăng ký' }}
+                        </button>
                     </form>
                 </div>
             @endif
@@ -224,9 +240,16 @@
                         </li>
                         <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
                     </ul>
+                    @php
+                        $userpackages = $this->userpackages;
+                        $purchased = $userpackages->where('packages_id', $package->id)->isNotEmpty();
+                    @endphp
+
                     <form action="{{ route('client.employer.payment') }}" method="GET">
                         <input type="hidden" name="package_id" value="{{ $package->id }}">
-                        <button type="submit" class="subscribe-btn">Đăng ký</button>
+                        <button type="submit" class="subscribe-btn">
+                            {{ $purchased ? 'Gia hạn' : 'Đăng ký' }}
+                        </button>
                     </form>
                 </div>
             @endif

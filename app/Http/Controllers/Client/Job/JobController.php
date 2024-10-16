@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client\Job;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\Client\EmployerNotification;
+use App\Repositories\Candidate\CandidateRepository;
 use App\Repositories\Filter\FilterInterface;
 use App\Repositories\Job\JobInterface;
 use App\Services\Search\SearchService;
@@ -15,12 +16,14 @@ class JobController extends Controller
     protected $jobRepository;
     protected $filterRepository;
     protected $searchService;
+    protected $candidateRepository;
 
-
-    public function __construct(JobInterface $jobRepository,
-                                FilterInterface $filterRepository,
-                                SearchService $searchService)
+    public function __construct(JobInterface        $jobRepository,
+                                CandidateRepository $candidateRepository,
+                                FilterInterface     $filterRepository,
+                                SearchService       $searchService)
     {
+        $this->candidateRepository = $candidateRepository;
         $this->jobRepository = $jobRepository;
         $this->filterRepository = $filterRepository;
         $this->searchService = $searchService;
@@ -28,6 +31,7 @@ class JobController extends Controller
 
     public function index(Request $request)
     {
+
         $selectedCategories = $request->input('categories', []);
         $selectedSalaries = $request->input('salaries', []);
         $selectedKeywords = $request->input('keywords', []);
@@ -75,6 +79,9 @@ class JobController extends Controller
             $jobs = $filteredJobs;
         }
 
+        $savedJobs = $this->candidateRepository->getSavedJobs();
+        $savedJobIds = $savedJobs->pluck('id')->toArray();
+
         $data = [
             'jobs' => $jobs,
             'totalJobs' => $filteredJobs->total(),
@@ -91,11 +98,11 @@ class JobController extends Controller
             'jobsCount7Days' => $filteredData['jobsCount7Days'],
             'jobsCount30Days' => $filteredData['jobsCount30Days'],
             'locations' => $filteredData['locations'],
+            'savedJobIds' => $savedJobIds,
         ];
 
         return view('client.job.index', $data);
     }
-
 
 
     public function single($jobSlug)
@@ -141,7 +148,8 @@ class JobController extends Controller
 
         dispatch(new EmployerNotification($employer, $candidate, $job, $filePath))->handle();
 
-        Flasher::success('Đã nộp đơn thành công.');
+//        Flasher::success('Đã nộp đơn thành công.');
+        flash('Đã nộp đơn thành công.', 'Thành công!');
         return redirect()->back();
     }
 
