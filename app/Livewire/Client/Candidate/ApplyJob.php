@@ -58,8 +58,7 @@ class ApplyJob extends Component
         $job = $jobRepository->findJobById($this->jobId);
         $employer = $job->employer;
         $candidate = Auth::user()->candidate;
-
-        dispatch(new EmployerNotification($employer, $candidate, $job, $filePath))->handle();
+        dispatch(new EmployerNotification($employer, $candidate, $job, $filePath))->onConnection('database')->handle();
 
         $this->reset(['resume', 'description']);
 
