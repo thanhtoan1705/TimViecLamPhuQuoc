@@ -54,17 +54,14 @@ class SalaryResource extends Resource
                                         })
                                         ->label('Tên lương')
                                         ->validationAttribute('tên lương')
-                                        ->rules([
-                                            'unique:salaries,name']),
+                                        ->unique('salaries', 'name', ignoreRecord: true),
 
                                     TextInput::make('slug')
                                         ->required()
                                         ->maxLength(255)
                                         ->dehydrated()
                                         ->label('Đường dẫn')
-                                        ->rules([
-                                            'unique:salaries,slug',
-                                        ]),
+                                        ->unique('salaries', 'slug', ignoreRecord: true),
                                 ])
                         ])->columnSpan(2),
 
