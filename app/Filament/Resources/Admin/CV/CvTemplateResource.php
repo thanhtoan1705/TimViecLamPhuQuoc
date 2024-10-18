@@ -6,11 +6,13 @@ use App\Filament\Resources\Admin\CV\CvTemplateResource\Pages;
 use App\Filament\Resources\Admin\CV\CvTemplateResource\RelationManagers;
 use App\Models\CvTemplate;
 use Filament\Forms;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use FilamentTiptapEditor\TiptapEditor;
+
 
 class CvTemplateResource extends Resource
 {
@@ -51,15 +53,9 @@ class CvTemplateResource extends Resource
 
                     Forms\Components\Grid::make(1)
                     ->schema([
-                        TiptapEditor::make('template_content')
+                        TiptapEditor::make('template_content_display')
                             ->label('Nội dung mẫu CV')
-                            ->afterStateUpdated(function ($state) {
-                                // Kiểm tra kiểu dữ liệu và loại bỏ HTML nếu cần
-                                if (is_string($state)) {
-                                    return strip_tags($state);
-                                }
-                                return $state; // Hoặc xử lý cho trường hợp khác nếu không phải là chuỗi
-                            })
+                            ->profile('default')
                             ->tools([
                                 'bold',
                                 'italic',
@@ -67,7 +63,9 @@ class CvTemplateResource extends Resource
                                 'underline',
                                 'link',
                             ])
-                            ->hint('Bạn có thể sử dụng các công cụ định dạng để tạo CV chuyên nghiệp.'),
+                            ->hint('Bạn có thể sử dụng các công cụ định dạng để tạo CV chuyên nghiệp.')
+                            ->required(),
+                        Hidden::make('template_content'),
                     ]),
                 ])
                     ->columnSpan(2)

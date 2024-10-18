@@ -67,16 +67,12 @@ class ExperienceResource extends Resource implements HasShieldPermissions
                                         ->required()
                                         ->maxLength(255)
                                         ->live(onBlur: true)
-                                        ->afterStateUpdated(function (string $operation, $state, Set $set) {
-                                            $slug = Str::slug($state);
-                                            if ($operation === 'create' || $operation === 'update') {
-                                                $set('slug', $slug);
-                                            }
+                                        ->afterStateUpdated(function ($state, Set $set) {
+                                            $set('slug', Str::slug($state));
                                         })
                                         ->label('Tên kinh nghiệm')
                                         ->validationAttribute('tên kinh nghiệm')
-                                        ->rules([
-                                            'unique:experiences,name']),
+                                        ->unique(ignoreRecord: true),
 
                                     TextInput::make('slug')
                                         ->required()
@@ -85,8 +81,8 @@ class ExperienceResource extends Resource implements HasShieldPermissions
                                         ->label('Đường dẫn')
                                         ->rules([
                                             'regex:/^[a-zA-Z0-9\-]+$/u',
-                                            'unique:experiences,slug',
-                                        ]),
+                                        ])
+                                        ->unique(ignoreRecord: true),
                                 ])
                         ])->columnSpan(2),
 

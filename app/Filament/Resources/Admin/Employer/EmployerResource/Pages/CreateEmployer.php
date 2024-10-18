@@ -4,10 +4,7 @@ namespace App\Filament\Resources\Admin\Employer\EmployerResource\Pages;
 
 use App\Filament\Resources\Admin\Employer\EmployerResource;
 use App\Models\Address;
-use App\Models\District;
-use App\Models\Province;
 use App\Models\User;
-use App\Models\Ward;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,7 +27,7 @@ class CreateEmployer extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-//        dd($data);
+        //    dd($data);
         $existingUser = User::where('email', $data['user']['email'])->first();
         if (!$existingUser) {
             $user = User::create([
@@ -56,11 +53,9 @@ class CreateEmployer extends CreateRecord
                 'longitude' => $data['longitude'] ?? null,
             ]);
 
-            // Cập nhật ID địa chỉ vào employer
             $data['address_id'] = $address->id;
         }
 
-        // Cập nhật ID người dùng vào employer
         $data['user_id'] = $user->id;
 
         return $data;

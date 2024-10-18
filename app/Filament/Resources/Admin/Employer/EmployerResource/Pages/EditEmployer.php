@@ -35,6 +35,8 @@ class EditEmployer extends EditRecord
             $address->district_id = $data['district_id'];
             $address->ward_id = $data['ward_id'];
             $address->street = $data['street'];
+            $address->latitude = $data['latitude'];
+            $address->longitude = $data['longitude'];
             $address->save();
         }
 
@@ -60,6 +62,12 @@ class EditEmployer extends EditRecord
             $data['district_id'] = $address->district_id;
             $data['ward_id'] = $address->ward_id;
             $data['street'] = $address->street;
+            $data['latitude'] = $address->latitude;
+            $data['longitude'] = $address->longitude;
+
+            // Lưu kinh độ và vĩ độ vào thuộc tính của lớp
+            $this->latitude = $address->latitude;
+            $this->longitude = $address->longitude;
         }
 
         return $data;

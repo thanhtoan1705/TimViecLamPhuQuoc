@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Employer\Candidate\CandidateResource\Pages;
 use App\Filament\Resources\Employer\Candidate\CandidateResource;
 use App\Repositories\Employer\EmployerInterface;
 use Filament\Forms\Components\Select;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,6 +20,16 @@ class CandidateSuggestion extends Page
 
     public $candidates;
     public $sortOrder = 'newest';
+
+    public function getTitle(): string
+    {
+        return __('Gợi ý ứng viên');
+    }
+
+    public function getHeading(): string
+    {
+        return __('Gợi ý ứng viên');
+    }
 
     protected function getFormSchema(): array
     {
@@ -56,9 +67,15 @@ class CandidateSuggestion extends Page
         $isSaved = app(EmployerInterface::class)->saveCandidate($employerId, $candidateId);
 
         if ($isSaved) {
-            flash('message', 'Ứng viên đã được lưu.');
+            Notification::make()
+                ->title('Ứng viên đã được lưu')
+                ->success()
+                ->send();
         } else {
-            flash('error', 'Ứng viên đã được lưu trước đó.');
+            Notification::make()
+                ->title('Ứng viên đã được lưu trước đó')
+                ->warning()
+                ->send();
         }
     }
 

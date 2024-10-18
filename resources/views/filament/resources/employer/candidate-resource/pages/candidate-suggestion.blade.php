@@ -39,7 +39,7 @@
                                         N/A
                                     @endif
                                 </span>
-                            <span class="price">{{ number_format($candidate->salary) }} VNĐ</span>
+                            <span class="price">{{ $candidate->salary->name }} VNĐ</span>
                         </div>
                         <button wire:click="saveCandidate({{ $candidate->id }})" class="save-button">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

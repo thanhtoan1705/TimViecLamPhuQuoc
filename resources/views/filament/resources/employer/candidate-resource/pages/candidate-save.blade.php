@@ -38,7 +38,7 @@
                                     N/A
                                 @endif
                             </span>
-                            <span class="price">{{ number_format($candidate->candidate->salary) }} VNĐ</span>
+                            <span class="price">{{ $candidate->candidate->salary->name }} VNĐ</span>
                         </div>
 
                         <button wire:click="unsaveCandidate({{ $candidate->candidate->id }})" class="button-un-save">

@@ -13,9 +13,7 @@ use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Livewire;
 use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -183,7 +181,7 @@ class EmployerResource extends Resource implements HasShieldPermissions
 
                                         Select::make('district_id')
                                             ->label('Quận/Huyện')
-                                            ->searchable()
+                                            // ->searchable()
                                             ->required()
                                             ->options(fn($get) => District::where('province_id', $get('province_id'))->pluck('name', 'id')->toArray())
                                             ->reactive()
@@ -206,11 +204,13 @@ class EmployerResource extends Resource implements HasShieldPermissions
                                         ->schema([
                                             TextInput::make('latitude')
                                                 ->label('Vĩ độ')
-                                                ->default(fn(Page $livewire) => $livewire->latitude ?? 10.0452),
+                                                ->default(fn(Page $livewire) => $livewire->latitude ?? 10.0452)
+                                                ->dehydrated(true),
 
                                             TextInput::make('longitude')
                                                 ->label('Kinh độ')
-                                                ->default(fn(Page $livewire) => $livewire->longitude ?? 105.7469),
+                                                ->default(fn(Page $livewire) => $livewire->longitude ?? 105.7469)
+                                                ->dehydrated(true),
                                         ]),
 
                                         Placeholder::make('map')

@@ -41,6 +41,10 @@
                         var marker = L.marker([lat, lon]).addTo(map);
                         marker.bindPopup(`<b>${display_name || 'Không có thông tin đường'}</b>`).openPopup();
 
+                    @this.set('data.latitude', lat)
+                        ;
+                    @this.set('data.longitude', lon)
+                        ;
 
                         document.getElementById('data.latitude').value = lat;
                         document.getElementById('data.longitude').value = lon;
@@ -85,6 +89,12 @@
                                 var marker = L.marker([lat, lon]).addTo(map);
                                 map.setView([lat, lon], 13);
                                 marker.bindPopup(`<b>${result.display_name}</b>`).openPopup();
+
+                            @this.set('data.latitude', lat)
+                                ;
+                            @this.set('data.longitude', lon)
+                                ;
+
 
                                 // Cập nhật form
                                 document.getElementById('data.latitude').value = lat;

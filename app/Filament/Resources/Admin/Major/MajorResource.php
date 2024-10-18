@@ -68,11 +68,11 @@ class MajorResource extends Resource implements HasShieldPermissions
                                         ->required()
                                         ->maxLength(255)
                                         ->live(onBlur: true)
-                                        ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' || $operation === 'update' ? $set('slug', Str::slug($state)) : null)
+                                        ->afterStateUpdated(function ($state, Set $set) {
+                                            $set('slug', Str::slug($state));
+                                        })
                                         ->label('Tên chuyên ngành')
-                                        ->rules([
-                                            'unique:majors,name',
-                                        ])
+                                        ->unique(ignoreRecord: true)
                                         ->validationAttribute('Tên chuyên ngành'),
 
                                     TextInput::make('slug')
@@ -81,8 +81,8 @@ class MajorResource extends Resource implements HasShieldPermissions
                                         ->maxLength(255)
                                         ->rules([
                                             'regex:/^[a-zA-Z0-9\-]+$/u',
-                                            'unique:majors,slug',
                                         ])
+                                        ->unique(ignoreRecord: true)
                                         ->validationAttribute('Slug'),
 
                                     Textarea::make('describe')
