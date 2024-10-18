@@ -19,7 +19,7 @@ class Comments extends Component
     public $users = [];
 
     public $showDropdown = false;
-    
+
     protected $numberOfPaginatorsRendered = [];
 
     public $newCommentState = [
@@ -86,7 +86,7 @@ class Comments extends Component
         $this->showDropdown = false;
 
         $this->resetPage();
-        flash('Bình luận đã được đăng thành công!');
+        flash()->success('Bình luận đã được đăng thành công!', [], 'Thành công!');
     }
 
 }

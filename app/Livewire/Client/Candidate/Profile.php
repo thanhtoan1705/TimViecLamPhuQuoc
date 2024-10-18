@@ -104,7 +104,7 @@ class Profile extends Component
             $user->candidate->update(['address_id' => $address->id]);
         }
 
-        flash()->success('Thông tin tài khoản đã được cập nhật.');
+        flash()->success('Thông tin tài khoản đã được cập nhật.', [], 'Thành công!');
 
         return redirect()->to(request()->header('Referer'));
 

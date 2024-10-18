@@ -148,8 +148,7 @@ class JobController extends Controller
 
         dispatch(new EmployerNotification($employer, $candidate, $job, $filePath))->handle();
 
-//        Flasher::success('Đã nộp đơn thành công.');
-        flash('Đã nộp đơn thành công.', 'Thành công!');
+        flash()->success('Đã nộp đơn thành công.', [],'Thành công!');
         return redirect()->back();
     }
 

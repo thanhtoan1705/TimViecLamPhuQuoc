@@ -149,28 +149,36 @@
                                                                     class="card-text-price">{{ $item->salary->name }}</span>
                                                             </div>
                                                             <div class="col-lg-1 col-1 p-0 align-content-center">
-{{--                                                                <form--}}
-{{--                                                                    action="{{ route('client.candidate.saveJob', ['job_id' => $item->id]) }}"--}}
-{{--                                                                    method="POST">--}}
-{{--                                                                    @csrf--}}
-{{--                                                                    <button style="border: 0; background-color: white"--}}
-{{--                                                                            type="submit"><i--}}
-{{--                                                                            class="bi bi-heart"--}}
-{{--                                                                            style="font-size: 16px; margin: 0"></i>--}}
-{{--                                                                    </button>--}}
-{{--                                                                </form>--}}
                                                                 @php
-                                                                    // Kiểm tra xem công việc hiện tại có nằm trong danh sách đã lưu không
                                                                     $isSaved = in_array($item->id, $savedJobIds);
                                                                 @endphp
-                                                                <form action="{{ route('client.candidate.saveJob', ['job_id' => $item->id]) }}" method="POST">
-                                                                    @csrf
-                                                                    <button style="border: 0; background-color: white" type="submit">
-                                                                        <i class="bi {{ $isSaved ? 'bi-heart-fill text-primary' : 'bi-heart' }}"
-                                                                           style="font-size: 16px; margin: 0">
-                                                                        </i>
-                                                                    </button>
-                                                                </form>
+                                                                @if ($isSaved)
+                                                                    <!-- Nếu công việc đã lưu, hiển thị nút bỏ lưu -->
+                                                                    <form
+                                                                        action="{{ route('client.candidate.unsave', ['job_id' => $item->id]) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <button
+                                                                            style="border: 0; background-color: white"
+                                                                            type="submit">
+                                                                            <i class="bi bi-heart-fill text-primary"
+                                                                               style="font-size: 16px; margin: 0"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                @else
+                                                                    <!-- Nếu công việc chưa lưu, hiển thị nút lưu -->
+                                                                    <form
+                                                                        action="{{ route('client.candidate.saveJob', ['job_id' => $item->id]) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        <button
+                                                                            style="border: 0; background-color: white"
+                                                                            type="submit">
+                                                                            <i class="bi bi-heart"
+                                                                               style="font-size: 16px; margin: 0"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                @endif
                                                             </div>
                                                             <div class="col-lg-4 col-4 text-end">
                                                                 <div class="btn btn-apply-now" data-bs-toggle="modal"

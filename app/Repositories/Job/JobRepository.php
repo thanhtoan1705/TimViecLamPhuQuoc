@@ -3,6 +3,7 @@
 namespace App\Repositories\Job;
 
 use App\Models\JobPost;
+use App\Models\JobPostPackage;
 use App\Models\JobPostCandidate;
 use Illuminate\Support\Facades\DB;
 
@@ -14,6 +15,11 @@ class JobRepository implements JobInterface
     public function __construct(JobPost $jobPost)
     {
         $this->jobPost = $jobPost;
+    }
+
+    public function getAllJobPostPackages()
+    {
+        return JobPostPackage::all();
     }
 
     public function getAllJobPaginated($perPage = 12, $sortBy = 'created_at', $sortOrder = 'desc')

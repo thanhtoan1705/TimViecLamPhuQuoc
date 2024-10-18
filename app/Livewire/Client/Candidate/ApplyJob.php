@@ -47,7 +47,8 @@ class ApplyJob extends Component
         $lastApplication = $jobRepository->findLastApplication($candidateId, $this->jobId);
 
         if ($lastApplication && Carbon::parse($lastApplication->created_at)->diffInHours(now()) < 24) {
-            Flasher::error('Bạn đã nộp CV cho bài đăng này. Vui lòng đợi 24 giờ để nộp lại.');
+//            Flasher::error('Bạn đã nộp CV cho bài đăng này. Vui lòng đợi 24 giờ để nộp lại.');
+            flash()->error('Bạn đã nộp CV cho bài đăng này. Vui lòng đợi 24 giờ để nộp lại.', [], 'Thất bại!');
             return;
         }
 
@@ -62,7 +63,7 @@ class ApplyJob extends Component
 
         $this->reset(['resume', 'description']);
 
-        Flasher::success('Đã nộp đơn thành công.');
+        flash()->success('Đã nộp đơn thành công.', [], 'Thành công!');
 
         return redirect()->to(request()->header('Referer'));
     }

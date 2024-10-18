@@ -149,8 +149,17 @@
                                             <a href="{{route('client.job.single', ['jobSlug' => $post->slug])}}">
                                                 <div class="card-grid-2 hover-up">
                                                     <div class="card-grid-2-image-left">
-                                                        {{--VLgap VLhot--}}
-                                                        <span class="label-jobbox VLhot">Việc làm hot</span>
+                                                        <span class="flash"></span>
+                                                        {{--                                                        @foreach($jobPackages as $jobPackage)--}}
+{{--                                                            @if($jobPackage->label === 0)--}}
+{{--                                                                <span class="label-jobbox VLhot">hot</span>--}}
+{{--                                                            @elseif($jobPackage->label === 1)--}}
+{{--                                                                <span class="label-jobbox VLgap">gấp</span>--}}
+{{--                                                            @else--}}
+{{--                                                                <div class="card-grid-2-image-left"><span--}}
+{{--                                                                        class="flash"></span></div>--}}
+{{--                                                            @endif--}}
+{{--                                                        @endforeach--}}
                                                         <div class="image-box">
                                                             @if(!empty($posts->first()->job_category->image))
                                                                 <img alt="jobBox" width="50px"
@@ -197,17 +206,36 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-lg-1 col-1 p-0 align-content-center">
-                                                                    <form
-                                                                        action="{{ route('client.candidate.saveJob', ['job_id' => $post->id]) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        <button
-                                                                            style="border: 0; background-color: white"
-                                                                            type="submit"><i
-                                                                                class="bi bi-heart"
-                                                                                style="font-size: 16px; margin: 0"></i>
-                                                                        </button>
-                                                                    </form>
+                                                                    @php
+                                                                        $isSaved = in_array($post->id, $savedJobIds);
+                                                                    @endphp
+                                                                    @if ($isSaved)
+                                                                        <!-- Nút bỏ lưu -->
+                                                                        <form
+                                                                            action="{{ route('client.candidate.unsave', ['job_id' => $post->id]) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <button
+                                                                                style="border: 0; background-color: white"
+                                                                                type="submit">
+                                                                                <i class="bi bi-heart-fill text-danger"
+                                                                                   style="font-size: 16px; margin: 0"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    @else
+                                                                        <!-- Nút lưu -->
+                                                                        <form
+                                                                            action="{{ route('client.candidate.saveJob', ['job_id' => $post->id]) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <button
+                                                                                style="border: 0; background-color: white"
+                                                                                type="submit">
+                                                                                <i class="bi bi-heart"
+                                                                                   style="font-size: 16px; margin: 0"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                    @endif
                                                                 </div>
                                                                 <div class="col-lg-3 col-3 text-end">
                                                                     <div class="btn btn-apply-now"

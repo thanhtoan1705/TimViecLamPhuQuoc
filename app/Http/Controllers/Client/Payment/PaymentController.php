@@ -84,7 +84,8 @@ class PaymentController extends Controller
 
         $paypal->capturePaymentOrder($request->token);
 
-        return redirect()->route('client.client.index')->with('message', 'Thanh toán thành công!');
+        flash()->success('Thanh toán thành công.', [], 'Thành công!');
+        return redirect()->route('client.client.index');
     }
 
     public function handleVnPayCallback(Request $request)
@@ -104,9 +105,11 @@ class PaymentController extends Controller
 
             $transaction = null;
             $this->paymentService->savePayment($employerId, $package, 'VNPay', '00', $promo, $transaction);
-            return redirect()->route('client.client.index')->with('message', 'Thanh toán thành công!');
+            flash()->success('Thanh toán thành công.', [], 'Thành công!');
+            return redirect()->route('client.client.index');
         } else {
-            return redirect()->route('client.client.index')->with('message', 'Thanh toán không thành công!');
+            flash()->error('Thanh toán không thành công.', [], 'Thất bại!');
+            return redirect()->route('client.client.index');
         }
     }
 
@@ -125,31 +128,22 @@ class PaymentController extends Controller
             "key2" => "kLtgPl8HHhfvMuDHPwKfgfsY4Ydm9eIz"
         ];
 
-        // Lấy dữ liệu từ request của ZaloPay
         $data = $request->all();
-//        dd($data);
 
-        // Tạo chuỗi dữ liệu để xác thực MAC
         $receivedMac = $data['mac'];
         $stringToHash = $data['app_id'] . '|' . $data['app_trans_id'] . '|' . $data['app_time'] . '|' . $data['zp_trans_id'] . '|' . $data['server_time'] . '|' . $data['amount'] . '|' . $data['channel'] . '|' . $data['status'];
         $calculatedMac = hash_hmac('sha256', $stringToHash, $config['key2']);
 
-        // Kiểm tra MAC hợp lệ
         if ($receivedMac === $calculatedMac) {
-            // Nếu MAC hợp lệ, xử lý giao dịch
-            if ($data['status'] == 1) { // Status 1 nghĩa là giao dịch thành công
-                // Tìm giao dịch theo app_trans_id
+            if ($data['status'] == 1) {
                 $transaction = Transaction::where('transaction_id', $data['app_trans_id'])->first();
 
                 if ($transaction) {
-                    // Cập nhật trạng thái giao dịch và các bảng liên quan
                     $transaction->update(['status' => 'successful']);
                     $this->paymentService->savePayment($employerId, $package, 'Momo', '00', $promo, null);
-                    // Cập nhật trạng thái trong bảng Payment nếu cần
                     Payment::where('transaction_id', $transaction->transaction_id)
                         ->update(['status' => 'successful', 'payment_date' => now()]);
 
-                    // Trả về phản hồi thành công cho ZaloPay
                     return response()->json([
                         'return_code' => 1,
                         'return_message' => 'Giao dịch thành công'
@@ -162,7 +156,6 @@ class PaymentController extends Controller
                     ]);
                 }
             } else {
-                // Giao dịch thất bại, cập nhật trạng thái thất bại trong DB
                 Transaction::where('transaction_id', $data['app_trans_id'])
                     ->update(['status' => 'failed']);
 
@@ -205,9 +198,12 @@ class PaymentController extends Controller
             $transaction->save();
 
             $this->paymentService->savePayment($employerId, $package, 'Momo', '00', $promo, $transaction->trans_id);
-            return redirect()->route('client.client.index')->with('message', 'Thanh toán thành công!');
+            flash()->success('Thanh toán thành công.', [], 'Thành công!');
+            return redirect()->route('client.client.index');
         } else {
-            return redirect()->route('client.client.index')->with('message', 'Thanh toán không thành công!');
+            flash()->error('Thanh toán không thành công.', [], 'Thất bại!');
+            return redirect()->route('client.client.index');
+
         }
     }
 }

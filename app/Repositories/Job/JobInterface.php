@@ -7,6 +7,8 @@ interface JobInterface
 {
     public function getAllJobPaginated($perPage, $sortBy, $sortOrder);
 
+    public function getAllJobPostPackages();
+
     public function findBySlugs(string $employerSlug, string $jobSlug);
 
     public function findJobsByEmployer($employer_id);

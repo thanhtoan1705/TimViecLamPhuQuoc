@@ -31,6 +31,7 @@ class PageController extends Controller
             )
         );
 
-        return back()->with('success', 'Email đã được gửi thành công!');
+        flash()->success('Email đã được gửi thành công.', [], 'Thành công!');
+        return back();
     }
 }

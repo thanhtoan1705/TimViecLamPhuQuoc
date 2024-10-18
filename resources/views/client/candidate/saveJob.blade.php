@@ -62,7 +62,7 @@
                                                                     method="POST">
                                                                     @csrf
                                                                     <button style="border: 0; background-color: white"
-                                                                            type="submit"><i class="bi bi-trash"
+                                                                            type="submit"><i class="bi bi-heart-fill text-primary"
                                                                                              style="font-size: 16px; margin: 0"></i>
                                                                     </button>
                                                                 </form>

@@ -106,31 +106,37 @@ class CandidateController extends Controller
     public function saveJob(Request $request, $job_id)
     {
         if (!auth()->check()) {
-            return redirect()->back()->with('error', 'Bạn cần đăng nhập để lưu công việc.');
+            flash()->error('Bạn cần đăng nhập để lưu công việc.', [], 'Thất bại!');
+            return redirect()->back();
         }
 
         $isSaved = $this->candidateRepository->saveJob($job_id);
 
         if (!$isSaved) {
-            return redirect()->back()->with('error', 'Công việc này đã được lưu rồi hoặc không tìm thấy ứng viên.');
+            flash()->error('Công việc này đã được lưu rồi hoặc không tìm thấy ứng viên.', [], 'Thất bại!');
+            return redirect()->back();
         }
 
-        return redirect()->back()->with('success', 'Công việc đã được lưu.');
+        flash()->success('Công việc đã được lưu.', [], 'Thành công!');
+        return redirect()->back();
     }
 
     public function unsaveJob(Request $request, $job_id)
     {
         if (!auth()->check()) {
-            return redirect()->back()->with('error', 'Bạn cần đăng nhập để bỏ lưu công việc.');
+            flash()->error('Bạn cần đăng nhập để bỏ lưu công việc.', [], 'Thất bại!');
+            return redirect()->back();
         }
 
         $isUnsaved = $this->candidateRepository->unSaveJob($job_id);
 
         if (!$isUnsaved) {
-            return redirect()->back()->with('error', 'Công việc này chưa được lưu hoặc không tìm thấy ứng viên.');
+            flash()->error('Công việc này chưa được lưu hoặc không tìm thấy ứng viên.', [], 'Thất bại!');
+            return redirect()->back();
         }
 
-        return redirect()->back()->with('success', 'Công việc đã được bỏ lưu.');
+        flash()->success('Công việc đã được bỏ lưu.', [], 'Thành công!');
+        return redirect()->back();
     }
 
 
@@ -190,8 +196,7 @@ class CandidateController extends Controller
 
         $this->candidateRepository->updatePassword($user, $request->input('new_password'));
 
-//        flash()->success('Cập nhật mật khẩu thành công');
-        flash('Cập nhật mật khẩu thành công.', 'Thành công!');
+        flash()->success('Cập nhật mật khẩu thành công.', [],'Thành công!');
 
         return redirect()->back();
     }

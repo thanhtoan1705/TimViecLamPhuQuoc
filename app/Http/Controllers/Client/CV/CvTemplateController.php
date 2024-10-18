@@ -53,7 +53,8 @@ class CvTemplateController extends Controller
 
         $cvTemplate->update($validatedData);
 
-        return redirect()->route('cv.preview', $cvTemplate)->with('success', 'Mẫu CV đã được cập nhật.');
+        flash()->success('Mẫu CV đã được cập nhật.', [], 'Thành công!');
+        return redirect()->route('cv.preview', $cvTemplate);
     }
 
     public function saveCV(Request $request)
