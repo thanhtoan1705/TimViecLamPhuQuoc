@@ -6,6 +6,7 @@ use App\Filament\Auth\EmployerLogin;
 use App\Filament\Pages\Auth\Employer\RequestPasswordReset;
 use App\Filament\Resources\Employer\Notification\NotificationResource\Pages\NotificationsPage;
 use App\Filament\Resources\Pages\RegistrationEmployer;
+use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -42,6 +43,10 @@ class EmployerPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
+            ->renderHook(
+                'panels::user-menu.before',
+                fn () => view('components.filament.chat-icon')
+            )
             ->navigationItems([
                 NavigationItem::make('Đăng tin tuyển dụng')
                     ->group('Quản lý tin đăng')
