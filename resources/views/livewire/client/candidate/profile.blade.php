@@ -14,84 +14,111 @@
         <a class="btn btn-link">Xóa</a>
     </div>
     <div class="row form-contact">
-        <div class="col-lg-6 col-md-12">
-            <div class="form-group">
-                <label class="font-sm color-text-muted mb-10">Tên đầy đủ *</label>
-                <input class="form-control" type="text" wire:model="name">
-                @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label class="font-sm color-text-muted mb-10">Tên đầy đủ *</label>
+                    <input class="form-control" type="text" wire:model="name">
+                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
             </div>
-            <div class="form-group">
-                <label class="font-sm color-text-muted mb-10">Email *</label>
-                <input class="form-control" type="text" wire:model="email">
-                @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label class="font-sm color-text-muted mb-10">Email *</label>
+                    <input class="form-control" type="text" wire:model="email">
+                    @error('email') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
             </div>
-            <div class="form-group">
-                <label class="font-sm color-text-muted mb-10">Số điện thoại</label>
-                <input class="form-control" type="text" wire:model="phone">
-                @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label class="font-sm color-text-muted mb-10">Số điện thoại</label>
+                    <input class="form-control" type="text" wire:model="phone">
+                    @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
             </div>
-            <div class="form-group">
-                <label class="font-sm color-text-muted mb-10">Tiểu sử</label>
-                <textarea class="form-control" rows="4" wire:model="description"></textarea>
-                @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label class="font-sm color-text-muted mb-10">Ngày sinh</label>
+                    <input class="form-control" type="date" wire:model="date_of_birth">
+                    @error('date_of_birth') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label class="font-sm color-text-muted mb-10">Giới tính</label>
+                    <select class="form-control" wire:model="gender">
+                        <option value="">Chọn giới tính</option>
+                        <option value="male">Nam</option>
+                        <option value="female">Nữ</option>
+                        <option value="other">Khác</option>
+                    </select>
+                    @error('gender') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label class="font-sm color-text-muted mb-10">Tỉnh / Thành phố</label>
+                    <select class="form-control" wire:model="province_id" id="province-select">
+                        <option value="">Chọn Tỉnh / Thành phố</option>
+                        @foreach($provinces as $province)
+                            <option
+                                value="{{ $province->id }}" {{ $province->id == $province_id ? 'selected' : '' }}>{{ $province->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('province_id') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label class="font-sm color-text-muted mb-10">Quận / Huyện</label>
+                    <select class="form-control" wire:model="district_id" id="district-select">
+                        <option value="">Chọn Quận / Huyện</option>
+                        @foreach($districts as $district)
+                            <option
+                                value="{{ $district->id }}" {{ $district->id == $district_id ? 'selected' : '' }}>{{ $district->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('district_id') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                    <label class="font-sm color-text-muted mb-10">Xã / Phường</label>
+                    <select class="form-control" wire:model="ward_id" id="ward-select">
+                        <option value="">Chọn Xã / Phường</option>
+                        @foreach($wards as $ward)
+                            <option
+                                value="{{ $ward->id }}" {{ $ward->id == $ward_id ? 'selected' : '' }}>{{ $ward->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('ward_id') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="font-sm color-text-muted mb-10">Đường</label>
+                    <input class="form-control" type="text" wire:model="street" placeholder="Nhập tên đường">
+                    @error('street') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
             </div>
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label class="font-sm color-text-muted mb-10">Tỉnh / Thành phố</label>
-                        <select class="form-control" wire:model="province_id" id="province-select">
-                            <option value="">Chọn Tỉnh / Thành phố</option>
-                            @foreach($provinces as $province)
-                                <option
-                                    value="{{ $province->id }}" {{ $province->id == $province_id ? 'selected' : '' }}>{{ $province->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('province_id') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label class="font-sm color-text-muted mb-10">Quận / Huyện</label>
-                        <select class="form-control" wire:model="district_id" id="district-select">
-                            <option value="">Chọn Quận / Huyện</option>
-                            @foreach($districts as $district)
-                                <option
-                                    value="{{ $district->id }}" {{ $district->id == $district_id ? 'selected' : '' }}>{{ $district->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('district_id') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label class="font-sm color-text-muted mb-10">Xã / Phường</label>
-                        <select class="form-control" wire:model="ward_id" id="ward-select">
-                            <option value="">Chọn Xã / Phường</option>
-                            @foreach($wards as $ward)
-                                <option
-                                    value="{{ $ward->id }}" {{ $ward->id == $ward_id ? 'selected' : '' }}>{{ $ward->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('ward_id') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label class="font-sm color-text-muted mb-10">Đường</label>
-                        <input class="form-control" type="text" wire:model="street" placeholder="Nhập tên đường">
-                        @error('street') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                </div>
+
             </div>
 
-            <div class="border-bottom pt-10 pb-10 mb-30"></div>
+            <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                    <label class="font-sm color-text-muted mb-10">Tiểu sử</label>
+                    <textarea class="form-control" rows="4" wire:model="description"></textarea>
+                    @error('description') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+            </div>
+            <div class="border-bottom pt-10 pb-10"></div>
             <div class="box-agree mt-30">
                 <label class="lbl-agree font-xs color-text-paragraph-2">
                     <input class="lbl-checkbox" type="checkbox" value="1">Đồng ý với điều khoản
                 </label>
             </div>
-            <div class="box-button mt-15">
-                <button wire:click="updateAccount" class="btn btn-apply-big font-md font-bold">Lưu tất cả thay đổi
+            <div class="mt-15">
+                <button wire:click="updateAccount" class="btn btn-apply-big font-md font-bold">Lưu thay đổi
                 </button>
             </div>
         </div>

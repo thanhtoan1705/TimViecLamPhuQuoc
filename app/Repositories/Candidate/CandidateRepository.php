@@ -111,4 +111,24 @@ class CandidateRepository implements CandidateInterface
         }
         return $query->paginate($perPage);
     }
+
+    public function firstOrCreate(array $attributes, array $values = [])
+    {
+        return Candidate::firstOrCreate($attributes, $values);
+    }
+
+    public function findBySlug($slug)
+    {
+        return Candidate::where('slug', $slug)->first();
+    }
+
+    public function updateOrCreate(array $attributes, array $values = [])
+    {
+        return Candidate::updateOrCreate($attributes, $values);
+    }
+
+    public function findByUserId($userId)
+    {
+        return Candidate::where('user_id', $userId)->first();
+    }
 }

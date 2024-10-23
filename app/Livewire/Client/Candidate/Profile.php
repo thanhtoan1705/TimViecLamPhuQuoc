@@ -21,6 +21,8 @@ class Profile extends Component
     public $ward_id;
     public $street;
     public $image;
+    public $date_of_birth;
+    public $gender;
 
     public $provinces;
     public $districts = [];
@@ -43,6 +45,8 @@ class Profile extends Component
         $this->email = $user->email;
         $this->phone = $user->phone;
         $this->description = $candidate->description;
+        $this->date_of_birth = $candidate->date_of_birth; // Thêm dòng này
+        $this->gender = $candidate->gender; // Thêm dòng này
         $this->province_id = $address->province_id ?? null;
         $this->district_id = $address->district_id ?? null;
         $this->ward_id = $address->ward_id ?? null;
@@ -67,6 +71,8 @@ class Profile extends Component
             'phone' => 'nullable|string|max:15',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'nullable|string',
+            'date_of_birth' => 'nullable|date', // Thêm dòng này
+            'gender' => 'nullable|string',
             'province_id' => 'required',
             'district_id' => 'required',
             'ward_id' => 'required',
@@ -89,6 +95,8 @@ class Profile extends Component
 
         $user->candidate->update([
             'description' => $this->description,
+            'date_of_birth' => $this->date_of_birth, // Thêm dòng này
+            'gender' => $this->gender,
         ]);
 
         $addressData = [

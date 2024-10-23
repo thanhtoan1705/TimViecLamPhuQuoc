@@ -22,4 +22,9 @@ interface CandidateInterface
     public function update($id, array $data);
 
     public function getAllCandidates($query, $sortBy, $perPage);
+
+    public function firstOrCreate(array $attributes, array $values = []);
+    public function findBySlug($slug);
+
+    public function findByUserId($userId);
 }

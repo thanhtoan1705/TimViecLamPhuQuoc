@@ -16,7 +16,7 @@ class Candidate extends Model
         'major_id',
         'resume_id',
         'experience_id',
-        'education_id',
+        // 'education_id',
         'degree_id',
         'address_id',
         'salary_id',
@@ -24,6 +24,9 @@ class Candidate extends Model
         'description',
         'featured',
         'status',
+        'slug',
+        'date_of_birth',
+        'gender',
     ];
 
     public function user(): BelongsTo
@@ -101,5 +104,20 @@ class Candidate extends Model
     public function interviews(): BelongsToMany
     {
         return $this->belongsToMany(Interview::class, 'candidate_interviews', 'candidate_id', 'interview_id');
+    }
+
+    public function workExperiences()
+    {
+        return $this->hasMany(WorkExperience::class);
+    }
+
+    public function educations()
+    {
+        return $this->hasMany(Education::class);
+    }
+
+    public function languageProficiencies()
+    {
+        return $this->hasMany(LanguageProficiency::class);
     }
 }

@@ -40,10 +40,44 @@
             <div class="container">
                 <div class="row">
                     <x-client.sidebar-candidate></x-client.sidebar-candidate>
-                    <div class="col-lg-9 col-md-8 col-sm-12 col-12 mb-50">
+                    <div class="col-lg-9 col-md-6 col-sm-12 col-12 mb-50">
                         <div class="content-single">
                             <div class="tab-content">
                                 @livewire('client.candidate.profile')
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-8 col-sm-12 col-12 mb-50">
+                        <h3 class="mb-3">Bổ sung thông tin</h3>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                @livewire('client.candidate.skills-form')
+                            </div>
+                            <div class="col-lg-6">
+                                @livewire('client.candidate.language-proficiency-form')
+                            </div>
+                            <div class="col-lg-6">
+                                @livewire('client.candidate.work-experience-form')
+
+                            </div>
+                            <div class="col-lg-6">
+                                @livewire('client.candidate.education-form')
+
+                            </div>
+
+                            <div class="col-lg-6">
+                                @livewire('client.candidate.experience-form')
+
+                            </div>
+                            <div class="col-lg-6">
+                                @livewire('client.candidate.salary-form')
+
+                            </div>
+                            <div class="col-lg-6">
+                                @livewire('client.candidate.major-form')
+                            </div>
+                            <div class="col-lg-6">
+                                @livewire('client.candidate.degree-form')
                             </div>
                         </div>
                     </div>

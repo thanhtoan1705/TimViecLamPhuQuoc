@@ -21,7 +21,7 @@ class JobPostCandidateTableSeeder extends Seeder
         // Tạo dữ liệu mẫu cho bảng job_post_candidates
         foreach ($jobPosts as $jobPostId) {
             // Random số lượng ứng viên cho mỗi job_post
-            $randomCandidates = $candidates->random(rand(1, 5));
+            $randomCandidates = $candidates->random(rand(1, 3));
 
             foreach ($randomCandidates as $candidateId) {
                 // Kiểm tra sự tồn tại của job_post_id và candidate_id trước khi thêm

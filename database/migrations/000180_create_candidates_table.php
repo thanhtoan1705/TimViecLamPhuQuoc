@@ -16,6 +16,10 @@ return new class extends Migration
 
             $table->string('slug', 255)->unique()->nullable();
 
+            $table->date('date_of_birth')->nullable();
+
+            $table->string('gender')->nullable();
+
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained('users')
@@ -36,11 +40,6 @@ return new class extends Migration
                 ->constrained('experiences')
                 ->onDelete('set null');
 
-            $table->foreignId('education_id')
-                ->nullable()
-                ->constrained('education')
-                ->onDelete('set null');
-
             $table->foreignId('degree_id')
                 ->nullable()
                 ->constrained('degrees')
@@ -55,7 +54,6 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('salaries')
                 ->onDelete('set null');
-
 
 //            $table->bigInteger('salary')->nullable();
             $table->text('description')->nullable();

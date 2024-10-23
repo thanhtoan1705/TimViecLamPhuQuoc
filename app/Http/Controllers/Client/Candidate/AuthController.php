@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+
 
 class AuthController extends Controller
 {
@@ -90,6 +93,19 @@ class AuthController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
+    private function generateUniqueSlug($name)
+    {
+        $slug = Str::slug($name);
+        $count = 2;
+
+        while ($this->candidateRepository->findBySlug($slug)) {
+            $slug = Str::slug($name) . '-' . $count;
+            $count++;
+        }
+
+        return $slug;
+    }
+
     public function handleGoogleCallback()
     {
         try {
@@ -104,11 +120,28 @@ class AuthController extends Controller
                 'role' => 'candidate',
             ]);
 
+            $candidate = $this->candidateRepository->findByUserId($user->id);
+
+            if (!$candidate) {
+                // Tạo candidate mới nếu chưa tồn tại
+                $candidate = $this->candidateRepository->create([
+                    'user_id' => $user->id,
+                    'slug' => $this->generateUniqueSlug($user->name)
+                ]);
+                Log::info('New candidate created with slug', ['candidate_id' => $candidate->id, 'slug' => $candidate->slug]);
+            } else if (empty($candidate->slug)) {
+                // Nếu candidate đã tồn tại nhưng không có slug, thêm slug
+                $candidate->slug = $this->generateUniqueSlug($user->name);
+                $candidate->save();
+                Log::info('Existing candidate updated with new slug', ['candidate_id' => $candidate->id, 'slug' => $candidate->slug]);
+            }
+
             Auth::login($user);
 
             flash()->success('Đăng nhập thành công.', [],'Thành công!');
             return redirect()->route('client.client.index');
         } catch (\Exception $e) {
+            Log::error('Google login error: ' . $e->getMessage());
             return redirect()->route('client.candidate.login')->withErrors(['msg' => 'Đăng nhập thất bại']);
         }
     }
