@@ -6,6 +6,7 @@ use App\Filament\Resources\Employer\Promotional\PromotionalResource;
 use App\Models\Promotion;
 use Filament\Resources\Pages\Page;
 use Carbon\Carbon;
+use App\Models\Payment;
 
 class CustomView extends Page
 {
@@ -17,31 +18,30 @@ class CustomView extends Page
 
     public function mount()
     {
-        $now = Carbon::now();
+        $employerId = auth()->id(); // Lấy ID của employer hiện tại
+        $now = now(); // Thời gian hiện tại
 
         $this->packages = [
-            'status_0' => Promotion::where('status', 0)->get(), // đã sử dụng
-            'status_1' => Promotion::where('status', 1)->where('end_time', '>', $now)->get(), // có hiệu lực
-            'status_2' => Promotion::where('status', 1)->where('end_time', '<', $now)->get(), // hết hạn
-        ];
-//        $usedPromotions = Payment::where('employer_id', $employerId)
-//            ->whereNotNull('promotion_id')
-//            ->pluck('promotion_id');
+            // Lấy tất cả mã giảm giá đã được employer này sử dụng
+            'status_0' => Promotion::whereHas('payments', function ($query) use ($employerId) {
+                $query->where('employer_id', $employerId)
+                    ->whereNotNull('promotion_id'); // Chỉ lấy các payment có mã giảm giá
+            })->get(),
 
-//        $now = now(); // Lấy thời gian hiện tại
-//
-//        $this->packages = [
-//            // Lấy những mã giảm giá mà employer đã sử dụng
-//            'used_promotions' => Promotion::whereIn('id', $usedPromotions)->get(),
-//
-//            // Mã giảm giá đang có hiệu lực (status = 1 và chưa hết hạn)
-//            'status_1' => Promotion::where('status', 1)->where('end_time', '>', $now)->get(),
-//
-//            // Mã giảm giá đã hết hạn (status = 1 hoặc status = 0)
-//            'status_2' => Promotion::where(function ($query) use ($now) {
-//                $query->where('status', 1)->where('end_time', '<', $now)
-//                    ->orWhere('status', 0); // Bao gồm các mã có status = 0 (không còn hoạt động)
-//            })->get(),
-//        ];
+            // Các mã giảm giá có hiệu lực (status = 1 và chưa hết hạn)
+            'status_1' => Promotion::where('status', 1)
+                ->where('end_time', '>', $now) // Thời gian còn hiệu lực
+                ->get(),
+
+            // Mã giảm giá đã hết hạn hoặc số lượt sử dụng = 0 và status = 0
+            'status_2' => Promotion::where(function ($query) use ($now) {
+                $query->where('status', 0)
+                    ->where('number_use', 0) // Số lượt sử dụng = 0
+                    ->orWhere(function ($subQuery) use ($now) {
+                        $subQuery->where('status', 1)
+                            ->where('end_time', '<', $now); // Đã hết hạn
+                    });
+            })->get(),
+        ];
     }
 }

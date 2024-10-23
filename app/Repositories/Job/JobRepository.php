@@ -17,11 +17,6 @@ class JobRepository implements JobInterface
         $this->jobPost = $jobPost;
     }
 
-    public function getAllJobPostPackages()
-    {
-        return JobPostPackage::all();
-    }
-
     public function getAllJobPaginated($perPage = 12, $sortBy = 'created_at', $sortOrder = 'desc')
     {
         return $this->jobPost::orderBy($sortBy, $sortOrder)->paginate($perPage);

@@ -12,31 +12,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
-class HomeController extends Controller{
+class HomeController extends Controller
+{
 
     protected $employerRepository;
     protected $jobPostRepository;
     protected $jobCategoryRepository;
     protected $candidateRepository;
-    protected $jobRepository;
 
     public function __construct(
         EmployerInterface    $employerRepository,
         JobPostInterface     $jobPostRepository,
         JobCategoryInterface $jobCategoryRepository,
-        CandidateRepository $candidateRepository,
-        JobRepository $jobRepository,)
+        CandidateRepository  $candidateRepository,)
     {
         $this->employerRepository = $employerRepository;
         $this->jobPostRepository = $jobPostRepository;
         $this->jobCategoryRepository = $jobCategoryRepository;
         $this->candidateRepository = $candidateRepository;
-        $this->jobRepository = $jobRepository;
     }
+
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
      */
-    public function index(){
+    public function index()
+    {
         $jobPostRepository = $this->jobPostRepository->getAllJobPost();
 
         $jobCategoriesRepository = $this->jobCategoryRepository->getAllJobCategories();
@@ -50,8 +50,6 @@ class HomeController extends Controller{
         $savedJobs = $this->candidateRepository->getSavedJobs();
         $savedJobIds = $savedJobs->pluck('id')->toArray();
 
-        $jobPostPackages = $this->jobRepository->getAllJobPostPackages();
-
         $data = [
             'jobpost' => $jobPostRepository,
             'jobCategories' => $jobCategoriesRepository,
@@ -59,7 +57,6 @@ class HomeController extends Controller{
             'topEmployers' => $topEmployers,
             'hotJobCategories' => $hotJobCategories,
             'savedJobIds' => $savedJobIds,
-            'jobPackages' => $jobPostPackages,
         ];
 
         return view("client.home", $data);

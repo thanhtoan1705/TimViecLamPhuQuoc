@@ -18,4 +18,10 @@ class Promotion extends Model
         'describe',
         'status',
     ];
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'promotion_id');
+    }
+
 }

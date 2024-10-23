@@ -149,17 +149,19 @@
                                             <a href="{{route('client.job.single', ['jobSlug' => $post->slug])}}">
                                                 <div class="card-grid-2 hover-up">
                                                     <div class="card-grid-2-image-left">
-                                                        <span class="flash"></span>
-                                                        {{--                                                        @foreach($jobPackages as $jobPackage)--}}
-{{--                                                            @if($jobPackage->label === 0)--}}
-{{--                                                                <span class="label-jobbox VLhot">hot</span>--}}
-{{--                                                            @elseif($jobPackage->label === 1)--}}
-{{--                                                                <span class="label-jobbox VLgap">gấp</span>--}}
-{{--                                                            @else--}}
-{{--                                                                <div class="card-grid-2-image-left"><span--}}
-{{--                                                                        class="flash"></span></div>--}}
-{{--                                                            @endif--}}
-{{--                                                        @endforeach--}}
+                                                        <div class="d-flex justify-content-around label-jobbox">
+                                                            @if (in_array(2, $post->package_labels))
+                                                                <span class="VLhot">hot</span>
+                                                            @endif
+
+                                                            @if (in_array(1, $post->package_labels))
+                                                                <span class="VLgap">gấp</span>
+                                                            @endif
+
+                                                            @if (!in_array(1, $post->package_labels) && !in_array(2, $post->package_labels))
+                                                                <span class="flash"></span>
+                                                            @endif
+                                                        </div>
                                                         <div class="image-box">
                                                             @if(!empty($posts->first()->job_category->image))
                                                                 <img alt="jobBox" width="50px"
@@ -478,13 +480,14 @@
             color: white;
             padding: 1px 8px;
             border-radius: 15px;
+            margin-left: 5px;
         }
 
         .card-grid-2 .VLhot {
             background-color: #fdd5ce;
             color: red;
             padding: 1px 8px;
-            border-radius: 5px;
+            border-radius: 15px;
         }
     </style>
 @endsection

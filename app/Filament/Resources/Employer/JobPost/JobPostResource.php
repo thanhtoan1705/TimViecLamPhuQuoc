@@ -50,6 +50,22 @@ class JobPostResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $operation = $form->getOperation();
+
+        $hasPostedToday = JobPost::where('employer_id', Auth::user()->employer->id)
+            ->whereDate('created_at', now()->format('Y-m-d'))
+            ->exists();
+
+        if ($hasPostedToday && $operation === 'create') {
+            session()->flash('Thông báo', 'Bạn chỉ được phép đăng một lần mỗi ngày.');
+
+            return $form->schema([
+                Forms\Components\Placeholder::make('Thông báo')
+                    ->content('Bạn đã hết lượt đăng ngày hôm nay. Hãy nâng cấp tài khoản để đăng thêm.')
+                    ->extraAttributes(['class' => 'bg-warning text-dark p-3 rounded']),
+            ]);
+        }
+
         return $form
             ->schema([
                 Grid::make(3)
@@ -75,8 +91,6 @@ class JobPostResource extends Resource
                                         ->maxLength(255)
                                         ->label('Slug'),
 
-
-
                                     Forms\Components\Select::make('rank_id')
                                         ->required()
                                         ->placeholder('Cấp bậc')
@@ -97,10 +111,8 @@ class JobPostResource extends Resource
                                         ->required()
                                         ->relationship('job_category', 'name')
                                         ->placeholder('Chọn ngành nghề (tối đa 6)')
-//                                        ->multiple()
                                         ->searchable()
                                         ->preload()
-//                                        ->maxItems(6)
                                         ->label('Ngành nghề'),
                                     Forms\Components\Select::make('salary_id')
                                         ->required()
@@ -125,8 +137,6 @@ class JobPostResource extends Resource
                                             - Kiểm tra các order trước khi thanh toán, trực tiếp thực hiện quá trình thanh toán.
                                             - Các công việc khác theo yêu cầu của quản lý.')
                                         ->columnSpanFull(),
-
-
                                 ]),
                             ]),
 
@@ -225,12 +235,9 @@ class JobPostResource extends Resource
                             ]),
                         ]),
                     ])->columnSpan(3),
-
-
                 ]),
             ]);
     }
-
 
     public static function table(Table $table): Table
     {

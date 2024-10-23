@@ -27,13 +27,32 @@ class JobPostRepository implements JobPostInterface
 
     public function getAllJobPost($limit = 10)
     {
-        $jobPosts = $this->jobPost->limit($limit)->get();
+        $jobPosts = $this->jobPost
+            ->with(['employer.userJobPackages.jobPostPackage'])
+            ->limit($limit)
+            ->get();
 
-        $jobPosts = $jobPosts->groupBy(function ($item) {
+        $groupedJobPosts = $jobPosts->groupBy(function ($item) {
             return $item->job_category->name;
         });
 
-        return $jobPosts;
+        $groupedJobPosts->transform(function ($posts) {
+            return $posts->map(function ($post) {
+                $labels = $post->employer->userJobPackages
+                    ->filter(function ($package) {
+                        return $package->expires_at && $package->expires_at > now();
+                    })
+                    ->map(fn($package) => optional($package->jobPostPackage)->label)
+                    ->filter()
+                    ->toArray();
+
+                $post->package_labels = !empty($labels) ? $labels : ['N/A'];
+
+                return $post;
+            });
+        });
+
+        return $groupedJobPosts;
     }
 
     public function getApplyCandidatesByJobPost($jobPostID = null, $sortOrder = 'newest')

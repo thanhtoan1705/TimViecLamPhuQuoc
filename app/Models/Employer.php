@@ -56,4 +56,10 @@ class Employer extends Model
     {
         return $this->hasMany(Address::class, 'id');
     }
+
+    public function userJobPackages()
+    {
+        return $this->hasMany(UserJobPackage::class, 'employer_id');
+    }
+
 }
