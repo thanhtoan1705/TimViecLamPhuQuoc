@@ -179,18 +179,25 @@
                                 liên kết để đặt lại mật khẩu của bạn
                             </p>
                         </div>
-                        <form class="login-register text-start mt-20" action="#">
+                        <form class="login-register text-start mt-20" action="{{ route('client.sendResetLink') }}" method="post">
+                            @csrf
                             <div class="form-group">
                                 <label class="form-label" for="input-1">Địa chỉ email *</label>
-                                <input class="form-control" id="input-1" type="text" required="" name="emaill"
-                                    placeholder="stevenjob@gmail.com">
+                                <input class="form-control @error('email') is-invalid @enderror" id="input-1" type="text" required name="email"
+                                       placeholder="Nhập email" value="{{ old('email') }}">
+                                
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+                        
                             <div class="form-group">
-                                <button class="btn btn-brand-1 hover-up w-100" type="submit" name="continue">Tiếp
-                                    tục</button>
+                                <button class="btn btn-brand-1 hover-up w-100" type="submit" name="continue">Tiếp tục</button>
                             </div>
-                            <div class="text-muted text-center">Bạn chưa có tài khoản? <a href='page-signin.html'>Đăng
-                                    ký</a></div>
+                            
+                            <div class="text-muted text-center">Bạn chưa có tài khoản? 
+                                <a href="{{route('client.candidate.register')}}">Đăng ký</a>
+                            </div>
                         </form>
                     </div>
                     <div class="img-1 d-none d-lg-block"><img class="shape-1"

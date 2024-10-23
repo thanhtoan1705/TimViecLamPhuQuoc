@@ -16,8 +16,12 @@ Route::get('/ung-vien/dang-ky', [AuthCandidateController::class, 'register'])->n
 Route::post('/ung-vien/dang-ky', [AuthCandidateController::class, 'handleRegister'])->name('candidate.register.post');
 Route::get('/nha-tuyen-dung/dang-nhap', [EmployerController::class, 'login'])->name('employer.login');
 Route::get('/nha-tuyen-dung/dang-ky', [EmployerController::class, 'register'])->name('employer.register');
+
 Route::get('dat-lai-mat-khau', [AuthController::class, 'reset'])->name('reset');
-Route::get('tao-moi-mat-khau', [AuthController::class, 'newPass'])->name('newPass');
+Route::post('dat-lai-mat-khau', [AuthController::class, 'sendResetLink'])->name('sendResetLink');
+Route::get('tao-moi-mat-khau/{token}', [AuthController::class, 'newPass'])->name('newPass');
+Route::post('tao-moi-mat-khau/{token}', [AuthController::class, 'resetPassword'])->name('resetPassword');
+
 Route::get('nhap-otp', [AuthController::class, 'otp'])->name('OTP');
 
 Route::get('login/facebook', [FacebookController::class, 'redirectToFacebook'])->name('login.facebook');

@@ -46,7 +46,7 @@
                                 <label class="cb-container">
                                     <input type="checkbox" name="remember_loginremember_login"><span class="text-small">Ghi nhớ đăng nhập<i></i></span><span
                                         class="checkmark"></span>
-                                </label><a class='text-muted' href='page-contact.html'>Quên mật khẩu</a>
+                                </label><a class='text-muted' href={{route('client.reset')}}>Quên mật khẩu</a>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-brand-1 hover-up w-100" type="submit" name="login">Đăng nhập

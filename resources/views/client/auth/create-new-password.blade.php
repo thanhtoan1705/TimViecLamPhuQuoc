@@ -178,21 +178,32 @@
                                 Mật khẩu phải từ 8 ký tự kết hợp các ký tự a-z, số 0-9 và một số ký tự đặc biệt
                             </p>
                         </div>
-                        <form class="login-register text-start mt-20" action="#">
+                        <form class="login-register text-start mt-20" action="{{ route('client.resetPassword', $user->remember_token) }}" method="POST">
+                            @csrf
+                        
                             <div class="form-group">
-                                <input class="form-control" id="input-1" type="password" required=""
-                                    name="password" placeholder="Mật khẩu mới">
+                                <input class="form-control @error('password') is-invalid @enderror" id="input-1" type="password" required=""
+                                       name="password" placeholder="Mật khẩu mới">
+                                
+                                @error('password')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+                        
                             <div class="form-group">
-                                <input class="form-control" id="input-1" type="password" required=""
-                                    name="re_password" placeholder="Nhập lại mật khẩu mới">
+                                <input class="form-control @error('confirm-password') is-invalid @enderror" id="input-1" type="password" required=""
+                                       name="confirm-password" placeholder="Nhập lại mật khẩu mới">
+                                
+                                @error('confirm-password')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+                        
                             <div class="form-group">
-                                <button class="btn btn-brand-1 hover-up w-100" type="submit" name="continue">Xác
-                                    nhận</button>
+                                <button class="btn btn-brand-1 hover-up w-100" type="submit" name="continue">Xác nhận</button>
                             </div>
-                            <div class="text-muted text-center"><a href='page-signin.html'>Đăng
-                                    nhập</a></div>
+                        
+                            <div class="text-muted text-center"><a href='page-signin.html'>Đăng nhập</a></div>
                         </form>
                     </div>
                     <div class="img-1 d-none d-lg-block"><img class="shape-1"
