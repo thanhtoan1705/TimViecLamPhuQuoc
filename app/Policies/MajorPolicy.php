@@ -63,7 +63,7 @@ class MajorPolicy
      */
     public function forceDelete(User $user, Major $major): bool
     {
-        return $user->can('force_delete_admin::major::major');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class MajorPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::major::major');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class MajorPolicy
      */
     public function restore(User $user, Major $major): bool
     {
-        return $user->can('restore_admin::major::major');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class MajorPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::major::major');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class MajorPolicy
      */
     public function replicate(User $user, Major $major): bool
     {
-        return $user->can('replicate_admin::major::major');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class MajorPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::major::major');
+        return $user->can('{{ Reorder }}');
     }
 }

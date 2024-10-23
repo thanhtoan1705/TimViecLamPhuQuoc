@@ -5,11 +5,10 @@ namespace App\Policies;
 use App\Models\JobPost;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Spatie\Permission\Traits\HasRoles;
 
 class JobPostPolicy
 {
-    use HandlesAuthorization, HasRoles;
+    use HandlesAuthorization;
 
     /**
      * Determine whether the user can view any models.
@@ -64,7 +63,7 @@ class JobPostPolicy
      */
     public function forceDelete(User $user, JobPost $jobPost): bool
     {
-        return $user->can('force_delete_admin::job::post::job::post');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -72,7 +71,7 @@ class JobPostPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::job::post::job::post');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -80,7 +79,7 @@ class JobPostPolicy
      */
     public function restore(User $user, JobPost $jobPost): bool
     {
-        return $user->can('restore_admin::job::post::job::post');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -88,7 +87,7 @@ class JobPostPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::job::post::job::post');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -96,7 +95,7 @@ class JobPostPolicy
      */
     public function replicate(User $user, JobPost $jobPost): bool
     {
-        return $user->can('replicate_admin::job::post::job::post');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -104,6 +103,6 @@ class JobPostPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::job::post::job::post');
+        return $user->can('{{ Reorder }}');
     }
 }

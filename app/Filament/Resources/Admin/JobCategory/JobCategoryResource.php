@@ -8,6 +8,7 @@ use App\Models\Job_category;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
@@ -20,7 +21,6 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
-use Filament\Forms\Components\Hidden;
 
 class JobCategoryResource extends Resource implements HasShieldPermissions
 {
@@ -76,7 +76,7 @@ class JobCategoryResource extends Resource implements HasShieldPermissions
                                         ->disk('public')
                                         ->directory('images/job-category')
                                         ->maxSize(1024 * 5)
-                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp']),
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/svg+xml']),
                                 ])
                         ])->columnSpan(2),
 

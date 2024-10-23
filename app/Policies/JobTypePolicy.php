@@ -63,7 +63,7 @@ class JobTypePolicy
      */
     public function forceDelete(User $user, JobType $jobType): bool
     {
-        return $user->can('force_delete_admin::job::type::job::type');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class JobTypePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::job::type::job::type');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class JobTypePolicy
      */
     public function restore(User $user, JobType $jobType): bool
     {
-        return $user->can('restore_admin::job::type::job::type');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class JobTypePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::job::type::job::type');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class JobTypePolicy
      */
     public function replicate(User $user, JobType $jobType): bool
     {
-        return $user->can('replicate_admin::job::type::job::type');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class JobTypePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::job::type::job::type');
+        return $user->can('{{ Reorder }}');
     }
 }

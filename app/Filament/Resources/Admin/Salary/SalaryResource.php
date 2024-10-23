@@ -5,7 +5,7 @@ namespace App\Filament\Resources\Admin\Salary;
 use App\Filament\Resources\Admin\Salary\SalaryResource\Pages;
 use App\Filament\Resources\Admin\Salary\SalaryResource\RelationManagers;
 use App\Models\Salary;
-use Filament\Forms;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
@@ -17,10 +17,9 @@ use Filament\Tables;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
-class SalaryResource extends Resource
+class SalaryResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Salary::class;
 
@@ -32,6 +31,18 @@ class SalaryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
     protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function form(Form $form): Form
     {

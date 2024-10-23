@@ -63,7 +63,7 @@ class RankPolicy
      */
     public function forceDelete(User $user, Rank $rank): bool
     {
-        return $user->can('force_delete_admin::rank::rank');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class RankPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::rank::rank');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class RankPolicy
      */
     public function restore(User $user, Rank $rank): bool
     {
-        return $user->can('restore_admin::rank::rank');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class RankPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::rank::rank');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class RankPolicy
      */
     public function replicate(User $user, Rank $rank): bool
     {
-        return $user->can('replicate_admin::rank::rank');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class RankPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::rank::rank');
+        return $user->can('{{ Reorder }}');
     }
 }

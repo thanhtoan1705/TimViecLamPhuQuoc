@@ -63,7 +63,7 @@ class ExperiencePolicy
      */
     public function forceDelete(User $user, Experience $experience): bool
     {
-        return $user->can('force_delete_admin::experience::experience');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class ExperiencePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::experience::experience');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class ExperiencePolicy
      */
     public function restore(User $user, Experience $experience): bool
     {
-        return $user->can('restore_admin::experience::experience');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class ExperiencePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::experience::experience');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class ExperiencePolicy
      */
     public function replicate(User $user, Experience $experience): bool
     {
-        return $user->can('replicate_admin::experience::experience');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class ExperiencePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::experience::experience');
+        return $user->can('{{ Reorder }}');
     }
 }

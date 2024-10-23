@@ -63,7 +63,7 @@ class DegreePolicy
      */
     public function forceDelete(User $user, Degree $degree): bool
     {
-        return $user->can('force_delete_admin::degree::degree');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class DegreePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::degree::degree');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class DegreePolicy
      */
     public function restore(User $user, Degree $degree): bool
     {
-        return $user->can('restore_admin::degree::degree');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class DegreePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::degree::degree');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class DegreePolicy
      */
     public function replicate(User $user, Degree $degree): bool
     {
-        return $user->can('replicate_admin::degree::degree');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class DegreePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::degree::degree');
+        return $user->can('{{ Reorder }}');
     }
 }

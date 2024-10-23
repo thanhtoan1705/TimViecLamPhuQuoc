@@ -2,8 +2,10 @@
     <div class="container">
         <div class="main-header">
             <div class="header-left">
-                <div class="header-logo"><a class='d-flex' href="{{ route('client.client.index') }}"><img alt="jobBox"
-                                                                                  src="{{ asset('assets/client/imgs/template/pq2.svg') }}"></a>
+                <div style="width: 185px" class="header-logo"><a class='d-flex'
+                                                                 href="{{ route('client.client.index') }}"><img
+                            alt="jobBox"
+                            src="{{ asset('storage/vieclamphuquoc/logo/pq.svg') }}"></a>
                 </div>
             </div>
             <div class="header-nav">

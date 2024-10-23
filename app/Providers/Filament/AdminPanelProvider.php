@@ -37,6 +37,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login(AdminLogin::class)
             ->databaseNotifications()
+            ->brandLogo(asset('storage/vieclamphuquoc/logo/pq.svg'))
             ->colors([
                 'primary' => Color::Blue,
             ])

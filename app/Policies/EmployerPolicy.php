@@ -63,7 +63,7 @@ class EmployerPolicy
      */
     public function forceDelete(User $user, Employer $employer): bool
     {
-        return $user->can('force_delete_admin::employer::employer');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class EmployerPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::employer::employer');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class EmployerPolicy
      */
     public function restore(User $user, Employer $employer): bool
     {
-        return $user->can('restore_admin::employer::employer');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class EmployerPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::employer::employer');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class EmployerPolicy
      */
     public function replicate(User $user, Employer $employer): bool
     {
-        return $user->can('replicate_admin::employer::employer');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class EmployerPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::employer::employer');
+        return $user->can('{{ Reorder }}');
     }
 }

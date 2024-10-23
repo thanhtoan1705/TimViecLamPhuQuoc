@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Admin\Rank;
 
 use App\Filament\Resources\Rank\RankResource\Pages;
 use App\Models\Rank;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
@@ -18,7 +19,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
-class RankResource extends Resource
+class RankResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Rank::class;
 
@@ -26,6 +27,18 @@ class RankResource extends Resource
     protected static ?string $modelLabel = 'Chức vụ';
     protected static ?string $navigationGroup = 'Công việc';
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function form(Form $form): Form
     {

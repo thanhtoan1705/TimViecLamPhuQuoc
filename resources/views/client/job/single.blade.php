@@ -28,7 +28,7 @@
                             </form>
                         </div>
                         <div class="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal"
-                             data-bs-target="#ModalApplyJobForm">Ứng tuyển ngay
+                             data-bs-target="#ModalApplyJobForm">Nộp hồ sơ
                         </div>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                         <div class="single-apply-jobs">
                             <div class="row align-items-center">
                                 <div class="col-md-5 d-flex justify-content-center align-content-center">
-                                    <button type="submit" class="btn btn-primary me-3">Ứng tuyển ngay</button>
+                                    <button type="submit" class="btn btn-primary me-3">Nộp hồ sơ</button>
                                     <form action="{{ route('client.candidate.saveJob', ['job_id' => $job->id]) }}"
                                           method="POST">
                                         @csrf

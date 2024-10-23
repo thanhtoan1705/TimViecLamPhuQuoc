@@ -7,6 +7,7 @@ use App\Filament\Resources\UserJobPackage\UserJobPackageResource\RelationManager
 use App\Models\Employer;
 use App\Models\JobPostPackage;
 use App\Models\UserJobPackage;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
@@ -22,7 +23,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
-class UserJobPackageResource extends Resource
+class UserJobPackageResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = UserJobPackage::class;
 
@@ -31,6 +32,18 @@ class UserJobPackageResource extends Resource
     protected static ?string $navigationGroup = 'Dịch vụ';
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function form(Form $form): Form
     {

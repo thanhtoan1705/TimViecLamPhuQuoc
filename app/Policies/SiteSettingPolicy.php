@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Promotion;
+use App\Models\SiteSetting;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PromotionPolicy
+class SiteSettingPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class PromotionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_admin::promotional::promotional');
+        return $user->can('view_any_admin::site::setting::site::setting');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Promotion $promotion): bool
+    public function view(User $user, SiteSetting $siteSetting): bool
     {
-        return $user->can('view_admin::promotional::promotional');
+        return $user->can('view_admin::site::setting::site::setting');
     }
 
     /**
@@ -31,23 +31,23 @@ class PromotionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_admin::promotional::promotional');
+        return $user->can('create_admin::site::setting::site::setting');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Promotion $promotion): bool
+    public function update(User $user, SiteSetting $siteSetting): bool
     {
-        return $user->can('update_admin::promotional::promotional');
+        return $user->can('update_admin::site::setting::site::setting');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Promotion $promotion): bool
+    public function delete(User $user, SiteSetting $siteSetting): bool
     {
-        return $user->can('delete_admin::promotional::promotional');
+        return $user->can('delete_admin::site::setting::site::setting');
     }
 
     /**
@@ -55,13 +55,13 @@ class PromotionPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_admin::promotional::promotional');
+        return $user->can('delete_any_admin::site::setting::site::setting');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, Promotion $promotion): bool
+    public function forceDelete(User $user, SiteSetting $siteSetting): bool
     {
         return $user->can('{{ ForceDelete }}');
     }
@@ -77,7 +77,7 @@ class PromotionPolicy
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, Promotion $promotion): bool
+    public function restore(User $user, SiteSetting $siteSetting): bool
     {
         return $user->can('{{ Restore }}');
     }
@@ -93,7 +93,7 @@ class PromotionPolicy
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, Promotion $promotion): bool
+    public function replicate(User $user, SiteSetting $siteSetting): bool
     {
         return $user->can('{{ Replicate }}');
     }

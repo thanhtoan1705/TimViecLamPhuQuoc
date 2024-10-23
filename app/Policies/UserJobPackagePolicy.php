@@ -63,7 +63,7 @@ class UserJobPackagePolicy
      */
     public function forceDelete(User $user, UserJobPackage $userJobPackage): bool
     {
-        return $user->can('force_delete_admin::user::job::package::user::job::package');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class UserJobPackagePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::user::job::package::user::job::package');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class UserJobPackagePolicy
      */
     public function restore(User $user, UserJobPackage $userJobPackage): bool
     {
-        return $user->can('restore_admin::user::job::package::user::job::package');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class UserJobPackagePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::user::job::package::user::job::package');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class UserJobPackagePolicy
      */
     public function replicate(User $user, UserJobPackage $userJobPackage): bool
     {
-        return $user->can('replicate_admin::user::job::package::user::job::package');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class UserJobPackagePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::user::job::package::user::job::package');
+        return $user->can('{{ Reorder }}');
     }
 }

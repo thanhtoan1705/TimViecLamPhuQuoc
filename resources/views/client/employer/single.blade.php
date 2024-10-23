@@ -20,7 +20,12 @@
                                     class="card-location font-regular">{{$employer->address->district->name}}, {{$employer->address->province->name}}</span></p>
                         </div>
                         <div class="col-lg-4 col-md-12 text-lg-end">
-                            <a class='btn btn-call-icon btn-apply btn-apply-big' href="tel:+84{{$employer->company_phone}}">Liên hệ</a>
+                            <a class='btn btn-white border' href="tel:+84{{$employer->company_phone}}">Liên hệ</a>
+
+                            <a target="_blank" href="{{ route('user', ['id' => $employer->user_id]) }}"
+                               style="margin-left: 5px" class='ml-1 btn btn-apply btn-apply'>
+                                Nhắn tin
+                            </a>
                         </div>
 
                     </div>

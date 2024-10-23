@@ -135,7 +135,7 @@
                                                             class="card-time">{{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }}</span>
                                                     </div>
                                                     <p class="font-sm color-text-paragraph mt-15">
-                                                        {{ $item->description }}
+                                                        {!! $item->description !!}
                                                     </p>
                                                     <div class="mt-30">
                                                         @foreach($item->skills as $skill)
@@ -181,9 +181,10 @@
                                                                 @endif
                                                             </div>
                                                             <div class="col-lg-4 col-4 text-end">
-                                                                <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                                     data-bs-target="#ModalApplyJobForm">Ứng tuyển
-                                                                </div>
+                                                                <a href="{{route('client.job.single', ['jobSlug' => $item->slug])}}"
+                                                                   target="_blank" class="btn btn-apply-now"
+                                                                >Ứng tuyển
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>

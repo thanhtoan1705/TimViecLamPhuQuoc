@@ -63,7 +63,7 @@ class BlogCategoryPolicy
      */
     public function forceDelete(User $user, BlogCategory $blogCategory): bool
     {
-        return $user->can('force_delete_admin::blog::category::blog::category');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class BlogCategoryPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::blog::category::blog::category');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class BlogCategoryPolicy
      */
     public function restore(User $user, BlogCategory $blogCategory): bool
     {
-        return $user->can('restore_admin::blog::category::blog::category');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class BlogCategoryPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::blog::category::blog::category');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class BlogCategoryPolicy
      */
     public function replicate(User $user, BlogCategory $blogCategory): bool
     {
-        return $user->can('replicate_admin::blog::category::blog::category');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class BlogCategoryPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::blog::category::blog::category');
+        return $user->can('{{ Reorder }}');
     }
 }

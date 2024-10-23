@@ -63,7 +63,7 @@ class BlogPolicy
      */
     public function forceDelete(User $user, Blog $blog): bool
     {
-        return $user->can('force_delete_admin::blog::blog');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class BlogPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::blog::blog');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class BlogPolicy
      */
     public function restore(User $user, Blog $blog): bool
     {
-        return $user->can('restore_admin::blog::blog');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class BlogPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::blog::blog');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class BlogPolicy
      */
     public function replicate(User $user, Blog $blog): bool
     {
-        return $user->can('replicate_admin::blog::blog');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class BlogPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::blog::blog');
+        return $user->can('{{ Reorder }}');
     }
 }

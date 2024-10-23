@@ -128,7 +128,7 @@
                                                  src="{{ asset('storage/' . $item->job_category->image) }}">
                                         @else
                                             <img alt="jobBox" width="50px"
-                                                 src="{{ asset('storage/images/employer/logo/default.svg') }}">
+                                                 src="{{ asset('default/logo.svg') }}">
                                         @endif
                                         {{ $categoryName }}
                                     </a>

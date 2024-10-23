@@ -63,7 +63,7 @@ class CandidatePolicy
      */
     public function forceDelete(User $user, Candidate $candidate): bool
     {
-        return $user->can('force_delete_admin::candidate::candidate');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class CandidatePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::candidate::candidate');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class CandidatePolicy
      */
     public function restore(User $user, Candidate $candidate): bool
     {
-        return $user->can('restore_admin::candidate::candidate');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class CandidatePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::candidate::candidate');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class CandidatePolicy
      */
     public function replicate(User $user, Candidate $candidate): bool
     {
-        return $user->can('replicate_admin::candidate::candidate');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class CandidatePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::candidate::candidate');
+        return $user->can('{{ Reorder }}');
     }
 }

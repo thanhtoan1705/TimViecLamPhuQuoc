@@ -5,23 +5,20 @@ namespace App\Filament\Resources\Admin\SiteSetting;
 use App\Filament\Resources\Admin\SiteSetting\SiteSettingResource\Pages;
 use App\Filament\Resources\Admin\SiteSetting\SiteSettingResource\RelationManagers;
 use App\Models\SiteSetting;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
-use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Table;
-use Filament\Forms\Components\Tabs;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Toggle;
-use Illuminate\Support\Str;
-use Termwind\Components;
 
-class SiteSettingResource extends Resource
+class SiteSettingResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = SiteSetting::class;
 
@@ -32,6 +29,18 @@ class SiteSettingResource extends Resource
     protected static ?string $navigationGroup = 'Cấu hình chung';
 
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function form(Form $form): Form
     {

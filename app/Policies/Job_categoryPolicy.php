@@ -63,7 +63,7 @@ class Job_categoryPolicy
      */
     public function forceDelete(User $user, Job_category $jobCategory): bool
     {
-        return $user->can('force_delete_admin::job::category::job::category');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class Job_categoryPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::job::category::job::category');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class Job_categoryPolicy
      */
     public function restore(User $user, Job_category $jobCategory): bool
     {
-        return $user->can('restore_admin::job::category::job::category');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class Job_categoryPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::job::category::job::category');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class Job_categoryPolicy
      */
     public function replicate(User $user, Job_category $jobCategory): bool
     {
-        return $user->can('replicate_admin::job::category::job::category');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class Job_categoryPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::job::category::job::category');
+        return $user->can('{{ Reorder }}');
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Salary;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SalaryPolicy
@@ -63,7 +63,7 @@ class SalaryPolicy
      */
     public function forceDelete(User $user, Salary $salary): bool
     {
-        return $user->can('force_delete_admin::salary::salary');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class SalaryPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_admin::salary::salary');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class SalaryPolicy
      */
     public function restore(User $user, Salary $salary): bool
     {
-        return $user->can('restore_admin::salary::salary');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class SalaryPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_admin::salary::salary');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class SalaryPolicy
      */
     public function replicate(User $user, Salary $salary): bool
     {
-        return $user->can('replicate_admin::salary::salary');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class SalaryPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_admin::salary::salary');
+        return $user->can('{{ Reorder }}');
     }
 }

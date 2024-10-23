@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Admin\Skill;
 
 use App\Filament\Resources\Skill\SkillResource\Pages;
 use App\Models\Skill;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
@@ -18,7 +19,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
-class SkillResource extends Resource
+class SkillResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Skill::class;
 
@@ -28,6 +29,18 @@ class SkillResource extends Resource
     protected static ?string $navigationGroup = 'Năng lực';
 
     protected static ?string $navigationIcon = 'heroicon-o-light-bulb';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
 
     public static function form(Form $form): Form

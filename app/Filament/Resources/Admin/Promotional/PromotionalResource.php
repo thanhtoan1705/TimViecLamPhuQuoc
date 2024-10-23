@@ -4,23 +4,24 @@ namespace App\Filament\Resources\Admin\Promotional;
 
 use App\Filament\Resources\Admin\Promotional\PromotionalResource\Pages;
 use App\Models\Promotion;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Notifications\Notification;
-use Carbon\Carbon;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
-use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rule;
 
-class PromotionalResource extends Resource
+class PromotionalResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Promotion::class;
 
@@ -31,6 +32,18 @@ class PromotionalResource extends Resource
     protected static ?string $modelLabel = 'Mã ưu đãi';
 
     protected static ?string $navigationGroup = 'Mã ưu đãi';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function getNavigationBadge(): ?string
     {

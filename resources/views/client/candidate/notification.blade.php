@@ -190,8 +190,9 @@
             }
 
             .badged {
+                min-width: 105px;
                 padding: 10px 15px;
-                font-size: 14px;
+                font-size: 12px;
                 border-radius: 30px;
                 background: linear-gradient(90deg, #007bff, #00c6ff);
                 color: #fff;
