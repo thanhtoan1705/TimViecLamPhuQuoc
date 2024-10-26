@@ -359,7 +359,6 @@
                 </div>
             </div>
         @endif
-        <x-client.newsletter/>
     </main>
 @endsection
 @push('css')

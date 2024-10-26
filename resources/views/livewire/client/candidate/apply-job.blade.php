@@ -15,7 +15,7 @@
 
     <div class="form-group">
         <label for="des" class="form-label">Giới thiệu ngắn</label>
-        <textarea id="des" name="description" class="form-control" placeholder="Giới thiệu ngắn của bạn..." rows="5" wire:model="description"></textarea>
+        <textarea id="des" name="description" class="form-control" placeholder="Giới thiệu ngắn của bạn..." rows="5" wire:model="description" style="height: 120px;"></textarea>
         @error('description') <div class="text-danger">{{ $message }}</div> @enderror
     </div>
 

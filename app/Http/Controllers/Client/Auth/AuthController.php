@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Requests\Client\Candidate\ForgotPasswordRequest;
 use App\Http\Requests\Client\Candidate\ResetPasswordRequest;
-use App\Mail\Client\ForgotPasswordNotification;
+use App\Jobs\Client\ForgotPWNotification;
+use Illuminate\Support\Facades\Cache;
 
 class AuthController extends Controller
 {
@@ -21,7 +22,7 @@ class AuthController extends Controller
     public function newPass($token)
     {
         $user = User::where('remember_token', '=', $token)->first();
-        
+
         if(!empty($user)) {
             $data['user'] = $user;
 
@@ -38,19 +39,27 @@ class AuthController extends Controller
     public function sendResetLink(ForgotPasswordRequest $request)
     {
         $user = User::where('email', $request->email)->first();
-        
-        if(!empty($user)) {
+
+        if (!empty($user)) {
+            $checkTime = 15;
+            $cacheKey = 'password_reset_' . $user->email;
+
+            if (Cache::has($cacheKey)) {
+                flash()->error("Bạn vừa yêu cầu đặt lại mật khẩu. Vui lòng đợi $checkTime phút trước khi yêu cầu lại.", [], 'Thất bại!');
+                return redirect()->back();
+            }
+
             $user->remember_token = Str::random(40);
             $user->save();
 
-            Mail::to($user->email)->send(new ForgotPasswordNotification($user));
+            Cache::put($cacheKey, now(), $checkTime * 60);
 
-            flash()->success('Một email đã được gửi đến hộp thư của bạn, vui lòng thực hiện theo hướng dẫn trong mail để tạo mật khẩu mới', [],'Thành công!');
+            dispatch(new ForgotPWNotification($user));
 
+            flash()->success('Một email đã được gửi đến hộp thư của bạn, vui lòng thực hiện theo hướng dẫn trong mail để tạo mật khẩu mới', [], 'Thành công!');
             return redirect()->back();
         } else {
-
-            flash()->error('Email không tồn tại vui lòng kiểm tra lại', [],'Thất bại!');
+            flash()->error('Email không tồn tại, vui lòng kiểm tra lại', [], 'Thất bại!');
             return redirect()->back();
         }
     }
@@ -58,7 +67,7 @@ class AuthController extends Controller
     public function resetPassword($token, ResetPasswordRequest $request)
     {
         $user = User::where('remember_token', '=', $token)->first();
-        
+
         if(!empty($user)) {
             $user->password = Hash::make($request->password);
 

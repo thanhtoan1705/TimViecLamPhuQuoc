@@ -39,6 +39,9 @@ class ForgotPasswordNotification extends Mailable
     {
         return new Content(
             view: 'vendor.mail.forgot-password',
+            with: [
+                'user' => $this->user
+            ]
         );
     }
 

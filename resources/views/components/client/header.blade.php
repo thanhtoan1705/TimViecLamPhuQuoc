@@ -30,7 +30,7 @@
                 <div class="burger-icon burger-icon-white"><span class="burger-icon-top"></span><span
                         class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
             </div>
-            <div class="header-right d-flex align-items-center">
+            <div class="header-right d-none d-xl-flex align-items-center">
                 @if(auth()->check() && auth()->user()->role == 'candidate')
                     <div class="dropdown me-3">
                         <button class="btn btn-grey position-relative" id="notificationButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -100,74 +100,46 @@
                         <input type="text" placeholder="Search…"><i class="fi-rr-search"></i>
                     </form>
                 </div>
+                <div class="mobile-account">
+                    @if(auth()->check())
+                        <h6 class="mb-10">Tài khoản của bạn</h6>
+                        <ul class="mobile-menu font-heading">
+                            @if(auth()->user()->role == 'candidate')
+                                <li>
+                                    <a href="{{ route('client.candidate.notification') }}">
+                                        {{-- <i class="bi bi-bell-fill"></i>  --}}
+                                        Thông báo
+                                        <span class="badge bg-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
+                                    </a>
+                                </li>
+                                <li><a href="{{route('client.candidate.profile')}}">Hồ sơ</a></li>
+                                <li><a href="{{route('client.candidate.logout')}}">Đăng xuất</a></li>
+                            @else
+                                <li><a href="{{route('client.employer.login')}}">Tuyển dụng</a></li>
+                                <li><a href="{{route('client.candidate.login')}}">Ứng viên</a></li>
+                            @endif
+                        </ul>
+                    @else
+                        <h6 class="mb-10">Đăng nhập</h6>
+                        <ul class="mobile-menu font-heading">
+                            <li><a href="{{route('client.employer.login')}}">Đăng nhập Tuyển dụng</a></li>
+                            <li><a href="{{route('client.candidate.login')}}">Đăng nhập Ứng viên</a></li>
+                        </ul>
+                    @endif
+                </div>
+                <hr>
                 <div class="mobile-menu-wrap mobile-header-border">
                     <!-- mobile menu start-->
                     <nav>
                         <ul class="mobile-menu font-heading">
-                            <li class="has-children"><a class='active' href='/'>Trang chủ</a>
-                            </li>
-                            <li class="has-children"><a href='{{route('client.job.index')}}'>Việc làm</a>
-                            </li>
-                            <li class="has-children"><a href='{{route('client.employer.index')}}'>Công ty</a>
-                            </li>
-                            <li class="has-children"><a href='{{route('client.post.index')}}'>Tin tức</a>
-                            </li>
-                            <li class="has-children"><a href='{{route('client.client.about')}}'>Giới thiệu</a>
-                            </li>
-                            <li class="has-children"><a href='{{route('client.pricing.index')}}'>Bảng giá</a>
-                            </li>
+                            <li class="has-children"><a class='active' href='/'>Trang chủ</a></li>
+                            <li class="has-children"><a href='{{route('client.job.index')}}'>Việc làm</a></li>
+                            <li class="has-children"><a href='{{route('client.employer.index')}}'>Công ty</a></li>
+                            <li class="has-children"><a href='{{route('client.post.index')}}'>Tin tức</a></li>
+                            <li class="has-children"><a href='{{route('client.client.about')}}'>Giới thiệu</a></li>
+                            <li class="has-children"><a href='{{route('client.pricing.index')}}'>Bảng giá</a></li>
                         </ul>
                     </nav>
-                </div>
-                <div class="mobile-account">
-                    <h6 class="mb-10">Tài khoản của bạn</h6>
-                    <ul class="mobile-menu font-heading">
-                        <li><a href="#">Hồ hơ</a></li>
-                        <li><a href="#">Công việc</a></li>
-                        <li><a href="#">Cài đặt tài khoản</a></li>
-                        <li><a href='page-signin.html'>Đăng xuất</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar">
-    <div class="mobile-header-wrapper-inner">
-        <div class="mobile-header-content-area">
-            <div class="perfect-scroll">
-                <div class="mobile-search mobile-header-border mb-30">
-                    <form action="#">
-                        <input type="text" placeholder="Search…"><i class="fi-rr-search"></i>
-                    </form>
-                </div>
-                <div class="mobile-menu-wrap mobile-header-border">
-                    <!-- mobile menu start-->
-                    <nav>
-                        <ul class="mobile-menu font-heading">
-                            <li class="has-children"><a class='active' href='index.html'>Trang chủ</a>
-                            </li>
-                            <li class="has-children"><a href='{{route('client.job.index')}}'>Việc làm</a>
-                            </li>
-                            <li class="has-children"><a href='{{route('client.employer.index')}}'>Công ty</a>
-                            </li>
-                            <li class="has-children"><a href='{{route('client.post.index')}}'>Tin tức</a>
-                            </li>
-                            <li class="has-children"><a href='{{route('client.client.about')}}'>Giới thiệu</a>
-                            </li>
-                            <li class="has-children"><a href='{{route('client.pricing.index')}}'>Bảng giá</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="mobile-account">
-                    <h6 class="mb-10">Tài khoản của bạn</h6>
-                    <ul class="mobile-menu font-heading">
-                        <li><a href="#">Hồ sơ</a></li>
-                        <li><a href="#">Công việc</a></li>
-                        <li><a href="#">Cài đặt tài khoản</a></li>
-                        <li><a href='page-signin.html'>Đăng xuất</a></li>
-                    </ul>
                 </div>
             </div>
         </div>
