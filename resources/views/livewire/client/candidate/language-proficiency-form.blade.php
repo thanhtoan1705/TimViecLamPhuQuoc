@@ -8,7 +8,7 @@
                     @error('language') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-md-5">
-                    <select class="form-select" id="proficiency_level" wire:model="proficiency_level">
+                    <select class="form-select" id="proficiency_level" style="height: 50px" wire:model="proficiency_level">
                         <option value="">Mức độ thành thạo</option>
                         <option value="Beginner">Sơ cấp</option>
                         <option value="Intermediate">Trung cấp</option>
@@ -19,7 +19,7 @@
                     @error('proficiency_level') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary w-100">Thêm</button>
+                    <button type="submit" style="height: 50px;" class="btn btn-primary w-100">Thêm</button>
                 </div>
             </div>
         </form>

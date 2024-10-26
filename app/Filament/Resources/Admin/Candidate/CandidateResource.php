@@ -15,6 +15,8 @@ use App\Models\Major;
 use App\Models\Province;
 use App\Models\Salary;
 use App\Models\Ward;
+use App\Models\WorkExperience;
+use App\Models\LanguageProficiency;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -34,6 +36,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
+use Filament\Forms\Components\DatePicker;
 
 
 class CandidateResource extends Resource implements HasShieldPermissions
@@ -115,18 +118,6 @@ class CandidateResource extends Resource implements HasShieldPermissions
                                                 ->searchable()
                                                 ->required(),
 
-                                            Select::make('education_id')
-                                                ->label('Giáo dục')
-                                                ->relationship('education', 'institution')
-                                                ->options(Education::pluck('name', 'id'))
-                                                ->required(),
-
-//                                            Select::make('skill_id')
-//                                                ->label('Kỹ năng')
-//                                                ->relationship('skill', 'name')
-//                                                ->options(Skill::pluck('name', 'id'))
-//                                                ->required(),
-
                                             Select::make('skills')
                                                 ->multiple()
                                                 ->relationship('skills', 'name')
@@ -161,6 +152,70 @@ class CandidateResource extends Resource implements HasShieldPermissions
 
                                 ]),
 
+                                Section::make('Kinh nghiệm làm việc')
+                                    ->schema([
+                                        Repeater::make('work_experiences')
+                                            ->label('Kinh nghiệm làm việc')
+                                            ->relationship('workExperiences')
+                                            ->schema([
+                                                TextInput::make('position')
+                                                    ->label('Vị trí'),
+                                                TextInput::make('company_name')
+                                                    ->label('Tên công ty'),
+                                                DatePicker::make('start_date')
+                                                    ->label('Ngày bắt đầu'),
+                                                DatePicker::make('end_date')
+                                                    ->label('Ngày kết thúc'),
+                                                RichEditor::make('description')
+                                                    ->label('Mô tả công việc')
+                                                ->columnSpanFull(),
+                                            ])
+                                            ->columns(2),
+                                    ]),
+
+                                Section::make('Giáo dục')
+                                    ->schema([
+                                        Repeater::make('educations')
+                                            ->relationship('educations')
+                                            ->label('Giáo dục')
+                                            ->schema([
+                                                TextInput::make('major_name')
+                                                    ->label('Chuyên ngành'),
+                                                TextInput::make('institution_name')
+                                                    ->label('Tên trường'),
+                                                DatePicker::make('start_date')
+                                                    ->label('Ngày bắt đầu'),
+                                                DatePicker::make('end_date')
+                                                    ->label('Ngày kết thúc'),
+                                                TextInput::make('classification')
+                                                    ->label('Xếp loại'),
+                                                TextInput::make('gpa')
+                                                    ->numeric()
+                                                    ->label('Điểm trung bình'),
+                                            ])
+                                            ->columns(2),
+                                    ]),
+
+                                Section::make('Ngôn ngữ')
+                                    ->schema([
+                                        Repeater::make('language_proficiencies')
+                                            ->relationship('languageProficiencies')
+                                            ->label('Ngôn ngữ')
+                                            ->schema([
+                                                TextInput::make('language')
+                                                    ->label('Ngôn ngữ'),
+                                                Select::make('proficiency_level')
+                                                    ->options([
+                                                        'Beginner' => 'Beginner',
+                                                        'Elementary' => 'Elementary',
+                                                        'Intermediate' => 'Intermediate',
+                                                        'Advanced' => 'Advanced',
+                                                        'Proficient' => 'Proficient',
+                                                    ])
+                                                    ->label('Trình độ'),
+                                            ])
+                                            ->columns(2),
+                                    ]),
 
                             ])->columnSpan(2),
 
@@ -280,10 +335,10 @@ class CandidateResource extends Resource implements HasShieldPermissions
                     ->searchable(),
 
 
-                TextColumn::make('education.institution')
-                    ->label('Giáo dục')
-                    ->sortable()
-                    ->searchable(),
+                // TextColumn::make('education.institution')
+                //     ->label('Giáo dục')
+                //     ->sortable()
+                //     ->searchable(),
 
                 TextColumn::make('skills.name')
                     ->label('Kỹ năng')
@@ -297,9 +352,6 @@ class CandidateResource extends Resource implements HasShieldPermissions
             ->filters([
                 Tables\Filters\SelectFilter::make('degree')->label('Bằng cấp')
                     ->relationship('degree', 'name'),
-
-                Tables\Filters\SelectFilter::make('education')->label('Giáo dục')
-                    ->relationship('education', 'institution'),
 
                 Tables\Filters\SelectFilter::make('major')->label('Chuyên ngành')
                     ->relationship('major', 'name'),

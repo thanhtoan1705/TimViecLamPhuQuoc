@@ -133,7 +133,7 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
         const fieldRegex = /{{(\w+)}}/g;
         processed = processed.replace(fieldRegex, (match, key) => {
             if (data[key] !== undefined) {
-                return `<span class="editable" data-key="${key}">${data[key]}</span>`;
+                return `<span class="editable" contentEditable="true" data-key="${key}">${data[key]}</span>`;
             }
             return match;
         });
@@ -297,70 +297,93 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
         closeModal();
     };
 
+    const handleAvatarChange = useCallback((e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const maxWidth = 600;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > maxWidth) {
+                        height *= maxWidth / width;
+                        width = maxWidth;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.9); // Tăng chất lượng lên 90%
+                    setCvData(prevData => ({
+                        ...prevData,
+                        avatar: compressedDataUrl
+                    }));
+                };
+                img.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }, []);
+
+    useEffect(() => {
+        const applyStyle = (command, value = null) => {
+            document.execCommand(command, false, value);
+        };
+
+        const handleFontChange = (e) => {
+            applyStyle('fontName', e.target.value);
+        };
+
+        const handleFontSizeChange = (e) => {
+            applyStyle('fontSize', e.target.value);
+        };
+
+        const handleBoldClick = () => {
+            applyStyle('bold');
+        };
+
+        const handleItalicClick = () => {
+            applyStyle('italic');
+        };
+
+        const handleUnderlineClick = () => {
+            applyStyle('underline');
+        };
+
+        const handleColorChange = (e) => {
+            applyStyle('foreColor', e.target.value);
+        };
+
+        document.getElementById('fontSelect').addEventListener('change', handleFontChange);
+        document.getElementById('fontSizeSelect').addEventListener('change', handleFontSizeChange);
+        document.getElementById('boldBtn').addEventListener('click', handleBoldClick);
+        document.getElementById('italicBtn').addEventListener('click', handleItalicClick);
+        document.getElementById('underlineBtn').addEventListener('click', handleUnderlineClick);
+        document.getElementById('colorPicker').addEventListener('input', handleColorChange);
+
+        return () => {
+            // Remove event listeners on cleanup
+            document.getElementById('fontSelect').removeEventListener('change', handleFontChange);
+            document.getElementById('fontSizeSelect').removeEventListener('change', handleFontSizeChange);
+            document.getElementById('boldBtn').removeEventListener('click', handleBoldClick);
+            document.getElementById('italicBtn').removeEventListener('click', handleItalicClick);
+            document.getElementById('underlineBtn').removeEventListener('click', handleUnderlineClick);
+            document.getElementById('colorPicker').removeEventListener('input', handleColorChange);
+        };
+    }, []);
 
     return (
-        <div className="cv-editor">
-            <div
-                ref={cvRef}
-                dangerouslySetInnerHTML={{ __html: processedContent }}
-            />
-
-            <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <p>Click Thêm hoặc Double click để thêm mục</p>
-                <div className="mb-3">
-                    <h5>Mục chưa sử dụng</h5>
-                    <div className="d-flex flex-wrap">
-                        {unusedSections.map(({ key, title }) => (
-                            <button
-                                key={key}
-                                className="btn btn-outline-secondary m-1"
-                                onClick={() => handleAddSection(key, title)}
-                                onDoubleClick={() => handleAddSection(key, title)}
-                            >
-                                <i className="bi bi-hash"></i> {title}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-                <div>
-                    <h5>Mục đã sử dụng</h5>
-                    <div className="d-flex flex-wrap">
-                        {usedSections.map(({ key, title }) => (
-                            <button
-                                key={key}
-                                className="btn btn-outline-secondary m-1"
-                                disabled
-                            >
-                                <i className="bi bi-check"></i> {title}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-                <div className="mt-3 text-end">
-                    <button className="btn btn-secondary me-2" onClick={closeModal}>Hủy</button>
-                    <button className="btn btn-primary" onClick={closeModal}>Thêm</button>
-                </div>
-            </Modal>
-            <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onloadend = () => {
-                            setCvData(prevData => ({
-                                ...prevData,
-                                avatar: reader.result
-                            }));
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                }}
-                style={{ display: 'none' }}
-                id="avatar-upload"
-            />
-        </div>
+        <div
+            ref={cvRef}
+            className="cv-editor"
+            dangerouslySetInnerHTML={{ __html: processedContent }}
+        />
     );
 };
 

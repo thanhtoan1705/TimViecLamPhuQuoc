@@ -5,29 +5,27 @@
         <div class="cv-header sticky-top d-flex justify-content-between align-items-center p-3 bg-light">
             <div class="cv-toolbar d-flex justify-content-start p-3 bg-white">
                 <select id="fontSelect" class="cv-select me-2">
-                    <option value="Montserrat">Montserrat</option>
-                    // Thêm các tùy chọn font khác ở đây
+                    <option value="Arial">Arial</option>
+                    <option value="Helvetica">Helvetica</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <!-- Thêm các font khác nếu cần -->
                 </select>
                 <select id="fontSizeSelect" class="cv-select me-2">
-                    <option value="30px">30px</option>
-                    // Thêm các tùy chọn cỡ chữ khác ở đây
+                    <option value="12px">12px</option>
+                    <option value="14px">14px</option>
+                    <option value="16px">16px</option>
+                    <!-- Thêm các kích thước khác nếu cần -->
                 </select>
-                <button class="cv-btn" onclick="toggleBold()">
+                <button id="boldBtn" class="cv-btn" title="In đậm">
                     <i class="bi bi-type-bold"></i>
                 </button>
-                <button class="cv-btn" onclick="toggleItalic()">
+                <button id="italicBtn" class="cv-btn" title="In nghiêng">
                     <i class="bi bi-type-italic"></i>
                 </button>
-                <button class="cv-btn" onclick="toggleUnderline()">
+                <button id="underlineBtn" class="cv-btn" title="Gạch chân">
                     <i class="bi bi-type-underline"></i>
                 </button>
-                <button class="cv-btn" onclick="changeColor()">
-                    <i class="bi bi-palette"></i>
-                </button>
-                <select id="lineHeightSelect" class="cv-select ms-2">
-                    <option value="1.2">1.2</option>
-                    // Thêm các tùy chọn khoảng cách dòng khác ở đây
-                </select>
+                <input type="color" id="colorPicker" class="cv-btn" title="Chọn màu">
             </div>
             <div class="cv-button-group ms-auto">
                 <button class="btn btn-outline-primary cv-action-btn xem-truoc">
@@ -86,48 +84,35 @@
     }
 
     .cv-toolbar {
-        background-color: var(--cv-bg-color);
+        display: flex;
+        align-items: center;
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-bottom: 1px solid #dee2e6;
     }
 
-    .cv-select {
-        padding: 6px 12px;
-        border: 1px solid var(--cv-border-color);
+    .cv-select, .cv-btn {
+        margin-right: 5px;
+        padding: 5px 10px;
+        border: 1px solid #ced4da;
         border-radius: 4px;
         background-color: white;
-        color: #333;
-        font-size: 14px;
-        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    }
-
-    .cv-select:focus {
-        border-color: var(--cv-primary-color);
-        outline: 0;
-        box-shadow: 0 0 0 0.2rem rgba(60, 101, 245, 0.25);
     }
 
     .cv-btn {
-        padding: 6px 12px;
-        background-color: white;
-        border: 1px solid var(--cv-border-color);
-        border-radius: 4px;
-        color: #333;
-        font-size: 14px;
-        transition: all 0.15s ease-in-out;
+        cursor: pointer;
     }
 
     .cv-btn:hover {
-        background-color: var(--cv-primary-color);
-        color: white;
+        background-color: #e9ecef;
     }
 
-    .cv-btn:focus {
-        outline: 0;
-        box-shadow: 0 0 0 0.2rem rgba(60, 101, 245, 0.25);
-    }
-
-    .cv-btn.active {
-        background-color: var(--cv-primary-color);
-        color: white;
+    #colorPicker {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border: none;
+        cursor: pointer;
     }
 
     .cv-toolbar > * {
@@ -201,12 +186,18 @@
         const content = document.getElementById('pdf');
 
         html2canvas(content, {
-            scale: 2,
+            scale: 2, // Tăng scale lên để có độ phân giải tốt hơn
             useCORS: true,
-            logging: true,
+            logging: false,
+            backgroundColor: null
         }).then(canvas => {
             const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdf = new jsPDF({
+                orientation: 'p',
+                unit: 'mm',
+                format: 'a4',
+                compress: true
+            });
 
             const imgWidth = 210;
             const pageHeight = 295;
@@ -215,13 +206,15 @@
             let heightLeft = imgHeight;
             let position = 0;
 
-            pdf.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight);
+            const imgData = canvas.toDataURL('image/jpeg', 0.9); // Tăng chất lượng lên 90%
+
+            pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
             heightLeft -= pageHeight;
 
             while (heightLeft >= 0) {
                 position = heightLeft - imgHeight;
                 pdf.addPage();
-                pdf.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight);
+                pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
                 heightLeft -= pageHeight;
             }
 
