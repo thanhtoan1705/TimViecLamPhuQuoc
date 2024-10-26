@@ -270,9 +270,9 @@
                                                 <li>
                                                     <label class="cb-container">
                                                         <input type="checkbox" name="educations[]"
-                                                               value="{{ $education->id }}"
-                                                            {{ in_array($education->id, request('educations', [])) ? 'checked' : '' }}>
-                                                        <span class="text-small">{{ $education->name }}</span>
+                                                               value="{{ $education->institution_name }}"
+                                                            {{ in_array($education->institution_name, request('educations', [])) ? 'checked' : '' }}>
+                                                        <span class="text-small">{{ $education->institution_name }}</span>
                                                         <span class="checkmark"></span>
                                                     </label>
                                                     <span class="number-item">{{ $education->candidate_count }}</span>

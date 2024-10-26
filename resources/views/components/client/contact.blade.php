@@ -1,5 +1,5 @@
 <button id="contactButton" class="contact-button">
-    <i style="width: 30px !important; height: 30px !important" class="bi bi-envelope"></i>
+    <i style="font-size: 25px;" class="bi bi-envelope"></i>
 </button>
 
 <div id="contactForm" class="contact-form hidden">
@@ -30,7 +30,7 @@
         background-color: #3c65f5;
         color: white;
         border: none;
-        padding: 17px 20px;
+        padding: 13px 16px;
         border-radius: 100px;
         cursor: pointer;
         font-size: 16px;
@@ -102,7 +102,6 @@
     .hidden {
         display: none;
     }
-
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -120,8 +119,5 @@
         closeFormButton.addEventListener('click', () => {
             contactForm.style.display = 'none';
         });
-
-
     });
-
 </script>

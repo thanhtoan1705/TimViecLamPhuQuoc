@@ -45,8 +45,7 @@ class JobPostRepository implements JobPostInterface
                     ->map(fn($package) => optional($package->jobPostPackage)->label)
                     ->filter()
                     ->toArray();
-
-                $post->package_labels = !empty($labels) ? $labels : ['N/A'];
+                $post->package_labels = !empty($labels) ? $labels : [null];
 
                 return $post;
             });

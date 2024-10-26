@@ -184,8 +184,7 @@
                                                                 class="card-briefcase">{{ $post->jobType->name  }}</span><span
                                                                 class="card-time">{{ \Carbon\Carbon::parse($post['created_at'])->diffForHumans() }}</span>
                                                         </div>
-                                                        <p style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;  white-space: normal;"
-                                                           class="font-sm color-text-paragraph mt-15">
+                                                        <p class="description font-sm color-text-paragraph mt-15">
                                                             {{ $post->description }}
                                                         </p>
                                                         <div class="mt-30">
@@ -196,9 +195,8 @@
                                                         </div>
                                                         <div class="card-2-bottom mt-30">
                                                             <div class="row">
-                                                                {{--                                                            card-text-price--}}
                                                                 <div class="col-lg-6 col-6 align-content-center">
-                                                                    <span class=" text-sm">
+                                                                    <span class="text-sm">
                                                                     @if($post->salary_min == $post->salary_max || $post->salary_min <= 1000000 || $post->salary_max <= 1000000)
                                                                             {{ formatSalary($post->salary_min) }}
                                                                         @else
@@ -452,28 +450,91 @@
         <script src="{{ asset('assets/client/js/plugins/counterup.js') }}"></script>
     </main>
     <style>
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-        }
+            .row {
+                display: flex;
+                flex-wrap: wrap;
+            }
 
-        .col-xl-3, .col-lg-4, .col-md-6 {
-            display: flex;
-            flex-direction: column;
-        }
+            .col-xl-3, .col-lg-4, .col-md-6 {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
 
-        .card-grid-2 {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            flex-grow: 1;
-        }
+            .card-grid-2 {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                flex-grow: 1;
+                height: 100%;
+                background-color: #fff;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            }
 
-        .card-grid-2 .label-jobbox {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-        }
+            .description {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: normal;
+
+                height: 63px;
+                line-height: 20px;
+            }
+
+            .description:only-child {
+                margin-bottom: 23px;
+            }
+
+            .card-block-info {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
+            }
+
+            .card-grid-2-image-left {
+                padding: 10px 20px 15px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: relative;
+                width: 100%;
+            }
+
+            .image-box {
+                flex-shrink: 0;
+            }
+
+            .right-info {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 5px;
+                max-width: 70%;
+            }
+
+            .location-small {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: normal;
+
+                height: 42px;
+                line-height: 20px;
+            }
+
+
+            .card-grid-2 .label-jobbox {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+            }
 
         .card-grid-2 .VLgap {
             background-color: orangered;

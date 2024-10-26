@@ -186,9 +186,13 @@ class FilterService
     public function getEducations()
     {
         return DB::table('education')
-            ->leftJoin('candidates', 'candidates.education_id', '=', 'education.id')
-            ->select('education.id', 'education.name', DB::raw('COUNT(candidates.id) as candidate_count'))
-            ->groupBy('education.id', 'education.name')
+            ->select(
+                DB::raw('MIN(education.id) as id'), // Lấy ID đầu tiên trong nhóm
+                'education.institution_name',
+                DB::raw('COUNT(education.id) as candidate_count')
+            )
+            ->leftJoin('candidates', 'education.candidate_id', '=', 'candidates.id')
+            ->groupBy('education.institution_name')
             ->having('candidate_count', '>', 0)
             ->orderBy('candidate_count', 'desc')
             ->limit(5)
@@ -312,7 +316,9 @@ class FilterService
         }
 
         if (!empty($selectedEducations)) {
-            $query->whereIn('education_id', (array)$selectedEducations);
+            $query->whereHas('educations', function ($q) use ($selectedEducations) {
+                $q->whereIn('institution_name', (array)$selectedEducations);
+            });
         }
 
         if (!empty($selectedSalaries) && is_array($selectedSalaries)) {

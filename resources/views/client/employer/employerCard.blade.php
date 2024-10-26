@@ -11,11 +11,6 @@
                          src="{{ asset('default/logo.svg') }}"
                          alt="jobBox">
                 @endif
-
-
-
-
-
             </a>
         </div>
         <div class="info-text mt-10">

@@ -33,9 +33,10 @@ class PromotionalRepository implements PromotionalInterface
             ->pluck('promotion_id');
 
         $availablePromotions = Promotion::whereNotIn('id', $usedPromotions)
-            ->where('status', 1)
-            ->where('start_time', '<', $now)
-            ->where('end_time', '>', $now)
+            ->where('status', 1)                  // Khuyến mãi còn hiệu lực.
+            ->where('start_time', '<', $now)      // Đã bắt đầu.
+            ->where('end_time', '>', $now)        // Chưa hết hạn.
+            ->where('number_use', '>', 0)         // Vẫn còn số lần sử dụng.
             ->get();
 
         return $availablePromotions;
@@ -49,6 +50,7 @@ class PromotionalRepository implements PromotionalInterface
             ->where('status', 1) // Mã giảm giá đang hoạt động
             ->where('start_time', '<=', $now) // Mã giảm giá đã bắt đầu
             ->where('end_time', '>=', $now)   // Mã giảm giá chưa hết hạn
+            ->where('number_use', '>', 0)
             ->first();
 
         if (!$promotion) {

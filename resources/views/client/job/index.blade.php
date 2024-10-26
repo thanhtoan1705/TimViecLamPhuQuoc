@@ -134,7 +134,7 @@
                                                         <span
                                                             class="card-time">{{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }}</span>
                                                     </div>
-                                                    <p class="font-sm color-text-paragraph mt-15">
+                                                    <p class="description font-sm color-text-paragraph mt-15">
                                                         {!! $item->description !!}
                                                     </p>
                                                     <div class="mt-30">
@@ -146,7 +146,7 @@
                                                     <div class="card-2-bottom mt-30">
                                                         <div class="row">
                                                             <div class="col-lg-6 col-6 align-content-center"><span
-                                                                    class="card-text-price">{{ $item->salary->name }}</span>
+                                                                    class="text-sm">{{ $item->salary->name }}</span>
                                                             </div>
                                                             <div class="col-lg-1 col-1 p-0 align-content-center">
                                                                 @php
@@ -180,7 +180,7 @@
                                                                     </form>
                                                                 @endif
                                                             </div>
-                                                            <div class="col-lg-4 col-4 text-end">
+                                                            <div class="col-lg-3 col-3 text-end">
                                                                 <a href="{{route('client.job.single', ['jobSlug' => $item->slug])}}"
                                                                    target="_blank" class="btn btn-apply-now"
                                                                 >Ứng tuyển
@@ -389,6 +389,7 @@
         .col-xl-3, .col-lg-4, .col-md-6 {
             display: flex;
             flex-direction: column;
+            margin-bottom: 20px;
         }
 
         .card-grid-2 {
@@ -396,6 +397,73 @@
             flex-direction: column;
             justify-content: space-between;
             flex-grow: 1;
+            height: 100%;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .description {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+
+            height: 63px;
+            line-height: 20px;
+        }
+
+        .description:only-child {
+            margin-bottom: 23px;
+        }
+
+        .card-block-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .card-grid-2-image-left {
+            padding: 10px 20px 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            width: 100%;
+        }
+
+        .image-box {
+            flex-shrink: 0;
+        }
+
+        .right-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            max-width: 70%;
+        }
+
+        .location-small {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+
+            height: 42px;
+            line-height: 20px;
+        }
+
+        .card-grid-2 .label-jobbox {
+            position: absolute;
+            top: 15px;
+            right: 15px;
         }
     </style>
 

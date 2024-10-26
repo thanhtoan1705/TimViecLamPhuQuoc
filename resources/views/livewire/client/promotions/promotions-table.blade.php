@@ -8,7 +8,7 @@
                         <h5 class="card-title">
                             Giảm: {{ number_format($promotion->discount, 0, ',', '.') }} VND
                         </h5>
-                        @if ($status === 1)
+                        @if ($statusCode === 1)
                             <p class="mo-ta">
                                 Thời gian còn lại: {{ \App\Helper\PromotionHelper\PromotionHelper::getTimeRemaining($promotion->end_time) }}
                             </p>
@@ -18,7 +18,7 @@
                                 </p>
                                 <a href="" class="btn btn-danger">Dùng ngay</a>
                             </div>
-                        @elseif ($status === 0)
+                        @elseif ($statusCode === 0)
                             <p class="mo-ta">Đã sử dụng vui lòng liên hệ: 0354233642 để biết thêm chi tiết</p>
                             <div class="ma-giam-gia">
                                 <p class="text-danger text-center">
@@ -26,7 +26,7 @@
                                 </p>
                                 <a href="tel:0354233642" class="btn btn-danger">Liên hệ</a>
                             </div>
-                        @elseif ($status === 2)
+                        @elseif ($statusCode === 2)
                             <p class="mo-ta">Đã hết hạn vui lòng liên hệ: 0354233642 để biết thêm chi tiết</p>
                             <div class="ma-giam-gia">
                                 <p class="text-danger text-center">
