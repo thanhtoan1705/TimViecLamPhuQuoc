@@ -6,6 +6,7 @@ use App\Http\Controllers\Client\Auth\FacebookController;
 use App\Http\Controllers\Client\Candidate\AuthController as AuthCandidateController;
 use App\Http\Controllers\Client\Employer\EmployerController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/ung-vien/dang-nhap', [AuthCandidateController::class, 'login'])->name('candidate.login');
@@ -14,6 +15,9 @@ Route::get('/ung-vien/dang-xuat', [AuthCandidateController::class, 'logout'])->n
 
 Route::get('/ung-vien/dang-ky', [AuthCandidateController::class, 'register'])->name('candidate.register');
 Route::post('/ung-vien/dang-ky', [AuthCandidateController::class, 'handleRegister'])->name('candidate.register.post');
+
+Route::get('/ung-vien/xac-thuc/{token}', [AuthCandidateController::class, 'verify'])->name('candidate.verify-email');
+
 Route::get('/nha-tuyen-dung/dang-nhap', [EmployerController::class, 'login'])->name('employer.login');
 Route::get('/nha-tuyen-dung/dang-ky', [EmployerController::class, 'register'])->name('employer.register');
 

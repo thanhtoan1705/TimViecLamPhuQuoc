@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use App\Jobs\Client\VerificationEmailRegister;
+use App\Models\User;
 
 
 class AuthController extends Controller
@@ -42,7 +44,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->input('passwords')),
             'avatar_url' => 'https://topcode.vn/assets/images/avanta2.png',
             'role' => 'candidate',
-            'email_verified_at' => now(),
+            'remember_token' => Str::random(40),
         ]);
 
         //Thêm mới candidate
@@ -50,10 +52,30 @@ class AuthController extends Controller
             'user_id' => $user->id,
         ]);
 
-        flash()->success('Tài khoản của bạn đã được đăng ký thành công.', [],'Thành công!');
+
+        flash()->success('Tài khoản của bạn đã được đăng ký thành công. Vui lòng kiểm tra email xác thực', [],'Thành công!');
+        VerificationEmailRegister::dispatch($user);
 
         return redirect()->route('client.candidate.login')
             ->with('msg-success', 'Đăng ký thành công, bây giờ bạn có thể đăng  nhập');
+    }
+
+    public function verify($token)
+    {
+        // Kiểm tra xem token có tồn tại không và email_verified_at có NULL không
+        $account = User::where('remember_token', $token)->whereNull('email_verified_at')->first();
+
+        if (!$account) {
+            flash()->success('Tài khoản xác thực thành công. Bây giờ bạn có thể đăng nhập ngay', [], 'Thành công!');
+            return redirect()->route('client.candidate.login');
+        }
+
+        // Cập nhật email_verified_at
+        $account->email_verified_at = now();
+        $account->save();
+
+        flash()->success('Tài khoản xác thực thành công. Bây giờ bạn có thể đăng nhập ngay.', [], 'Thành công!');
+        return redirect()->route('client.candidate.login');
     }
 
     public function login()
@@ -73,6 +95,12 @@ class AuthController extends Controller
                 $request->session()->regenerate();
                 flash()->success('Đăng nhập thành công.', [],'Thành công!');
                 return redirect()->route('client.client.index');
+            }else {
+
+                flash()->error('Tài khoản chưa được xác thực vui lòng kiểm tra email.', [],'Thất bại!');
+                VerificationEmailRegister::dispatch(Auth::user());
+
+                return redirect()->route('client.candidate.login');
             }
         }
 
@@ -118,6 +146,7 @@ class AuthController extends Controller
                 'avatar_url' => $googleUser->avatar,
                 'password' => encrypt('password'),
                 'role' => 'candidate',
+                'email_verified_at' => now(),
             ]);
 
             $candidate = $this->candidateRepository->findByUserId($user->id);

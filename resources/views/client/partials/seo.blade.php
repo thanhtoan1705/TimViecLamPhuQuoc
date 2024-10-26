@@ -1,6 +1,6 @@
 @if (isset($settings))
     <!-- Title -->
-    <title>@yield('seo_title', $settings->seo_title)</title>
+    <title>@yield('title', $settings->seo_title)</title>
 
     <!-- Basic Meta Tags -->
     <meta name="author" content="@yield('seo_title', $settings->seo_title)">
@@ -13,11 +13,11 @@
     <meta property="og:title" content="@yield('seo_title', $settings->seo_title)">
     <meta property="og:description" content="@yield('seo_description', $settings->seo_description)">
     <meta property="og:image" content="{{ asset('storage').'/' }}@yield('seo_image', $settings->seo_image)">
-    <meta property="og:url" content="https://www.vieclamphuquoc.com.vn">
+    <meta property="og:url" content="{{ url()->current() }}">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://www.vieclamphuquoc.com.vn">
+    <meta property="twitter:url" content="{{ url()->current() }}">
     <meta name="twitter:title" content="@yield('seo_title', $settings->seo_title)">
     <meta name="twitter:description" content="@yield('seo_description', $settings->seo_description)">
     <meta name="twitter:image" content="{{ asset('storage').'/' }}@yield('seo_image', $settings->seo_image)">
@@ -33,7 +33,7 @@
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "{{ $settings->company_name }}",
-            "url": "https://www.vieclamphuquoc.com.vn",
+            "url": "{{ url()->current() }}",
             "logo": "{{ asset('storage').'/' }}@yield('seo_image', $settings->seo_image)",
             "contactPoint": {
                 "@type": "ContactPoint",
@@ -77,6 +77,12 @@
               "position": 4,
               "name": "Giới thiệu",
               "item": "https://www.vieclamphuquoc.com.vn/gioi-thieu"
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "name": "Liên hệ",
+              "item": "https://www.vieclamphuquoc.com.vn/lien-he"
             }
           ]
         }

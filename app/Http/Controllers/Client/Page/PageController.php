@@ -34,4 +34,9 @@ class PageController extends Controller
         flash()->success('Email đã được gửi thành công.', [], 'Thành công!');
         return back();
     }
+
+    public function contact()
+    {
+        return view("client.contact.index");
+    }
 }

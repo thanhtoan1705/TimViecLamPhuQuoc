@@ -1,5 +1,5 @@
 @extends('client.layouts.master')
-@section('title', 'Trang chủ')
+{{--@section('title', 'Trang chủ')--}}
 @section('content')
     <main class="main">
         <div class="bg-homepage1"></div>

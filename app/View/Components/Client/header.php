@@ -2,9 +2,11 @@
 
 namespace App\View\Components\Client;
 
+use App\Models\SiteSetting;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Cache;
 
 class header extends Component
 {

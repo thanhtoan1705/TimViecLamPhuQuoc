@@ -4,8 +4,8 @@
             <div class="header-left">
                 <div style="width: 185px" class="header-logo"><a class='d-flex'
                                                                  href="{{ route('client.client.index') }}"><img
-                            alt="jobBox"
-                            src="{{ asset('storage/vieclamphuquoc/logo/pq.svg') }}"></a>
+                            alt="{{ $settings->company_name }}"
+                            src="{{ asset('storage/'. $settings->logo_website) }}"></a>
                 </div>
             </div>
             <div class="header-nav">

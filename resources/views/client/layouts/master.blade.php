@@ -30,7 +30,7 @@
 
     @livewireStyles
     @stack('css')
-    <title>@yield('title', 'Trang chủ')</title>
+{{--    <title>@yield('title', 'Trang chủ')</title>--}}
 
     <!-- SEO -->
 
