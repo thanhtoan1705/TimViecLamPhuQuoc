@@ -25,6 +25,7 @@ class Employer extends Model
         'company_size',
         'company_type',
         'status',
+        'max_posts_per_day',
     ];
 
     public function user()

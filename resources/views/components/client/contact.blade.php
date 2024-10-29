@@ -43,7 +43,6 @@
         transition: 0.2s;
     }
 
-    /* Form liên hệ */
     .contact-form {
         position: fixed;
         bottom: 80px;

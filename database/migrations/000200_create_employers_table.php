@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('company_size', 255)->nullable();
             $table->string('company_type', 255)->nullable();
             $table->boolean('status')->default(true);
+            $table->integer('max_posts_per_day')->default(1)->nullable();
             $table->timestamps();
         });
     }
