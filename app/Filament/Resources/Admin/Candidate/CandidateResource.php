@@ -9,15 +9,13 @@ use App\Models\Address;
 use App\Models\Candidate;
 use App\Models\Degree;
 use App\Models\District;
-use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Major;
 use App\Models\Province;
 use App\Models\Salary;
 use App\Models\Ward;
-use App\Models\WorkExperience;
-use App\Models\LanguageProficiency;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
@@ -36,7 +34,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
-use Filament\Forms\Components\DatePicker;
 
 
 class CandidateResource extends Resource implements HasShieldPermissions
@@ -282,7 +279,7 @@ class CandidateResource extends Resource implements HasShieldPermissions
                                                 // District Selector
                                                 Select::make('district_id')
                                                     ->label('Quận/Huyện')
-                                                    ->searchable()
+                                                    // ->searchable()
                                                     ->options(fn($get) => District::where('province_id', $get('province_id'))->pluck('name', 'id')->toArray())
                                                     ->reactive()
                                                     ->afterStateUpdated(function (callable $set, $state) {

@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Flasher\Laravel\Facade\Flasher;
 
 class ApplyJob extends Component
 {
@@ -52,7 +51,8 @@ class ApplyJob extends Component
             return;
         }
 
-        $filePath = $this->resume->store('resumes', 'public');
+        $originalName = $this->resume->getClientOriginalName();
+        $filePath = $this->resume->storeAs('resumes', $originalName, 'public');
 
         $jobRepository->applyForJob($this->jobId, $candidateId, $filePath, $this->description);
 

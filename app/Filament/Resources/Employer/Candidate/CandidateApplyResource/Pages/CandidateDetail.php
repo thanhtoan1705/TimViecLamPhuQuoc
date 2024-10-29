@@ -22,6 +22,15 @@ class CandidateDetail extends Page
         $record->update(['viewed' => true]);
     }
 
+    public function getTitle(): string
+    {
+        return __('Chi tiết ứng viên');
+    }
+
+    public function getHeading(): string
+    {
+        return __('Chi tiết ứng viên');
+    }
 
 
 

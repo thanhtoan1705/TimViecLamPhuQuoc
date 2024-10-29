@@ -16,13 +16,13 @@
                     <option value="16px">16px</option>
                     <!-- Thêm các kích thước khác nếu cần -->
                 </select>
-                <button id="boldBtn" class="cv-btn" title="In đậm">
+                <button id="boldBtn" class="cv-btn" title="In đậm" data-format="bold">
                     <i class="bi bi-type-bold"></i>
                 </button>
-                <button id="italicBtn" class="cv-btn" title="In nghiêng">
+                <button id="italicBtn" class="cv-btn" title="In nghiêng" data-format="italic">
                     <i class="bi bi-type-italic"></i>
                 </button>
-                <button id="underlineBtn" class="cv-btn" title="Gạch chân">
+                <button id="underlineBtn" class="cv-btn" title="Gạch chân" data-format="underline">
                     <i class="bi bi-type-underline"></i>
                 </button>
                 <input type="color" id="colorPicker" class="cv-btn" title="Chọn màu">
@@ -161,6 +161,44 @@
 
     .cv-container {
         flex: 1;
+    }
+
+    .cv-btn.active {
+        background-color: #e9ecef;
+        border-color: #ced4da;
+    }
+
+    .avatar-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .avatar-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.3s;
+        border-radius: 50%;
+    }
+
+    .avatar-container:hover .avatar-overlay {
+        opacity: 1;
+    }
+
+    .change-avatar-btn {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    .change-avatar-btn i {
+        font-size: 1.2rem;
     }
 </style>
 @endpush

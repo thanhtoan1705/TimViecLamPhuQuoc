@@ -1,261 +1,273 @@
 <x-filament-panels::page>
     <div class="content-wrapper">
         <div class="application-content">
-            <div class="header">
-                <span class="step-label">Bước 1: Đã nhận hồ sơ</span>
-                <span class="date-received">(Ngày nhận: {{ now()->format('d-m-Y H:i:s') }})</span>
-            </div>
-
-            <div class="title">
-                <h3 class="section-title">TIÊU ĐỀ</h3>
-                <p class="job-title">{{ $record->jobPost->title }}</p>
-            </div>
-
-            <div class="candidate-info">
-                <h3 class="section-title">THÔNG TIN ỨNG VIÊN</h3>
-                <table class="info-table">
-                    <tr>
-                        <td>Tên ứng viên</td>
-                        <td>{{ $record->candidate->user->name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Điện thoại</td>
-                        <td>{{ $record->candidate->user->phone }}</td>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <td>{{ $record->candidate->user->email }}</td>
-                    </tr>
-                    <tr>
-                        <td>Vị trí ứng tuyển</td>
-                        <td>{{ $record->jobPost->title }}</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="message-content">
-                <h3 class="section-title">Nội dung</h3>
-                <div class="message-body">
-                    {!! $record->description !!}
+            <!-- Status Banner -->
+            <div class="status-banner">
+                <div class="status-icon">
+                    <x-heroicon-o-document-check class="h-6 w-6"/>
+                </div>
+                <div class="status-info">
+                    <span class="step-label">Bước 1: Đã nhận hồ sơ</span>
+                    <span class="date-received">Ngày nhận: {{ $record->created_at->format('d/m/Y H:i') }}</span>
                 </div>
             </div>
 
-            <div class="attachment">
-                <h3>File đính kèm</h3>
-                @if($record->file)
-                    <div class="file-card">
-                        <div class="file-icon">
-                            <x-heroicon-o-document class="icon-hero" />
-                        </div>
-                        <div class="file-info">
-                            <span class="file-name">{{ basename($record->file) }}</span>
-                            <a href="{{ Storage::url($record->file) }}" target="_blank" class="download-icon">
-                                ⬇️
-                            </a>
+            <!-- Main Content Grid -->
+            <div class="main-content-grid">
+                <!-- Left Column -->
+                <div class="left-column">
+                    <div class="card job-info">
+                        <h3 class="card-title">Thông tin việc làm</h3>
+                        <div class="job-title">{{ $record->jobPost->title }}</div>
+                        <div class="job-meta">
+                            <span class="salary">{{ $record->jobPost->salary->name}} VNĐ</span>
+                            <span class="location">{{ $record->jobPost->address }}</span>
                         </div>
                     </div>
-                @else
-                    <p>Không có file đính kèm</p>
-                @endif
+
+                    <div class="card candidate-info">
+                        <h3 class="card-title">Thông tin ứng viên</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="label">Họ và tên</span>
+                                <span class="value">{{ $record->candidate->user->name }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Vị trí ứng tuyển</span>
+                                <span class="value">{{ $record->jobPost->title }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Số điện thoại</span>
+                                <span class="value">{{ $record->candidate->user->phone }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Email</span>
+                                <span class="value">{{ $record->candidate->user->email }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="right-column">
+                    <div class="card message-content">
+                        <h3 class="card-title">Thư xin việc</h3>
+                        <div class="message-body">
+                            {!! $record->description !!}
+                        </div>
+                    </div>
+
+                    @if($record->file)
+                        <div class="card attachment">
+                            <h3 class="card-title">Tài liệu đính kèm</h3>
+                            <div class="file-card">
+                                <div class="file-icon">
+                                    <x-heroicon-o-document class="w-8 h-8 text-primary-600"/>
+                                </div>
+                                <div class="file-info">
+                                    <span class="file-name">{{ basename($record->file) }}</span>
+                                    <a href="{{ Storage::url($record->file) }}"
+                                       target="_blank"
+                                       class="download-button">
+                                        <x-heroicon-o-arrow-down-tray class="w-5 h-5"/>
+                                        Tải xuống
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
             </div>
 
-            <div class="buttons">
-                <button class="btn btn-primary">Xem thông tin ứng viên</button>
-                <button class="btn btn-success">Xem tin tuyển dụng</button>
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="{{ route('client.candidate.detail', ['slug' => $record->candidate->slug]) }}"
+                   class="btn btn-secondary">
+                    <x-heroicon-o-user class="w-5 h-5 mr-2"/>
+                    Xem hồ sơ chi tiết
+                </a>
+                <button class="btn btn-primary">
+                    <x-heroicon-o-envelope class="w-5 h-5 mr-2"/>
+                    Liên hệ ứng viên
+                </button>
             </div>
         </div>
     </div>
 
     <style>
         .content-wrapper {
-            max-width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
         .application-content {
-            background-color: #f9fafb;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            font-family: 'Poppins', sans-serif;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
-        .header {
+        .status-banner {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #e0e0e0;
+            gap: 16px;
+            padding: 20px;
+            background-color: #f0f9ff;
+            border-bottom: 1px solid #e5e7eb;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .status-icon {
+            color: #0284c7;
+        }
+
+        .status-info {
+            display: flex;
+            flex-direction: column;
         }
 
         .step-label {
-            color: #007bff;
-            font-weight: 700;
+            font-weight: 600;
+            color: #0284c7;
         }
 
         .date-received {
-            color: #6c757d;
+            font-size: 0.875rem;
+            color: #64748b;
         }
 
-        .title {
-            margin-bottom: 25px;
+        .main-content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 24px;
+            padding: 24px;
         }
 
-        .section-title {
-            font-size: 20px;
-            color: #343a40;
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.125rem;
             font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 15px;
+            color: #1e293b;
+            margin-bottom: 16px;
         }
 
         .job-title {
-            font-size: 18px;
-            font-weight: 500;
-            color: #495057;
-        }
-
-        .candidate-info {
-            margin-bottom: 25px;
-        }
-
-        .info-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .info-table td {
-            padding: 12px 15px;
-            border: 1px solid #dee2e6;
-            vertical-align: middle;
-        }
-
-        .info-table td:first-child {
+            font-size: 1rem;
             font-weight: 600;
-            color: #495057;
-            width: 30%;
+            color: #0f172a;
+            margin-bottom: 8px;
         }
 
-        .info-table td:last-child {
-            color: #212529;
-            width: 70%;
+        .job-meta {
+            display: flex;
+            gap: 16px;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .label {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .value {
+            font-weight: 500;
+            color: #1e293b;
         }
 
         .message-body {
-            background-color: #fff;
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            line-height: 1.7;
-            color: #495057;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: flex-start;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-success {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background-color: #218838;
-        }
-
-        .attachment {
-            margin-top: 20px;
-            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #334155;
         }
 
         .file-card {
             display: flex;
             align-items: center;
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            padding: 15px;
-            width: 250px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
-        }
-
-        .file-card:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .file-icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 10px;
+            gap: 12px;
+            padding: 12px;
+            background-color: #f8fafc;
+            border-radius: 6px;
         }
 
         .file-info {
+            flex: 1;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 100%;
         }
 
         .file-name {
-            font-weight: 600;
-            color: #495057;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            max-width: 150px;
+            font-weight: 500;
+            color: #0f172a;
         }
 
-        .download-icon {
-            margin-left: 10px;
-            font-size: 18px;
-            color: #007bff;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .download-icon:hover {
-            color: #0056b3;
-        }
-
-        /* Điều chỉnh kích thước icon Filament Hero */
-        .icon-hero {
-            width: 32px;
-            height: 32px;
-            color: #6c757d;
-        }
-
-        .buttons {
+        .download-button {
             display: flex;
-            justify-content: center; /* Căn giữa các nút */
-            gap: 15px;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 12px;
+            background-color: #0284c7;
+            color: white;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            transition: background-color 0.2s;
         }
 
+        .download-button:hover {
+            background-color: #0369a1;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e2e8f0;
+        }
+
+        .btn-primary {
+            background-color: #0284c7;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0369a1;
+        }
     </style>
 </x-filament-panels::page>

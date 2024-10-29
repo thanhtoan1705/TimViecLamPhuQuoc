@@ -1,9 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import axios from 'axios';
-import { createRoot } from 'react-dom/client';
-import EditableField from './EditableField';
-import Modal from './Modal';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import sampleData from './data/sampleData';
 
 
@@ -42,6 +38,11 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
         { key: 'awards', title: 'Giải thưởng' },
         { key: 'certificates', title: 'Chứng chỉ' },
     ]);
+    const [activeFormats, setActiveFormats] = useState({
+        bold: false,
+        italic: false,
+        underline: false
+    });
 
     const openModal = useCallback(() => setIsModalOpen(true), []);
     const closeModal = useCallback(() => setIsModalOpen(false), []);
@@ -51,13 +52,17 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
 
         // Xử lý avatar
         const avatarRegex = /{{avatar}}/g;
+        const defaultAvatar = '/path/to/default-avatar.jpg';
         processed = processed.replace(avatarRegex, `
-             <div class="avatar-container text-center mb-3 position-relative">
-            <img src="${data.avatar}" alt="Avatar" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
-            <label for="avatar-upload" class="btn btn-sm btn-light rounded-circle change-avatar-btn">
-                <i class="bi bi-camera-fill"></i>
-            </label>
-        </div>
+            <div class="avatar-container text-center mb-3 position-relative">
+                <img src="${data.avatar || defaultAvatar}" alt="Avatar" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="avatar-overlay">
+                    <label for="avatar-upload" class="btn btn-sm btn-light rounded-circle change-avatar-btn">
+                        <i class="bi bi-camera-fill"></i>
+                    </label>
+                    <input type="file" id="avatar-upload" class="d-none" accept="image/*">
+                </div>
+            </div>
         `);
 
         // Xử lý các section
@@ -332,51 +337,126 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
     }, []);
 
     useEffect(() => {
-        const applyStyle = (command, value = null) => {
+        const applyFormat = (command, value = null) => {
             document.execCommand(command, false, value);
         };
 
+        const handleFormatClick = (e) => {
+            const button = e.target.closest('[data-format]');
+            if (!button) return;
+
+            const format = button.dataset.format;
+
+            // Toggle active state
+            setActiveFormats(prev => ({
+                ...prev,
+                [format]: !prev[format]
+            }));
+
+            // Apply format
+            applyFormat(format);
+
+            // Add/remove active class
+            button.classList.toggle('active');
+        };
+
         const handleFontChange = (e) => {
-            applyStyle('fontName', e.target.value);
+            applyFormat('fontName', e.target.value);
         };
 
         const handleFontSizeChange = (e) => {
-            applyStyle('fontSize', e.target.value);
-        };
-
-        const handleBoldClick = () => {
-            applyStyle('bold');
-        };
-
-        const handleItalicClick = () => {
-            applyStyle('italic');
-        };
-
-        const handleUnderlineClick = () => {
-            applyStyle('underline');
+            // Convert px to font size points (1-7)
+            const size = Math.ceil(parseInt(e.target.value) / 4);
+            applyFormat('fontSize', size);
         };
 
         const handleColorChange = (e) => {
-            applyStyle('foreColor', e.target.value);
+            applyFormat('foreColor', e.target.value);
         };
 
-        document.getElementById('fontSelect').addEventListener('change', handleFontChange);
-        document.getElementById('fontSizeSelect').addEventListener('change', handleFontSizeChange);
-        document.getElementById('boldBtn').addEventListener('click', handleBoldClick);
-        document.getElementById('italicBtn').addEventListener('click', handleItalicClick);
-        document.getElementById('underlineBtn').addEventListener('click', handleUnderlineClick);
-        document.getElementById('colorPicker').addEventListener('input', handleColorChange);
+        // Add event listeners
+        const toolbar = document.querySelector('.cv-toolbar');
+        toolbar.addEventListener('click', handleFormatClick);
 
+        const fontSelect = document.getElementById('fontSelect');
+        const fontSizeSelect = document.getElementById('fontSizeSelect');
+        const colorPicker = document.getElementById('colorPicker');
+
+        fontSelect.addEventListener('change', handleFontChange);
+        fontSizeSelect.addEventListener('change', handleFontSizeChange);
+        colorPicker.addEventListener('input', handleColorChange);
+
+        // Cleanup
         return () => {
-            // Remove event listeners on cleanup
-            document.getElementById('fontSelect').removeEventListener('change', handleFontChange);
-            document.getElementById('fontSizeSelect').removeEventListener('change', handleFontSizeChange);
-            document.getElementById('boldBtn').removeEventListener('click', handleBoldClick);
-            document.getElementById('italicBtn').removeEventListener('click', handleItalicClick);
-            document.getElementById('underlineBtn').removeEventListener('click', handleUnderlineClick);
-            document.getElementById('colorPicker').removeEventListener('input', handleColorChange);
+            toolbar.removeEventListener('click', handleFormatClick);
+            fontSelect.removeEventListener('change', handleFontChange);
+            fontSizeSelect.removeEventListener('change', handleFontSizeChange);
+            colorPicker.removeEventListener('input', handleColorChange);
         };
     }, []);
+
+    // Thêm hàm để kiểm tra định dạng hiện tại của selection
+    const checkFormatting = useCallback(() => {
+        setActiveFormats({
+            bold: document.queryCommandState('bold'),
+            italic: document.queryCommandState('italic'),
+            underline: document.queryCommandState('underline')
+        });
+    }, []);
+
+    // Thêm event listener để cập nhật trạng thái nút khi selection thay đổi
+    useEffect(() => {
+        document.addEventListener('selectionchange', checkFormatting);
+        return () => document.removeEventListener('selectionchange', checkFormatting);
+    }, [checkFormatting]);
+
+    useEffect(() => {
+        const handleAvatarUpload = (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const maxWidth = 600;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+                        setCvData(prevData => ({
+                            ...prevData,
+                            avatar: compressedDataUrl
+                        }));
+                    };
+                    img.src = reader.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        const avatarInput = document.getElementById('avatar-upload');
+        if (avatarInput) {
+            avatarInput.addEventListener('change', handleAvatarUpload);
+        }
+
+        return () => {
+            const avatarInput = document.getElementById('avatar-upload');
+            if (avatarInput) {
+                avatarInput.removeEventListener('change', handleAvatarUpload);
+            }
+        };
+    }, [processedContent]);
 
     return (
         <div

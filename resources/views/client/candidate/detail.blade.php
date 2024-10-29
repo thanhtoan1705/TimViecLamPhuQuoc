@@ -19,7 +19,7 @@
 
                             <img alt="{{ $candidate->user->name }}" width="100px" src="{{ $finalAvatarUrl }}">
                         @else
-                            <img alt="jobBox" width="10px" src="{{ asset('storage/images/default.jpeg') }}">
+                            <img alt="jobBox" width="10px" src="{{ asset('default/user.png') }}">
                         @endif
                     </div>
                     <div class="row mt-10">

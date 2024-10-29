@@ -17,7 +17,6 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class JobPostResource extends Resource implements HasShieldPermissions
@@ -110,6 +109,13 @@ class JobPostResource extends Resource implements HasShieldPermissions
                                             ->preload()
 //                                        ->maxItems(6)
                                             ->label('Ngành nghề'),
+                                        Forms\Components\Select::make('major_id')
+                                            ->required()
+                                            ->relationship('majors', 'name')
+                                            ->placeholder('Chọn chuyên ngành')
+                                            ->searchable()
+                                            ->preload()
+                                            ->label('Chuyên ngành'),
                                         Forms\Components\Select::make('salary_id')
                                             ->required()
                                             ->placeholder('Vui lòng chọn bằng cấp')

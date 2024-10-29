@@ -129,6 +129,13 @@ class JobPostResource extends Resource
                                             ->searchable()
                                             ->preload()
                                             ->label('Ngành nghề'),
+                                        Forms\Components\Select::make('major_id')
+                                            ->required()
+                                            ->relationship('majors', 'name')
+                                            ->placeholder('Chọn chuyên ngành')
+                                            ->searchable()
+                                            ->preload()
+                                            ->label('Chuyên ngành'),
                                         Forms\Components\Select::make('salary_id')
                                             ->required()
                                             ->placeholder('Vui lòng chọn bằng cấp')
