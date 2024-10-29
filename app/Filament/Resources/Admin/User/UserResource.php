@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Admin\User;
 
-use App\Filament\Resources\Admin\Candidate\CandidateResource\Pages\CreateCandidate;
 use App\Filament\Resources\Admin\User\UserResource\Pages;
 use App\Filament\Resources\Admin\User\UserResource\RelationManagers;
 use App\Models\User;
@@ -24,6 +23,8 @@ use Rmsramos\Activitylog\RelationManagers\ActivitylogRelationManager;
 class UserResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = User::class;
+
+    protected static ?string $slug = 'users';
 
     protected static ?string $navigationLabel = 'Thành viên';
 

@@ -23,6 +23,8 @@ class ExperienceResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Experience::class;
 
+    protected static ?string $slug = 'experience';
+
     protected static ?string $navigationLabel = 'Kinh nghiệm';
 
     protected static ?string $modelLabel = 'Kinh nghiệm';

@@ -19,6 +19,8 @@ class CvTemplateResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = CvTemplate::class;
 
+    protected static ?string $slug = 'cv-templates';
+
     protected static ?string $navigationIcon = 'heroicon-o-folder-open';
 
     protected static ?string $navigationLabel = 'Mẫu CV';

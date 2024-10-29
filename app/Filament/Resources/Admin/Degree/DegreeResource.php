@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Builder;
 class DegreeResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Degree::class;
+    protected static ?string $slug = 'degree';
 
     protected static ?string $navigationLabel = 'Bằng cấp';
     protected static ?string $modelLabel = 'Bằng cấp';

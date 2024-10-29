@@ -32,6 +32,8 @@ class EmployerResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Employer::class;
 
+    protected static ?string $slug = 'business';
+
     protected static ?string $navigationLabel = 'Nhà tuyên dụng';
 
     protected static ?string $modelLabel = 'Nhà tuyển dụng';

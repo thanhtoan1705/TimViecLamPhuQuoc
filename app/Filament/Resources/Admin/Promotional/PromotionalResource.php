@@ -25,6 +25,8 @@ class PromotionalResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Promotion::class;
 
+    protected static ?string $slug = 'promotions';
+
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
 
     protected static ?string $navigationLabel = 'Mã ưu đãi';

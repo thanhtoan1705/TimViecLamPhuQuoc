@@ -23,6 +23,8 @@ class JobPostPackageResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = JobPostPackage::class;
 
+    protected static ?string $slug = 'job-post-package';
+
     protected static ?string $navigationLabel = 'Gói đăng tin';
     protected static ?string $modelLabel = 'Gói đăng tin';
     protected static ?string $navigationGroup = 'Dịch vụ';

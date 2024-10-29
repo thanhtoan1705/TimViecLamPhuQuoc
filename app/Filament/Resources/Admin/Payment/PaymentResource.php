@@ -29,6 +29,8 @@ class PaymentResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Payment::class;
 
+    protected static ?string $slug = 'payments';
+
     protected static ?string $navigationLabel = 'Thanh toán';
     protected static ?string $modelLabel = 'Thanh toán';
     protected static ?string $navigationGroup = 'Quản lý thanh toán';

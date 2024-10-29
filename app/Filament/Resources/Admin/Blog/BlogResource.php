@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Admin\Blog;
 use App\Filament\Resources\Blog\BlogResource\Pages;
 use App\Filament\Resources\Blog\BlogResource\RelationManagers;
 use App\Models\Blog;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -28,13 +29,12 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use Livewire\Component;
-use Livewire\WithFileUploads;
-use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 
 class BlogResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Blog::class;
+
+    protected static ?string $slug = 'blogs';
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 

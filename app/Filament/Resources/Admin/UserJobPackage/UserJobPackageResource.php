@@ -27,6 +27,8 @@ class UserJobPackageResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = UserJobPackage::class;
 
+    protected static ?string $slug = 'user-job-package';
+
     protected static ?string $navigationLabel = 'Gói đăng tin người dùng';
     protected static ?string $modelLabel = 'Gói đăng tin người dùng';
     protected static ?string $navigationGroup = 'Dịch vụ';

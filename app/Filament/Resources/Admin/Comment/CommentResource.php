@@ -22,6 +22,8 @@ class CommentResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = \App\Models\Comment::class;
 
+    protected static ?string $slug = 'comments';
+
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-bottom-center-text';
 
     protected static ?string $navigationLabel = 'Bình luận';

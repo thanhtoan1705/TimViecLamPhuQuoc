@@ -1,5 +1,11 @@
 @extends('client.layouts.master')
-@section('title', 'Chi tiết bài viết')
+
+@section('title', $postDetail->title)
+@section('seo_title', $postDetail->title)
+@section('seo_description', $postDetail->meta_description)
+@section('seo_keywords', $postDetail->meta_keywords)
+@section('seo_image',  $postDetail->image)
+
 @section('content')
     <main class="main">
         @php

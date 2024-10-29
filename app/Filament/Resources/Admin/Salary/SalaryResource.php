@@ -23,6 +23,8 @@ class SalaryResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Salary::class;
 
+    protected static ?string $slug = 'salary';
+
     protected static ?string $navigationLabel = 'Mức lương';
 
     protected static ?string $modelLabel = 'Mức lương';

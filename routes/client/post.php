@@ -3,11 +3,11 @@
 use App\Http\Controllers\Client\Post\PostController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('bai-viet')
+Route::prefix('/')
     ->name('post.')
     ->group(function () {
 
-        Route::get('/', [PostController::class, 'index'])->name('index');
-        Route::get('/{slug}.html', [PostController::class, 'detail'])->name('detail');
+        Route::get('/bai-viet', [PostController::class, 'index'])->name('index');
+        Route::get('/{slug}', [PostController::class, 'detail'])->name('detail');
 
     });

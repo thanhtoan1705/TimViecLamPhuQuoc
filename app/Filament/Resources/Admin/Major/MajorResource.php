@@ -24,6 +24,8 @@ class MajorResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Major::class;
 
+    protected static ?string $slug = 'majors';
+
     protected static ?string $navigationLabel = 'Chuyên ngành';
 
     protected static ?string $modelLabel = 'Chuyên ngành';

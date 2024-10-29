@@ -34,7 +34,7 @@
                 <a href="#" style="text-decoration: none; color: #007bff;">Phí đăng tin</a> |
                 <a href="#" style="text-decoration: none; color: #007bff;">Hướng dẫn</a>
             </p>
-            <p>Email: <a href="mailto:vieclamphuquoc.vn" style="text-decoration: none; color: #007bff;">vieclamphuquoc@gmail.com</a> - Hotline: 09777.850.32</p>
+            <p>Email: <a href="mailto:vieclamphuquoc.hotro@gmail.com">vieclamphuquoc.vn</a> - Hotline: 0336.216.546</p>
         </div>
     </div>
 </div>

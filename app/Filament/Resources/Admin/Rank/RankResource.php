@@ -23,6 +23,8 @@ class RankResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Rank::class;
 
+    protected static ?string $slug = 'ranks';
+
     protected static ?string $navigationLabel = 'Chức vụ';
     protected static ?string $modelLabel = 'Chức vụ';
     protected static ?string $navigationGroup = 'Công việc';

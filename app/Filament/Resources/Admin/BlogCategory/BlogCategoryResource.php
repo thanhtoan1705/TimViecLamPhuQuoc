@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Admin\BlogCategory;
 use App\Filament\Resources\BlogCategory\BlogCategoryResource\Pages;
 use App\Filament\Resources\BlogCategory\BlogCategoryResource\RelationManagers;
 use App\Models\BlogCategory;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
@@ -22,11 +23,12 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 
 class BlogCategoryResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = BlogCategory::class;
+
+    protected static ?string $slug = 'blog-categories';
 
     protected static ?string $navigationIcon = 'heroicon-o-document-duplicate';
 

@@ -18,6 +18,8 @@ class CvFieldResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = CvField::class;
 
+    protected static ?string $slug = 'cv-fields';
+
     protected static ?string $navigationIcon = 'heroicon-o-pause';
 
     protected static ?string $navigationLabel = 'Trường CV';
