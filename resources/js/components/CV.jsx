@@ -1,5 +1,9 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
+import { createRoot } from 'react-dom/client';
+import EditableField from './EditableField';
+import Modal from './Modal';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import sampleData from './data/sampleData';
 
 
@@ -38,30 +42,83 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
         { key: 'awards', title: 'Giải thưởng' },
         { key: 'certificates', title: 'Chứng chỉ' },
     ]);
-    const [activeFormats, setActiveFormats] = useState({
-        bold: false,
-        italic: false,
-        underline: false
-    });
+    const [themeColor, setThemeColor] = useState('#3c65f5');
 
     const openModal = useCallback(() => setIsModalOpen(true), []);
     const closeModal = useCallback(() => setIsModalOpen(false), []);
 
+    const handleThemeColorChange = useCallback((color) => {
+        setThemeColor(color);
+        document.documentElement.style.setProperty('--theme-color', color);
+
+        // Tính toán màu light dựa trên màu chủ đề
+        const rgb = hexToRgb(color);
+        const lightColor = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.1)`;
+        document.documentElement.style.setProperty('--theme-color-light', lightColor);
+    }, []);
+
+    const hexToRgb = (hex) => {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    };
+
+    useEffect(() => {
+        const themeColorPicker = document.getElementById('themeColorPicker');
+        if (themeColorPicker) {
+            themeColorPicker.addEventListener('input', (e) => {
+                handleThemeColorChange(e.target.value);
+            });
+
+            // Set initial color
+            handleThemeColorChange(themeColorPicker.value);
+        }
+
+        return () => {
+            if (themeColorPicker) {
+                themeColorPicker.removeEventListener('input', handleThemeColorChange);
+            }
+        };
+    }, [handleThemeColorChange]);
+
     const processTemplate = useCallback((template, data) => {
         let processed = template;
 
+        // Thêm class cho tên người dùng
+        processed = processed.replace(
+            /{{name}}/g,
+            `<span class="editable cv-name" data-key="name">${data.name || ''}</span>`
+        );
+
+        // Thêm class cho tiêu đề section
+        processed = processed.replace(
+            /<h2([^>]*)>(.*?)<\/h2>/g,
+            '<h2$1 class="section-title">$2</h2>'
+        );
+
+        // Thêm class cho đường kẻ
+        processed = processed.replace(
+            /<hr([^>]*)>/g,
+            '<hr$1 class="section-divider">'
+        );
+
         // Xử lý avatar
         const avatarRegex = /{{avatar}}/g;
-        const defaultAvatar = '/path/to/default-avatar.jpg';
         processed = processed.replace(avatarRegex, `
-            <div class="avatar-container text-center mb-3 position-relative">
-                <img src="${data.avatar || defaultAvatar}" alt="Avatar" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
-                <div class="avatar-overlay">
-                    <label for="avatar-upload" class="btn btn-sm btn-light rounded-circle change-avatar-btn">
-                        <i class="bi bi-camera-fill"></i>
-                    </label>
-                    <input type="file" id="avatar-upload" class="d-none" accept="image/*">
-                </div>
+            <div class="avatar-container text-center mb-3">
+                <img src="${data.avatar || '/images/default-avatar.png'}"
+                     alt="Avatar"
+                     class="img-fluid rounded-circle avatar-image"
+                     style="width: 150px; height: 150px; object-fit: cover; cursor: pointer;"
+                     onclick="document.getElementById('avatar-upload').click()">
+                <input type="file"
+                       id="avatar-upload"
+                       accept="image/*"
+                       style="display: none;"
+                       data-action="change-avatar">
             </div>
         `);
 
@@ -166,9 +223,10 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
     };
 
     const handleEditableFieldChange = (event) => {
-        const { textContent, dataset } = event.target;
+        const { dataset } = event.target;
         const key = dataset.key;
-        updateNestedValue(key, textContent);
+        const htmlContent = event.target.innerHTML;
+        updateNestedValue(key, htmlContent);
     };
 
     const updateNestedValue = (path, value) => {
@@ -324,7 +382,7 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
                     canvas.height = height;
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.9); // Tăng chất lượng lên 90%
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.9);
                     setCvData(prevData => ({
                         ...prevData,
                         avatar: compressedDataUrl
@@ -337,126 +395,137 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
     }, []);
 
     useEffect(() => {
-        const applyFormat = (command, value = null) => {
-            document.execCommand(command, false, value);
-        };
-
-        const handleFormatClick = (e) => {
-            const button = e.target.closest('[data-format]');
-            if (!button) return;
-
-            const format = button.dataset.format;
-
-            // Toggle active state
-            setActiveFormats(prev => ({
-                ...prev,
-                [format]: !prev[format]
-            }));
-
-            // Apply format
-            applyFormat(format);
-
-            // Add/remove active class
-            button.classList.toggle('active');
-        };
-
-        const handleFontChange = (e) => {
-            applyFormat('fontName', e.target.value);
-        };
-
-        const handleFontSizeChange = (e) => {
-            // Convert px to font size points (1-7)
-            const size = Math.ceil(parseInt(e.target.value) / 4);
-            applyFormat('fontSize', size);
-        };
-
-        const handleColorChange = (e) => {
-            applyFormat('foreColor', e.target.value);
-        };
-
-        // Add event listeners
-        const toolbar = document.querySelector('.cv-toolbar');
-        toolbar.addEventListener('click', handleFormatClick);
-
-        const fontSelect = document.getElementById('fontSelect');
-        const fontSizeSelect = document.getElementById('fontSizeSelect');
-        const colorPicker = document.getElementById('colorPicker');
-
-        fontSelect.addEventListener('change', handleFontChange);
-        fontSizeSelect.addEventListener('change', handleFontSizeChange);
-        colorPicker.addEventListener('input', handleColorChange);
-
-        // Cleanup
-        return () => {
-            toolbar.removeEventListener('click', handleFormatClick);
-            fontSelect.removeEventListener('change', handleFontChange);
-            fontSizeSelect.removeEventListener('change', handleFontSizeChange);
-            colorPicker.removeEventListener('input', handleColorChange);
-        };
-    }, []);
-
-    // Thêm hàm để kiểm tra định dạng hiện tại của selection
-    const checkFormatting = useCallback(() => {
-        setActiveFormats({
-            bold: document.queryCommandState('bold'),
-            italic: document.queryCommandState('italic'),
-            underline: document.queryCommandState('underline')
-        });
-    }, []);
-
-    // Thêm event listener để cập nhật trạng thái nút khi selection thay đổi
-    useEffect(() => {
-        document.addEventListener('selectionchange', checkFormatting);
-        return () => document.removeEventListener('selectionchange', checkFormatting);
-    }, [checkFormatting]);
-
-    useEffect(() => {
-        const handleAvatarUpload = (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        const maxWidth = 600;
-                        let width = img.width;
-                        let height = img.height;
-
-                        if (width > maxWidth) {
-                            height *= maxWidth / width;
-                            width = maxWidth;
-                        }
-
-                        canvas.width = width;
-                        canvas.height = height;
-                        ctx.drawImage(img, 0, 0, width, height);
-
-                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-                        setCvData(prevData => ({
-                            ...prevData,
-                            avatar: compressedDataUrl
-                        }));
-                    };
-                    img.src = reader.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        };
-
         const avatarInput = document.getElementById('avatar-upload');
         if (avatarInput) {
-            avatarInput.addEventListener('change', handleAvatarUpload);
+            avatarInput.addEventListener('change', handleAvatarChange);
         }
 
         return () => {
-            const avatarInput = document.getElementById('avatar-upload');
             if (avatarInput) {
-                avatarInput.removeEventListener('change', handleAvatarUpload);
+                avatarInput.removeEventListener('change', handleAvatarChange);
             }
         };
     }, [processedContent]);
+
+    useEffect(() => {
+        let currentSelection = null;
+
+        const saveSelection = () => {
+            const sel = window.getSelection();
+            if (sel.rangeCount > 0) {
+                const range = sel.getRangeAt(0);
+                const editableParent = range.commonAncestorContainer.closest('.editable');
+                if (editableParent) {
+                    currentSelection = range.cloneRange();
+                }
+            }
+        };
+
+        const restoreSelection = () => {
+            if (currentSelection) {
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(currentSelection);
+            }
+        };
+
+        const applyFormatting = (command, value = null) => {
+            const activeElement = document.activeElement;
+            if (activeElement && activeElement.classList.contains('editable')) {
+                document.execCommand(command, false, value);
+                activeElement.focus();
+            } else {
+                restoreSelection();
+                document.execCommand(command, false, value);
+            }
+            saveSelection();
+        };
+
+        // Xử lý thay đổi font chữ
+        const fontSelect = document.getElementById('fontSelect');
+        if (fontSelect) {
+            fontSelect.addEventListener('change', (e) => {
+                applyFormatting('fontName', e.target.value);
+            });
+        }
+
+        // Xử lý thay đổi kích thước chữ
+        const fontSizeSelect = document.getElementById('fontSizeSelect');
+        if (fontSizeSelect) {
+            fontSizeSelect.addEventListener('change', (e) => {
+                applyFormatting('fontSize', e.target.value);
+            });
+        }
+
+        // Xử lý thay đổi màu chữ
+        const colorPicker = document.getElementById('colorPicker');
+        if (colorPicker) {
+            colorPicker.addEventListener('input', (e) => {
+                applyFormatting('foreColor', e.target.value);
+            });
+        }
+
+        // Xử lý sự kiện click cho các nút định dạng
+        const handleFormatClick = (e) => {
+            const button = e.currentTarget;
+            const format = button.dataset.format;
+
+            if (format) {
+                e.preventDefault();
+                applyFormatting(format);
+                button.classList.toggle('active');
+            }
+        };
+
+        // Thêm sự kiện cho các nút định dạng
+        const formatButtons = document.querySelectorAll('.cv-btn[data-format]');
+        formatButtons.forEach(button => {
+            button.addEventListener('click', handleFormatClick);
+        });
+
+        // Thêm sự kiện phím tắt
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey) {
+                switch (e.key.toLowerCase()) {
+                    case 'b':
+                        e.preventDefault();
+                        applyFormatting('bold');
+                        document.getElementById('boldBtn')?.classList.toggle('active');
+                        break;
+                    case 'i':
+                        e.preventDefault();
+                        applyFormatting('italic');
+                        document.getElementById('italicBtn')?.classList.toggle('active');
+                        break;
+                    case 'u':
+                        e.preventDefault();
+                        applyFormatting('underline');
+                        document.getElementById('underlineBtn')?.classList.toggle('active');
+                        break;
+                }
+            }
+        });
+
+        // Lưu selection khi người dùng tô đen text
+        document.addEventListener('selectionchange', saveSelection);
+
+        // Cleanup
+        return () => {
+            formatButtons.forEach(button => {
+                button.removeEventListener('click', handleFormatClick);
+            });
+            document.removeEventListener('selectionchange', saveSelection);
+            if (fontSelect) {
+                fontSelect.removeEventListener('change', (e) => applyFormatting('fontName', e.target.value));
+            }
+            if (fontSizeSelect) {
+                fontSizeSelect.removeEventListener('change', (e) => applyFormatting('fontSize', e.target.value));
+            }
+            if (colorPicker) {
+                colorPicker.removeEventListener('input', (e) => applyFormatting('foreColor', e.target.value));
+            }
+        };
+    }, []);
 
     return (
         <div

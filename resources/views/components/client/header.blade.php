@@ -222,7 +222,7 @@
         </div>
     </div>
 </div>
-
+@if(!auth()->check())
 <style>
     .modal-body {
         display: flex;
@@ -264,7 +264,7 @@
         color: #0b5ed7;
     }
 </style>
-
+@endif
 @push('script')
     <script>
         document.addEventListener('DOMContentLoaded', function () {

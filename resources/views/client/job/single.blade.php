@@ -12,7 +12,7 @@
             <div class="container">
                 <div class="banner-hero banner-image-single">
                     <div class="img-container">
-                        <img src="{{ asset('storage/' . $job->employer->company_photo_cover) }}" alt="jobBox">
+                        <img src="{{ $job->employer->company_photo_cover ? asset('storage/' . $job->employer->company_photo_cover) : asset('default/photo-cover.png') }}" alt="jobBox">
                     </div>
                 </div>
 
@@ -33,9 +33,12 @@
                                 <button type="submit" class="btn btn-white border">Lưu lại</button>
                             </form>
                         </div>
-                        <div class="btn btn-apply-icon btn-apply btn-apply-big hover-up" data-bs-toggle="modal"
-                             data-bs-target="#ModalApplyJobForm">Nộp hồ sơ
-                        </div>
+                        <button class="btn btn-apply-icon btn-apply btn-apply-big hover-up"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="{{ auth()->check() ? '#ModalApplyJobForm' : '#ModalLoginForm' }}">
+                            Nộp hồ sơ
+                        </button>
                     </div>
                 </div>
                 <div class="border-bottom pt-10 pb-10"></div>
@@ -293,7 +296,7 @@
                                                                 @endif</span></div>
                                                         <div class="col-lg-5 col-5 text-end">
                                                             <div class="btn btn-apply-now" data-bs-toggle="modal"
-                                                                 data-bs-target="#ModalApplyJobForm">
+                                                                 data-bs-target="{{ auth()->check() ? '#ModalApplyJobForm' : '#ModalLoginForm' }}">
                                                                 ỨNG TUYỂN
                                                             </div>
                                                         </div>
@@ -330,34 +333,118 @@
             </div>
         </div>
         @else
-            <div class="modal fade" id="ModalLoginForm" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content login-form">
-                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <div class="modal-body pl-30 pr-30 pt-50">
-                            <div class="text-center">
-                                <p class="font-sm text-brand-2">Login Required</p>
-                                <h2 class="mt-10 mb-5 text-brand-1 text-capitalize">Please login to apply</h2>
+        <div class="modal fade" id="ModalLoginForm" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-xl" style="max-width: 1000px;">
+                <div class="modal-content">
+                    <div class="p-0">
+                        <div class="row g-0">
+                            <div class="col-lg-6 d-none d-lg-block">
+                                <div class="bg-primary h-100 d-flex flex-column justify-content-center"
+                                     style="background: linear-gradient(135deg, #3a8ffe 0%, #0048db 100%); min-height: 600px;">
+                                    <div class="text-center px-5">
+                                        <img src="{{ asset('assets/client/imgs/page/login-register/img-4.svg') }}"
+                                             alt="Login"
+                                             class="img-fluid mb-4"
+                                             style="max-width: 85%;">
+                                        <h2 class="text-white mb-3 fs-2">Chào mừng bạn trở lại!</h2>
+                                        <p class="text-white-50 fs-6">
+                                            Đăng nhập để khám phá hàng ngàn cơ hội việc làm hấp dẫn
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <form class="login-register text-start mt-20 pb-30" action="" method="POST">
-                                @csrf
-                                <div class="form-group">
-                                    <label class="form-label" for="email">Email</label>
-                                    <input class="form-control" id="email" name="email" type="email" required>
+
+                            <div class="col-lg-6">
+                                <div class="p-30">
+                                    <button type="button"
+                                            class="btn-close position-absolute top-0 end-0 mt-3 me-3"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+
+                                    <div class="text-center mb-4">
+                                        <h3 class="text-brand-1 mb-2 fs-3">Đăng nhập để ứng tuyển</h3>
+                                        <p class="text-muted">Truy cập vào tài khoản của bạn</p>
+                                    </div>
+
+                                    <div class="d-grid gap-3 mb-4">
+                                        <a href="{{ route('client.login.facebook') }}"
+                                           class="btn btn-outline-primary hover-up py-2 d-flex align-items-center justify-content-center">
+                                            <img src="{{asset('assets/client/imgs/template/icons/facebook.svg')}}"
+                                                 alt="facebook" class="me-2" height="24">
+                                            <span>Đăng nhập với Facebook</span>
+                                        </a>
+                                        <a href="{{ route('client.auth.google', ['previous_url' => url()->current()]) }}"
+                                           class="btn btn-outline-danger hover-up py-2 d-flex align-items-center justify-content-center">
+                                            <img src="{{ asset('assets/client/imgs/template/icons/icon-google.svg') }}"
+                                                 alt="google" class="me-2" height="24">
+                                            <span>Đăng nhập với Google</span>
+                                        </a>
+                                    </div>
+
+                                    <div class="position-relative mb-4">
+                                        <hr class="text-muted">
+                                        <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted">
+                                            hoặc đăng nhập với
+                                        </span>
+                                    </div>
+
+                                    <form class="login-register" method="post" action="{{ route('client.candidate.login.post') }}">
+                                        @csrf
+                                        <input type="hidden" name="previous_url" value="{{ url()->current() }}">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="email">Email của bạn</label>
+                                            <input class="form-control"
+                                                   id="email"
+                                                   type="email"
+                                                   required
+                                                   name="email"
+                                                   placeholder="name@example.com">
+                                        </div>
+
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="password">Mật khẩu</label>
+                                            <input class="form-control"
+                                                   id="password"
+                                                   type="password"
+                                                   required
+                                                   name="password"
+                                                   placeholder="Nhập mật khẩu">
+                                        </div>
+
+                                        <div class="d-flex justify-content-between align-items-center mb-4">
+                                            <div class="form-check">
+                                                <input type="checkbox"
+                                                       class="form-check-input" style="height: 16px;"
+                                                       id="remember"
+                                                       name="remember_login">
+                                                <label class="form-check-label small" for="remember">
+                                                    Ghi nhớ
+                                                </label>
+                                            </div>
+                                            <a href="{{route('client.reset')}}" class="text-primary small">Quên mật khẩu?</a>
+                                        </div>
+
+                                        <div class="d-grid mb-3">
+                                            <button class="btn btn-primary hover-up py-2 p-15" type="submit">
+                                                Đăng nhập ngay
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <div class="text-center mt-4">
+                                        <p class="mb-0">Chưa có tài khoản?
+                                            <a href="{{ route('client.candidate.register') }}" class="text-primary">
+                                                Đăng ký ngay
+                                            </a>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="password">Password</label>
-                                    <input class="form-control" id="password" name="password" type="password" required>
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-default hover-up w-100" type="submit" name="login">Login</button>
-                                </div>
-                                <div class="text-muted text-center">Don't have an account? <a href="">Register</a></div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         @endif
     </main>
 @endsection
@@ -452,6 +539,79 @@
             text-overflow: ellipsis;
             max-height: 3.6em; /* 1.8em per line for example, adjust based on your line-height */
             line-height: 1.8em; /* Adjust this value according to your font size */
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+
+        .form-control:focus {
+            border-color: #0048db;
+            box-shadow: 0 0 0 0.2rem rgba(0,72,219,0.25);
+        }
+
+        .btn-outline-primary, .btn-outline-danger {
+            border-width: 2px;
+            border-radius: 8px;
+            height: 48px; /* Đặt chiều cao cố định cho nút */
+        }
+
+        .btn-outline-primary img, .btn-outline-danger img {
+            margin-top: -2px; /* Điều chỉnh vị trí icon nếu cần */
+        }
+
+        .btn-outline-primary span, .btn-outline-danger span {
+            line-height: 24px; /* Căn chỉnh chiều cao line cho text */
+        }
+
+        .hover-up {
+            transition: all 0.3s ease;
+        }
+
+        .hover-up:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+        }
+
+        .text-brand-1 {
+            color: #0048db;
+        }
+
+        /* Animation cho modal */
+        .modal.fade .modal-dialog {
+            transform: scale(0.8);
+            transition: transform 0.3s ease-out;
+        }
+
+        .modal.show .modal-dialog {
+            transform: scale(1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .modal-dialog {
+                max-width: 90% !important;
+            }
+        }
+
+        .form-check-input {
+            cursor: pointer;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .small {
+            font-size: 0.875rem;
         }
     </style>
 @endpush
@@ -549,6 +709,20 @@
 
             map.addControl(new ZoomToMapControl());
         });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Debug để kiểm tra modal có được khởi tạo không
+        const loginModal = new bootstrap.Modal(document.getElementById('ModalLoginForm'));
+
+        // Thêm event listener cho nút trigger
+        document.querySelectorAll('[data-bs-target="#ModalLoginForm"]').forEach(button => {
+            button.addEventListener('click', function() {
+                loginModal.show();
+            });
+        });
+    });
     </script>
 
 @endpush

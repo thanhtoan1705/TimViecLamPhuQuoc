@@ -93,13 +93,20 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             if (!empty(Auth::user()->email_verified_at)) {
                 $request->session()->regenerate();
+
+                // Kiểm tra và chuyển hướng về trang trước đó
+                $previousUrl = $request->input('previous_url');
+                if ($previousUrl) {
+                    flash()->success('Đăng nhập thành công.', [],'Thành công!');
+                    return redirect()->to($previousUrl);
+                }
+
+                // Nếu không có previous_url thì chuyển về trang mặc định
                 flash()->success('Đăng nhập thành công.', [],'Thành công!');
                 return redirect()->route('client.client.index');
-            }else {
-
+            } else {
                 flash()->error('Tài khoản chưa được xác thực vui lòng kiểm tra email.', [],'Thất bại!');
                 VerificationEmailRegister::dispatch(Auth::user());
-
                 return redirect()->route('client.candidate.login');
             }
         }
@@ -116,8 +123,10 @@ class AuthController extends Controller
         return redirect()->route('client.candidate.login');
     }
 
-    public function redirectToGoogle()
+    public function redirectToGoogle(Request $request)
     {
+        // Lưu URL trước đó vào session
+        session(['previous_url' => $request->get('previous_url')]);
         return Socialite::driver('google')->redirect();
     }
 
@@ -168,7 +177,17 @@ class AuthController extends Controller
             Auth::login($user);
 
             flash()->success('Đăng nhập thành công.', [],'Thành công!');
+
+            // Lấy URL trước đó từ session và xóa nó
+            $previousUrl = session('previous_url');
+            session()->forget('previous_url');
+
+            if ($previousUrl) {
+                return redirect()->to($previousUrl);
+            }
+
             return redirect()->route('client.client.index');
+
         } catch (\Exception $e) {
             Log::error('Google login error: ' . $e->getMessage());
             return redirect()->route('client.candidate.login')->withErrors(['msg' => 'Đăng nhập thất bại']);

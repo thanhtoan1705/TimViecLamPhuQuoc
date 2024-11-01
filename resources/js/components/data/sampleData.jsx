@@ -11,7 +11,7 @@ const sampleData = {
     website: 'https://nguyenvana.com',
 
     title_skills: 'Kỹ năng',
-    skills: ['JavaScript', 'React', 'Node.js', 'Python', 'SQL', 'Git', 'Agile', 'Team Leadership'],
+    skills: ['JavaScript', 'React', 'Node.js'],
 
     title_certificates: 'Chứng chỉ',
     certificates: [
