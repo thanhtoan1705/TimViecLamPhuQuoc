@@ -64,7 +64,7 @@
                                                     </div>
                                                     <h5><a href="{{route('client.post.detail' , $value->slug)}}">{{ $value->title }}</a></h5>
                                                     <p class="mt-10 color-text-paragraph font-sm">
-                                                        {!! \Illuminate\Support\Str::limit($value->content, 100, '...')   !!}
+                                                        {!! \Illuminate\Support\Str::limit(strip_tags($value->content), 100, '...') !!}
                                                     </p>
                                                     <div class="card-2-bottom mt-20">
                                                         <div class="row">
@@ -121,7 +121,7 @@
                                                     </div>
                                                     <h5><a href="{{route('client.post.detail' , $value->slug)}}">{{ $value->title }}</a></h5>
                                                     <p class="mt-10 color-text-paragraph font-sm">
-                                                        {!! \Illuminate\Support\Str::limit($value->content, 100, '...')   !!}
+                                                        {!! \Illuminate\Support\Str::limit(strip_tags($value->content), 100, '...') !!}
                                                     </p>
                                                     <div class="card-2-bottom mt-20">
                                                         <div class="row">

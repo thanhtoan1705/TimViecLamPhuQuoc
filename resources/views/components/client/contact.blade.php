@@ -36,6 +36,7 @@
         font-size: 16px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: background-color 0.3s;
+        z-index: 1000;
     }
 
     .contact-button:hover {

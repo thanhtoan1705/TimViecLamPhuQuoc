@@ -22,7 +22,7 @@ class BlogRepository implements BlogInterface
         return $this->blog->get();
     }
 
-    public function blogTrending(int $is_publish = 1, int $paginate = 5)
+    public function blogTrending(int $is_publish = 1, int $limit = 5)
     {
         return $this->blog
             ->withCount('comments')
@@ -30,7 +30,7 @@ class BlogRepository implements BlogInterface
             ->whereYear('created_at', date('Y'))
             ->orderBy('view', 'desc')
             ->orderBy('comments_count', 'desc')
-            ->paginate($paginate);
+            ->paginate($limit);
     }
 }
 

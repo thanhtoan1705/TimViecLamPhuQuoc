@@ -31,6 +31,11 @@
             </select>
         </div>
         <input class="form-input input-keysearch mr-10" name="keyword" type="text" placeholder="Từ khóa... ">
-        <button class="btn btn-default btn-find font-sm">Tìm Kiếm</button>
+        <button class="btn btn-default btn-find font-sm d-block d-md-none d-lg-block">Tìm Kiếm</button>
+
+        <!-- Nút với biểu tượng tìm kiếm -->
+        <button class="btn btn-default font-sm d-none d-md-block d-lg-none">
+            <i class="bi bi-search"></i>
+        </button>
     </form>
 </div>
