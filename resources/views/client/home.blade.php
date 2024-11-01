@@ -65,13 +65,11 @@
                                         <a class="m-1" href=''>
                                             <div class="item-logo">
                                                 <div class="image-left">
-                                                    @if(!empty($category->image))
-                                                        <img alt="jobBox" width="50px"
-                                                             src="{{ asset('storage/' . $category->image) }}">
-                                                    @else
-                                                        <img alt="jobBox" width="50px"
-                                                             src="{{ asset('default/logo.svg') }}">
-                                                    @endif
+                                                        @php
+                                                            $category_img = getStorageImageUrl($category->image, 'default/square-logo.svg');
+                                                        @endphp
+                                                        <img alt="{{ $category->name }}" width="50px"
+                                                        src="{{ $category_img }}">
                                                 </div>
                                                 <div class="text-info-right">
                                                     <h4 style="max-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $category->name }}</h4>
@@ -163,13 +161,14 @@
                                                             @endif
                                                         </div>
                                                         <div class="image-box">
-                                                            @if(!empty($posts->first()->job_category->image))
-                                                                <img alt="jobBox" width="50px"
-                                                                     src="{{ asset('storage/' . $posts->first()->job_category->image) }}">
-                                                            @else
-                                                                <img alt="jobBox" width="50px"
-                                                                     src="{{ asset('default/logo.svg') }}">
-                                                            @endif
+
+                                                            @php
+                                                                $blog_img = getStorageImageUrl($posts->first()->job_category->image, 'default/square-logo.svg');
+                                                            @endphp
+
+                                                            <img alt="{{ $post->title }}" width="50px"
+                                                                 src="{{ $blog_img }}">
+
                                                         </div>
                                                         <div class="right-info">
                                                             <a class='name-job' href=''>{{ $categoryName }}</a>
@@ -179,7 +178,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="card-block-info">
-                                                        <h6><a href='job-details.html'>{{ $post->title }}</a></h6>
+                                                        <h6>
+                                                            <a href='{{route('client.job.single', ['jobSlug' => $post->slug])}}'>{{ $post->title }}</a>
+                                                        </h6>
                                                         <div class="mt-5"><span
                                                                 class="card-briefcase">{{ $post->jobType->name  }}</span><span
                                                                 class="card-time">{{ \Carbon\Carbon::parse($post['created_at'])->diffForHumans() }}</span>
@@ -238,10 +239,9 @@
                                                                     @endif
                                                                 </div>
                                                                 <div class="col-lg-3 col-3 text-end">
-                                                                    <div class="btn btn-apply-now"
-                                                                         data-bs-toggle="modal"
-                                                                         data-bs-target="#ModalApplyJobForm">Ứng tuyển
-                                                                    </div>
+                                                                    <a href="{{route('client.job.single', ['jobSlug' => $post->slug])}}" class="btn btn-apply-now">
+                                                                        Ứng tuyển
+                                                                    </a>
                                                                 </div>
                                                             </div>
                                                         </div>

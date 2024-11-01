@@ -2,15 +2,15 @@
     <div class="card-grid-1 hover-up wow animate__animated animate__fadeIn">
         <div class="image-box">
             <a href='{{ route('client.employer.single', ['slug' => $employer->slug]) }}'>
-                @if(isset($employer->company_logo) && !is_null($employer->company_logo))
-                    <img style="width: 50px; height: 50px"
-                         src="{{ asset('storage/' . $employer->company_logo) }}"
-                         alt="jobBox">
-                @else
-                    <img style="width: 50px; height: 50px"
-                         src="{{ asset('default/logo.svg') }}"
-                         alt="jobBox">
-                @endif
+                @php
+                    $company_logo = \App\Helper\Image\ImageHelper::getImageUrl($employer->company_logo, 'default/square-logo.svg');
+                @endphp
+
+                <img style="width: 50px; height: 50px"
+                     src="{{ $company_logo }}"
+                     alt="{{ $employer->company_name }}">
+
+
             </a>
         </div>
         <div class="info-text mt-10">

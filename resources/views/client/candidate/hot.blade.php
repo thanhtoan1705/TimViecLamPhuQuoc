@@ -151,12 +151,11 @@
                                             <div class="card-grid-2-image-rd online">
                                                 <a href='#'>
                                                     <figure>
-                                                        @if($candidate->user->avatar_url)
-                                                            <img alt="jobBox"
-                                                                 src="{{ asset('storage/' . $candidate->user->avatar_url) }}">
-                                                        @else
-                                                            <img alt="jobBox" src="{{ asset('default/user.png') }}">
-                                                        @endif
+                                                        @php
+                                                            $avatar_url = getStorageImageUrl($candidate->user->avatar_url, config('image.avatar'));
+                                                        @endphp
+
+                                                        <img alt="{{ $candidate->user->name }}" src="{{ $avatar_url }}">
                                                     </figure>
                                                 </a>
                                             </div>

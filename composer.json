@@ -43,7 +43,9 @@
 
         "files": [
             "app/Helper/FormatHelper/FormatHelper.php",
-            "app/Helper/PromotionHelper/PromotionHelper.php"
+            "app/Helper/PromotionHelper/PromotionHelper.php",
+            "app/Helper/Image/ImageHelper.php",
+            "app/Helper/Image/ImageFunctions.php"
         ]
     },
     "autoload-dev": {

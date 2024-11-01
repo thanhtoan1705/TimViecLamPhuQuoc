@@ -2,10 +2,14 @@
     <div class="container">
         <div class="main-header">
             <div class="header-left">
+                @php
+
+                    $logo = getStorageImageUrl($settings->logo_website, config('image.main-logo'));
+                @endphp
                 <div style="width: 185px" class="header-logo"><a class='d-flex'
                                                                  href="{{ route('client.client.index') }}"><img
                             alt="{{ $settings->company_name }}"
-                            src="{{ asset('storage/'. $settings->logo_website) }}"></a>
+                            src="{{ $logo }}"></a>
                 </div>
             </div>
             <div class="header-nav">

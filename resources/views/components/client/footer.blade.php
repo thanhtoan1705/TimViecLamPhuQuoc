@@ -7,7 +7,10 @@
       <div class="row">
         <div class="footer-col-1 col-md-3 col-sm-12">
             <a href='{{ route('client.client.index') }}'>
-                <img style="width: 185px" alt="{{ $settings->company_name }}"  src="{{ asset('storage/'. $settings->logo_website) }}">
+                @php
+                    $logo_website = getStorageImageUrl($settings->logo_website, config('image.main-logo'));
+                 @endphp
+                <img style="width: 185px" alt="{{ $settings->company_name }}"  src="{{ $logo_website }}">
             </a>
           <div class="mt-20 mb-20 font-xs color-text-paragraph-2">{{ $settings->short_intro }}</div>
           <div class="footer-social">

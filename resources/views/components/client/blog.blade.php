@@ -13,27 +13,37 @@
                     <div class="swiper-wrapper pb-70 pt-5">
                         @foreach($blogs as $blog)
                         @php
-                            if (isset($blog->user->avatar_url))
-                                $user_img = $blog->user->avatar_url;
-                            else
-                                $user_img = asset('default/user.png');
 
-                            if (isset($blog->image))
-                                $blog_img = asset('storage/' . $blog->image);
-                            else
-                                $blog_img = asset('default/blog.jpg');
+                            $user_img = getStorageImageUrl($blog->user->avatar_url, config('image.avatar'));
+
+                            $blog_img = getStorageImageUrl($blog->image, config('image.blog'));
+
                         @endphp
                         <div class="swiper-slide">
                             <div class="card-grid-3 hover-up wow animate__animated animate__fadeIn">
-                                <div class="text-center card-grid-3-image"><a href="#">
-                                        <figure><img alt="jobBox"
+                                <div class="text-center card-grid-3-image">
+                                    <a href="{{route('client.post.detail' , $blog->slug)}}">
+                                        <figure><img alt="{{ $blog->title }}" style="max-width: 100%;
+                                                                        max-height: 255px;
+                                                                        object-fit: cover;"
                                                 src="{{ $blog_img }}">
                                         </figure>
-                                    </a></div>
+                                    </a>
+                                </div>
                                 <div class="card-block-info">
-                                    <div class="tags mb-15"><a class='btn btn-tag' href='blog-grid.html'>{{$blog->category->name}}</a></div>
-                                    <h5><a href='blog-details.html'>{{$blog->title}}</a></h5>
-                                    <p class="mt-10 color-text-paragraph font-sm">{{$blog->meta_description}}</p>
+                                    <div class="tags mb-15">
+                                        <a class='btn btn-tag' href='{{ $blog->category->slug }}'>
+                                            {{$blog->category->name}}
+                                        </a>
+                                    </div>
+                                    <h5>
+                                        <a href='{{route('client.post.detail' , $blog->slug)}}'>
+                                            {{$blog->title}}
+                                        </a>
+                                    </h5>
+                                    <p class="mt-10 color-text-paragraph font-sm">
+                                        {!! \Illuminate\Support\Str::limit(strip_tags($blog->content), 130, '...') !!}
+                                    </p>
                                     <div class="card-2-bottom mt-20">
                                         <div class="row">
                                             <div class="col-lg-6 col-6">
@@ -59,8 +69,11 @@
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
-            <div class="text-center"><a class='btn btn-brand-1 btn-icon-load mt--30 hover-up' href='blog-grid.html'>
-                Tải thêm bài viết</a></div>
+            <div class="text-center">
+                <a class='btn btn-brand-1 btn-icon-load mt--30 hover-up' href='{{ route('client.post.index') }}'>
+                Xem thêm bài viết
+                </a>
+            </div>
         </div>
     </div>
 </section>

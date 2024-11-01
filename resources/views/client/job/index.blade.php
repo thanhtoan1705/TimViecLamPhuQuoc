@@ -117,9 +117,16 @@
                                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                                             <div class="card-grid-2 hover-up">
                                                 <div class="card-grid-2-image-left"><span class="flash"></span>
-                                                    <div class="image-box"><img
-                                                            src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
-                                                            alt="jobBox"></div>
+                                                    <div class="image-box">
+                                                        @php
+                                                            $company_logo = getStorageImageUrl($item->employer->company_logo, config('image.square-logo'));
+                                                        @endphp
+
+                                                        <img
+                                                            style="width: 55px; height: 55px;"
+                                                            src="{{ $company_logo }}"
+                                                            alt="{{ $item->title }}">
+                                                    </div>
                                                     <div class="right-info"><a class='name-job'
                                                                                href="{{route('client.job.single', ['jobSlug' => $item->slug])}}">
                                                             {{ $item->employer->company_name }}</a><span

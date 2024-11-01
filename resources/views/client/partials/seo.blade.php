@@ -23,7 +23,11 @@
     <meta name="twitter:image" content="{{ asset('storage').'/' }}@yield('seo_image', $settings->seo_image)">
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('storage/' . $settings->favicon) }}" type="image/x-icon">
+    @php
+        $favicon = getStorageImageUrl($settings->favicon, config('image.favicon'));
+
+     @endphp
+    <link rel="shortcut icon" href="{{ $favicon }}" type="image/x-icon">
 
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ url()->current() }}">
