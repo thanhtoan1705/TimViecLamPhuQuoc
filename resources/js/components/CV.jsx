@@ -20,7 +20,7 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
         { key: 'skills', title: 'Kỹ năng' },
         { key: 'projects', title: 'Dự án' },
         { key: 'certificates', title: 'Chứng chỉ' },
-        { key: 'languages', title: 'Ngôn ngữ' },
+        { key: 'languages', title: 'Ngôn ng' },
         { key: 'awards', title: 'Giải thưởng và Thành tích' },
         { key: 'extracurricular', title: 'Hoạt động ngoại khóa' },
         { key: 'references', title: 'Người tham khảo' },
@@ -43,6 +43,7 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
         { key: 'certificates', title: 'Chứng chỉ' },
     ]);
     const [themeColor, setThemeColor] = useState('#3c65f5');
+    const [activeItemId, setActiveItemId] = useState(null);
 
     const openModal = useCallback(() => setIsModalOpen(true), []);
     const closeModal = useCallback(() => setIsModalOpen(false), []);
@@ -147,8 +148,11 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
             `;
 
             return `<div class="editable-section position-relative" data-section="${sectionKey}">
-                <button class="p-1 btn btn-outline-danger btn-sm remove-section" data-action="remove-section" data-section="${sectionKey}">
-                    <i class="bi bi-x-lg"></i>
+                <button class="remove-section-btn"
+                        data-action="remove-section"
+                        data-section="${sectionKey}"
+                        title="Xóa phần này">
+                    <i class="bi bi-trash3"></i>
                 </button>
                 ${sectionContent}
                 ${addItemButton}
@@ -158,34 +162,65 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
         const eachRegex = /{{#each\s+(\w+)}}([\s\S]*?){{\/each}}/g;
         processed = processed.replace(eachRegex, (match, key, content) => {
             if (Array.isArray(data[key])) {
-                return data[key].map((item, index) => {
-                    let itemContent = content;
-                    if (typeof item === 'string' || item === null || item === undefined) {
-                        itemContent = itemContent.replace(/{{this}}/g, `<span class="editable" data-key="${key}.${index}">${item || ''}</span>`);
-                    } else if (typeof item === 'object') {
-                        Object.keys(item).forEach(prop => {
-                            const propRegex = new RegExp(`{{this.${prop}}}`, 'g');
-                            itemContent = itemContent.replace(propRegex, `<span class="editable" data-key="${key}.${index}.${prop}">${item[prop] || ''}</span>`);
-                        });
-                    }
-                    return `<div class="editable-item">
-                        ${itemContent}
-                        <div class="action-buttons">
-                            <button class="btn btn-outline-danger btn-sm remove-item" data-action="remove" data-section="${key}" data-index="${index}">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                            <button class="btn btn-outline-secondary btn-sm move-up" data-action="move-up" data-section="${key}" data-index="${index}">
-                                <i class="bi bi-arrow-up"></i>
-                            </button>
-                            <button class="btn btn-outline-secondary btn-sm move-down" data-action="move-down" data-section="${key}" data-index="${index}">
-                                <i class="bi bi-arrow-down"></i>
-                            </button>
-                        </div>
-                    </div>`;
-                }).join('') + `
-                <button class="btn btn-outline-primary btn-sm add-item" data-action="add" data-section="${key}">
-                    <i class="bi bi-plus"></i> Thêm
-                </button>`;
+                return `
+                    ${data[key].map((item, index) => {
+                        let itemContent = content;
+                        const itemId = `${key}-${index}`;
+
+                        if (typeof item === 'string' || item === null || item === undefined) {
+                            itemContent = itemContent.replace(/{{this}}/g,
+                                `<span class="editable"
+                                      contenteditable="true"
+                                      data-key="${key}.${index}"
+                                      data-item-id="${itemId}"
+                                      onblur="window.handleEditableBlur(event)"
+                                      onclick="window.handleEditableClick(event, '${itemId}')">${item || ''}</span>`
+                            );
+                        } else if (typeof item === 'object') {
+                            Object.keys(item).forEach(prop => {
+                                const propRegex = new RegExp(`{{this.${prop}}}`, 'g');
+                                itemContent = itemContent.replace(propRegex,
+                                    `<span class="editable"
+                                          contenteditable="true"
+                                          data-key="${key}.${index}.${prop}"
+                                          data-item-id="${itemId}"
+                                          onblur="window.handleEditableBlur(event)"
+                                          onclick="window.handleEditableClick(event, '${itemId}')">${item[prop] || ''}</span>`
+                                );
+                            });
+                        }
+
+                        return `
+                            <div class="editable-item" data-item-id="${itemId}">
+                                ${itemContent}
+                                <div class="item-controls">
+                                    <button class="control-btn add-btn" title="Thêm mục mới"
+                                            data-action="add"
+                                            data-section="${key}"
+                                            onclick="event.stopPropagation(); window.handleAction('add', '${key}')">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button>
+                                    <button class="control-btn delete-btn" title="Xóa mục này"
+                                            onclick="event.stopPropagation(); window.handleAction('remove', '${key}', ${index})">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                    ${index > 0 ? `
+                                        <button class="control-btn move-btn" title="Di chuyển lên"
+                                                onclick="event.stopPropagation(); window.handleAction('move-up', '${key}', ${index})">
+                                            <i class="bi bi-arrow-up-circle-fill"></i>
+                                        </button>
+                                    ` : ''}
+                                    ${index < data[key].length - 1 ? `
+                                        <button class="control-btn move-btn" title="Di chuyển xuống"
+                                                onclick="event.stopPropagation(); window.handleAction('move-down', '${key}', ${index})">
+                                            <i class="bi bi-arrow-down-circle-fill"></i>
+                                        </button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                `;
             }
             return match;
         });
@@ -200,8 +235,35 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
             return match;
         });
 
+        // Xử lý languages section
+        const languagesRegex = /{{#each languages}}([\s\S]*?){{\/each}}/g;
+        processed = processed.replace(languagesRegex, (match, content) => {
+            if (!Array.isArray(data.languages)) return '';
+
+            return data.languages.map((lang, index) => {
+                // Nếu lang là string (như trong sampleData)
+                if (typeof lang === 'string') {
+                    return content.replace(/{{this}}/g,
+                        `<span class="editable" data-key="languages.${index}">${lang}</span>`
+                    );
+                }
+                // Nếu lang là object (như từ API)
+                else if (typeof lang === 'object') {
+                    let itemContent = content;
+                    Object.entries(lang).forEach(([key, value]) => {
+                        const fieldRegex = new RegExp(`{{this.${key}}}`, 'g');
+                        itemContent = itemContent.replace(fieldRegex,
+                            `<span class="editable" data-key="languages.${index}.${key}">${value || ''}</span>`
+                        );
+                    });
+                    return itemContent;
+                }
+                return '';
+            }).join('');
+        });
+
         return processed;
-    }, [removedSections]);
+    }, [activeItemId, removedSections]);
 
     useEffect(() => {
         const newProcessedContent = processTemplate(templateContent, cvData);
@@ -278,19 +340,59 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
         } else if (action === 'add') {
             setCvData(prevData => {
                 const newData = { ...prevData };
+
+                // Tạo item mới dựa vào loại section
+                const createEmptyItem = (sectionType) => {
+                    switch(sectionType) {
+                        case 'education':
+                            return {
+                                degree: '',
+                                university: '',
+                                start_year: '',
+                                end_year: '',
+                                gpa: '',
+                                classification: ''
+                            };
+                        case 'work_experience':
+                            return {
+                                company: '',
+                                position: '',
+                                start_date: '',
+                                end_date: '',
+                                responsibilities: ''
+                            };
+                        case 'languages':
+                                return '';
+                        case 'projects':
+                            return {
+                                name: '',
+                                description: '',
+                                technologies: ''
+                            };
+                        case 'skills':
+                            return '';
+                        case 'certificates':
+                            return '';
+                        default:
+                            return '';
+                    }
+                };
+
+                // Kiểm tra và thêm item mới
                 if (Array.isArray(newData[section])) {
+                    // Nếu là mảng rỗng hoặc mảng chứa string
                     if (newData[section].length === 0 || typeof newData[section][0] === 'string') {
-                        newData[section] = [...newData[section], ''];
-                    } else if (typeof newData[section][0] === 'object') {
-                        const newItem = Object.keys(newData[section][0] || {}).reduce((acc, key) => {
-                            acc[key] = '';
-                            return acc;
-                        }, {});
-                        newData[section] = [...newData[section], newItem];
+                        newData[section] = [...newData[section], createEmptyItem(section)];
+                    }
+                    // Nếu là mảng chứa object
+                    else if (typeof newData[section][0] === 'object') {
+                        newData[section] = [...newData[section], createEmptyItem(section)];
                     }
                 } else {
-                    newData[section] = [''];
+                    // Nếu section chưa tồn tại
+                    newData[section] = [createEmptyItem(section)];
                 }
+
                 return newData;
             });
         } else if (action === 'remove') {
@@ -506,7 +608,7 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
             }
         });
 
-        // Lưu selection khi người dùng tô đen text
+        // Lu selection khi người dùng tô đen text
         document.addEventListener('selectionchange', saveSelection);
 
         // Cleanup
@@ -527,11 +629,190 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
         };
     }, []);
 
+    const getFullImageUrl = (path) => {
+        if (!path) return `${window.location.origin}/default/user.png`;
+        if (path.startsWith('http')) return path; // Nếu là URL đầy đủ
+        return `${window.location.origin}/storage/${path}`; // Nếu là đường dẫn tương đối
+    };
+
+    useEffect(() => {
+        const fetchCandidateInfo = async () => {
+            try {
+                const response = await axios.get('/candidate-info');
+                const { user, candidate } = response.data;
+
+                setCvData(prevData => {
+                    const newData = { ...prevData };
+
+                    // Thông tin cơ bản từ user hoặc sampleData
+                    newData.avatar = getFullImageUrl(user.avatar_url) || sampleData.avatar;
+                    newData.name = user.name || sampleData.name;
+                    newData.email = user.email || sampleData.email;
+                    newData.phone = user.phone || sampleData.phone;
+
+                    // Thông tin cá nhân
+                    newData.personal_info = {
+                        date_of_birth: candidate.date_of_birth || sampleData.birthdate,
+                        gender: candidate.gender || 'Nam/Nữ',
+                        address: candidate.address?.street || sampleData.address,
+                    };
+
+                    // Mục tiêu nghề nghiệp
+                    newData.career_objective = candidate.description || sampleData.career_objective;
+
+                    // Kinh nghiệm làm việc
+                    newData.work_experience = candidate.work_experiences?.length > 0
+                        ? candidate.work_experiences.map(exp => ({
+                            company: exp.company_name,
+                            position: exp.position,
+                            start_date: new Date(exp.start_date).toLocaleDateString('vi-VN'),
+                            end_date: exp.end_date ? new Date(exp.end_date).toLocaleDateString('vi-VN') : 'Hiện tại',
+                            responsibilities: exp.description
+                        }))
+                        : sampleData.work_experience;
+
+                    // Học vấn
+                    newData.education = candidate.educations?.length > 0
+                        ? candidate.educations.map(edu => ({
+                            university: edu.institution_name,
+                            degree: edu.major_name,
+                            start_year: new Date(edu.start_date).toLocaleDateString('vi-VN'),
+                            end_year: new Date(edu.end_date).toLocaleDateString('vi-VN'),
+                            gpa: edu.gpa,
+                            classification: edu.classification
+                        }))
+                        : sampleData.education;
+
+                    // Kỹ năng
+                    newData.skills = candidate.skills?.length > 0
+                        ? candidate.skills.map(skill => skill.name)
+                        : sampleData.skills;
+
+                    // Ngôn ngữ
+                    newData.languages = candidate.language_proficiencies?.length > 0
+                        ? candidate.language_proficiencies.map(lang =>
+                            `${lang.language} (${lang.proficiency_level})`)
+                        : sampleData.languages;
+
+                    // Dự án
+                    newData.projects = candidate.projects?.length > 0
+                        ? candidate.projects
+                        : sampleData.projects;
+
+                    // Chứng chỉ
+                    newData.certificates = candidate.certificates?.length > 0
+                        ? candidate.certificates
+                        : sampleData.certificates;
+
+                    // Giải thưởng
+                    newData.awards = candidate.awards?.length > 0
+                        ? candidate.awards
+                        : sampleData.awards;
+
+                    // Hoạt động ngoại khóa
+                    newData.extracurricular = candidate.extracurricular?.length > 0
+                        ? candidate.extracurricular
+                        : sampleData.extracurricular;
+
+                    // Thêm các tiêu đề từ sampleData
+                    newData.title_personal_info = sampleData.title_personal_info;
+                    newData.title_skills = sampleData.title_skills;
+                    newData.title_certificates = sampleData.title_certificates;
+                    newData.title_languages = sampleData.title_languages;
+                    newData.title_career_objective = sampleData.title_career_objective;
+                    newData.title_work_experience = sampleData.title_work_experience;
+                    newData.title_education = sampleData.title_education;
+                    newData.title_projects = sampleData.title_projects;
+                    newData.title_awards = sampleData.title_awards;
+                    newData.title_extracurricular = sampleData.title_extracurricular;
+                    newData.title_references = sampleData.title_references;
+
+                    return newData;
+                });
+
+            } catch (error) {
+                console.error('Error fetching candidate info:', error);
+                // Nếu có lỗi, sử dụng toàn bộ dữ liệu mẫu
+                setCvData(sampleData);
+            }
+        };
+
+        fetchCandidateInfo();
+    }, []);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const cvContainer = document.getElementById('pdf');
+            if (!cvContainer) return;
+
+            const containerWidth = window.innerWidth;
+            let scale;
+
+            // Tính toán scale dựa trên kích thước màn hình
+            if (containerWidth <= 320) {
+                scale = 0.35;
+            } else if (containerWidth <= 375) {
+                scale = 0.38;
+            } else if (containerWidth <= 414) {
+                scale = 0.4;
+            } else if (containerWidth <= 768) {
+                scale = 0.45;
+            } else {
+                scale = 1;
+            }
+
+            // Áp dụng transform
+            // cvContainer.style.transform = `scale(${scale})`;
+            // cvContainer.style.transformOrigin = 'top left';
+        };
+
+        // Initial check
+        handleResize();
+
+        // Add event listener
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        window.handleItemClick = (itemId) => {
+            setActiveItemId(prevId => prevId === itemId ? null : itemId);
+        };
+
+        window.handleAction = handleAction;
+
+        return () => {
+            delete window.handleItemClick;
+            delete window.handleAction;
+        };
+    }, [handleAction]);
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (!e.target.closest('.editable-item')) {
+                setActiveItemId(null);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, []);
+
     return (
         <div
             ref={cvRef}
             className="cv-editor"
             dangerouslySetInnerHTML={{ __html: processedContent }}
+            style={{
+                width: '21cm',
+                minHeight: '29.7cm',
+                padding: '0.5cm',
+                // margin: '0 auto',
+                // background: 'white',
+                // boxShadow: '0 0 10px rgba(0,0,0,0.1)'
+            }}
         />
     );
 };

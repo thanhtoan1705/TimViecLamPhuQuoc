@@ -212,4 +212,27 @@ class CandidateController extends Controller
 
         return view('your-view-name', $data);
     }
+
+    public function getCandidateInfo()
+    {
+        $user = auth()->user();
+        $candidate = $user->candidate()->with([
+            'major',
+            'resume',
+            'experience',
+            'education',
+            'skills',
+            'degree',
+            'salary',
+            'address',
+            'workExperiences',
+            'educations',
+            'languageProficiencies'
+        ])->first();
+
+        return response()->json([
+            'user' => $user,
+            'candidate' => $candidate
+        ]);
+    }
 }

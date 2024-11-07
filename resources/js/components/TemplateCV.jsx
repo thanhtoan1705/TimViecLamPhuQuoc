@@ -222,9 +222,9 @@ function TemplateCV() {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container mt-5" style={{ minWidth: '992px' }}>
             <div className="row">
-                <div className="col-md-4">
+                <div className="col-4">
                     <div className="text-center mb-4">
                         <img src="https://via.placeholder.com/150" alt="Avatar" className="rounded-circle img-fluid" style={{width: '150px', height: '150px', objectFit: 'cover'}} />
                     </div>
@@ -252,7 +252,7 @@ function TemplateCV() {
                     <hr className="my-4" />
                     {sections.filter(s => ['contact', 'education', 'skills'].includes(s.type)).map(renderSection)}
                 </div>
-                <div className="col-md-8">
+                <div className="col-8">
                     {sections.filter(s => !['contact', 'education', 'skills'].includes(s.type)).map(renderSection)}
                 </div>
             </div>

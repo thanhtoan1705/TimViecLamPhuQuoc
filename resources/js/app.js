@@ -4,8 +4,9 @@
  * building robust, powerful web applications using React + Laravel.
  */
 
-import './bootstrap';
-import '../../public/assets/client/js/room.js';
+// import './bootstrap';
+// require('bootstrap');
+// import '../../public/assets/client/js/room.js';
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 

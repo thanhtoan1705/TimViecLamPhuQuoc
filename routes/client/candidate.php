@@ -18,5 +18,7 @@ Route::prefix('/ung-vien')->name('candidate.')->group(function(){
 });
 Route::get('/districts/{province}', [CandidateController::class, 'getDistricts']);
 Route::get('/wards/{district}', [CandidateController::class, 'getWards']);
+Route::get('/candidate-info', [CandidateController::class, 'getCandidateInfo'])->middleware('auth');
+
 
 

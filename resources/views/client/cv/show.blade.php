@@ -70,7 +70,8 @@
 
         <div class="cv-content-wrapper">
             <div class="cv-container container mt-35 p-4 bg-white" id="pdf">
-                <div id="cv-editor" data-template-id="{{ $cvTemplate->id }}"></div>
+                <div id="cv-editor" data-template-id="{{ $cvTemplate->id }}" data-is-authenticated="{{ auth()->check() }}"
+                ></div>
             </div>
         </div>
     </main>
@@ -172,7 +173,7 @@
         margin-right: 0;
     }
 
-    .cv-button-group .btn-primary {
+    /* .cv-button-group .btn-primary {
         background-color: var(--cv-primary-color);
         border-color: var(--cv-primary-color);
     }
@@ -193,7 +194,7 @@
         background-color: var(--cv-primary-color);
         border-color: var(--cv-primary-color);
         color: white;
-    }
+    } */
 
     .main {
         display: flex;
@@ -204,12 +205,7 @@
     .cv-content-wrapper {
         flex: 1;
         display: flex;
-        flex-direction: column;
         padding-bottom: 2rem;
-    }
-
-    .cv-container {
-        flex: 1;
     }
 
     .cv-btn.active {
@@ -259,7 +255,7 @@
     }
 
     /* Thêm hiệu ứng hover */
-    .avatar-container::after {
+    /* .avatar-container::after {
         content: 'Thay đổi ảnh';
         position: absolute;
         top: 50%;
@@ -270,7 +266,7 @@
         transition: opacity 0.3s ease;
         pointer-events: none;
         text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-    }
+    } */
 
     .avatar-container:hover::after {
         opacity: 1;
@@ -377,7 +373,7 @@
     }
 
     /* Đảm bảo các định dạng được giữ nguyên */
-    .editable[style*="font-family"] {
+    /* .editable[style*="font-family"] {
         font-family: inherit;
     }
 
@@ -387,7 +383,7 @@
 
     .editable[style*="color"] {
         color: inherit;
-    }
+    } */
 
     #themeColorPicker {
         -webkit-appearance: none;
@@ -1081,6 +1077,508 @@
             padding-left: 15px !important;
         }
     }
+
+
+        @keyframes scrollIndicator {
+        0% { transform: translateX(0); opacity: 0.8; }
+        50% { transform: translateX(10px); opacity: 0.5; }
+        100% { transform: translateX(0); opacity: 0.8; }
+    }
+
+/* Điều chỉnh toolbar cho mobile */
+    @media (max-width: 768px) {
+        .cv-toolbar {
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            padding: 10px;
+        }
+
+        .toolbar-group {
+            display: inline-flex;
+            margin-right: 15px;
+        }
+
+        .action-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    }
+
+    /* Reset và cố định kích thước cho CV */
+    #pdf {
+        /* width: 21cm !important; */
+        margin: 0 auto !important;
+        padding: 0 !important;
+        background: white;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        position: relative;
+    }
+
+    /* Wrapper styles */
+    .cv-content-wrapper {
+        width: 100% !important;
+        padding: 20px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        min-height: 100vh !important;
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .cv-content-wrapper {
+            padding: 0 !important;
+            overflow: hidden !important;
+        }
+
+        #pdf {
+            transform: scale(0.4);
+            transform-origin: top center;
+        }
+
+        /* Override các style có thể gây conflict */
+        .container {
+            width: auto !important;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .row {
+            margin: 0 !important;
+        }
+
+        [class*="col-"] {
+            padding: 0 !important;
+        }
+
+        /* Đảm bảo không có scroll ngang */
+        body {
+            overflow-x: hidden !important;
+        }
+    }
+
+    /* Fine-tune scale cho từng kích thước màn hình */
+    @media (max-width: 320px) {
+        #pdf {
+            transform: scale(0.35);
+        }
+    }
+
+    @media (min-width: 321px) and (max-width: 375px) {
+        #pdf {
+            transform: scale(0.38);
+        }
+    }
+
+    @media (min-width: 376px) and (max-width: 414px) {
+        #pdf {
+            transform: scale(0.4);
+        }
+    }
+
+    @media (min-width: 415px) and (max-width: 768px) {
+        #pdf {
+            transform: scale(0.45);
+        }
+    }
+
+    /* Thêm style mới cho container */
+    .cv-content-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    #pdf {
+        width: 21cm; /* Kích thước A4 */
+        background: white;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        margin: 0 auto;
+    }
+
+    /* Style cho mobile */
+    @media (max-width: 768px) {
+        .cv-content-wrapper {
+            padding: 10px;
+        }
+
+        #pdf {
+            width: 100%; /* Chiếm full width của container */
+            transform: scale(0.9); /* Thu nhỏ xuống 90% */
+            transform-origin: top center; /* Điểm gốc transform từ giữa trên cùng */
+        }
+    }
+
+    /* Thêm breakpoint cho màn hình nhỏ hơn */
+    @media (max-width: 480px) {
+        #pdf {
+            transform: scale(0.8); /* Thu nhỏ xuống 80% cho màn hình nhỏ hơn */
+        }
+    }
+
+    @media (max-width: 320px) {
+        #pdf {
+            transform: scale(0.7); /* Thu nhỏ xuống 70% cho màn hình rất nhỏ */
+        }
+    }
+
+    /* Style cho CV container */
+    .cv-content-wrapper {
+        width: 100%;
+        min-height: 100vh;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        overflow-x: hidden;
+    }
+
+    #pdf {
+        width: 21cm;
+        min-height: 29.7cm;
+        background: white;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        margin: 0 auto;
+        transform-origin: top center;
+        position: relative;
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .main {
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .cv-content-wrapper {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            min-height: auto;
+        }
+
+        #pdf {
+            width: 21cm;
+            transform: scale(0.45);
+            /* transform-origin: top left; */
+            margin-left: 0;
+            margin-right: -50%; /* Điều chỉnh để tránh scroll ngang */
+        }
+
+        /* Điều chỉnh toolbar cho mobile */
+        .cv-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .cv-toolbar {
+            padding: 10px !important;
+        }
+
+        .action-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+    }
+
+    /* Fine-tune scale cho từng kích thước màn hình */
+    @media (max-width: 320px) {
+        #pdf {
+            transform: scale(0.35);
+        }
+    }
+
+    @media (min-width: 321px) and (max-width: 375px) {
+        #pdf {
+            transform: scale(0.38);
+        }
+    }
+
+    @media (min-width: 376px) and (max-width: 414px) {
+        #pdf {
+            transform: scale(0.4);
+        }
+    }
+
+    @media (min-width: 415px) and (max-width: 768px) {
+        #pdf {
+            transform: scale(0.45);
+        }
+    }
+
+    .item-controls {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        display: none;
+        gap: 8px;
+        background: white;
+        padding: 8px;
+        border-radius: 8px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12);
+        z-index: 1000;
+        transition: all 0.3s ease;
+    }
+
+    .item-controls.show {
+        display: flex;
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Style cho các nút điều khiển */
+    .control-btn {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border: none;
+        border-radius: 6px;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    /* Style cho từng loại nút */
+    .control-btn.add-btn {
+        color: #2ecc71;
+    }
+
+    .control-btn.delete-btn {
+        color: #e74c3c;
+    }
+
+    .control-btn.move-btn {
+        color: #3498db;
+    }
+
+    /* Hover effects */
+    .control-btn:hover {
+        transform: translateY(-2px);
+        background-color: #f8f9fa;
+    }
+
+    .control-btn:active {
+        transform: translateY(0);
+    }
+
+    /* Icon styles */
+    .control-btn i {
+        font-size: 1.2rem;
+        transition: transform 0.2s ease;
+    }
+
+    .control-btn:hover i {
+        transform: scale(1.1);
+    }
+
+    /* Style cho editable item khi active */
+    .editable-item {
+        position: relative;
+        padding: 15px;
+        margin: 5px 0;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .editable-item.active {
+        background-color: #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Style cho item controls - chỉ hiện khi item active */
+    .item-controls {
+        position: absolute;
+        top: -40px;
+        right: 10px;
+        display: none;
+        gap: 8px;
+        background: white;
+        padding: 8px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    .item-controls.show {
+        display: flex;
+        animation: slideDown 0.2s ease;
+    }
+
+    /* Animation cho controls */
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .item-controls {
+            position: static;
+            margin-top: 10px;
+            box-shadow: none;
+            padding: 5px;
+        }
+
+        .editable-item.active {
+            padding-bottom: 50px;
+        }
+    }
+
+    /* Tooltip styles */
+    .control-btn[title] {
+        position: relative;
+    }
+
+    .control-btn[title]::before {
+        content: attr(title);
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 4px 8px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        font-size: 12px;
+        border-radius: 4px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease;
+    }
+
+    .control-btn[title]:hover::before {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .item-controls {
+            position: static;
+            margin-top: 10px;
+            box-shadow: none;
+            padding: 5px;
+        }
+
+        .editable-item.active {
+            padding-bottom: 50px;
+        }
+    }
+
+    /* Thêm styles mới cho nút xóa section */
+    .remove-section-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        border: none;
+        background: transparent;
+        color: #dc3545;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(5px);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+    }
+
+    .remove-section-btn i {
+        font-size: 1.1rem;
+        transition: transform 0.2s ease;
+    }
+
+    /* Hiển thị nút chỉ khi hover trên desktop */
+    @media (min-width: 769px) {
+        .editable-section:hover .remove-section-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Style cho mobile - chỉ hiện khi section được active/focus */
+    @media (max-width: 768px) {
+        .remove-section-btn {
+            transform: none;
+            width: 28px;
+            height: 28px;
+        }
+
+        .remove-section-btn i {
+            font-size: 1rem;
+        }
+
+        /* Chỉ hiện nút khi section được active */
+        .editable-section.active .remove-section-btn {
+            opacity: 1;
+        }
+    }
+
+    /* Thêm class active cho section khi được click */
+    .editable-section.active {
+        background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    .editable-section .section-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: none;
+    gap: 8px;
+    background: white;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+}
+
+.editable-section:hover .section-controls,
+.editable-section.active .section-controls {
+    display: flex;
+}
 </style>
 @endpush
 
@@ -1329,6 +1827,87 @@
             previewContent.appendChild(cvContent);
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        let activeItem = null;
+
+        // Xử lý click vào phần editable
+        window.handleEditableClick = function(event, itemId) {
+            event.stopPropagation();
+
+            const clickedItem = document.querySelector(`.editable-item[data-item-id="${itemId}"]`);
+
+            // Ẩn controls của item cũ (nếu có và khác với item hiện tại)
+            if (activeItem && activeItem !== clickedItem) {
+                activeItem.classList.remove('active');
+                activeItem.querySelector('.item-controls').classList.remove('show');
+            }
+
+            // Hiện controls của item được click
+            clickedItem.classList.add('active');
+            clickedItem.querySelector('.item-controls').classList.add('show');
+            activeItem = clickedItem;
+        };
+
+        // Xử lý blur của editable
+        window.handleEditableBlur = function(event) {
+            const element = event.target;
+            const key = element.dataset.key;
+            const value = element.innerHTML;
+
+            if (window.updateCVData) {
+                window.updateCVData(key, value);
+            }
+        };
+
+        // Click ra ngoài để ẩn controls
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.editable') &&
+                !event.target.closest('.item-controls')) {
+                if (activeItem) {
+                    activeItem.classList.remove('active');
+                    activeItem.querySelector('.item-controls').classList.remove('show');
+                    activeItem = null;
+                }
+            }
+        });
+
+        // Ngăn chặn sự kiện click của các nút điều khiển lan ra ngoài
+        document.querySelectorAll('.item-controls button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        let activeSection = null;
+
+        // Xử lý click vào section
+        document.addEventListener('click', function(e) {
+            const section = e.target.closest('.editable-section');
+
+            // Nếu click vào section mới
+            if (section) {
+                // Nếu đang có section active khác, bỏ active
+                if (activeSection && activeSection !== section) {
+                    activeSection.classList.remove('active');
+                }
+
+                // Toggle active cho section hiện tại
+                section.classList.toggle('active');
+                activeSection = section;
+            }
+            // Nếu click ra ngoài
+            else if (!e.target.closest('.remove-section-btn')) {
+                if (activeSection) {
+                    activeSection.classList.remove('active');
+                    activeSection = null;
+                }
+            }
+        });
+    });
 </script>
 @endpush
+
 
