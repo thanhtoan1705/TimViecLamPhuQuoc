@@ -179,11 +179,13 @@
                                                 }
                                             @endphp
                                             <div class="post-list-small-item d-flex align-items-center">
-                                                <figure class="thumb mr-15"><img
+                                                <a href="{{route('client.post.detail' , $item->slug)}}">
+                                                    <figure class="thumb mr-15"><img
                                                         src="{{ $blog_img }}"
                                                         alt="jobBox"></figure>
+                                                </a>
                                                 <div class="content">
-                                                    <a href="#"><h5>{{$item->title}}</h5></a>
+                                                    <a href="{{route('client.post.detail' , $item->slug)}}"><h5>{{$item->title}}</h5></a>
                                                     <div class="post-meta text-muted d-flex align-items-center mb-15">
                                                         <div class="author d-flex align-items-center mr-20"><img
                                                                 alt="jobBox"
