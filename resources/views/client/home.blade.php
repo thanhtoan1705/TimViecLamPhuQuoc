@@ -179,14 +179,16 @@
                                                     </div>
                                                     <div class="card-block-info">
                                                         <h6>
-                                                            <a href='{{route('client.job.single', ['jobSlug' => $post->slug])}}'>{{ $post->title }}</a>
+                                                            <a href='{{route('client.job.single', ['jobSlug' => $post->slug])}}'>
+                                                                {{ limit_text($post->title, 65) }}
+                                                            </a>
                                                         </h6>
                                                         <div class="mt-5"><span
                                                                 class="card-briefcase">{{ $post->jobType->name  }}</span><span
                                                                 class="card-time">{{ \Carbon\Carbon::parse($post['created_at'])->diffForHumans() }}</span>
                                                         </div>
                                                         <p class="description font-sm color-text-paragraph mt-15">
-                                                            {{ $post->description }}
+                                                            {{ limit_text($post->description, 120) }}
                                                         </p>
                                                         <div class="mt-30">
                                                             @foreach($post->skills as $key => $skill)

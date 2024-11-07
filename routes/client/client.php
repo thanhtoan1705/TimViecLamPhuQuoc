@@ -10,6 +10,7 @@ Route::prefix('/')->name('client.')->group(function () {
     Route::post('/contact', [PageController::class, 'sendEmail'])->name('contact');
     Route::get('/gioi-thieu', [PageController::class, 'about'])->name('about');
     Route::get('/lien-he', [PageController::class, 'contact'])->name('lien-he');
+    Route::post('/lien-he', [PageController::class, 'sendMailContact'])->name('lien-he.post');
     Route::get('/video-call', [VideoCallController::class, 'index'])->name('video-call');
     Route::get('/room', [VideoCallController::class, 'room'])->name('room');
 });

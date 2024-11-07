@@ -42,7 +42,7 @@
                                         </a>
                                     </h5>
                                     <p class="mt-10 color-text-paragraph font-sm">
-                                        {!! \Illuminate\Support\Str::limit(strip_tags($blog->content), 130, '...') !!}
+                                        {{ limit_text($blog->content, 180) }}
                                     </p>
                                     <div class="card-2-bottom mt-20">
                                         <div class="row">

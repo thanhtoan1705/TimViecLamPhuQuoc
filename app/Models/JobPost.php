@@ -11,7 +11,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class JobPost extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
     use LogsActivity;
 
     public function getActivitylogOptions(): LogOptions

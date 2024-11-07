@@ -65,21 +65,21 @@ class JobPostResource extends Resource
             ]);
         }
 
-        $maxPosts = $employer->max_posts_per_day;
-
-        $hasPostedToday = JobPost::where('employer_id', $employer->id)
-            ->whereDate('created_at', now()->format('Y-m-d'))
-            ->count();
-
-        if ($operation === 'create' && $hasPostedToday >= $maxPosts) {
-            session()->flash('error', 'Bạn chỉ được phép đăng ' . $maxPosts . ' bài hôm nay.');
-
-            return $form->schema([
-                Forms\Components\Placeholder::make('Thông báo')
-                    ->content('Bạn đã đăng ' . $hasPostedToday . ' bài hôm nay. Hãy nâng cấp tài khoản để đăng thêm.')
-                    ->extraAttributes(['class' => 'bg-warning text-dark p-3 rounded']),
-            ]);
-        }
+//        $maxPosts = $employer->max_posts_per_day;
+//
+//        $hasPostedToday = JobPost::where('employer_id', $employer->id)
+//            ->whereDate('created_at', now()->format('Y-m-d'))
+//            ->count();
+//
+//        if ($operation === 'create' && $hasPostedToday >= $maxPosts) {
+//            session()->flash('error', 'Bạn chỉ được phép đăng ' . $maxPosts . ' bài hôm nay.');
+//
+//            return $form->schema([
+//                Forms\Components\Placeholder::make('Thông báo')
+//                    ->content('Bạn đã đăng ' . $hasPostedToday . ' bài hôm nay. Hãy nâng cấp tài khoản để đăng thêm.')
+//                    ->extraAttributes(['class' => 'bg-warning text-dark p-3 rounded']),
+//            ]);
+//        }
 
         return $form
             ->schema([
@@ -307,13 +307,13 @@ class JobPostResource extends Resource
             ]);
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
-    }
+//    public static function getEloquentQuery(): Builder
+//    {
+//        return parent::getEloquentQuery()
+//            ->withoutGlobalScopes([
+//                SoftDeletingScope::class,
+//            ]);
+//    }
 
 
     public static function getRelations(): array

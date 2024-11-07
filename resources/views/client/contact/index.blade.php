@@ -27,27 +27,52 @@
                     <div class="col-lg-7 mb-40">
                         <h3 class="mt-5 mb-10">Liên hệ với chúng tôi</h3>
 
-                        <form class="contact-form-style mt-30" id="contact-form" action="#" method="post">
+                        <form class="contact-form-style mt-30" id="contact-form" action="" method="post">
+                            @csrf
                             <div class="row wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
                                 <div class="col-lg-12 col-md-12">
                                     <div class="input-style mb-20">
-                                        <input class="font-sm color-text-paragraph-2" name="name" placeholder="Họ và tên" type="text">
+                                        <input value="{{ old('name') }}" class="font-sm color-text-paragraph-2" name="name" placeholder="Họ và tên" type="text">
+
+                                        @error('name')
+                                            <span class="text-danger">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="input-style mb-20">
-                                        <input class="font-sm color-text-paragraph-2" name="company" placeholder="Số điện thoại" type="text">
+                                        <input value="{{ old('phone') }}" class="font-sm color-text-paragraph-2" name="phone" placeholder="Số điện thoại" type="text">
+
+                                        @error('phone')
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="input-style mb-20">
-                                        <input class="font-sm color-text-paragraph-2" name="email" placeholder="Email" type="email">
+                                        <input value="{{ old('email') }}" class="font-sm color-text-paragraph-2" name="email" placeholder="Email" type="email">
+
+                                        @error('email')
+                                            <span class="text-danger">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12 col-md-12">
                                     <div class="textarea-style mb-30">
-                                        <textarea class="font-sm color-text-paragraph-2" name="message" placeholder="Nội dung liên hệ"></textarea>
+                                        <textarea class="font-sm color-text-paragraph-2" name="message" placeholder="Nội dung liên hệ">{{old('message')}}</textarea>
+
+                                        @error('message')
+                                            <span class="text-danger">
+                                                    {{ $message }}
+                                            </span>
+                                        @enderror
                                     </div>
                                     <button class="submit btn btn-send-message" type="submit">
                                         Liên hệ
@@ -78,7 +103,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-12 mb-30">
                             <a href="#">
-                                <img style="width: 180px" src="{{ asset('storage/'. $settings->logo_website) }}" alt="joxBox">
+                                <img style="width: 180px" src="{{ getStorageImageUrl($settings->logo_website, 'default/main-logo.svg') }}" alt="joxBox">
                             </a>
                             <div class="font-sm color-text-paragraph">
 

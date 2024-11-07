@@ -134,7 +134,9 @@
                                                 </div>
                                                 <div class="card-block-info">
                                                     <h6>
-                                                        <a href="{{route('client.job.single', ['jobSlug' => $item->slug])}}">{{ $item->title }}</a>
+                                                        <a href="{{route('client.job.single', ['jobSlug' => $item->slug])}}">
+                                                            {{ limit_text($item->title, 65) }}
+                                                        </a>
                                                     </h6>
                                                     <div class="mt-5"><span
                                                             class="card-briefcase">{{ $item->jobType->name }}</span>
@@ -142,7 +144,7 @@
                                                             class="card-time">{{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }}</span>
                                                     </div>
                                                     <p class="description font-sm color-text-paragraph mt-15">
-                                                        {!! $item->description !!}
+                                                        {{ limit_text($item->description, 120) }}
                                                     </p>
                                                     <div class="mt-30">
                                                         @foreach($item->skills as $skill)
