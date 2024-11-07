@@ -1,3 +1,4 @@
+let roomOwnerId = null;
 let handleMemberJoined = async (MemberId) => {
     console.log('A new member has joined the room:', MemberId)
     addMemberToDom(MemberId)
@@ -5,9 +6,71 @@ let handleMemberJoined = async (MemberId) => {
     let members = await channel.getMembers()
     updateMemberTotal(members)
 
+    if (members.length === 1) {
+        roomOwnerId = MemberId;
+        addBotMessageToDom(`Bây giờ bạn là chủ phòng.`);
+    } else {
+        await requestRoomOwnerApproval(MemberId);
+    }
     let {name} = await rtmClient.getUserAttributesByKeys(MemberId, ['name'])
     addBotMessageToDom(`Welcome to the room ${name}! 👋`)
 }
+
+let requestRoomOwnerApproval = async (MemberId) => {
+    let ownerName = await rtmClient.getUserAttributesByKeys(roomOwnerId, ['name']);
+    let memberName = await rtmClient.getUserAttributesByKeys(MemberId, ['name']);
+
+    // Gửi tin nhắn yêu cầu chủ phòng phê duyệt
+    addBotMessageToDom(`${memberName.name} muốn tham gia phòng. Đang chờ phê duyệt từ ${ownerName.name}...`);
+
+    // Chờ chủ phòng phê duyệt hoặc từ chối
+    let approved = await getApprovalFromOwner(MemberId);
+    if (approved) {
+        addBotMessageToDom(`${ownerName.name} đã chấp nhận yêu cầu của ${memberName.name} vào phòng.`);
+        addMemberToDom(MemberId); // Thêm thành viên vào DOM
+    } else {
+        addBotMessageToDom(`${ownerName.name} đã từ chối yêu cầu của ${memberName.name} vào phòng.`);
+    }
+};
+
+let getApprovalFromOwner = async (MemberId) => {
+    let { name } = await rtmClient.getUserAttributesByKeys(MemberId, ['name']);
+
+    // Tạo HTML cho modal
+    let modalHtml =
+        `<div class="modal" tabindex="-1" id="approvalModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chấp nhận ${name} vào phòng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="denyBtn">Không đồng ý</button>
+                        <button type="button" class="btn btn-primary" id="approveBtn">Đồng ý</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+    let approvalModal = new bootstrap.Modal(document.getElementById('approvalModal'));
+    approvalModal.show();
+
+    // Trả về một Promise để chờ phản hồi
+    return new Promise((resolve) => {
+        document.getElementById('approveBtn').onclick = () => {
+            approvalModal.hide();
+            resolve(true); // Phê duyệt
+        };
+
+        document.getElementById('denyBtn').onclick = () => {
+            approvalModal.hide();
+            resolve(false); // Từ chối
+        };
+    });
+};
 
 let addMemberToDom = async (MemberId) => {
     let {name} = await rtmClient.getUserAttributesByKeys(MemberId, ['name'])
@@ -104,7 +167,7 @@ let addBotMessageToDom = (botMessage) => {
 
     let newMessage = `<div class="message__wrapper">
                         <div class="message__body__bot">
-                            <strong class="message__author__bot">🤖 Mumble Bot</strong>
+                            <strong class="message__author__bot">🤖 Jobbox Bot</strong>
                             <p class="message__text__bot">${botMessage}</p>
                         </div>
                     </div>`

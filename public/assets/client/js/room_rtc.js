@@ -20,9 +20,8 @@ if(!roomId){
     roomId = 'main'
 }
 
-let displayName = sessionStorage.getItem('display_name')
 if(!displayName){
-    window.location = 'lobby.html'
+    window.location = '/video-call'
 }
 
 let localTracks = []
@@ -37,6 +36,14 @@ let joinRoomInit = async () => {
 
     await rtmClient.addOrUpdateLocalUserAttributes({'name':displayName})
 
+    // if (isEmployer) {
+    //     channel = await rtmClient.createChannel(roomId);
+    //     await channel.join();
+    // } else {
+    //     channel = await rtmClient.createChannel('main');
+    //     await channel.join();
+    // }
+
     channel = await rtmClient.createChannel(roomId)
     await channel.join()
 
@@ -45,7 +52,7 @@ let joinRoomInit = async () => {
     channel.on('ChannelMessage', handleChannelMessage)
 
     getMembers()
-    addBotMessageToDom(`Welcome to the room ${displayName}! 👋`)
+    addBotMessageToDom(`Chào mừng đến với phòng: ${inviteCode} ${displayName}! 👋`)
 
     client = AgoraRTC.createClient({mode:'rtc', codec:'vp8'})
     await client.join(APP_ID, roomId, token, uid)
@@ -66,7 +73,8 @@ let joinStream = async () => {
 
     let player = `<div class="video__container" id="user-container-${uid}">
                     <div class="video-player" id="user-${uid}"></div>
-                 </div>`
+                    <div class="user-name" id="user-name-${uid}">${displayName}</div>
+                 </div>`;
 
     document.getElementById('streams__container').insertAdjacentHTML('beforeend', player)
     document.getElementById(`user-container-${uid}`).addEventListener('click', expandVideoFrame)
@@ -155,14 +163,17 @@ let toggleMic = async (e) => {
 }
 
 let toggleCamera = async (e) => {
-    let button = e.currentTarget
+    let button = e.currentTarget;
+    let userNameElement = document.getElementById(`user-name-${uid}`);
 
-    if(localTracks[1].muted){
-        await localTracks[1].setMuted(false)
-        button.classList.add('active')
-    }else{
-        await localTracks[1].setMuted(true)
-        button.classList.remove('active')
+    if (localTracks[1].muted) {
+        await localTracks[1].setMuted(false);
+        button.classList.add('active');
+        userNameElement.style.display = 'none';
+    } else {
+        await localTracks[1].setMuted(true);
+        button.classList.remove('active');
+        userNameElement.style.display = 'flex';
     }
 }
 
