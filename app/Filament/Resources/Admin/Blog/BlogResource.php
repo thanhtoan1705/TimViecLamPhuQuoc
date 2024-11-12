@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Admin\Blog;
 
+use App\Filament\Components\ImageUploadComponent;
 use App\Filament\Resources\Blog\BlogResource\Pages;
 use App\Filament\Resources\Blog\BlogResource\RelationManagers;
 use App\Models\Blog;
@@ -117,15 +118,22 @@ class BlogResource extends Resource implements HasShieldPermissions
                                             ->columnSpan(2),
                                         Section::make('Hình ảnh')
                                             ->schema([
-                                                FileUpload::make('image')
-                                                    ->label('Nhập ảnh .png, .jpg, .jpeg')
-                                                    ->image()
-                                                    ->imageEditor()
-                                                    ->disk('public')
-                                                    ->required()
-                                                    ->directory('images/blog')
-                                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
-                                                    ->columnSpan(2),
+//                                                FileUpload::make('image')
+//                                                    ->label('Nhập ảnh .png, .jpg, .jpeg')
+//                                                    ->image()
+//                                                    ->imageEditor()
+//                                                    ->disk('public')
+//                                                    ->required()
+//                                                    ->directory('images/blog')
+//                                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
+//                                                    ->columnSpan(2),
+
+                                                ImageUploadComponent::make(
+                                                    'image',
+                                                    'title',
+                                                    'bai-viet',
+                                                    'images/blog',
+                                                )
                                             ]),
                                         Section::make('SEO')
                                             ->schema([
@@ -209,6 +217,7 @@ class BlogResource extends Resource implements HasShieldPermissions
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('row_number')
                     ->label('STT')

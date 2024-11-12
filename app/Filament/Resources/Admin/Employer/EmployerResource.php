@@ -264,9 +264,9 @@ class EmployerResource extends Resource implements HasShieldPermissions
                                     ->schema([
                                         Toggle::make('status')
                                             ->label('Hiển thị'),
-                                        TextInput::make('max_posts_per_day')
-                                            ->label('Giới hạn bài đăng')
-                                            ->numeric(),
+//                                        TextInput::make('max_posts_per_day')
+//                                            ->label('Giới hạn bài đăng')
+//                                            ->numeric(),
                                     ]),
 
                                 Section::make('Thời gian')

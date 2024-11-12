@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Admin\CV;
 
+use App\Filament\Components\ImageUploadComponent;
 use App\Filament\Resources\Admin\CV\CvTemplateResource\Pages;
 use App\Filament\Resources\Admin\CV\CvTemplateResource\RelationManagers;
 use App\Models\CvTemplate;
@@ -50,15 +51,19 @@ class CvTemplateResource extends Resource implements HasShieldPermissions
                     ->schema([
                         Forms\Components\TextInput::make('template_name')
                             ->required()
+                            ->maxLength(220)
                             ->label('Tên mẫu CV')
                             ->columnSpan(2),
 
-                        Forms\Components\FileUpload::make('template_image')
-                            ->label('Hình ảnh mẫu CV')
-                            ->disk('public')
-                            ->required()
-                            ->directory('images/cv')
-                            ->columnSpan(1),
+
+                        ImageUploadComponent::make(
+                            'template_image',
+                            'template_name',
+                            'cv',
+                            'images/cv',
+                            'Hình ảnh mẫu CV'
+                        )->required()
+                        ->columnSpan(1),
 
                         Forms\Components\Textarea::make('template_description')
                             ->label('Mô tả mẫu CV')

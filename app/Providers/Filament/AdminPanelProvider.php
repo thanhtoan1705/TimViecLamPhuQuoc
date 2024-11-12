@@ -58,8 +58,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+//                Widgets\AccountWidget::class,
+//                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -87,6 +87,8 @@ class AdminPanelProvider extends PanelProvider
                 FilamentEditProfilePlugin::make()
                     ->setIcon('heroicon-o-user')
                     ->setTitle('Hồ sơ')
+//                    ->setNavigationGroup('Thông tin tài khoản')
+                    ->setSort(2)
                     ->setNavigationLabel('Hồ sơ')
                     ->shouldRegisterNavigation(true)
                     ->shouldShowDeleteAccountForm(false)

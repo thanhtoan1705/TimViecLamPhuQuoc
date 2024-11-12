@@ -19,6 +19,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Rmsramos\Activitylog\Actions\ActivityLogTimelineTableAction;
 use Rmsramos\Activitylog\RelationManagers\ActivitylogRelationManager;
+use App\Filament\Components\ImageUploadComponent;
 
 class UserResource extends Resource implements HasShieldPermissions
 {
@@ -107,17 +108,19 @@ class UserResource extends Resource implements HasShieldPermissions
 
                                 Section::make('Avatar')
                                     ->schema([
-                                        FileUpload::make('avatar_url')
-                                            ->label('Chọn ảnh định dang png, jpg, jpeg')
-                                            ->image()
-                                            ->disk('public')
-                                            ->directory('images/users/avatar')
+                                        ImageUploadComponent::make(
+                                            'avatar_url',
+                                            'name',
+                                            'Avatar',
+                                            'images/users/avatar',
+                                        )
+
 
                                     ]),
 
                                 Section::make('Trạng thái')
                                     ->schema([
-                                        Toggle::make('status')
+                                        Toggle::make('active_status')
                                             ->label('Kích hoạt'),
                                     ]),
 

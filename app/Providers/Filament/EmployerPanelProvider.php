@@ -6,6 +6,7 @@ use App\Filament\Auth\EmployerLogin;
 use App\Filament\Pages\Auth\Employer\RequestPasswordReset;
 use App\Filament\Resources\Employer\Notification\NotificationResource\Pages\NotificationsPage;
 use App\Filament\Resources\Pages\RegistrationEmployer;
+use App\Livewire\Filament\Employer\EmployerAddress;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -62,8 +63,8 @@ class EmployerPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Employer/Widgets'), for: 'App\\Filament\\Employer\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+//                Widgets\AccountWidget::class,
+//                Widgets\FilamentInfoWidget::class,
 //                EmployerNotificationsWidget::class,
             ])
             ->middleware([
@@ -81,8 +82,13 @@ class EmployerPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->userMenuItems([
-                'profile' => MenuItem::make()
-                    ->label(fn() => Auth::user()->name)
+//                'profile' => MenuItem::make()
+//                    ->label(fn() => Auth::user()->name)
+//                    ->url(fn(): string => EditProfilePage::getUrl())
+//                    ->icon('heroicon-m-user-circle'),
+
+                'profiles' => MenuItem::make()
+                    ->label('Cập nhật hồ sơ')
                     ->url(fn(): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle')
             ])
@@ -96,8 +102,10 @@ class EmployerPanelProvider extends PanelProvider
                     ->shouldShowDeleteAccountForm(false)
                     ->shouldShowEditProfileForm(false)
                     ->customProfileComponents([
+                        \App\Livewire\Filament\Employer\EmployerAddress::class,
                         \App\Livewire\FilamentEmployerUserProfile::class,
                         \App\Livewire\Filament\Employer\EmployerProfile::class,
+
                     ])
                     ->shouldShowAvatarForm(
                         value: true,

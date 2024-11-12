@@ -1,5 +1,5 @@
 @extends('client.layouts.master')
-@section('title', 'Giới thiệu')
+@section('title', 'Về chúng tôi')
 
 @section('content')
     <div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar">
@@ -232,470 +232,92 @@
                         <h6 class="f-18 color-text-mutted text-uppercase">CÔNG TY CHÚNG TÔI</h6>
                         <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Gặp đội của chúng tôi</h2>
                         <p class="font-sm color-text-paragraph w-lg-50 mx-auto wow animate__animated animate__fadeInUp">
-                            Gặp gỡ đội ngũ chuyên gia tại JobBox, những người tận tâm và giàu kinh nghiệm trong lĩnh vực
-                            tuyển dụng và phát triển sự nghiệp. Chúng tôi luôn sẵn sàng hỗ trợ bạn từ việc tìm kiếm cơ hội
-                            việc làm đến chuẩn bị phỏng vấn và tư vấn nghề nghiệp. Với JobBox, bạn sẽ nhận được sự hỗ trợ
+                            Chúng tôi luôn sẵn sàng hỗ trợ bạn từ việc tìm kiếm cơ hội
+                            việc làm đến chuẩn bị phỏng vấn và tư vấn nghề nghiệp. Với Vieclamphuquoc, bạn sẽ nhận được sự hỗ trợ
                             chuyên nghiệp và chu đáo nhất.</p>
                     </div>
                     <div class="row mt-70">
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-md-30">
-                            <div class="card-grid-4 text-center hover-up">
-                                <div class="image-top-feature">
-                                    <figure><img alt="jobBox"
-                                            src="{{ asset('assets/client/imgs/page/about/team1.png') }}"></figure>
+                        @if(is_object($founders) && isset($founders))
+                            @foreach($founders as $item)
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-md-30">
+                                    <div class="card-grid-4 text-center hover-up">
+                                        <div class="image-top-feature">
+                                            <figure>
+                                                <img alt="jobBox"
+                                                    src="{{ getStorageImageUrl($item->image, 'default/user.png') }}">
+                                            </figure>
+                                        </div>
+                                        <div class="card-grid-4-info">
+                                            <h5 class="mt-10">{{  $item->name }}</h5>
+                                            <p class="font-xs color-text-paragraph-2 mt-5 mb-5">
+                                                {{  $item->position }}
+                                            </p>
+                                            <div class="rate-reviews-small pt-5">
+                                                <span>
+                                                    <img
+                                                        src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
+                                                        alt="jobBox">
+                                                </span>
+                                                <span>
+                                                    <img
+                                                        src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
+                                                        alt="jobBox">
+                                                </span>
+                                                <span>
+                                                    <img
+                                                        src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
+                                                        alt="jobBox">
+                                                </span>
+                                                <span>
+                                                    <img
+                                                        src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
+                                                        alt="jobBox">
+                                                </span>
+                                                <span>
+                                                    <img
+                                                        src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
+                                                        alt="jobBox">
+                                                </span>
+                                            </div>
+                                            <span class="card-location">{{ $item->address }}</span>
+                                            <div class="text-center mt-30">
+
+                                                @if(isset($item->facebook))
+                                                    <a class="share-facebook social-share-link"
+                                                       href="{{ $item->facebook }}" target="_blank">
+                                                    </a>
+                                                @endif
+
+                                                @if(isset($item->twitter))
+                                                    <a class="share-twitter social-share-link"
+                                                       href="{{ $item->twitter }}" target="_blank">
+                                                    </a>
+                                                @endif
+
+                                                @if(isset($item->instagram))
+                                                    <a class="share-instagram social-share-link"
+                                                       href="{{ $item->instagram }}" target="_blank">
+                                                    </a>
+                                                @endif
+
+                                                @if(isset($item->linkedin))
+                                                    <a class="share-linkedin social-share-link"
+                                                       href="{{ $item->linkedin }}" target="_blank">
+                                                    </a>
+                                                @endif
+
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="card-grid-4-info">
-                                    <h5 class="mt-10">Arlene McCoy</h5>
-                                    <p class="font-xs color-text-paragraph-2 mt-5 mb-5">Frontend Developer</p>
-                                    <div class="rate-reviews-small pt-5"><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span
-                                            class="ml-10 color-text-mutted font-xs"><span>(</span><span>65</span><span>)</span></span>
-                                    </div><span class="card-location">Việt Nam, Cần Thơ</span>
-                                    <div class="text-center mt-30"><a class="share-facebook social-share-link"
-                                            href="#"></a><a class="share-twitter social-share-link"
-                                            href="#"></a><a class="share-instagram social-share-link"
-                                            href="#"></a><a class="share-linkedin social-share-link"
-                                            href="#"></a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-md-30">
-                            <div class="card-grid-4 text-center hover-up">
-                                <div class="image-top-feature">
-                                    <figure><img alt="jobBox"
-                                            src="{{ asset('assets/client/imgs/page/about/team2.png') }}"></figure>
-                                </div>
-                                <div class="card-grid-4-info">
-                                    <h5 class="mt-10">Floyd Miles</h5>
-                                    <p class="font-xs color-text-paragraph-2 mt-5 mb-5">UI/UX Designer</p>
-                                    <div class="rate-reviews-small pt-5"><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span
-                                            class="ml-10 color-text-mutted font-xs"><span>(</span><span>28</span><span>)</span></span>
-                                    </div><span class="card-location">Việt Nam, Cần Thơ</span>
-                                    <div class="text-center mt-30"><a class="share-facebook social-share-link"
-                                            href="#"></a><a class="share-twitter social-share-link"
-                                            href="#"></a><a class="share-instagram social-share-link"
-                                            href="#"></a><a class="share-linkedin social-share-link"
-                                            href="#"></a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-md-30">
-                            <div class="card-grid-4 text-center hover-up">
-                                <div class="image-top-feature">
-                                    <figure><img alt="jobBox"
-                                            src="{{ asset('assets/client/imgs/page/about/team3.png') }}"></figure>
-                                </div>
-                                <div class="card-grid-4-info">
-                                    <h5 class="mt-10">Devon Lane</h5>
-                                    <p class="font-xs color-text-paragraph-2 mt-5 mb-5">Frontend Developer</p>
-                                    <div class="rate-reviews-small pt-5"><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span
-                                            class="ml-10 color-text-mutted font-xs"><span>(</span><span>65</span><span>)</span></span>
-                                    </div><span class="card-location">Việt Nam, Cần Thơ</span>
-                                    <div class="text-center mt-30"><a class="share-facebook social-share-link"
-                                            href="#"></a><a class="share-twitter social-share-link"
-                                            href="#"></a><a class="share-instagram social-share-link"
-                                            href="#"></a><a class="share-linkedin social-share-link"
-                                            href="#"></a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-md-30">
-                            <div class="card-grid-4 text-center hover-up">
-                                <div class="image-top-feature">
-                                    <figure><img alt="jobBox"
-                                            src="{{ asset('assets/client/imgs/page/about/team4.png') }}"></figure>
-                                </div>
-                                <div class="card-grid-4-info">
-                                    <h5 class="mt-10">Jerome Bell</h5>
-                                    <p class="font-xs color-text-paragraph-2 mt-5 mb-5">Frontend Developer</p>
-                                    <div class="rate-reviews-small pt-5"><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span
-                                            class="ml-10 color-text-mutted font-xs"><span>(</span><span>65</span><span>)</span></span>
-                                    </div><span class="card-location">Việt Nam, Cần Thơ</span>
-                                    <div class="text-center mt-30"><a class="share-facebook social-share-link"
-                                            href="#"></a><a class="share-twitter social-share-link"
-                                            href="#"></a><a class="share-instagram social-share-link"
-                                            href="#"></a><a class="share-linkedin social-share-link"
-                                            href="#"></a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-md-30">
-                            <div class="card-grid-4 text-center hover-up">
-                                <div class="image-top-feature">
-                                    <figure><img alt="jobBox"
-                                            src="{{ asset('assets/client/imgs/page/about/team5.png') }}"></figure>
-                                </div>
-                                <div class="card-grid-4-info">
-                                    <h5 class="mt-10">Theresa</h5>
-                                    <p class="font-xs color-text-paragraph-2 mt-5 mb-5">Frontend Developer</p>
-                                    <div class="rate-reviews-small pt-5"><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span
-                                            class="ml-10 color-text-mutted font-xs"><span>(</span><span>65</span><span>)</span></span>
-                                    </div><span class="card-location">Việt Nam, Cần Thơ</span>
-                                    <div class="text-center mt-30"><a class="share-facebook social-share-link"
-                                            href="#"></a><a class="share-twitter social-share-link"
-                                            href="#"></a><a class="share-instagram social-share-link"
-                                            href="#"></a><a class="share-linkedin social-share-link"
-                                            href="#"></a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-md-30">
-                            <div class="card-grid-4 text-center hover-up">
-                                <div class="image-top-feature">
-                                    <figure><img alt="jobBox"
-                                            src="{{ asset('assets/client/imgs/page/about/team6.png') }}"></figure>
-                                </div>
-                                <div class="card-grid-4-info">
-                                    <h5 class="mt-10">Cameron</h5>
-                                    <p class="font-xs color-text-paragraph-2 mt-5 mb-5">Frontend Developer</p>
-                                    <div class="rate-reviews-small pt-5"><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span
-                                            class="ml-10 color-text-mutted font-xs"><span>(</span><span>65</span><span>)</span></span>
-                                    </div><span class="card-location">Việt Nam, Cần Thơ</span>
-                                    <div class="text-center mt-30"><a class="share-facebook social-share-link"
-                                            href="#"></a><a class="share-twitter social-share-link"
-                                            href="#"></a><a class="share-instagram social-share-link"
-                                            href="#"></a><a class="share-linkedin social-share-link"
-                                            href="#"></a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-md-30">
-                            <div class="card-grid-4 text-center hover-up">
-                                <div class="image-top-feature">
-                                    <figure><img alt="jobBox"
-                                            src="{{ asset('assets/client/imgs/page/about/team7.png') }}"></figure>
-                                </div>
-                                <div class="card-grid-4-info">
-                                    <h5 class="mt-10">Jacob Jones</h5>
-                                    <p class="font-xs color-text-paragraph-2 mt-5 mb-5">Frontend Developer</p>
-                                    <div class="rate-reviews-small pt-5"><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span
-                                            class="ml-10 color-text-mutted font-xs"><span>(</span><span>65</span><span>)</span></span>
-                                    </div><span class="card-location">Việt Nam, Cần Thơ</span>
-                                    <div class="text-center mt-30"><a class="share-facebook social-share-link"
-                                            href="#"></a><a class="share-twitter social-share-link"
-                                            href="#"></a><a class="share-instagram social-share-link"
-                                            href="#"></a><a class="share-linkedin social-share-link"
-                                            href="#"></a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-md-30">
-                            <div class="card-grid-4 text-center hover-up">
-                                <div class="image-top-feature">
-                                    <figure><img alt="jobBox"
-                                            src="{{ asset('assets/client/imgs/page/about/team8.png') }}"></figure>
-                                </div>
-                                <div class="card-grid-4-info">
-                                    <h5 class="mt-10">Court Henry</h5>
-                                    <p class="font-xs color-text-paragraph-2 mt-5 mb-5">Frontend Developer</p>
-                                    <div class="rate-reviews-small pt-5"><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span><img
-                                                src="{{ asset('assets/client/imgs/template/icons/star.svg') }}"
-                                                alt="jobBox"></span><span
-                                            class="ml-10 color-text-mutted font-xs"><span>(</span><span>65</span><span>)</span></span>
-                                    </div><span class="card-location">Việt Nam, Cần Thơ</span>
-                                    <div class="text-center mt-30"><a class="share-facebook social-share-link"
-                                            href="#"></a><a class="share-twitter social-share-link"
-                                            href="#"></a><a class="share-instagram social-share-link"
-                                            href="#"></a><a class="share-linkedin social-share-link"
-                                            href="#"></a></div>
-                                </div>
-                            </div>
-                        </div>
+                            @endforeach
+                        @endif
+
                     </div>
                 </div>
             </div>
         </section>
-        <section class="section-box mt-50 mb-50">
-            <div class="container">
-                <div class="text-start">
-                    <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Tin tức và Blog</h2>
-                    <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Nhận tin tức, cập
-                        nhật và mẹo mới nhất</p>
-                </div>
-            </div>
-            <div class="container">
-                <div class="mt-50">
-                    <div class="box-swiper style-nav-top">
-                        <div class="swiper-container swiper-group-3 swiper">
-                            <div class="swiper-wrapper pb-70 pt-5">
-                                <div class="swiper-slide">
-                                    <div class="card-grid-3 hover-up wow animate__animated animate__fadeIn">
-                                        <div class="text-center card-grid-3-image"><a href="#">
-                                                <figure><img alt="jobBox"
-                                                        src="{{ asset('assets/client/imgs/page/homepage1/img-news1.png') }}">
-                                                </figure>
-                                            </a></div>
-                                        <div class="card-block-info">
-                                            <div class="tags mb-15"><a class='btn btn-tag' href='blog-grid.html'>Tin
-                                                    tức</a>
-                                            </div>
-                                            <h5><a href='blog-details.html'>21 mẹo phỏng vấn xin việc: Cách tạo ấn
-                                                    tượng tốt</a></h5>
-                                            <p class="mt-10 color-text-paragraph font-sm">Sứ mệnh của chúng tôi là tạo ra
-                                                công ty chăm sóc sức khỏe bền vững nhất thế giới bằng cách tạo ra các sản
-                                                phẩm chăm sóc sức khỏe chất lượng cao với bao bì bền vững, mang tính biểu
-                                                tượng.</p>
-                                            <div class="card-2-bottom mt-20">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-6">
-                                                        <div class="d-flex"><img class="img-rounded"
-                                                                src="{{ asset('assets/client/imgs/page/homepage1/user1.png') }}"
-                                                                alt="jobBox">
-                                                            <div class="info-right-img"><span
-                                                                    class="font-sm font-bold color-brand-1 op-70">Sarah
-                                                                    Harding</span><br><span
-                                                                    class="font-xs color-text-paragraph-2">ngày 06 tháng
-                                                                    9</span></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 text-end col-6 pt-15"><span
-                                                            class="color-text-paragraph-2 font-xs">8 phút để đọc</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="card-grid-3 hover-up wow animate__animated animate__fadeIn">
-                                        <div class="text-center card-grid-3-image"><a href="#">
-                                                <figure><img alt="jobBox"
-                                                        src="{{ asset('assets/client/imgs/page/homepage1/img-news2.png') }}">
-                                                </figure>
-                                            </a></div>
-                                        <div class="card-block-info">
-                                            <div class="tags mb-15"><a class='btn btn-tag' href='blog-grid.html'>Sự
-                                                    kiện</a></div>
-                                            <h5><a href='blog-details.html'>39 điểm mạnh và điểm yếu cần thảo luận trong
-                                                    cuộc phỏng vấn xin việc</a></h5>
-                                            <p class="mt-10 color-text-paragraph font-sm">Sứ mệnh của chúng tôi là tạo ra
-                                                công ty chăm sóc sức khỏe bền vững nhất thế giới bằng cách tạo ra các sản
-                                                phẩm chăm sóc sức khỏe chất lượng cao với bao bì bền vững, mang tính biểu
-                                                tượng.</p>
-                                            <div class="card-2-bottom mt-20">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-6">
-                                                        <div class="d-flex"><img class="img-rounded"
-                                                                src="{{ asset('assets/client/imgs/page/homepage1/user2.png') }}"
-                                                                alt="jobBox">
-                                                            <div class="info-right-img"><span
-                                                                    class="font-sm font-bold color-brand-1 op-70">Steven
-                                                                    Jobs</span><br><span
-                                                                    class="font-xs color-text-paragraph-2">ngày 06 tháng
-                                                                    9</span></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 text-end col-6 pt-15"><span
-                                                            class="color-text-paragraph-2 font-xs">6 phút để đọc</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="card-grid-3 hover-up wow animate__animated animate__fadeIn">
-                                        <div class="text-center card-grid-3-image"><a href="#">
-                                                <figure><img alt="jobBox"
-                                                        src="{{ asset('assets/client/imgs/page/homepage1/img-news3.png') }}">
-                                                </figure>
-                                            </a></div>
-                                        <div class="card-block-info">
-                                            <div class="tags mb-15"><a class='btn btn-tag' href='blog-grid.html'>Tin
-                                                    tức</a>
-                                            </div>
-                                            <h5><a href='blog-details.html'>Câu hỏi phỏng vấn: Tại sao bạn không
-                                                    có bằng cấp?</a></h5>
-                                            <p class="mt-10 color-text-paragraph font-sm">Tìm hiểu cách trả lời nếu người
-                                                phỏng vấn hỏi bạn tại sao
-                                                bạn không có bằng cấp và đọc các câu trả lời ví dụ có thể
-                                                giúp bạn thành thạo.</p>
-                                            <div class="card-2-bottom mt-20">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-6">
-                                                        <div class="d-flex"><img class="img-rounded"
-                                                                src="{{ asset('assets/client/imgs/page/homepage1/user3.png') }}"
-                                                                alt="jobBox">
-                                                            <div class="info-right-img"><span
-                                                                    class="font-sm font-bold color-brand-1 op-70">Wiliam
-                                                                    Kend</span><br><span
-                                                                    class="font-xs color-text-paragraph-2">ngày 06 tháng
-                                                                    9</span></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 text-end col-6 pt-15"><span
-                                                            class="color-text-paragraph-2 font-xs">9 phút để đọc</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                    <div class="text-center"><a class='btn btn-brand-1 btn-icon-load mt--30 hover-up'
-                            href='blog-grid.html'>Tải thêm bài viết</a></div>
-                </div>
-            </div>
-        </section>
-        <section class="section-box mt-30 mb-40">
-            <div class="container">
-                <h2 class="text-center mb-15 wow animate__animated animate__fadeInUp">Khách hàng hạnh phúc của chúng tôi
-                </h2>
-                <div class="font-lg color-text-paragraph-2 text-center wow animate__animated animate__fadeInUp">Khi nói đến
-                    việc chọn đúng nhà cung cấp dịch vụ lưu trữ web, chúng tôi biết việc đó dễ dàng như thế nào<br
-                        class="d-none d-lg-block"> is
-                    là bị choáng ngợp bởi số lượng.</div>
-                <div class="row mt-50">
-                    <div class="box-swiper">
-                        <div class="swiper-container swiper-group-3 swiper">
-                            <div class="swiper-wrapper pb-70 pt-5">
-                                <div class="swiper-slide">
-                                    <div class="card-grid-6 hover-up">
-                                        <div class="card-text-desc mt-10">
-                                            <p class="font-md color-text-paragraph">Khách hàng nói về JobBox: "JobBox đã
-                                                giúp tôi tìm được công việc mơ ước một cách nhanh chóng và dễ dàng. Dịch vụ
-                                                tư vấn nghề nghiệp và hỗ trợ viết CV của họ thực sự tuyệt vời. Tôi rất hài
-                                                lòng với sự chuyên nghiệp và tận tâm của đội ngũ JobBox."</p>
-                                        </div>
-                                        <div class="card-image">
-                                            <div class="image">
-                                                <figure><img alt="jobBox"
-                                                        src="{{ asset('assets/client/imgs/page/about/user1.png') }}">
-                                                </figure>
-                                            </div>
-                                            <div class="card-profile">
-                                                <h6>Mark Adair</h6><span>Doanh nhân</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="card-grid-6 hover-up">
-                                        <div class="card-text-desc mt-10">
-                                            <p class="font-md color-text-paragraph">Khách hàng nói về JobBox: "JobBox đã
-                                                giúp tôi tìm được công việc mơ ước một cách nhanh chóng và dễ dàng. Dịch vụ
-                                                tư vấn nghề nghiệp và hỗ trợ viết CV của họ thực sự tuyệt vời. Tôi rất hài
-                                                lòng với sự chuyên nghiệp và tận tâm của đội ngũ JobBox."</p>
-                                        </div>
-                                        <div class="card-image">
-                                            <div class="image">
-                                                <figure><img alt="jobBox"
-                                                        src="{{ asset('assets/client/imgs/page/about/user2.png') }}">
-                                                </figure>
-                                            </div>
-                                            <div class="card-profile">
-                                                <h6>Mark Adair</h6><span>Doanh nhân</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="card-grid-6 hover-up">
-                                        <div class="card-text-desc mt-10">
-                                            <p class="font-md color-text-paragraph">Khách hàng nói về JobBox: "JobBox đã
-                                                giúp tôi tìm được công việc mơ ước một cách nhanh chóng và dễ dàng. Dịch vụ
-                                                tư vấn nghề nghiệp và hỗ trợ viết CV của họ thực sự tuyệt vời. Tôi rất hài
-                                                lòng với sự chuyên nghiệp và tận tâm của đội ngũ JobBox."</p>
-                                        </div>
-                                        <div class="card-image">
-                                            <div class="image">
-                                                <figure><img alt="jobBox"
-                                                        src="{{ asset('assets/client/imgs/page/about/user3.png') }}">
-                                                </figure>
-                                            </div>
-                                            <div class="card-profile">
-                                                <h6>Mark Adair</h6><span>Doanh nhân</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-pagination swiper-pagination3"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
     </main>
 @endsection

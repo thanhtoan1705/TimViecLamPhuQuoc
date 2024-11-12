@@ -54,6 +54,7 @@ class User extends Authenticatable implements HasAvatar, FilamentUser
         'role',
         'google_id',
         'facebook_id',
+        'active_status',
     ];
 
     /**

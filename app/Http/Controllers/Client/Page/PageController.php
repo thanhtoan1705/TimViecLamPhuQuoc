@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Contact\ContactRequest;
 use App\Mail\Client\Contact\ContactNotification;
 use App\Mail\ContactFormNotification;
+use App\Models\Founder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -14,7 +15,14 @@ class PageController extends Controller
 {
     public function about()
     {
-        return view("client.about.index");
+        $founders = Founder::where('status', 1)->get();
+
+        $data = [
+            'founders' => $founders,
+        ];
+
+
+        return view("client.about.index", $data);
     }
 
     public function sendEmail(Request $request)

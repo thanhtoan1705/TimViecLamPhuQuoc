@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Filament\Employer;
 
+use App\Filament\Components\ImageUploadComponent;
 use App\Models\Employer;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -63,31 +64,31 @@ class EmployerProfile extends Component implements HasForms
 
                         Section::make('Nhận diện công ty')
                             ->schema([
-                                FileUpload::make('company_logo')
-                                    ->label('Logo công ty')
-                                    ->image()
-                                    ->imageEditor()
-                                    ->imageEditorAspectRatios([
-                                        '16:9',
-                                        '4:3',
-                                        '1:1',
-                                    ])
-                                    ->disk('public')
-                                    ->directory('images/employer/logo')
-                                    ->rules(['required', 'mimes:jpeg,png,jpg,gif', 'max:2048']),
 
-                                FileUpload::make('company_photo_cover')
-                                    ->label('Ảnh bìa công ty')
-                                    ->image()
-                                    ->imageEditor()
-                                    ->imageEditorAspectRatios([
+                                ImageUploadComponent::make(
+                                    'company_logo',
+                                    'company_name',
+                                    'cong-ty',
+                                    'images/employer/logo',
+                                )->imageEditor()
+                                ->imageEditorAspectRatios([
                                         '16:9',
                                         '4:3',
                                         '1:1',
-                                    ])
-                                    ->disk('public')
-                                    ->directory('images/employer/banner')
-                                    ->rules(['required', 'mimes:jpeg,png,jpg,gif', 'max:2048']),
+                                ]),
+
+                                ImageUploadComponent::make(
+                                    'company_photo_cover',
+                                    'company_name',
+                                    'cong-ty',
+                                    'images/employer/banner',
+                                )->imageEditor()
+                                ->imageEditorAspectRatios([
+                                    '16:9',
+                                    '4:3',
+                                    '1:1',
+                                ])->rules(['required', 'mimes:jpeg,png,jpg,gif', 'max:2048']),
+
                             ]),
 
                         Section::make('Quy mô công ty')

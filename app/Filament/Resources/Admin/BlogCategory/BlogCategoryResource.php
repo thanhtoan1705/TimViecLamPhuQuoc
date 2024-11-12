@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Admin\BlogCategory;
 
+use App\Filament\Components\ImageUploadComponent;
 use App\Filament\Resources\BlogCategory\BlogCategoryResource\Pages;
 use App\Filament\Resources\BlogCategory\BlogCategoryResource\RelationManagers;
 use App\Models\BlogCategory;
@@ -77,15 +78,24 @@ class BlogCategoryResource extends Resource implements HasShieldPermissions
                                         })
                                         ->label('Tên danh mục'),
 
-                                    FileUpload::make('image')
-                                        ->label('Hình ảnh')
-                                        ->image()
-                                        ->imageEditor()
-                                        ->required()
-                                        ->disk('public')
-                                        ->directory('images/blog-category')
-                                        ->maxSize(1024 * 5)
-                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp']),
+//                                    FileUpload::make('image')
+//                                        ->label('Hình ảnh')
+//                                        ->image()
+//                                        ->imageEditor()
+//                                        ->required()
+//                                        ->disk('public')
+//                                        ->directory('images/blog-category')
+//                                        ->maxSize(1024 * 5)
+//                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp']),
+
+                                    ImageUploadComponent::make(
+                                        'image',
+                                        'name',
+                                        'danh-muc-bai-viet',
+                                        'images/blog-category',
+                                        'Hình ảnh danh mục',
+                                    )->maxSize(1024 * 5)->required()
+
                                 ])->columnSpan(1),
 
                                 Grid::make(1)->schema([
@@ -103,8 +113,6 @@ class BlogCategoryResource extends Resource implements HasShieldPermissions
                                         ->schema([
                                             Toggle::make('is_active')
                                                 ->label('Hiển thị')
-                                                ->onColor('success')
-                                                ->offColor('danger')
                                                 ->default(true),
                                         ]),
                                 ])->columnSpan(1),
