@@ -19,6 +19,7 @@ class Comment extends Component
 
     public $comment;
     public $parentComment = null;
+    protected $listeners = ['deleteComment'];
 
     public $users = [];
 
@@ -77,10 +78,14 @@ class Comment extends Component
      */
     public function editComment(): void
     {
-        $this->authorize('update', $this->comment);
+        if (!auth()->check() || auth()->user()->id !== $this->comment->user_id) {
+            throw new AuthorizationException('Bạn không có quyền cập nhật bình luận này.');
+        }
+
         $this->validate([
             'editState.content' => 'required|min:2'
         ]);
+
         $this->comment->update($this->editState);
         $this->isEditing = false;
         $this->showOptions = false;
@@ -93,7 +98,6 @@ class Comment extends Component
     #[On('refresh')]
     public function deleteComment(): void
     {
-        $this->authorize('destroy', $this->comment);
         $this->comment->delete();
         $this->showOptions = false;
         $this->dispatch('refresh');

@@ -1,4 +1,4 @@
-<form class="mb-3" wire:submit="{{$method}}">
+<form class="mb-3" wire:submit.prevent="{{$method}}">
     @if (session()->has('message'))
         <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -7,7 +7,7 @@
         </div>
     @endif
     @csrf
-    <div class="form-group mb-3">
+    <div class="form-group my-3">
         <textarea id="{{$inputId}}" rows="6" style="max-height: 800px; height: 200px;"
                   class="form-control @error($state.'.content') is-invalid @enderror"
                   placeholder="Nhập bình luận..."

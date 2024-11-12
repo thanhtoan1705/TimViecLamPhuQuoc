@@ -34,20 +34,7 @@
                             <div class="row">
 
                                 @if(isset($searchResult) && !$searchResult->isEmpty())
-                                    @foreach($searchResult as $value)
-                                        @php
-                                            if (isset($value->user->avatar_url)) {
-                                                $user_img = asset('storage/' . $value->user->avatar_url);
-                                            } else {
-                                                $user_img = asset('default/user.png');
-                                            }
-
-                                            if (isset($value->image)) {
-                                                $blog_img = asset('storage/' . $value->image);
-                                            } else {
-                                                $blog_img = asset('default/blog.jpg');
-                                            }
-                                        @endphp
+                                    @foreach($searchResult as $value)                                       
                                         <div class="col-lg-6 mb-30">
 
                                             <div class="card-grid-3 hover-up">
@@ -55,7 +42,7 @@
                                                         <figure><img alt="jobBox" style="max-width: 100%;
                                                                                         max-height: 220px;
                                                                                         object-fit: cover;"
-                                                                     src="{{ $blog_img }}">
+                                                                     src="{{ getStorageImageUrl($value->image, config('image.blog')) }}">
                                                         </figure>
                                                     </a></div>
                                                 <div class="card-block-info">
@@ -64,13 +51,13 @@
                                                     </div>
                                                     <h5><a href="{{route('client.post.detail' , $value->slug)}}">{{ $value->title }}</a></h5>
                                                     <p class="mt-10 color-text-paragraph font-sm">
-                                                        {!! \Illuminate\Support\Str::limit(strip_tags($value->content), 100, '...') !!}
+                                                        {{ limit_text($value->content, 180) }}
                                                     </p>
                                                     <div class="card-2-bottom mt-20">
                                                         <div class="row">
                                                             <div class="col-lg-6 col-6">
                                                                 <div class="d-flex"><img class="img-rounded"
-                                                                                         src="{{ $user_img }}">
+                                                                                         src="{{ getStorageImageUrl($value->user->avatar_url, config('image.avatar')) }}">
                                                                     <div class="info-right-img"><span
                                                                             class="font-sm font-bold color-brand-1 op-70">{{ $value->user->name }}</span><br><span
                                                                             class="font-xs color-text-paragraph-2">{{ $value->created_at->format('d-m-Y') }}</span>
@@ -92,19 +79,6 @@
                                     </div>
                                 @else
                                     @foreach($blogs as $value)
-                                        @php
-                                            if (isset($value->user->avatar_url)) {
-                                                $user_img = asset('storage/' . $value->user->avatar_url);
-                                            } else {
-                                                $user_img = asset('default/user.png');
-                                            }
-
-                                            if (isset($value->image)) {
-                                                $blog_img = asset('storage/' . $value->image);
-                                            } else {
-                                                $blog_img = asset('default/blog.jpg');
-                                            }
-                                        @endphp
                                         <div class="col-lg-6 mb-30">
 
                                             <div class="card-grid-3 hover-up">
@@ -112,7 +86,7 @@
                                                         <figure><img alt="jobBox" style="max-width: 100%;
                                                                                         max-height: 220px;
                                                                                         object-fit: cover;"
-                                                                     src="{{ $blog_img }}">
+                                                                     src="{{ getStorageImageUrl($value->image, config('image.blog')) }}">
                                                         </figure>
                                                     </a></div>
                                                 <div class="card-block-info">
@@ -121,13 +95,13 @@
                                                     </div>
                                                     <h5><a href="{{route('client.post.detail' , $value->slug)}}">{{ $value->title }}</a></h5>
                                                     <p class="mt-10 color-text-paragraph font-sm">
-                                                        {!! \Illuminate\Support\Str::limit(strip_tags($value->content), 100, '...') !!}
+                                                        {{ limit_text($value->content, 180) }}
                                                     </p>
                                                     <div class="card-2-bottom mt-20">
                                                         <div class="row">
                                                             <div class="col-lg-6 col-6">
                                                                 <div class="d-flex"><img class="img-rounded"
-                                                                                         src="{{ $user_img }}">
+                                                                                         src="{{ getStorageImageUrl($value->user->avatar_url, config('image.avatar')) }}">
                                                                     <div class="info-right-img"><span
                                                                             class="font-sm font-bold color-brand-1 op-70">{{ $value->user->name }}</span><br><span
                                                                             class="font-xs color-text-paragraph-2">{{ $value->created_at->format('d-m-Y') }}</span>
@@ -165,23 +139,10 @@
                                 <div class="post-list-small">
                                     @if(is_object($blogTrending))
                                         @foreach($blogTrending as $item)
-                                            @php
-                                                if (isset($item->user->avatar_url)) {
-                                                    $user_img = asset('storage/' . $item->user->avatar_url);
-                                                } else {
-                                                    $user_img = asset('default/user.png');
-                                                }
-
-                                                if (isset($item->image)) {
-                                                    $blog_img = asset('storage/' . $item->image);
-                                                } else {
-                                                    $blog_img = asset('default/blog.jpg');
-                                                }
-                                            @endphp
                                             <div class="post-list-small-item d-flex align-items-center">
                                                 <a href="{{route('client.post.detail' , $item->slug)}}">
                                                     <figure class="thumb mr-15"><img
-                                                        src="{{ $blog_img }}"
+                                                        src="{{ getStorageImageUrl($item->image, config('image.blog')) }}"
                                                         alt="jobBox"></figure>
                                                 </a>
                                                 <div class="content">
@@ -189,7 +150,7 @@
                                                     <div class="post-meta text-muted d-flex align-items-center mb-15">
                                                         <div class="author d-flex align-items-center mr-20"><img
                                                                 alt="jobBox"
-                                                                src="{{$user_img}}"><span>{{$item->user->name}}</span>
+                                                                src="{{ getStorageImageUrl($item->user->avatar_url, config('image.avatar')) }}"><span>{{$item->user->name}}</span>
                                                         </div>
                                                         <div class="date"><span>{{ $item->created_at->diffForHumans() }}</span></div>
                                                     </div>

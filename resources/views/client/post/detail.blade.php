@@ -8,7 +8,7 @@
 
 @section('content')
     <main class="main">
-        @php
+        {{-- @php
             if (isset($postDetail->user->avatar_url)) {
                 $user_img = asset('storage/' . $postDetail->user->avatar_url);
             } else {
@@ -20,7 +20,7 @@
             } else {
                 $blog_img = asset('default/blog.jpg');
             }
-        @endphp
+        @endphp --}}
         <section class="section-box">
             <div><img src="{{ asset('assets/client/imgs/page/blog/img-single.png') }}"></div>
         </section>
@@ -33,7 +33,7 @@
                             <h2 class="mb-30 mt-20 text-center">{{ $postDetail->title }}</h2>
                             <div class="post-meta text-muted d-flex align-items-center mx-auto justify-content-center">
                                 <div class="author d-flex align-items-center mr-30"><img alt="jobBox"
-                                        src="{{ $user_img }}"><span>{{ $postDetail->user->name }}</span>
+                                        src="{{ getStorageImageUrl($postDetail->user->avatar_url, config('image.avatar')) }}"><span>{{ $postDetail->user->name }}</span>
                                 </div>
                                 <div class="date"><span class="font-xs color-text-paragraph-2 mr-20 d-inline-block"><img
                                             class="img-middle mr-5"
@@ -63,7 +63,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <figure class="text-center"><img src="{{ $blog_img }}">
+                            <figure class="text-center"><img src="{{ getStorageImageUrl($postDetail->image, config('image.blog')) }}">
                             </figure>
                             <div class="max-width-single">
                                 <div class="content-single">
@@ -71,12 +71,12 @@
                                 </div>
                                 <div class="single-apply-jobs mt-20">
                                     <div class="row">
-                                        <div class="col-lg-7"><a class="btn btn-border-3 mr-10 hover-up" href="#">#
+                                        {{-- <div class="col-lg-7"><a class="btn btn-border-3 mr-10 hover-up" href="#">#
                                                 Thiên nhiên</a><a class="btn btn-border-3 mr-10 hover-up" href="#">#
                                                 Việc làm</a><a class="btn btn-border-3 hover-up" href="#"># Kỹ
                                                 năng</a>
-                                        </div>
-                                        <div class="col-md-5 text-lg-end social-share">
+                                        </div> --}}
+                                        <div class="col-md-12 text-lg-end social-share">
                                             <h6 class="color-text-paragraph-2 d-inline-block d-baseline mr-20 mt-10">
                                                 Chia sẻ</h6><a class="mr-20 d-inline-block d-middle hover-up"
                                                 href="{{ $shareUrls['facebook'] }}"><img alt="jobBox"

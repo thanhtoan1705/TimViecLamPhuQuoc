@@ -6067,8 +6067,16 @@ ul li:last-child .card-list-4 {
 }
 
 .nav-tavs-profile {
-  padding-right: 30px;
+  display: none;
 }
+
+@media (min-width: 768px) {
+  .nav-tavs-profile {
+    display: block;
+    padding-right: 30px;
+  }
+}
+
 .nav-tavs-profile ul li {
   width: 100%;
 }
