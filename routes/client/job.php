@@ -12,4 +12,3 @@ Route::prefix('tin-tuyen-dung')
         Route::post('jobs/{id}/apply', [JobController::class, 'applyForJob'])->name('apply');
     });
 Route::get('/{jobSlug}.html', [JobController::class, 'single'])->name('job.single');
-

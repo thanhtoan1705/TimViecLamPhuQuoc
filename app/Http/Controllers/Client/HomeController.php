@@ -5,12 +5,8 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Repositories\Candidate\CandidateRepository;
 use App\Repositories\Employer\EmployerInterface;
-use App\Repositories\Job\JobRepository;
 use App\Repositories\JobCategory\JobCategoryInterface;
 use App\Repositories\JobPost\JobPostInterface;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -50,12 +46,17 @@ class HomeController extends Controller
         $savedJobs = $this->candidateRepository->getSavedJobs();
         $savedJobIds = $savedJobs->pluck('id')->toArray();
 
+        $bestJobs = $this->jobPostRepository->getBestJobs();
+        $hasteJobs = $this->jobPostRepository->getHasteJobs();
+
         $data = [
             'jobpost' => $jobPostRepository,
             'jobCategories' => $jobCategoriesRepository,
             'employers' => $employers,
             'topEmployers' => $topEmployers,
             'hotJobCategories' => $hotJobCategories,
+            'bestJobs' => $bestJobs,
+            'hasteJobs' => $hasteJobs,
             'savedJobIds' => $savedJobIds,
         ];
 

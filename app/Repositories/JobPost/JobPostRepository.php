@@ -15,21 +15,35 @@ class JobPostRepository implements JobPostInterface
         $this->jobPost = $jobPost;
     }
 
-    public function topEmployers($limit = 10)
+    public function topEmployers($limit = 6)
     {
         return $this->jobPost
-            ->selectRaw('employer_id, COUNT(*) as total_jobs')
-            ->groupBy('employer_id')
-            ->orderBy('total_jobs', 'DESC')
-            ->limit($limit)
-            ->get();
+            ->select('employer_id')
+            ->whereHas('employer.userJobPackages', function ($query) {
+                $query->whereHas('jobPostPackage', function ($q) {
+                    $q->where('display_top', 1);
+                })
+                    ->where('expires_at', '>', now());
+            })
+            ->with(['employer' => function ($query) {
+                $query->select('id', 'company_name', 'company_logo', 'company_photo_cover', 'slug', 'address_id')
+                    ->withCount('job_post as total_jobs')
+                    ->with(['address', 'job_post' => function ($q) {
+                        $q->latest()->take(3)->with('job_category', 'jobType', 'salary');
+                    }]);
+            }])
+            ->distinct()
+            ->take($limit)
+            ->get()
+            ->map(function ($post) {
+                return $post->employer;
+            });
     }
 
     public function getAllJobPost($limit = 10)
     {
         $jobPosts = $this->jobPost
             ->with(['employer.userJobPackages.jobPostPackage'])
-            ->limit($limit)
             ->get();
 
         $groupedJobPosts = $jobPosts->groupBy(function ($item) {
@@ -37,18 +51,20 @@ class JobPostRepository implements JobPostInterface
         });
 
         $groupedJobPosts->transform(function ($posts) {
-            return $posts->map(function ($post) {
-                $labels = $post->employer->userJobPackages
-                    ->filter(function ($package) {
-                        return $package->expires_at && $package->expires_at > now();
-                    })
-                    ->map(fn($package) => optional($package->jobPostPackage)->label)
-                    ->filter()
-                    ->toArray();
-                $post->package_labels = !empty($labels) ? $labels : [null];
+            return $posts->sortByDesc('created_at')
+                ->take(8)
+                ->map(function ($post) {
+                    $labels = $post->employer->userJobPackages
+                        ->filter(function ($package) {
+                            return $package->expires_at && $package->expires_at > now();
+                        })
+                        ->map(fn($package) => optional($package->jobPostPackage)->label)
+                        ->filter()
+                        ->toArray();
+                    $post->package_labels = !empty($labels) ? $labels : [null];
 
-                return $post;
-            });
+                    return $post;
+                });
         });
 
         return $groupedJobPosts;
@@ -81,5 +97,33 @@ class JobPostRepository implements JobPostInterface
         return JobPostCandidate::where('job_post_id', $jobpostId)
         ->where('candidate_id', $candidateId)
             ->delete();
+    }
+
+    public function getBestJobs($limit = 8)
+    {
+        return $this->jobPost
+            ->with(['employer.userJobPackages.jobPostPackage', 'job_category', 'jobType', 'skills'])
+            ->whereHas('employer.userJobPackages', function ($query) {
+                $query->whereHas('jobPostPackage', function ($q) {
+                    $q->where('display_best', 1);
+                })
+                    ->where('expires_at', '>', now());
+            })
+            ->limit($limit)
+            ->get();
+    }
+
+    public function getHasteJobs($limit = 8)
+    {
+        return $this->jobPost
+            ->with(['employer.userJobPackages.jobPostPackage', 'job_category', 'jobType', 'skills'])
+            ->whereHas('employer.userJobPackages', function ($query) {
+                $query->whereHas('jobPostPackage', function ($q) {
+                    $q->where('display_haste', 1);
+                })
+                    ->where('expires_at', '>', now());
+            })
+            ->limit($limit)
+            ->get();
     }
 }

@@ -1,8 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import sampleData from './data/sampleData';
 
-const ReviewCV = ({templateContent}) => {
-    console.log('ReviewCV rendered', {templateContent});
+const ReviewCV = ({templateContent, isPreview = true}) => {
     const [processedContent, setProcessedContent] = useState('');
 
     const processTemplate = useCallback((template, data) => {
@@ -49,15 +48,24 @@ const ReviewCV = ({templateContent}) => {
     }, []);
 
     useEffect(() => {
-        console.log('Processing template', {templateContent, sampleData});
         const newProcessedContent = processTemplate(templateContent, sampleData);
-        console.log('Processed content', newProcessedContent);
         setProcessedContent(newProcessedContent);
     }, [templateContent, processTemplate]);
 
     return (
-        <div className="cv-preview">
-            <div dangerouslySetInnerHTML={{__html: processedContent}}/>
+        <div className="cv-container" id="pdf">
+            <div className="cv-content"
+                 style={{
+                     width: '21cm',
+                     minHeight: '29.7cm',
+                     padding: '0.5cm',
+                     margin: '0 auto',
+                     background: 'white',
+                     boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+                     position: 'relative'
+                 }}
+                 dangerouslySetInnerHTML={{__html: processedContent}}
+            />
         </div>
     );
 };

@@ -33,4 +33,22 @@ class JobPostPackage extends Model
     {
         return $this->hasMany(UserJobPackage::class, 'packages_id');
     }
+
+    public static function getTotalActiveUsersWithDisplayBest()
+    {
+        return UserJobPackage::whereHas('jobPostPackage', function ($query) {
+            $query->where('display_best', 1);
+        })
+            ->where('expires_at', '>', now())
+            ->count();
+    }
+
+    public static function getTotalActiveUsersWithDisplayTop()
+    {
+        return UserJobPackage::whereHas('jobPostPackage', function ($query) {
+            $query->where('display_top', 1);
+        })
+            ->where('expires_at', '>', now())
+            ->count();
+    }
 }

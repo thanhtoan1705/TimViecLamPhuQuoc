@@ -109,10 +109,14 @@
                                              alt="{{ $template->template_name }}" class="w-100">
                                         <div class="overlay-buttons">
                                             <a href="#" class="p-0 btn btn-preview p-md-1" data-bs-toggle="modal"
-                                               data-bs-target="#previewModal{{ $template->id }}"><i
-                                                    class="fi-rr-eye"></i> Xem trước</a>
-                                            <a href="#" class="p-0 btn btn-use p-md-1"><i class="fi-rr-pencil"></i> Dùng
-                                                mẫu</a>
+                                               data-bs-target="#previewModal{{ $template->id }}">
+                                                <i class="fi-rr-eye"></i> Xem trước
+                                            </a>
+                                            <a href="#" class="p-0 btn btn-use p-md-1"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="{{ auth()->check() ? '#chooseCreateTypeModal'.$template->id : '#ModalLoginForm' }}">
+                                                <i class="fi-rr-pencil"></i> Dùng mẫu
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -142,6 +146,53 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Modal lựa chọn c��ch tạo CV -->
+                        <div class="modal fade" id="chooseCreateTypeModal{{$template->id}}" tabindex="-1"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header border-0">
+                                        <h5 class="modal-title">Chọn nội dung để bắt đầu tạo CV</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <a href="{{ route('client.cv.show', ['id' => $template->id]) }}"
+                                                   class="card h-100 text-center p-4 text-decoration-none">
+                                                    <div class="mb-3">
+                                                        <img
+                                                            src="{{ asset('assets/client/imgs/template/icons/plus-document.svg') }}"
+                                                            alt="create"
+                                                            class="img-fluid"
+                                                            style="width: 48px;">
+                                                    </div>
+                                                    <h6 class="mb-2">Tạo CV từ đầu</h6>
+                                                    <p class="text-muted small mb-0">Tạo CV mới với mẫu này</p>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <a href="#"
+                                                   class="card h-100 text-center p-4 text-decoration-none">
+                                                    <div class="mb-3">
+                                                        <img
+                                                            src="{{ asset('assets/client/imgs/template/icons/refresh-document.svg') }}"
+                                                            alt="restore"
+                                                            class="img-fluid"
+                                                            style="width: 48px;">
+                                                    </div>
+                                                    <h6 class="mb-2">Khôi phục dữ liệu chưa lưu</h6>
+                                                    <p class="text-muted small mb-0">Tiếp tục với dữ liệu đã nhập trước
+                                                        đó</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </div>
                 <div class="paginations">
@@ -156,7 +207,6 @@
 
 @push('css')
     <style>
-
         .image-box {
             position: relative;
             overflow: hidden;
@@ -224,6 +274,229 @@
             max-height: 80vh;
             overflow-y: auto;
         }
+
+        .modal-content {
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+
+        .form-control:focus {
+            border-color: #0048db;
+            box-shadow: 0 0 0 0.2rem rgba(0, 72, 219, 0.25);
+        }
+
+        .btn-outline-primary, .btn-outline-danger {
+            border-width: 2px;
+            border-radius: 8px;
+            height: 48px;
+        }
+
+        .btn-outline-primary img, .btn-outline-danger img {
+            margin-top: -2px;
+        }
+
+        .btn-outline-primary span, .btn-outline-danger span {
+            line-height: 24px;
+        }
+
+        .hover-up {
+            transition: all 0.3s ease;
+        }
+
+        .hover-up:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .text-brand-1 {
+            color: #0048db;
+        }
+
+        .modal.fade .modal-dialog {
+            transform: scale(0.8);
+            transition: transform 0.3s ease-out;
+        }
+
+        .modal.show .modal-dialog {
+            transform: scale(1);
+        }
+
+        @media (max-width: 1200px) {
+            .modal-dialog {
+                max-width: 90% !important;
+            }
+        }
+
+        .form-check-input {
+            cursor: pointer;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .small {
+            font-size: 0.875rem;
+        }
+
+        /* Thêm styles cho modal lựa chọn */
+        #chooseCreateTypeModal .card {
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        #chooseCreateTypeModal .card:hover {
+            border-color: #3C65F5;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        #chooseCreateTypeModal .card h6 {
+            color: #333;
+        }
+
+        #chooseCreateTypeModal .card:hover h6 {
+            color: #3C65F5;
+        }
+
+        .modal-dialog-centered {
+            display: flex;
+            align-items: center;
+            min-height: calc(100% - 1rem);
+        }
+
+        /* Modal Preview Styles */
+        .modal-dialog.modal-xl {
+            max-width: 80%;
+            margin: 1.75rem auto;
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+
+        .modal-body {
+            padding: 0;
+            background: #f5f5f5;
+        }
+
+        /* Container cho phép scroll */
+        .preview-scroll-container {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: auto;
+            max-height: 80vh;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Wrapper giữ kích thước cố định */
+        .preview-wrapper {
+            min-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* CV Container Styles */
+        .cv-container {
+            /* margin-top: 10px; */
+            /* width: 21cm;
+            min-height: 29.7cm;
+            padding: 0.5cm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1); */
+        }
+
+        .cv-content {
+            width: 100%;
+            min-height: 990px;
+            background: white;
+            padding: 5px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .modal-dialog.modal-xl {
+                max-width: 95%;
+                margin: 1rem auto;
+            }
+
+            .cv-container {
+                transform: scale(0.9);
+                transform-origin: top center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cv-container {
+                transform: scale(0.8);
+            }
+
+            .preview-scroll-container {
+                -ms-overflow-style: -ms-autohiding-scrollbar;
+                scrollbar-width: thin;
+            }
+
+            .preview-scroll-container::-webkit-scrollbar {
+                -webkit-appearance: none;
+                width: 7px;
+                height: 7px;
+            }
+
+            .preview-scroll-container::-webkit-scrollbar-thumb {
+                border-radius: 4px;
+                background-color: rgba(0, 0, 0, .5);
+                -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cv-container {
+                transform: scale(0.7);
+            }
+        }
+
+        /* Theme Colors */
+        :root {
+            --theme-color: #3c65f5;
+            --theme-color-light: rgba(60, 101, 245, 0.1);
+            --cv-primary-color: var(--theme-color);
+            --cv-hover-color: #2a4cd7;
+            --cv-bg-color: #f8f9fa;
+            --cv-border-color: #e0e0e0;
+        }
+
+        /* CV Content Styles */
+        h5 {
+            color: var(--theme-color);
+            border-bottom: 2px solid var(--theme-color);
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+
+        .fas, .fab, .bi {
+            color: var(--theme-color);
+        }
+
+        /* Hide unnecessary elements in preview */
+        #reviewCV .action-buttons,
+        #reviewCV .add-item,
+        #reviewCV .remove-section,
+        #reviewCV [contenteditable],
+        #reviewCV .btn,
+        #reviewCV .cv-toolbar {
+            display: none !important;
+        }
     </style>
 @endpush
 
@@ -251,3 +524,121 @@
         });
     </script>
 @endpush
+
+<!-- Modal Login Form -->
+<div class="modal fade" id="ModalLoginForm" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" style="max-width: 1000px;">
+        <div class="modal-content">
+            <div class="p-0">
+                <div class="row g-0">
+                    <div class="col-lg-6 d-none d-lg-block">
+                        <div class="bg-primary h-100 d-flex flex-column justify-content-center"
+                             style="background: linear-gradient(135deg, #3a8ffe 0%, #0048db 100%); min-height: 600px;">
+                            <div class="text-center px-5">
+                                <img src="{{ asset('assets/client/imgs/page/login-register/img-4.svg') }}"
+                                     alt="Login"
+                                     class="img-fluid mb-4"
+                                     style="max-width: 85%;">
+                                <h2 class="text-white mb-3 fs-2">Chào mừng bạn trở lại!</h2>
+                                <p class="text-white-50 fs-6">
+                                    Đăng nhập để khám phá hàng ngàn cơ hội việc làm hấp dẫn
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="p-30">
+                            <button type="button"
+                                    class="btn-close position-absolute top-0 end-0 mt-3 me-3"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+
+                            <div class="text-center mb-4">
+                                <h3 class="text-brand-1 mb-2 fs-3">Đăng nhập để tạo CV</h3>
+                                <p class="text-muted">Truy cập vào tài khoản của bạn</p>
+                            </div>
+
+                            <!-- Social Login Buttons -->
+                            <div class="d-grid gap-3 mb-4">
+                                <a href="{{ route('client.login.facebook') }}"
+                                   class="btn btn-outline-primary hover-up py-2 d-flex align-items-center justify-content-center">
+                                    <img src="{{asset('assets/client/imgs/template/icons/facebook.svg')}}"
+                                         alt="facebook" class="me-2" height="24">
+                                    <span>Đăng nhập với Facebook</span>
+                                </a>
+                                <a href="{{ route('client.auth.google', ['previous_url' => url()->current()]) }}"
+                                   class="btn btn-outline-danger hover-up py-2 d-flex align-items-center justify-content-center">
+                                    <img src="{{ asset('assets/client/imgs/template/icons/icon-google.svg') }}"
+                                         alt="google" class="me-2" height="24">
+                                    <span>Đăng nhập với Google</span>
+                                </a>
+                            </div>
+
+                            <div class="position-relative mb-4">
+                                <hr class="text-muted">
+                                <span
+                                    class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted">
+                                    hoặc đăng nhập với
+                                </span>
+                            </div>
+
+                            <!-- Login Form -->
+                            <form class="login-register" method="post"
+                                  action="{{ route('client.candidate.login.post') }}">
+                                @csrf
+                                <input type="hidden" name="previous_url" value="{{ url()->current() }}">
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="email">Email của bạn</label>
+                                    <input class="form-control"
+                                           id="email"
+                                           type="email"
+                                           required
+                                           name="email"
+                                           placeholder="name@example.com">
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="password">Mật khẩu</label>
+                                    <input class="form-control"
+                                           id="password"
+                                           type="password"
+                                           required
+                                           name="password"
+                                           placeholder="Nhập mật khẩu">
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div class="form-check">
+                                        <input type="checkbox"
+                                               class="form-check-input" style="height: 16px;"
+                                               id="remember"
+                                               name="remember_login">
+                                        <label class="form-check-label small" for="remember">
+                                            Ghi nhớ
+                                        </label>
+                                    </div>
+                                    <a href="{{route('client.reset')}}" class="text-primary small">Quên mật khẩu?</a>
+                                </div>
+
+                                <div class="d-grid mb-3">
+                                    <button class="btn btn-primary hover-up py-2 p-15" type="submit">
+                                        Đăng nhập ngay
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="text-center mt-4">
+                                <p class="mb-0">Chưa có tài khoản?
+                                    <a href="{{ route('client.candidate.register') }}" class="text-primary">
+                                        Đăng ký ngay
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

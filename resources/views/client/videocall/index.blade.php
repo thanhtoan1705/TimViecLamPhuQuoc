@@ -3,71 +3,101 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Lobby</title>
+    <title>Phòng họp trực tuyến</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link href="{{ asset('assets/client/css/lobby.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/client/css/main_video_call.css') }}" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3C65F5',
+                        secondary: '#2851E3',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-
-<header id="nav">
-    <div class="nav--list">
-        <a href="{{ route('client.client.video-call') }}">
-            <h3 id="logo">
-                <img src="./images/logo.png" alt="Site Logo">
-                <span>Jobbox</span>
-            </h3>
-        </a>
-    </div>
-
-    <div id="nav__links">
-        <a class="nav__link" href="/">
-            Trang chủ
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ede0e0" viewBox="0 0 24 24">
-                <path
-                    d="M20 7.093v-5.093h-3v2.093l3 3zm4 5.907l-12-12-12 12h3v10h7v-5h4v5h7v-10h3zm-5 8h-3v-5h-8v5h-3v-10.26l7-6.912 7 6.99v10.182z"/>
-            </svg>
-        </a>
-        <a class="nav__link" id="create__room__btn" href="{{ route('client.client.video-call') }}">
-            Tạo phòng
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ede0e0" viewBox="0 0 24 24">
-                <path
-                    d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z"/>
-            </svg>
-        </a>
-    </div>
-</header>
-
-<main id="room__lobby__container">
-
-    <div id="form__container">
-        <div id="form__container__header">
-            <p>👋 Tạo hoặc tham gia phòng</p>
-        </div>
-
-        <form id="lobby__form" action="{{ route('client.client.room') }}" method="GET">
-            @csrf
-            <div class="form__field__wrapper">
-                <label>Tên của bạn</label>
-                <input type="text" name="name" placeholder="Nhập tên hiển thị của bạn..."/>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-[Inter]">
+<!-- Navbar -->
+<nav class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center">
+                <a href="{{ route('client.client.video-call') }}" class="flex items-center">
+                    <img src="{{ asset('assets/client/images/logo.png') }}" alt="Jobbox" class="h-8 w-auto">
+                    {{-- <span class="ml-2 text-xl font-semibold text-primary">Jobbox</span> --}}
+                </a>
             </div>
 
-            <div class="form__field__wrapper">
-                <label>Tên phòng</label>
-                <input type="text" name="room" placeholder="Nhập tên phòng..."/>
-            </div>
-
-            <div class="form__field__wrapper">
-                <button type="submit">Đi tới phòng
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path
-                            d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"/>
+            <div class="flex items-center space-x-4">
+                <a href="/"
+                   class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-primary transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                     </svg>
-                </button>
+                    Trang chủ
+                </a>
+                <a href="{{ route('client.client.video-call') }}"
+                   class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-secondary transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Tạo phòng
+                </a>
             </div>
-        </form>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-md mx-auto">
+        <div class="bg-white shadow-xl rounded-2xl p-8">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-900">👋 Chào mừng đến với phòng họp</h2>
+                <p class="mt-2 text-sm text-gray-600">Nhập thông tin để bắt đầu cuộc họp</p>
+            </div>
+
+            <form id="lobby__form" action="{{ route('client.client.room') }}" method="GET" class="space-y-6">
+                @csrf
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Tên của bạn</label>
+                    <div class="mt-1">
+                        <input type="text" name="name" id="name" required
+                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary"
+                               placeholder="Nhập tên hiển thị của bạn...">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="room" class="block text-sm font-medium text-gray-700">Tên phòng</label>
+                    <div class="mt-1">
+                        <input type="text" name="room" id="room" required
+                               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary"
+                               placeholder="Nhập tên phòng...">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit"
+                            class="w-full flex justify-center items-center px-4 py-3 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
+                        <span>Tham gia phòng họp</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </main>
-
 </body>
 </html>

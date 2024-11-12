@@ -17,9 +17,22 @@ class CustomView extends Page
     public $userpackages;
     public $employerId;
 
+    public function canPurchasePackage($package)
+    {
+        if ($package->display_best == 1) {
+            $totalActiveUsers = JobPostPackage::getTotalActiveUsersWithDisplayBest();
+            return $totalActiveUsers < 6;
+        }
+        if ($package->display_top == 1) {
+            $totalActiveUsers = JobPostPackage::getTotalActiveUsersWithDisplayTop();
+            return $totalActiveUsers < 6;
+        }
+        return true;
+    }
+
     public function mount()
     {
-        $employerId = auth()->id();
+        $employerId = auth()->user()->employer->id;
         $this->packages = JobPostPackage::all();
         $this->userpackages = UserJobPackage::where('employer_id', $employerId)->get();
     }

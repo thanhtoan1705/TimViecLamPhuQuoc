@@ -6,7 +6,8 @@
             <div class="container">
                 <div class="banner-hero banner-image-single">
                     <div class="img-container">
-                        <img src="{{ asset('storage/' . $employer->company_photo_cover) }}" alt="jobBox">
+                        <img src="{{ getStorageImageUrl($employer->company_photo_cover, 'default/photo-cover.png') }}"
+                             alt="jobBox">
                     </div>
                 </div>
                 <div class="box-company-profile">
@@ -17,7 +18,8 @@
                             <h5 class="f-18">{{$employer->company_name}}
                             </h5>
                             <p class="mt-5 font-md color-text-paragraph-2 mb-15"><span
-                                    class="card-location font-regular">{{$employer->address->district->name}}, {{$employer->address->province->name}}</span></p>
+                                    class="card-location font-regular">{{$employer->address->district->name ?? ''}}, {{$employer->address->province->name ?? ''}}</span>
+                            </p>
                         </div>
                         <div class="col-lg-4 col-md-12 text-lg-end">
                             <a class='btn btn-white border' href="tel:+84{{$employer->company_phone}}">Liên hệ</a>
@@ -56,7 +58,7 @@
                                 <div class="avatar-sidebar">
                                     <div class="sidebar-info pl-0"><span
                                             class="sidebar-company">{{$employer->company_name}}</span><span
-                                            class="card-location">{{$employer->address->street}}</span></div>
+                                            class="card-location">{{$employer->address->street ?? ''}}</span></div>
                                 </div>
                             </div>
                             <div class="sidebar-list-job">
@@ -77,7 +79,8 @@
                                         <div class="sidebar-icon-item"><i class="fi-rr-marker"></i></div>
                                         <div class="sidebar-text-info"><span
                                                 class="text-description">Địa chỉ</span><strong
-                                                class="small-heading">{{$employer->address->street}}</strong></div>
+                                                class="small-heading">{{$employer->address->street ?? ''}}</strong>
+                                        </div>
                                     </li>
                                     <li>
                                         <div class="sidebar-icon-item"><i class="fi fi-rr-coins"></i></div>
@@ -103,7 +106,7 @@
                             </div>
                             <div class="sidebar-list-job">
                                 <ul class="ul-disc">
-                                    <li>{{$employer->address->street}}</li>
+                                    <li>{{$employer->address->street ?? ''}}</li>
                                     <li>Điện thoại: (+84) {{$employer->company_phone}}</li>
                                     <li>Email: {{$employer->user->email}}</li>
                                 </ul>
@@ -158,8 +161,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var lat = {{$employer->address->latitude}};
-            var lon = {{$employer->address->longitude}};
+            var lat = {{$employer->address->latitude ?? ''}};
+            var lon = {{$employer->address->longitude ?? ''}};
             var map = L.map('map', {
                 center: [lat, lon],
                 zoom: 16,

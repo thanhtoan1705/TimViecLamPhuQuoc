@@ -1,9 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import axios from 'axios';
-import { createRoot } from 'react-dom/client';
-import EditableField from './EditableField';
-import Modal from './Modal';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import sampleData from './data/sampleData';
 
 
@@ -138,12 +134,7 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
 
             const addItemButton = `
                 <div class="text-center my-3 position-relative">
-                    <button class="btn btn-outline-primary btn-sm add-item position-absolute start-50 translate-middle-x"
-                            data-action="open-modal"
-                            data-section="${sectionKey}"
-                            style="bottom: -20px; z-index: 10;">
-                        + Thêm mục
-                    </button>
+
                 </div>
             `;
 
@@ -200,10 +191,12 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
                                             onclick="event.stopPropagation(); window.handleAction('add', '${key}')">
                                         <i class="bi bi-plus-circle-fill"></i>
                                     </button>
-                                    <button class="control-btn delete-btn" title="Xóa mục này"
-                                            onclick="event.stopPropagation(); window.handleAction('remove', '${key}', ${index})">
-                                        <i class="bi bi-trash3-fill"></i>
-                                    </button>
+                                    ${data[key].length > 1 ? `
+                                        <button class="control-btn delete-btn" title="Xóa mục này"
+                                                onclick="event.stopPropagation(); window.handleAction('remove', '${key}', ${index})">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
+                                    ` : ''}
                                     ${index > 0 ? `
                                         <button class="control-btn move-btn" title="Di chuyển lên"
                                                 onclick="event.stopPropagation(); window.handleAction('move-up', '${key}', ${index})">
@@ -809,9 +802,11 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
                 width: '21cm',
                 minHeight: '29.7cm',
                 padding: '0.5cm',
-                // margin: '0 auto',
-                // background: 'white',
-                // boxShadow: '0 0 10px rgba(0,0,0,0.1)'
+                margin: '0 auto',
+                background: 'white',
+                // transform: 'scale(0.7)',
+                transformOrigin: 'top center',
+                boxShadow: '0 0 10px rgba(0,0,0,0.1)'
             }}
         />
     );

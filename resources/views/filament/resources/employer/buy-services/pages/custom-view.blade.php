@@ -157,13 +157,23 @@
                     </ul>
                     @php
                         $userpackages = $this->userpackages;
-                        $purchased = $userpackages->where('packages_id', $package->id)->isNotEmpty();
+                        $purchased = $userpackages->where('packages_id', $package->id)
+                            ->where('status', 1)
+                            ->isNotEmpty();
+                        $canPurchase = $this->canPurchasePackage($package);
                     @endphp
 
                     <form action="{{ route('client.employer.payment') }}" method="GET">
                         <input type="hidden" name="package_id" value="{{ $package->id }}">
-                        <button type="submit" class="subscribe-btn">
-                            {{ $purchased ? 'Gia hạn' : 'Đăng ký' }}
+                        <button type="submit"
+                                class="subscribe-btn"
+                                @if(!$canPurchase) disabled @endif
+                                style="@if(!$canPurchase) opacity: 0.5; cursor: not-allowed; @endif">
+                            @if(!$canPurchase)
+                                Đã đủ số lượng
+                            @else
+                                {{ $purchased ? 'Gia hạn' : 'Đăng ký' }}
+                            @endif
                         </button>
                     </form>
                 </div>
@@ -206,13 +216,23 @@
                     </ul>
                     @php
                         $userpackages = $this->userpackages;
-                        $purchased = $userpackages->where('packages_id', $package->id)->isNotEmpty();
+                        $purchased = $userpackages->where('packages_id', $package->id)
+                            ->where('status', 1)
+                            ->isNotEmpty();
+                        $canPurchase = $this->canPurchasePackage($package);
                     @endphp
 
                     <form action="{{ route('client.employer.payment') }}" method="GET">
                         <input type="hidden" name="package_id" value="{{ $package->id }}">
-                        <button type="submit" class="subscribe-btn">
-                            {{ $purchased ? 'Gia hạn' : 'Đăng ký' }}
+                        <button type="submit"
+                                class="subscribe-btn"
+                                @if(!$canPurchase) disabled @endif
+                                style="@if(!$canPurchase) opacity: 0.5; cursor: not-allowed; @endif">
+                            @if(!$canPurchase)
+                                Đã đủ số lượng
+                            @else
+                                {{ $purchased ? 'Gia hạn' : 'Đăng ký' }}
+                            @endif
                         </button>
                     </form>
                 </div>
@@ -242,13 +262,23 @@
                     </ul>
                     @php
                         $userpackages = $this->userpackages;
-                        $purchased = $userpackages->where('packages_id', $package->id)->isNotEmpty();
+                        $purchased = $userpackages->where('packages_id', $package->id)
+                            ->where('status', 1)
+                            ->isNotEmpty();
+                        $canPurchase = $this->canPurchasePackage($package);
                     @endphp
 
                     <form action="{{ route('client.employer.payment') }}" method="GET">
                         <input type="hidden" name="package_id" value="{{ $package->id }}">
-                        <button type="submit" class="subscribe-btn">
-                            {{ $purchased ? 'Gia hạn' : 'Đăng ký' }}
+                        <button type="submit"
+                                class="subscribe-btn"
+                                @if(!$canPurchase) disabled @endif
+                                style="@if(!$canPurchase) opacity: 0.5; cursor: not-allowed; @endif">
+                            @if(!$canPurchase)
+                                Đã đủ số lượng
+                            @else
+                                {{ $purchased ? 'Gia hạn' : 'Đăng ký' }}
+                            @endif
                         </button>
                     </form>
                 </div>

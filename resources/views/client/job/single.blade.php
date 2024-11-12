@@ -12,7 +12,9 @@
             <div class="container">
                 <div class="banner-hero banner-image-single">
                     <div class="img-container">
-                        <img src="{{ $job->employer->company_photo_cover ? asset('storage/' . $job->employer->company_photo_cover) : asset('default/photo-cover.png') }}" alt="jobBox">
+                        <img
+                            src="{{ getStorageImageUrl($job->employer->company_photo_cover, 'default/photo-cover.png') }}"
+                            alt="jobBox">
                     </div>
                 </div>
 

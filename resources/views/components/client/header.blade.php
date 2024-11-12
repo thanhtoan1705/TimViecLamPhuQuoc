@@ -48,7 +48,9 @@
                             <i class="bi bi-bell-fill"></i>
                             <span
                                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{ auth()->user()->unreadNotifications->count() }}
+                            {{ auth()->user()->unreadNotifications->filter(function($notification) {
+                                return isset($notification->data['message']) && !empty($notification->data['message']);
+                            })->count() }}
                         </span>
                         </button>
 
@@ -62,17 +64,19 @@
                                 <p class="text-muted">Bạn chưa có thông báo nào.</p>
                             @else
                                 @foreach ($notifications as $notification)
-                                    <li class="d-flex justify-content-between align-items-center"
-                                        style="background-color: #ffffff; border: none; padding: 20px; border-radius: 10px; margin-bottom: 15px; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05); position: relative; overflow: hidden;">
-                                        <div style="display: flex; align-items: center;">
-                                            <i class="bi bi-bell-fill"
-                                               style="background-color: #007bff; padding: 10px; border-radius: 50%; font-size: 20px; display: inline-flex; justify-content: center; align-items: center; transition: background-color 0.3s; color: white;"></i>
-                                            <span
-                                                style="font-size: 14px; color: #495057; font-weight: 500; margin-left: 10px;">{{ $notification->data['message'] ?? '' }}</span>
-                                        </div>
-                                        <div
-                                            style="content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 5px; background: linear-gradient(180deg, #00c6ff, #007bff); transition: width 0.3s ease;"></div>
-                                    </li>
+                                    @if(isset($notification->data['message']) && !empty($notification->data['message']))
+                                        <li class="d-flex justify-content-between align-items-center"
+                                            style="background-color: #ffffff; border: none; padding: 20px; border-radius: 10px; margin-bottom: 15px; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05); position: relative; overflow: hidden;">
+                                            <div style="display: flex; align-items: center;">
+                                                <i class="bi bi-bell-fill"
+                                                   style="background-color: #007bff; padding: 10px; border-radius: 50%; font-size: 20px; display: inline-flex; justify-content: center; align-items: center; transition: background-color 0.3s; color: white;"></i>
+                                                <span
+                                                    style="font-size: 14px; color: #495057; font-weight: 500; margin-left: 10px;">{{ $notification->data['message'] }}</span>
+                                            </div>
+                                            <div
+                                                style="content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 5px; background: linear-gradient(180deg, #00c6ff, #007bff); transition: width 0.3s ease;"></div>
+                                        </li>
+                                    @endif
                                 @endforeach
                                 <div class="d-flex justify-content-center mt-3">
                                     <a href="{{ route('client.candidate.notification') }}" class="btn btn-primary">Xem
@@ -183,10 +187,12 @@
                             @if(auth()->user()->role == 'candidate')
                                 <li>
                                     <a href="{{ route('client.candidate.notification') }}">
-                                        {{-- <i class="bi bi-bell-fill"></i>  --}}
                                         Thông báo
-                                        <span
-                                            class="badge bg-danger">{{ auth()->user()->unreadNotifications->count() }}</span>
+                                        <span class="badge bg-danger">
+                                            {{ auth()->user()->unreadNotifications->filter(function($notification) {
+                                                return isset($notification->data['message']) && !empty($notification->data['message']);
+                                            })->count() }}
+                                        </span>
                                     </a>
                                 </li>
                                 <li><a href="{{route('client.candidate.profile')}}">Hồ sơ</a></li>

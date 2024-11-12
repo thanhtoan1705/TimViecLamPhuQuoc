@@ -5,16 +5,12 @@ namespace App\Filament\Resources\Employer\ServiceTracking;
 use App\Filament\Resources\Employer\ServiceTracking\ServiceTrackingResource\Pages;
 use App\Filament\Resources\Employer\ServiceTracking\ServiceTrackingResource\RelationManagers;
 use App\Models\UserJobPackage;
-use Filament\Forms;
+use Carbon\Carbon;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Columns\TextColumn;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ServiceTrackingResource extends Resource
@@ -31,7 +27,7 @@ class ServiceTrackingResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $userId = Auth::user()->id;
+        $userId = Auth::user()->employer->id;
 
         return static::getModel()::where('employer_id', $userId)->count();
     }
@@ -51,7 +47,7 @@ class ServiceTrackingResource extends Resource
 
     public static function table(Table $table): Table
     {
-        $userId = Auth::user()->id;
+        $userId = Auth::user()->employer->id;
 
         return $table
         ->defaultSort('created_at', 'desc')

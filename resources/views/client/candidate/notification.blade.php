@@ -16,7 +16,9 @@
                                     <div class="">
                                         <h3 class="mb-4">Thông báo của bạn</h3>
                                         @php
-                                            $notifications = auth()->user()->notifications;
+                                            $notifications = auth()->user()->notifications->filter(function($notification) {
+                                                return isset($notification->data['message']) && !empty($notification->data['message']);
+                                            });
                                             $displayLimit = 2; // Số thông báo hiện ban đầu
                                             $remainingNotifications = $notifications->count() - $displayLimit;
                                         @endphp
@@ -26,13 +28,17 @@
                                         @else
                                             <ul class="list-group">
                                                 @foreach ($notifications->slice(0, $displayLimit) as $notification)
-                                                    <li class="list-group-item notification-item d-flex justify-content-between align-items-center">
-                                                        <div class="d-flex align-items-center">
-                                                            <i class="bi bi-bell-fill notification-icon text-white me-3"></i>
-                                                            <span class="notification-message">{{ $notification->data['message'] ?? 'Thông báo không có nội dung.' }}</span>
-                                                        </div>
-                                                        <span class="badged bg-gradient-primary">{{ $notification->created_at->diffForHumans() }}</span>
-                                                    </li>
+                                                    @if(isset($notification->data['message']) && !empty($notification->data['message']))
+                                                        <li class="list-group-item notification-item d-flex justify-content-between align-items-center">
+                                                            <div class="d-flex align-items-center">
+                                                                <i class="bi bi-bell-fill notification-icon text-white me-3"></i>
+                                                                <span
+                                                                    class="notification-message">{{ $notification->data['message'] }}</span>
+                                                            </div>
+                                                            <span
+                                                                class="badged bg-gradient-primary">{{ $notification->created_at->diffForHumans() }}</span>
+                                                        </li>
+                                                    @endif
                                                 @endforeach
                                             </ul>
 
@@ -227,18 +233,20 @@
             document.getElementById('showMoreBtn')?.addEventListener('click', function() {
                 let notificationsList = '';
                 @foreach ($notifications->slice($displayLimit) as $notification)
+                    @if(isset($notification->data['message']) && !empty($notification->data['message']))
                     notificationsList += `
-                <li class="list-group-item notification-item d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <i class="bi bi-bell-fill notification-icon text-white me-3"></i>
-                        <span class="notification-message">{{ $notification->data['message'] ?? 'Thông báo không có nội dung.' }}</span>
-                    </div>
-                    <span class="badged bg-gradient-primary">{{ $notification->created_at->diffForHumans() }}</span>
-                </li>`;
+                    <li class="list-group-item notification-item d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-bell-fill notification-icon text-white me-3"></i>
+                            <span class="notification-message">{{ $notification->data['message'] }}</span>
+                        </div>
+                        <span class="badged bg-gradient-primary">{{ $notification->created_at->diffForHumans() }}</span>
+                    </li>`;
+                @endif
                 @endforeach
 
                 document.querySelector('.list-group').innerHTML += notificationsList;
-                this.style.display = 'none'; // Ẩn nút "Xem thêm" sau khi nhấn
+                this.style.display = 'none';
             });
         </script>
     @endpush

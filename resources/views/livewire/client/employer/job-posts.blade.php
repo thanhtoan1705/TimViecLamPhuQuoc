@@ -10,7 +10,8 @@
                                         src="{{ asset('storage/' . $job->employer->company_logo) }}"
                                         alt="jobBox" width="85px" height="85px"></div>
                                 <div class="right-info"><a class="name-job" href="#">{{$job->employer->company_name}}</a><span
-                                        class="location-small">{{$job->employer->address->province->name}}</span></div>
+                                        class="location-small">{{$job->employer->address->province->name ?? ''}}</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6 text-start text-md-end pr-60 col-md-6 col-sm-12">
@@ -22,12 +23,13 @@
                         </div>
                     </div>
                     <div class="card-block-info">
-                        <h4><a href='job-details.html'>{{$job->title}}</a></h4>
+                        <h4><a href='{{ route('client.job.single', ['jobSlug' => $job->slug]) }}'>{{$job->title}}</a>
+                        </h4>
                         <div class="mt-5">
                             <span class="card-briefcase">{{$job->jobType->name}}</span>
                             <span class="card-time"><span>{{ \Carbon\Carbon::parse($job->start_date)->diffForHumans() }}</span></span>
                         </div>
-                        <p class="font-sm color-text-paragraph mt-10 text-truncate-2-lines">{{$job->description}}</p>
+                        <p class="font-sm color-text-paragraph mt-10 text-truncate-2-lines">{!! $job->description !!}</p>
                         <div class="card-2-bottom mt-20">
                             <div class="row">
                                 <div class="col-lg-7 col-7">
