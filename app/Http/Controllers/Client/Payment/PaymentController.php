@@ -85,7 +85,7 @@ class PaymentController extends Controller
         $paypal->capturePaymentOrder($request->token);
 
         flash()->success('Thanh toán thành công.', [], 'Thành công!');
-        return redirect()->route('client.client.index');
+        return redirect()->route('filament.employer.pages.dashboard');
     }
 
     public function handleVnPayCallback(Request $request)
@@ -106,10 +106,10 @@ class PaymentController extends Controller
             $transaction = null;
             $this->paymentService->savePayment($employerId, $package, 'VNPay', '00', $promo, $transaction);
             flash()->success('Thanh toán thành công.', [], 'Thành công!');
-            return redirect()->route('client.client.index');
+            return redirect()->route('filament.employer.pages.dashboard');
         } else {
             flash()->error('Thanh toán không thành công.', [], 'Thất bại!');
-            return redirect()->route('client.client.index');
+            return redirect()->route('filament.employer.pages.dashboard');
         }
     }
 
@@ -176,10 +176,8 @@ class PaymentController extends Controller
     public function handleMomoCallback(Request $request)
     {
 
-        // Giải mã extraData
         $extraData = json_decode($request->extraData, true);
 
-        // Lấy các giá trị từ extraData
         $employerId = $extraData['employer_id'] ?? null;
         $packageId = $extraData['package_id'] ?? null;
         $promoId = $extraData['promo_id'] ?? null;
@@ -199,10 +197,10 @@ class PaymentController extends Controller
 
             $this->paymentService->savePayment($employerId, $package, 'Momo', '00', $promo, $transaction->trans_id);
             flash()->success('Thanh toán thành công.', [], 'Thành công!');
-            return redirect()->route('client.client.index');
+            return redirect()->route('filament.employer.pages.dashboard');
         } else {
             flash()->error('Thanh toán không thành công.', [], 'Thất bại!');
-            return redirect()->route('client.client.index');
+            return redirect()->route('filament.employer.pages.dashboard');
 
         }
     }

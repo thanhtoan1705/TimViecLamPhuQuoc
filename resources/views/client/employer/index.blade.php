@@ -121,14 +121,14 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="box-view-type">
-                                                    <a class='view-type' href='#'><img
-                                                            src="{{ asset('assets/client/imgs/template/icons/icon-list.svg') }}"
-                                                            alt="jobBox"></a>
-                                                    <a class='view-type' href='#'><img
-                                                            src="{{ asset('assets/client/imgs/template/icons/icon-grid-hover.svg') }}"
-                                                            alt="jobBox"></a>
-                                                </div>
+{{--                                                <div class="box-view-type">--}}
+{{--                                                    <a class='view-type' href='#'><img--}}
+{{--                                                            src="{{ asset('assets/client/imgs/template/icons/icon-list.svg') }}"--}}
+{{--                                                            alt="jobBox"></a>--}}
+{{--                                                    <a class='view-type' href='#'><img--}}
+{{--                                                            src="{{ asset('assets/client/imgs/template/icons/icon-grid-hover.svg') }}"--}}
+{{--                                                            alt="jobBox"></a>--}}
+{{--                                                </div>--}}
                                                 <select name="perPage" class="d-none">
                                                     <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
                                                     <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10

@@ -128,7 +128,7 @@ class JobPostPackagesTableSeeder extends Seeder
                 'display_best' => false,
                 'display_haste' => false,
                 'descriptions' => 'Tin tuyển dụng được gắn nhãn HOT vào tiêu đề tin.',
-                'label' => 0,
+                'label' => 2,
                 'status' => true,
                 'created_at' => now(),
                 'updated_at' => now(),

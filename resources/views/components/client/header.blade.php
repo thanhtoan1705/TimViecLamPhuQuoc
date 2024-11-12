@@ -15,28 +15,27 @@
             <div class="header-nav">
                 <nav class="nav-main-menu">
                     <ul class="main-menu">
-                        <ul class="main-menu">
-                            <li><a class="{{ request()->is('/') ? 'active' : '' }}" href='/'>Trang chủ</a>
-                            </li>
-                            <li><a class="{{ request()->routeIs('client.job.index') ? 'active' : '' }}"
-                                   href='{{route('client.job.index')}}'>Việc làm</a>
-                            </li>
-                            <li><a class="{{ request()->routeIs('client.employer.index') ? 'active' : '' }}"
-                                   href='{{route('client.employer.index')}}'>Công ty</a>
-                            </li>
-                            <li><a class="{{ request()->routeIs('client.candidate.hot') ? 'active' : '' }}"
-                                   href='{{route('client.candidate.hot')}}'>Ứng viên</a>
-                            </li>
-                            <li><a class="{{ request()->routeIs('client.post.index') ? 'active' : '' }}"
-                                   href='{{route('client.post.index')}}'>Tin tức</a>
-                            </li>
-                            <li><a class="{{ request()->routeIs('client.client.about') ? 'active' : '' }}"
-                                   href='{{route('client.client.about')}}'>Giới thiệu</a>
-                            </li>
-                            <li><a class="{{ request()->routeIs('client.pricing.index') ? 'active' : '' }}"
-                                   href='{{route('client.pricing.index')}}'>Bảng giá</a>
-                            </li>
-                        </ul>
+                        <li><a class="{{ request()->is('/') ? 'active' : '' }}" href='/'>Trang chủ</a>
+                        </li>
+                        <li><a class="{{ request()->routeIs('client.job.index') ? 'active' : '' }}"
+                               href='{{route('client.job.index')}}'>Việc làm</a>
+                        </li>
+                        <li><a class="{{ request()->routeIs('client.employer.index') ? 'active' : '' }}"
+                               href='{{route('client.employer.index')}}'>Công ty</a>
+                        </li>
+                        <li><a class="{{ request()->routeIs('client.candidate.hot') ? 'active' : '' }}"
+                               href='{{route('client.candidate.hot')}}'>Ứng viên</a>
+                        </li>
+                        <li><a class="{{ request()->routeIs('client.post.index') ? 'active' : '' }}"
+                               href='{{route('client.post.index')}}'>Tin tức</a>
+                        </li>
+                        <li><a class="{{ request()->routeIs('client.client.about') ? 'active' : '' }}"
+                               href='{{route('client.client.about')}}'>Giới thiệu</a>
+                        </li>
+                        <li><a class="{{ request()->routeIs('client.pricing.index') ? 'active' : '' }}"
+                               href='{{route('client.pricing.index')}}'>Bảng giá</a>
+                        </li>
+                    </ul>
                 </nav>
                 <div class="burger-icon burger-icon-white"><span class="burger-icon-top"></span><span
                         class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
@@ -95,14 +94,14 @@
                     </div>
                 @else
                     <div id="loginContainer" class="login-container">
-                        <!-- Nút mở modal -->
-                        <button type="button" id="loginButton" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">Đăng nhập
+                        <button type="button" id="loginButton" class="btn btn-primary">Đăng nhập
                         </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
+                        <div
+                            style="position: fixed;top: 0;left: 0;right: 0;bottom: 0;background-color: rgba(0, 0, 0, 0.5);z-index: 1000; display: none"
+                            id="overlay" class="overlay"></div>
+
+                        <div id="loginModal" class="modal" style="margin: 70px auto">
                             <div class="modal-dialog" style="min-width: 850px">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary text-white">
@@ -164,6 +163,7 @@
                     </div>
             </div>
         </div>
+    </div>
 </header>
 
 
@@ -223,69 +223,83 @@
     </div>
 </div>
 @if(!auth()->check())
-<style>
-    .modal-body {
-        display: flex;
-        justify-content: space-around;
-        align-items: stretch;
-        gap: 10px;
-        text-align: left;
-        background-color: #eee;
-    }
+    <style>
+        .modal {
+            display: none;
+            z-index: 9999;
+        }
 
-    .login-box {
-        width: 49%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    }
+        .modal-body {
+            display: flex;
+            justify-content: space-around;
+            align-items: stretch;
+            gap: 10px;
+            text-align: left;
+            background-color: #eee;
+        }
 
-    .login-box ul {
-        flex: 1;
-        margin-bottom: 10px;
-    }
+        .login-box {
+            width: 49%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
 
-    .login-box a {
-        align-self: center;
-        width: 100%;
-        text-align: center;
-    }
+        .login-box ul {
+            flex: 1;
+            margin-bottom: 10px;
+        }
 
-    .list-unstyled li {
-        margin: 5px 0;
-    }
+        .login-box a {
+            align-self: center;
+            width: 100%;
+            text-align: center;
+        }
 
-    .list-unstyled li i {
-        font-size: 16px;
-        margin-right: 5px;
-        color: #0b5ed7;
-    }
-</style>
+        .list-unstyled li {
+            margin: 5px 0;
+        }
+
+        .list-unstyled li i {
+            font-size: 16px;
+            margin-right: 5px;
+            color: #0b5ed7;
+        }
+    </style>
 @endif
 @push('script')
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var myModalElement = document.getElementById('exampleModal');
-            var myModal = new bootstrap.Modal(myModalElement);
-            var closeButton = document.querySelector('.modal-header .close');
+        const loginButton = document.getElementById('loginButton');
+        const loginModal = document.getElementById('loginModal');
+        const overlay = document.getElementById('overlay');
+        const closeModalButton = document.querySelector('#loginModal .close');
 
-            myModalElement.addEventListener('shown.bs.modal', function () {
-                var myInput = document.getElementById('myInput');
-                if (myInput) myInput.focus();
-            });
+        loginButton.addEventListener('click', function () {
+            loginModal.style.display = 'block';
+            overlay.style.display = 'block';
+        });
 
-            closeButton.addEventListener('click', function () {
-                myModal.hide();
-            });
+        closeModalButton.addEventListener('click', function () {
+            loginModal.style.display = 'none';
+            overlay.style.display = 'none';
 
-            window.addEventListener('resize', function () {
-                if (window.innerWidth <= 1200) {
-                    myModal.hide();
-                }
-            });
+        });
+
+        window.addEventListener('click', function (event) {
+            if (event.target === loginModal) {
+                loginModal.style.display = 'none';
+                overlay.style.display = 'none';
+            }
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth <= 1200) {
+                loginModal.style.display = 'none';
+                overlay.style.display = 'none';
+            }
         });
     </script>
 @endpush

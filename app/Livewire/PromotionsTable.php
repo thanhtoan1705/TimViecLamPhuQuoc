@@ -32,6 +32,7 @@ class PromotionsTable extends Component
         if ($this->statusCode == 1) {
             $promotions = Promotion::query()
                 ->where('status', 1)
+                ->where('start_time', '<', $now)
                 ->where('end_time', '>', $now)
                 ->where('number_use', '>', 0)
                 ->whereNotIn('id', $usedPromotions)

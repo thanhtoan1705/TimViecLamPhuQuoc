@@ -45,28 +45,80 @@ class FilterService
     public function getJobCategories()
     {
         return $this->jobCategory
-            ->withCount('jobPosts')
+            ->whereHas('jobPosts', function ($query) {
+                $query->where('end_date', '>', now());
+            })
+            ->withCount(['jobPosts' => function ($query) {
+                $query->where('end_date', '>', now());
+            }])
             ->having('job_posts_count', '>', 0)
             ->orderBy('job_posts_count', 'desc')
             ->limit(5)
             ->get();
     }
 
+//    public function getJobCategories()
+//    {
+//        return $this->jobCategory
+//            ->withCount('jobPosts')
+//            ->having('job_posts_count', '>', 0)
+//            ->orderBy('job_posts_count', 'desc')
+//            ->limit(5)
+//            ->get();
+//    }
+
+//    public function getSalaries()
+//    {
+//        return $this->salary
+//            ->withCount('jobPosts')
+//            ->having('job_posts_count', '>', 0)
+//            ->orderBy('job_posts_count', 'desc')
+//            ->limit(5)
+//            ->get();
+//    }
+
     public function getSalaries()
     {
         return $this->salary
-            ->withCount('jobPosts')
+            ->whereHas('jobPosts', function ($query) {
+                $query->where('end_date', '>', now());
+            })
+            ->withCount(['jobPosts' => function ($query) {
+                $query->where('end_date', '>', now());
+            }])
             ->having('job_posts_count', '>', 0)
             ->orderBy('job_posts_count', 'desc')
             ->limit(5)
             ->get();
     }
+
+//    public function getKeywords()
+//    {
+//        return DB::table('job_posts')
+//            ->select(DB::raw('meta_keyword'))
+//            ->whereNotNull('meta_keyword')
+//            ->get()
+//            ->flatMap(function ($jobPost) {
+//                return explode(',', $jobPost->meta_keyword);
+//            })
+//            ->map(function ($keyword) {
+//                return trim($keyword);
+//            })
+//            ->filter()
+//            ->countBy()
+//            ->map(function ($count, $keyword) {
+//                return ['keyword' => $keyword, 'job_count' => $count];
+//            })
+//            ->sortByDesc('job_count')
+//            ->take(5);
+//    }
 
     public function getKeywords()
     {
         return DB::table('job_posts')
             ->select(DB::raw('meta_keyword'))
             ->whereNotNull('meta_keyword')
+            ->where('end_date', '>', now())
             ->get()
             ->flatMap(function ($jobPost) {
                 return explode(',', $jobPost->meta_keyword);
@@ -83,10 +135,25 @@ class FilterService
             ->take(5);
     }
 
+//    public function getRanks()
+//    {
+//        return DB::table('ranks')
+//            ->leftJoin('job_posts', 'job_posts.rank_id', '=', 'ranks.id')
+//            ->select('ranks.id', 'ranks.name', DB::raw('COUNT(job_posts.id) as job_count'))
+//            ->groupBy('ranks.id', 'ranks.name')
+//            ->having('job_count', '>', 0)
+//            ->orderBy('job_count', 'desc')
+//            ->limit(5)
+//            ->get();
+//    }
+
     public function getRanks()
     {
         return DB::table('ranks')
-            ->leftJoin('job_posts', 'job_posts.rank_id', '=', 'ranks.id')
+            ->leftJoin('job_posts', function ($join) {
+                $join->on('job_posts.rank_id', '=', 'ranks.id')
+                    ->where('job_posts.end_date', '>', now());
+            })
             ->select('ranks.id', 'ranks.name', DB::raw('COUNT(job_posts.id) as job_count'))
             ->groupBy('ranks.id', 'ranks.name')
             ->having('job_count', '>', 0)
@@ -95,10 +162,25 @@ class FilterService
             ->get();
     }
 
+//    public function getExperiences()
+//    {
+//        return DB::table('experiences')
+//            ->leftJoin('job_posts', 'job_posts.experience_id', '=', 'experiences.id')
+//            ->select('experiences.id', 'experiences.name', DB::raw('COUNT(job_posts.id) as job_count'))
+//            ->groupBy('experiences.id', 'experiences.name')
+//            ->having('job_count', '>', 0)
+//            ->orderBy('job_count', 'desc')
+//            ->limit(5)
+//            ->get();
+//    }
+
     public function getExperiences()
     {
         return DB::table('experiences')
-            ->leftJoin('job_posts', 'job_posts.experience_id', '=', 'experiences.id')
+            ->leftJoin('job_posts', function ($join) {
+                $join->on('job_posts.experience_id', '=', 'experiences.id')
+                    ->where('job_posts.end_date', '>', now());
+            })
             ->select('experiences.id', 'experiences.name', DB::raw('COUNT(job_posts.id) as job_count'))
             ->groupBy('experiences.id', 'experiences.name')
             ->having('job_count', '>', 0)
@@ -110,7 +192,10 @@ class FilterService
     public function getJobTypes()
     {
         return DB::table('job_types')
-            ->leftJoin('job_posts', 'job_posts.job_type_id', '=', 'job_types.id')
+            ->leftJoin('job_posts', function ($join) {
+                $join->on('job_posts.job_type_id', '=', 'job_types.id')
+                    ->where('job_posts.end_date', '>', now()); // Thêm điều kiện end_date
+            })
             ->select('job_types.id', 'job_types.name', DB::raw('COUNT(job_posts.id) as job_count'))
             ->groupBy('job_types.id', 'job_types.name')
             ->having('job_count', '>', 0)
@@ -118,13 +203,33 @@ class FilterService
             ->limit(5)
             ->get();
     }
+//    public function getJobTypes()
+//    {
+//        return DB::table('job_types')
+//            ->leftJoin('job_posts', 'job_posts.job_type_id', '=', 'job_types.id')
+//            ->select('job_types.id', 'job_types.name', DB::raw('COUNT(job_posts.id) as job_count'))
+//            ->groupBy('job_types.id', 'job_types.name')
+//            ->having('job_count', '>', 0)
+//            ->orderBy('job_count', 'desc')
+//            ->limit(5)
+//            ->get();
+//    }
+
+//    public function getJobsCountByTime()
+//    {
+//        return [
+//            '1_day' => $this->jobPost->where('created_at', '>=', now()->subDay())->count(),
+//            '7_days' => $this->jobPost->where('created_at', '>=', now()->subDays(7))->count(),
+//            '30_days' => $this->jobPost->where('created_at', '>=', now()->subDays(30))->count(),
+//        ];
+//    }
 
     public function getJobsCountByTime()
     {
         return [
-            '1_day' => $this->jobPost->where('created_at', '>=', now()->subDay())->count(),
-            '7_days' => $this->jobPost->where('created_at', '>=', now()->subDays(7))->count(),
-            '30_days' => $this->jobPost->where('created_at', '>=', now()->subDays(30))->count(),
+            '1_day' => $this->jobPost->where('created_at', '>=', now()->subDay())->where('end_date', '>', now())->count(),
+            '7_days' => $this->jobPost->where('created_at', '>=', now()->subDays(7))->where('end_date', '>', now())->count(),
+            '30_days' => $this->jobPost->where('created_at', '>=', now()->subDays(30))->where('end_date', '>', now())->count(),
         ];
     }
 
@@ -214,6 +319,8 @@ class FilterService
     public function filterJobs($selectedCategories, $selectedSalaries, $selectedKeywords, $selectedRanks, $selectedExperiences, $selectedJobTypes, $selectedPostedTime, $selectedLocation)
     {
         $jobs = $this->jobPost->query();
+
+        $jobs->where('end_date', '>', now());
 
         if (!empty($selectedLocation)) {
             $jobs->where('address', 'LIKE', '%' . $selectedLocation . '%');

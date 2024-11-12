@@ -97,16 +97,16 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="box-view-type">
-                                                <a class='view-type' href='jobs-list.html'>
-                                                    <img
-                                                        src="{{ asset('assets/client/imgs/template/icons/icon-list.svg') }}"
-                                                        alt="jobBox"></a>
-                                                <a class='view-type' href='jobs-grid.html'>
-                                                    <img
-                                                        src="{{ asset('assets/client/imgs/template/icons/icon-grid-hover.svg') }}"
-                                                        alt="jobBox"></a>
-                                            </div>
+{{--                                            <div class="box-view-type">--}}
+{{--                                                <a class='view-type' href='jobs-list.html'>--}}
+{{--                                                    <img--}}
+{{--                                                        src="{{ asset('assets/client/imgs/template/icons/icon-list.svg') }}"--}}
+{{--                                                        alt="jobBox"></a>--}}
+{{--                                                <a class='view-type' href='jobs-grid.html'>--}}
+{{--                                                    <img--}}
+{{--                                                        src="{{ asset('assets/client/imgs/template/icons/icon-grid-hover.svg') }}"--}}
+{{--                                                        alt="jobBox"></a>--}}
+{{--                                            </div>--}}
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@
                                                     <div class="mt-5"><span
                                                             class="card-briefcase">{{ $item->jobType->name }}</span>
                                                         <span
-                                                            class="card-time">{{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }}</span>
+                                                            class="card-time">{{ \Carbon\Carbon::parse($item['start_date'])->diffForHumans() }}</span>
                                                     </div>
                                                     <p class="description font-sm color-text-paragraph mt-15">
                                                         {{ limit_text($item->description, 120) }}

@@ -19,6 +19,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/client/imgs/template/favicon.svg') }}">
     <link href="{{ asset('assets/client/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/client/css/stylecd4e.css?version=4.1') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
     @livewireStyles
     @stack('css')
@@ -26,6 +27,8 @@
 </head>
 <body>
 
+<x-client.contact></x-client.contact>
+<x-client.utilities></x-client.utilities>
 <x-client.header></x-client.header>
 <script src="{{ asset('assets/client/js/app.js')}}"></script>
 @yield('content')

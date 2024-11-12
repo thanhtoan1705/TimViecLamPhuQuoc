@@ -108,7 +108,7 @@
                                             Giảm {{ number_format($promotion->discount) }} VNĐ
                                         </div>
                                         <div>
-                                            <span>HSD: {{ \Carbon\Carbon::parse($promotion['created_at'])->diffForHumans() }} </span>
+                                            <span>HSD: {{ \Carbon\Carbon::parse($promotion['end_time'])->diffForHumans() }} </span>
                                         </div>
                                     </div>
                                     <input type="radio" name="promo" value="{{ $promotion->code }}"

@@ -24,78 +24,54 @@
         <section class="section-box mt-90">
             <div class="container">
                 <h2 class="text-center mb-15 wow animate__animated animate__fadeInUp">Bảng giá</h2>
-                <div class="font-lg color-text-paragraph-2 text-center wow animate__animated animate__fadeInUp">Choose
-                    The
-                    Chọn gói tin tốt nhất dành cho bạn
+                <div class="font-lg color-text-paragraph-2 text-center wow animate__animated animate__fadeInUp">Chọn gói
+                    tin tốt nhất dành cho bạn
                 </div>
                 <div class="max-width-price">
                     <div class="block-pricing mt-70">
                         <div class="row">
-                            <div class="col-xl-4 col-lg-6 col-md-6 wow animate__animated animate__fadeInUp"
-                                 data-wow-delay=".1s">
-                                <div class="box-pricing-item">
-                                    <h3>Cơ bản</h3>
-                                    <div class="box-info-price"><span class="text-price color-brand-2">$19</span><span
-                                            class="text-tháng">/tháng</span></div>
-                                    <div class="border-bottom mb-30">
-                                        <p class="text-desc-package font-sm color-text-paragraph mb-30">
-                                            Dành cho hầu hết các doanh nghiệp muốn tối ưu
-                                        </p>
+                            @foreach($packages as $package)
+                                <div class="col-xl-4 col-lg-6 col-md-6 wow animate__animated animate__fadeInUp"
+                                     data-wow-delay=".1s">
+                                    <div class="box-pricing-item">
+                                        <h3>{{ $package -> title }}</h3>
+                                        <div class="box-info-price d-flex">
+                                            <h6 class="color-brand-2">{{ number_format($package->price, 0, ',', '.') }} VND</h6>
+                                            <span class="text-tháng">/{{ $package->period }} ngày</span>
+                                        </div>
+                                        <div class="border-bottom mb-30">
+                                            <p class="text-desc-package font-sm color-text-paragraph mb-30">
+                                                Dành cho hầu hết các doanh nghiệp muốn tối ưu
+                                            </p>
+                                        </div>
+                                        <ul class="features">
+                                            <li>Được bảo hành dịch vụ</li>
+                                            @if ($package->label != 0)
+                                                <li>
+                                                    @if ($package->label == 1)
+                                                        Tin tuyển dụng được gắn nhãn GẤP vào tiêu đề tin.
+                                                    @elseif ($package->label == 2)
+                                                        Tin tuyển dụng được gắn nhãn HOT vào tiêu đề tin.
+                                                    @endif
+                                                </li>
+                                            @endif
+                                            @if (!($package->display_haste == 0 && $package->display_best == 0 && $package->display_top == 0))
+                                                <li>
+                                                    @if ($package->display_top == 1)
+                                                        Đăng tin tuyển dụng với vị trí nổi bật.
+                                                    @elseif ($package->display_best == 1)
+                                                        Đăng tin tuyển dụng với vị trí tốt nhất.
+                                                    @elseif ($package->display_haste == 1)
+                                                        Đăng tin tuyển dụng với vị trí hàng đầu.
+                                                    @endif
+                                                </li>
+                                            @endif
+                                            <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
+                                        </ul>
+                                        <div><a class="btn btn-border" href="#">Mua ngay</a></div>
                                     </div>
-                                    <ul class="list-package-feature">
-                                        <li>Cập nhật không giới hạn</li>
-                                        <li>Custom designs &amp; features</li>
-                                        <li>Quyền tùy chỉnh</li>
-                                        <li>Quyền tùy chỉnh</li>
-                                        <li>Phiếu hỗ trợ miễn phí</li>
-                                    </ul>
-                                    <div><a class="btn btn-border" href="#">Mua ngay</a></div>
                                 </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-6 col-md-6 wow animate__animated animate__fadeInUp"
-                                 data-wow-delay=".2s">
-                                <div class="box-pricing-item">
-                                    <h3>Tiêu chuẩn</h3>
-                                    <div class="box-info-price"><span
-                                            class="text-price for-tháng display-tháng">$29</span><span
-                                            class="text-tháng">/tháng</span></div>
-                                    <div class="border-bottom mb-30">
-                                        <p class="text-desc-package mb-30">
-                                            Dành cho hầu hết các doanh nghiệp muốn tối ưu
-                                        </p>
-                                    </div>
-                                    <ul class="list-package-feature">
-                                        <li>Cập nhật không giới hạn</li>
-                                        <li>Custom designs &amp; features</li>
-                                        <li>Quyền tùy chỉnh</li>
-                                        <li>Quyền tùy chỉnh</li>
-                                        <li>Phiếu hỗ trợ miễn phí</li>
-                                    </ul>
-                                    <div><a class="btn btn-border" href="#">Mua ngay</a></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-6 col-md-6 wow animate__animated animate__fadeInUp"
-                                 data-wow-delay=".4s">
-                                <div class="box-pricing-item">
-                                    <h3>Doanh nghiệp</h3>
-                                    <div class="box-info-price"><span
-                                            class="text-price for-tháng display-tháng">$49</span><span
-                                            class="text-tháng">/tháng</span></div>
-                                    <div class="border-bottom mb-30">
-                                        <p class="text-desc-package mb-30">
-                                            Dành cho hầu hết các doanh nghiệp muốn tối ưu
-                                        </p>
-                                    </div>
-                                    <ul class="list-package-feature">
-                                        <li>Cập nhật không giới hạn</li>
-                                        <li>Custom designs &amp; features</li>
-                                        <li>Quyền tùy chỉnh</li>
-                                        <li>Quyền tùy chỉnh</li>
-                                        <li>Phiếu hỗ trợ miễn phí</li>
-                                    </ul>
-                                    <div><a class="btn btn-border" href="#">Mua ngay</a></div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
