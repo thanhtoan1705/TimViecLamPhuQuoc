@@ -6,11 +6,14 @@
             <div class="container">
                 <div class="banner-hero banner-image-single">
                     <div class="img-container">
-                        <img src="{{ getStorageImageUrl($employer->company_photo_cover, 'default/photo-cover.png') }}"
+                        <img
+                            src="{{ getStorageImageUrl($employer->company_photo_cover, config('image.company-banner')) }}"
                              alt="jobBox">
                     </div>
                 </div>
                 <div class="box-company-profile">
+                    <div class="image-compay"><img
+                            src="{{ getStorageImageUrl($employer->company_logo, config('image.square-logo')) }}"
                     <div class="image-compay"><img src="{{ getStorageImageUrl($employer->company_logo, config('image.square-logo'))}}"
                                                    alt="jobBox" width="85px" height="85px"></div>
                     <div class="row mt-10">
@@ -40,15 +43,12 @@
                 <div class="row">
                     <div class="col-lg-8 col-md-12 col-sm-12 col-12">
                         <div class="content-single">
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="tab-about" role="tabpanel"
-                                     aria-labelledby="tab-about">
-                                    {!! $employer->description !!}
-                                </div>
-                            </div>
+                            <h5 class="mb-30">Giới thiệu công ty</h5>
+                            {!! $employer->description !!}
+
                         </div>
                         <div class="box-related-job content-page">
-                            <h5 class="mb-30">Việc làm mới nhất</h5>
+                            <h5 class="mb-10">Việc làm mới nhất</h5>
                             @livewire('client.employer.job-posts', ['employer' => $employer])
                         </div>
                     </div>
@@ -56,9 +56,11 @@
                         <div class="sidebar-border">
                             <div class="sidebar-heading">
                                 <div class="avatar-sidebar">
-                                    <div class="sidebar-info pl-0"><span
-                                            class="sidebar-company">{{$employer->company_name}}</span><span
-                                            class="card-location">{{$employer->address->street ?? ''}}</span></div>
+                                    <div class="sidebar-info pl-0">
+                                        <span class="sidebar-company">
+                                            {{$employer->company_name}}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="sidebar-list-job">
@@ -69,58 +71,97 @@
                             <div class="sidebar-list-job">
                                 <ul>
                                     <li>
-                                        <div class="sidebar-icon-item"><i class="fi-rr-briefcase"></i></div>
-                                        <div class="sidebar-text-info"><span
-                                                class="text-description">Lĩnh vực công ty</span><strong
-                                                class="small-heading">{{$employer->company_type}}</strong>
+                                        <div class="sidebar-icon-item"><i class="fas fa-phone"></i></div>
+                                        <div class="sidebar-text-info">
+                                            <span class="text-description">Điện thoại</span>
+                                            <strong class="small-heading">
+                                                {{ get_or_default($employer->company_phone) }}
+                                            </strong>
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="sidebar-icon-item"><i class="fi-rr-marker"></i></div>
-                                        <div class="sidebar-text-info"><span
-                                                class="text-description">Địa chỉ</span><strong
-                                                class="small-heading">{{$employer->address->street ?? ''}}</strong>
+                                        <div class="sidebar-icon-item"><i class="fas fa-briefcase"></i></div>
+                                        <div class="sidebar-text-info">
+                                            <span class="text-description">Lĩnh vực công ty</span>
+                                            <strong class="small-heading">
+
+                                                {{ get_or_default($employer->company_type) }}
+                                            </strong>
+
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="sidebar-icon-item"><i class="fi fi-rr-id-badge"></i></div>
-                                        <div class="sidebar-text-info"><span
-                                                class="text-description">Mã số thuế</span><strong
-                                                class="small-heading">{{$employer->tax_code}}</strong></div>
+                                        <div class="sidebar-icon-item"><i class="fas fa-location-pin"></i></div>
+                                        <div class="sidebar-text-info">
+                                            <span class="text-description">
+                                                Địa chỉ
+                                            </span>
+                                            <strong class="small-heading">
+                                                @if(is_object($employer->address))
+                                                    {{ get_nested_alue($employer, 'address.street') }},
+                                                    {{ get_nested_alue($employer, 'address.ward.name') }},
+                                                    {{ get_nested_alue($employer, 'address.district.name') }},
+                                                    {{ get_nested_alue($employer, 'address.province.name') }}
+                                                @endif
+                                            </strong>
+                                        </div>
                                     </li>
                                     <li>
-                                        <div class="sidebar-icon-item"><i class="fi-rr-clock"></i></div>
+                                        <div class="sidebar-icon-item"><i class="fas fa-file-invoice-dollar"></i></div>
+                                        <div class="sidebar-text-info">
+                                            <span class="text-description">
+                                                Mã số thuế
+                                            </span>
+                                            <strong class="small-heading">
+                                                {{ get_or_default($employer->tax_code) }}
+                                            </strong>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-icon-item"><i class="fas fa-gavel"></i></div>
+                                        <div class="sidebar-text-info">
+                                            <span class="text-description">
+                                                Loại hình
+                                            </span>
+                                            <strong class="small-heading">
+                                                {{ get_or_default($employer->company_type) }}
+                                            </strong>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-icon-item"><i class="fas fa-clock"></i></div>
                                         <div class="sidebar-text-info"><span
                                                 class="text-description">Ngày thành lập</span>
                                             <strong class="small-heading">{{$employer->since}}</strong>
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="sidebar-icon-item"><i class="fi fi-rr-globe"></i></div>
-                                        <div class="sidebar-text-info"><span
-                                                class="text-description">Website công ty</span>
-                                            <strong class="small-heading"><a class="pager-prev" href="{{$employer->website_url}}">{{$employer->website_url}}</a></strong>
+                                        <div class="sidebar-icon-item"><i class="fas fa-globe"></i></div>
+                                        <div class="sidebar-text-info">
+                                            <span class="text-description">
+                                                Website công ty
+                                            </span>
+                                            <strong class="small-heading">
+                                                <a class="pager-prev"
+                                                   href="{{ get_or_default($employer->website_url) }}">
+                                                    {{ get_or_default($employer->website_url) }}
+                                                </a>
+                                            </strong>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
                             <div class="sidebar-list-job">
                                 <ul class="ul-disc">
-                                    <li>{{$employer->address->street ?? ''}}</li>
-                                    <li>Điện thoại: (+84) {{$employer->company_phone}}</li>
-                                    <li>Email: {{$employer->user->email}}</li>
+                                    <li>Điện thoại: {{ get_or_default($employer->company_phone) }}</li>
+                                    <li>Email: {{ get_or_default($employer->user->email) }}</li>
                                 </ul>
-                                <div class="mt-30"><a class='btn btn-send-message' href='page-contact.html'>Gửi tin</a>
-                                </div>
+
+                            </div>
                             </div>
                         </div>
-                        <div class="sidebar-border-bg bg-right"><span class="text-grey">Chúng tôi</span><span
-                                class="text-hiring">Đang tuyển dụng</span>
-                            <p class="font-xxs color-text-paragraph mt-5">Tìm kiếm ngay việc làm phù hợp với bạn</p>
-                            <div class="mt-15"><a class='btn btn-paragraph-2' href='page-contact.html'>Xem thêm</a>
-                            </div>
-                        </div>
-                    </div>
+
+                </div>
                 </div>
             </div>
         </section>

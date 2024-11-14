@@ -17,4 +17,9 @@ interface JobPostInterface
     public function getHasteJobs();
 
     public function topEmployers($limit = 6);
+
+    public function countActiveJobPosts();
+
+    public function countTodayJobPosts();
+
 }

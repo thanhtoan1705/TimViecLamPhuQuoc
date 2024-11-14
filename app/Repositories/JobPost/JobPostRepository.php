@@ -4,6 +4,7 @@ namespace App\Repositories\JobPost;
 
 use App\Models\JobPost;
 use App\Models\JobPostCandidate;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class JobPostRepository implements JobPostInterface
@@ -125,5 +126,17 @@ class JobPostRepository implements JobPostInterface
             })
             ->limit($limit)
             ->get();
+    }
+
+    // Đếm số lượng việc làm còn hạn ứng tuyển tất cả
+    public function countActiveJobPosts()
+    {
+        return $this->jobPost->where('end_date', '>=', Carbon::now())->count();
+    }
+
+    // Đếm số lượng việc làm còn hạn ứng tuyển hôm nay
+    public function countTodayJobPosts()
+    {
+        return JobPost::whereDate('end_date', Carbon::today())->count();
     }
 }

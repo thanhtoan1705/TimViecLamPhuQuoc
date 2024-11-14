@@ -2,26 +2,92 @@
 
 namespace App\Filament\Resources\Pages;
 
-use Database\Seeders\AssignEmployerPermissionsSeeder;
-use Database\Seeders\RegisterEmployerPermissionsSeeder;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Form;
-use Filament\Pages\Auth\Register;
-use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
-use Illuminate\Support\HtmlString;
-use Filament\Forms\Components\Wizard;
-use Illuminate\Support\Facades\Blade;
-use Filament\Forms\Components\Component;
-use Filament\Forms\Components\TextInput;
-use App\Models\User;
+use App\Models\Address;
 use App\Models\Employer;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Database\Seeders\RegisterEmployerPermissionsSeeder;
+use Filament\Forms\Components\Component;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Wizard;
+use Filament\Forms\Form;
+use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
+use Filament\Pages\Auth\Register;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Artisan;
+
 
 class RegistrationEmployer extends Register
 {
-    protected ?string $maxWidth = '2xl';
+    protected ?string $maxWidth = '3xl';
+
+//    public function form(Form $form): Form
+//    {
+//        return $form
+//            ->schema([
+//                Wizard::make([
+//                    Wizard\Step::make('Tài khoản')
+//                        ->schema([
+//                            $this->getNameFormComponent(),
+//                            $this->getEmailFormComponent(),
+//                        ]),
+//                    Wizard\Step::make('Công ty')
+//                        ->schema([
+//                            $this->getCompanyNameFormComponent(),
+//                            $this->getCompanyPhoneFormComponent(),
+//                            $this->getTaxCodeFormComponent(),
+//                            $this->getCompanyLogoFormComponent(),
+//                        ]),
+//                    Wizard\Step::make('Mật khẩu')
+//                        ->schema([
+//                            $this->getPasswordFormComponent(),
+//                            $this->getPasswordConfirmationFormComponent(),
+//                        ]),
+//                ])->submitAction(new HtmlString(Blade::render(<<<BLADE
+//                    <x-filament::button
+//                        type="submit"
+//                        size="sm"
+//                        wire:submit="register"
+//                    >
+//                        Đăng ký
+//                    </x-filament::button>
+//                    BLADE))),
+//            ]);
+//    }
+
+
+//    public function form(Form $form): Form
+//    {
+//        return $form
+//            ->schema([
+//                Action::make('create')->steps([
+//                    Grid::make(2)->schema([
+//                        $this->getEmailFormComponent()->columnSpanFull(),
+//                        $this->getPasswordFormComponent(),
+//                        $this->getPasswordConfirmationFormComponent(),
+//
+//                        $this->getCompanyNameFormComponent()->columnSpanFull(),
+//
+//                        $this->getTaxCodeFormComponent(),
+//                        $this->getCompanyPhoneFormComponent(),
+//
+//                        $this->getCompanyLogoFormComponent()->columnSpanFull(),
+//
+//
+//                    ])
+//            ])->submitAction(new HtmlString(Blade::render(<<<BLADE
+//                    <x-filament::button
+//                        type="submit"
+//                        size="sm"
+//                        wire:submit="register"
+//                    >
+//                        Đăng ký
+//                    </x-filament::button>
+//                    BLADE))),
+//            ]);
+//    }
 
     public function form(Form $form): Form
     {
@@ -32,18 +98,19 @@ class RegistrationEmployer extends Register
                         ->schema([
                             $this->getNameFormComponent(),
                             $this->getEmailFormComponent(),
-                        ]),
-                    Wizard\Step::make('Công ty')
-                        ->schema([
-                            $this->getCompanyNameFormComponent(),
-                            $this->getCompanyPhoneFormComponent(),
-                            $this->getTaxCodeFormComponent(),
-                            $this->getCompanyLogoFormComponent(),
-                        ]),
-                    Wizard\Step::make('Mật khẩu')
-                        ->schema([
                             $this->getPasswordFormComponent(),
                             $this->getPasswordConfirmationFormComponent(),
+                        ]),
+                    Wizard\Step::make('Thông tin công ty')
+                        ->schema([
+                            $this->getCompanyNameFormComponent()->columnSpanFull(),
+
+                            $this->getTaxCodeFormComponent(),
+                            $this->getCompanyPhoneFormComponent(),
+                            $this->getCompanyCompanyTypeFormComponent(),
+                            $this->getStreetFormComponent(),
+
+                            $this->getCompanyLogoFormComponent()->columnSpanFull(),
                         ]),
                 ])->submitAction(new HtmlString(Blade::render(<<<BLADE
                     <x-filament::button
@@ -57,6 +124,7 @@ class RegistrationEmployer extends Register
             ]);
     }
 
+
     public function register(): ?RegistrationResponse
     {
         $data = $this->form->getState();
@@ -67,6 +135,7 @@ class RegistrationEmployer extends Register
             'email' => $data['email'],
             'password' => $data['password'],
             'role' => 'employer', // Assign the employer role
+            'active_status' => 1,
         ]);
 
         // Handle the company logo upload
@@ -74,6 +143,15 @@ class RegistrationEmployer extends Register
         if ($companyLogoPath instanceof \Illuminate\Http\UploadedFile) {
             $companyLogoPath = $companyLogoPath->store('images/employer', 'public'); // Store the file and get the path
         }
+
+
+        // Tạo địa chỉ
+        $address = Address::create([
+            'street' => $data['address']['street'],
+        ]);
+
+        $addressId = $address->id;
+
 
         $slugEmployer = $data['employers']['company_name'] .' '.$user->id;
         // Create the associated employer record
@@ -84,6 +162,8 @@ class RegistrationEmployer extends Register
             'slug' => Str::slug($slugEmployer),
             'tax_code' => $data['employers']['tax_code'],
             'company_phone' => $data['employers']['company_phone'],
+            'company_type' => $data['employers']['company_type'],
+            'address_id' => $addressId,
         ]);
 
         auth()->login($user);
@@ -131,7 +211,30 @@ class RegistrationEmployer extends Register
     {
         return TextInput::make('employers.company_phone')
             ->label(__('Số diện thoại'))
+            ->unique()
             ->maxLength(255)
+            ->required();
+    }
+
+    protected function getStreetFormComponent(): Component
+    {
+        return TextInput::make('address.street')
+            ->label(__('Địa chỉ'))
+            ->maxLength(255)
+            ->required();
+    }
+
+    protected function getCompanyCompanyTypeFormComponent(): Component
+    {
+        return Select::make('employers.company_type')
+            ->label(__('Loại hình công ty'))
+            ->helperText('Ví dụ: Công ty TNHH, Công ty Cổ phần, Doanh nghiệp tư nhân...')
+            ->options([
+                'Công ty TNHH' => 'Công ty TNHH',
+                'Công ty Cổ phần' => 'Công ty Cổ phần',
+                'Doanh nghiệp tư nhân' => 'Doanh nghiệp tư nhân',
+                'Khác' => 'Khác',
+            ])
             ->required();
     }
 }

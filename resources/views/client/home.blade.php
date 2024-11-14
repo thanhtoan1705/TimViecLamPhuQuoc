@@ -9,15 +9,63 @@
                     <div class="row">
                         <div class="col-xl-11 col-lg-12">
                             <div class="block-banner">
-                                <h1 class="heading-banner wow animate__animated animate__fadeInUp">Cách <span
-                                        class="color-brand-2">dễ nhất</span><br class="d-none d-lg-block">để có được
-                                    công
-                                    việc mới của bạn</h1>
-                                <div class="banner-description mt-20 wow animate__animated animate__fadeInUp"
-                                     data-wow-delay=".1s">Mỗi tháng, hơn 3 triệu người tìm việc truy cập <br
-                                        class="d-none d-lg-block">trang web để tìm việc, tạo ra hơn 140.000 <br
-                                        class="d-none d-lg-block">đơn đăng ký mỗi ngày
+                                <h1 style="font-size: 30px;"
+                                    class="heading-banner wow animate__animated animate__fadeInUp">VIỆC LÀM PHÚ QUỐC
+                                    <br class="d-none d-lg-block">
+
+                                </h1>
+                                <h3 style="font-size: 20px;">
+                                    Tuyển Dụng Việc Làm Tại Phú Quốc
+                                    Và Khu Vực Miền Nam
+                                </h3>
+
+                                <div class="row mt-10">
+                                    <div class="col-md-12 col-lg-12">
+                                        <div class="search-description">
+                                            <div
+                                                class="section-description_top fw-700 d-flex align-items-center justify-content-between">
+                                                <div class="section-description_title d-flex align-items-center">
+                                                    <svg style="width: 40px;" viewBox="0 0 60 60" fill="#00aef0"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill="#F89D20"
+                                                              d="m27.9 16.1c2.2 0 3.9 1.8 3.9 3.9 0 2.2-1.7 4.7-3.9 4.7s-3.9-2.5-3.9-4.7c-.1-2.1 1.7-3.9 3.9-3.9zm9.1 20.4h-18.3c-.6 0-1.1-.5-1-1.1.5-5.1 4.9-9.1 10.2-9.1s9.6 4 10.2 9.1c0 .6-.5 1.1-1.1 1.1z"></path>
+                                                        <path
+                                                            d="m52.7 46.7-6.6-6.7c2.3-3.5 3.7-7.6 3.7-12.1 0-12.1-9.8-21.9-21.9-21.9s-21.9 9.8-21.9 21.9 9.8 21.9 21.9 21.9c4.5 0 8.7-1.4 12.1-3.7l6.6 6.6c1.7 1.7 4.4 1.7 6.1 0 1.7-1.6 1.7-4.4 0-6zm-24.8-1.4c-9.6 0-17.4-7.8-17.4-17.4s7.8-17.4 17.4-17.4 17.4 7.8 17.4 17.4-7.8 17.4-17.4 17.4z"></path>
+                                                    </svg>
+                                                    <span style="font-size: 16px;" class="fw-bold text-primary">
+                                                        Việc làm hôm nay:
+                                                    </span>
+                                                </div>
+                                                <div style="font-size: 16px;" class=" ml-2 text-primary fw-bold">
+                                                    {{ \Carbon\Carbon::now()->format('d/m/Y') }}
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="section-description_bottom mt-2 fw-700 d-flex align-items-center justify-content-between">
+                                                <h3 class="fs-inherit my-0 fw-500 d-flex align-items-center justify-content-between">
+                                                    <span style="font-size: 16px;" class="pl-5">
+                                                        Việc làm đang tuyển
+                                                    </span>
+                                                    <a style="font-size: 16px;" href="/viec-lam-moi-nhat"
+                                                       class="text-primary ml-5">
+                                                        {{ !empty($jobPostCountAll) ? number_format($jobPostCountAll) : '0' }}
+                                                    </a>
+                                                </h3>
+                                                <div class="section-description_divider"></div>
+                                                <h3 class="section-description_item fs-inherit my-0 fw-500 d-flex align-items-center justify-content-between">
+                                                    <span style="font-size: 16px;" class="section-description_title">
+                                                        Việc làm hôm nay
+                                                    </span>
+                                                    <a style="font-size: 16px;" href="/viec-lam-can-tho-moi-nhat"
+                                                       class="text-primary ml-5">
+                                                        {{ !empty($jobPostCountToday) ? number_format($jobPostCountToday) : '0' }}
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <x-client.search></x-client.search>
                                 <div class="list-tags-banner mt-60 wow animate__animated animate__fadeInUp"
                                      data-wow-delay=".3s"><strong>Tìm kiếm phổ biến:</strong><a

@@ -37,3 +37,31 @@ if (!function_exists('check_empty')) {
         return !empty($content) && !is_null($content) ? $content : $default;
     }
 }
+
+
+/**
+ * Trả về giá trị nếu không null, nếu không thì trả về giá trị mặc định.
+ *
+ * @param mixed $value Giá trị cần kiểm tra.
+ * @param mixed $default Giá trị mặc định trả về nếu $value là null.
+ * @return mixed Giá trị của $value hoặc giá trị mặc định.
+ */
+function get_or_default($value, $default = 'Chưa cập nhật'): mixed
+{
+    return !empty($value) ? $value : $default;
+}
+
+function get_nested_alue($object, $path, $default = 'Chưa cập nhật')
+{
+    $keys = explode('.', $path);
+
+    foreach ($keys as $key) {
+        if (is_object($object) && isset($object->{$key})) {
+            $object = $object->{$key};
+        } else {
+            return $default;
+        }
+    }
+
+    return $object;
+}

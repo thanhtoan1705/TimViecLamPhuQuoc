@@ -5,16 +5,16 @@ namespace App\Http\Controllers\Client\Candidate;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Employer\LoginRequest;
 use App\Http\Requests\Client\Employer\RegisterRequest;
+use App\Jobs\Client\VerificationEmailRegister;
+use App\Models\User;
 use App\Repositories\Candidate\CandidateInterface;
 use App\Repositories\User\UserInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
-use App\Jobs\Client\VerificationEmailRegister;
-use App\Models\User;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 
 class AuthController extends Controller
@@ -48,8 +48,16 @@ class AuthController extends Controller
         ]);
 
         //Thêm mới candidate
-        $this->candidateRepository->create([
+        $candidate = $this->candidateRepository->create([
             'user_id' => $user->id,
+        ]);
+
+        // Tạo slug cho candidate
+        $slug = Str::slug($user->name) . '-' . $candidate->id;
+
+        // Cập nhật slug vào record candidate
+        $this->candidateRepository->update($candidate->id, [
+            'slug' => $slug,
         ]);
 
 

@@ -3,7 +3,6 @@
 namespace App\Repositories\Job;
 
 use App\Models\JobPost;
-use App\Models\JobPostPackage;
 use App\Models\JobPostCandidate;
 use Illuminate\Support\Facades\DB;
 

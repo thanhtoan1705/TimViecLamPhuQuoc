@@ -6,8 +6,6 @@ use App\Filament\Auth\EmployerLogin;
 use App\Filament\Pages\Auth\Employer\RequestPasswordReset;
 use App\Filament\Resources\Employer\Notification\NotificationResource\Pages\NotificationsPage;
 use App\Filament\Resources\Pages\RegistrationEmployer;
-use App\Livewire\Filament\Employer\EmployerAddress;
-use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -17,14 +15,12 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
@@ -51,7 +47,7 @@ class EmployerPanelProvider extends PanelProvider
             ->navigationItems([
                 NavigationItem::make('Đăng tin tuyển dụng')
                     ->group('Quản lý tin đăng')
-                    ->url(config('app.url') . '/business/employer/job-post/job-posts/create')
+                    ->url(config('app.url') . '/business/job-posts/create')
                     ->sort(1)
                     ->icon('heroicon-o-folder-plus'),
 

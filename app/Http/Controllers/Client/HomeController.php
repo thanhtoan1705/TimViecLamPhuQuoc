@@ -49,6 +49,9 @@ class HomeController extends Controller
         $bestJobs = $this->jobPostRepository->getBestJobs();
         $hasteJobs = $this->jobPostRepository->getHasteJobs();
 
+        $jobPostCountAll = $this->jobPostRepository->countActiveJobPosts();
+        $jobPostCountToday = $this->jobPostRepository->countTodayJobPosts();
+
         $data = [
             'jobpost' => $jobPostRepository,
             'jobCategories' => $jobCategoriesRepository,
@@ -58,6 +61,8 @@ class HomeController extends Controller
             'bestJobs' => $bestJobs,
             'hasteJobs' => $hasteJobs,
             'savedJobIds' => $savedJobIds,
+            'jobPostCountAll' => $jobPostCountAll,
+            'jobPostCountToday' => $jobPostCountToday,
         ];
 
         return view("client.home", $data);

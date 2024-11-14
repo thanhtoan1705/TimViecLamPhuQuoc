@@ -8,6 +8,7 @@ use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -63,41 +64,89 @@ class JobPostPackageResource extends Resource implements HasShieldPermissions
                                 ->schema([
                                     TextInput::make('title')
                                         ->required()
-                                        ->rules(['regex:/^[\w\s-]+$/u'])
+//                                        ->rules(['regex:/^[\w\s-]+$/u'])
                                         ->maxLength(255)
                                         ->label('Tiêu đề gói'),
                                     TextInput::make('price')
                                         ->required()
                                         ->rules(['min:10000'])
                                         ->numeric()
-                                        ->label('Giá'),
+                                        ->prefix('VNĐ')
+                                        ->helperText('Tiền mệnh giá tính theo  VNĐ.')
+                                        ->label('Giá tiền'),
                                     TextInput::make('period')
                                         ->required()
-                                        ->rules(['regex:/^[\w\s-]+$/u'])
-                                        ->maxLength(255)
-                                        ->label('Thời hạn'),
+                                        ->numeric()
+                                        ->label('Thời hạn')
+                                        ->helperText('Nhập theo số ngày.'),
+
                                     TextInput::make('quantity')
                                         ->required()
                                         ->rules(['min:1'])
                                         ->numeric()
+                                        ->helperText('Số lượng gói được mua.')
                                         ->label('Số lượng'),
                                     TextInput::make('limit_job_post')
                                         ->required()
                                         ->rules(['min:1'])
                                         ->numeric()
+                                        ->helperText('Nhập giới hạn bài đăng trong ngày')
                                         ->label('Giới hạn bài đăng'),
                                     Grid::make(3)
                                         ->schema([
-                                            Toggle::make('display_top')
-                                                ->label('Hiển thị trên cùng')
-                                                ->default(true),
-                                            Toggle::make('display_best')
-                                                ->label('Hiển thị tốt nhất')
-                                                ->default(true),
-                                            Toggle::make('display_haste')
-                                                ->label('Hiển thị khẩn cấp')
-                                                ->default(true),
+                                            Section::make('Trạng thái gói')
+                                                ->schema([
+                                                    Toggle::make('display_top')
+                                                        ->label('Hiển thị trên cùng (Nhà tuyển dụng hàng đầu)')
+                                                        ->helperText('Khi bật, gói này sẽ được hiển thị ở trên cùng của danh sách.')
+                                                        ->default(false),
+                                                    Toggle::make('display_best')
+                                                        ->label('Hiển thị tốt nhất')
+                                                        ->helperText('Khi bật, gói này sẽ được hiển thị ở vị trí việc làm tốt nhất.')
+                                                        ->default(false),
+                                                    Toggle::make('display_haste')
+                                                        ->label('Hiển thị tuyển gấp')
+                                                        ->helperText('Khi bật, gói này sẽ được hiển thị ở vị trí việc làm tuyển gấp.')
+                                                        ->default(false),
+
+                                                ]),
                                         ]),
+
+
+                                    Section::make('Nhãn hiển thị')
+                                        ->schema([
+                                            Select::make('label')
+                                                ->label('Nhãn hiệu')
+                                                ->options([
+                                                    0 => 'Không có label',
+                                                    1 => 'Label gấp',
+                                                    2 => 'Label tốt',
+                                                ])
+                                                ->searchable()
+                                                ->preload()
+                                                ->required(),
+
+//                                            Toggle::make('label')
+//                                                ->label('Label hiển thị')
+//                                                ->helperText('Khi bật, gói này sẽ được hiển thị các label ở mục bài đăng tuyển dụng (VD: GẤP, TỐT).')
+//                                                ->default(false)
+//                                                ->reactive(),  // Lắng nghe thay đổi theo thời gian thực.
+//
+//                                            TextInput::make('label_value')
+//                                                ->label('Giá trị nhãn')
+//                                                ->helperText('Nhập giá trị VD: GẤP, TỐT...')
+//                                                ->required(fn ($get) => $get('label') === true)
+//                                                ->reactive(), // Tự động cập nhật khi giá trị của `label` thay đổi.
+//
+//                                            ColorPicker::make('label_color')
+//                                                ->label('Màu sắc nhãn')
+//                                                ->helperText('Chọn màu sắc cho nhãn hiển thị.')
+//                                                ->required(fn ($get) => $get('label') === true)
+//                                                ->default('#FF0000')
+//                                                ->reactive(), // Tự động cập nhật khi giá trị của `label` thay đổi.
+                                        ]),
+
+
                                     Textarea::make('descriptions')
                                         ->label('Mô tả gói')
                                         ->required(),

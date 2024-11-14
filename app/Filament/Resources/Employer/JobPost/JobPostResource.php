@@ -8,15 +8,17 @@ use App\Models\JobPost;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -24,6 +26,7 @@ use Illuminate\Support\Str;
 class JobPostResource extends Resource
 {
     protected static ?string $model = JobPost::class;
+    protected static ?string $slug = 'job-posts';
     protected static ?string $navigationLabel = 'Danh sách tin đăng';
 
     protected static ?string $modelLabel = 'Tin tuyển dụng';
@@ -273,29 +276,82 @@ class JobPostResource extends Resource
                 Tables\Columns\TextColumn::make('row_number')
                     ->label('STT')
                     ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
-                Tables\Columns\TextColumn::make('title')->label('Tên')->searchable(),
-                Tables\Columns\TextColumn::make('experience.name')->label('Kinh nghiệm')->searchable(),
-                Tables\Columns\TextColumn::make('rank.name')->label('Chức vụ')->searchable(),
+                Tables\Columns\TextColumn::make('title')->label('Tiêu đề')->searchable(),
+                Tables\Columns\TextColumn::make('end_date')
+                    ->label('Hạn nộp')
+                    ->formatStateUsing(function ($state) {
+                        return $state
+                            ? Carbon::parse($state)->format('d/m/Y H:i') // Format the date and time
+                            : null;
+                    })
+                    ->color(function ($state) {
+                        // Apply text color: Red (danger) if expired, Green (success) if valid
+                        return Carbon::parse($state)->isPast() ? 'danger' : 'success';
+                    })
+                    ->description(function ($state) {
+                        return Carbon::parse($state)->isPast()
+                            ? 'Hết hạn'
+                            : 'Còn hạn';
+                    }),
+
+                ToggleColumn::make('status')
+                    ->label('Trạng thái hiển thị')
+                    ->afterStateUpdated(function ($record, $state) {
+                        // Runs after the state is saved to the database.
+                    }),
+
+
+
 
 
             ])
             ->filters([
-                Filter::make('title')
-                    ->label('Lọc theo tên')
-                    ->query(fn(Builder $query, array $data) => $query->where('title', 'like', '%' . $data['value'] . '%'))
+
+                // Lọc theo trạng thái hết hạn hoặc còn hạn
+                Filter::make('end_date_status')
+                    ->label('Lọc theo trạng thái hạn nộp')
+                    ->query(function (Builder $query, array $data) {
+                        if ($data['value'] === 'expired') {
+                            // Filter for expired records
+                            $query->whereDate('end_date', '<', now());
+                        } elseif ($data['value'] === 'valid') {
+                            // Filter for valid records
+                            $query->whereDate('end_date', '>=', now());
+                        }
+                    })
                     ->form([
-                        TextInput::make('value')
-                            ->label('Tên kinh nghiệm')
-                            ->placeholder('Nhập tên để lọc...')
-                    ]),
+                        Select::make('value')
+                            ->label('Trạng thái')
+                            ->options([
+                                'expired' => 'Hết hạn',
+                                'valid' => 'Còn hạn',
+                            ])
+                            ->placeholder('Chọn trạng thái hạn nộp')
+                    ])
             ])
             ->actions([
+                Action::make('editEndDate')
+                    ->label('Gia hạn')
+                    ->icon('heroicon-o-calendar')
+                    ->action(function ($record, array $data) {
+                        // Cập nhật end_date với dữ liệu mới
+                        $record->update(['end_date' => $data['end_date']]);
+                    })
+                    ->form([
+                        Forms\Components\DateTimePicker::make('end_date')
+                            ->label('Hạn nộp hồ sơ')
+                            ->required()
+                            ->minDate(now())
+                            ->maxDate(Carbon::now()->addDays(90)),
+                    ])
+                    ->modalHeading('Chỉnh sửa hạn nộp hồ sơ')
+                    ->modalButton('Cập nhật'),
+
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
-                    Tables\Actions\RestoreAction::make(),
-                    Tables\Actions\ForceDeleteAction::make(),
+
                 ])
             ])
             ->bulkActions([
@@ -306,14 +362,6 @@ class JobPostResource extends Resource
                 ]),
             ]);
     }
-
-//    public static function getEloquentQuery(): Builder
-//    {
-//        return parent::getEloquentQuery()
-//            ->withoutGlobalScopes([
-//                SoftDeletingScope::class,
-//            ]);
-//    }
 
 
     public static function getRelations(): array

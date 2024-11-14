@@ -97,12 +97,12 @@ class StatsOverview extends BaseWidget
 
             Stat::make('Ứng viên', Candidate::count())
                 ->description('Số lượng ứng viên')
-                ->descriptionIcon('heroicon-o-user-group')
+                ->descriptionIcon('heroicon-o-user-group', 'before')
                 ->color('warning'),
 
             Stat::make('Tổng doanh thu', number_format($totalRevenueMonth, 0, ',', ',') . ' vnđ')
                 ->description("Tăng " . number_format($percentageIncrease, 2) . "% so với tháng trước")
-                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->descriptionIcon('heroicon-m-arrow-trending-up', 'before')
                 ->color('primary'),
         ];
     }
