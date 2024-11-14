@@ -10,10 +10,11 @@
                     <h2 class="text-md-newsletter text-center">Những điều mới sẽ luôn luôn<br> Cập nhật thường xuyên
                     </h2>
                     <div class="box-form-newsletter mt-40">
-                        <form class="form-newsletter">
-                            <input class="input-newsletter" type="text" value=""
+                        <form class="form-newsletter" action="{{route('client.client.subscribe')}}" method="POST">
+                            @csrf
+                            <input class="input-newsletter" type="email" value="" name="email"
                                    placeholder="Nhập địa chỉ email">
-                            <button style="width: 150px" class="btn btn-default font-heading icon-send-letter">Đăng ký
+                                <button style="width: 150px" class="btn btn-default font-heading icon-send-letter">Đăng ký
                             </button>
                         </form>
                     </div>

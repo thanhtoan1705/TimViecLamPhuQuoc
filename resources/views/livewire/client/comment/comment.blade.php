@@ -54,7 +54,7 @@
                                         class="dropdown-item">Sửa</button>
                                 </li>
                                 <li>
-                                    <button type="button" wire:click="deleteComment" onclick="return confirm('Bạn có chắc muốn xóa bình luận này?')" class="dropdown-item">Xóa</button>
+                                    <button type="button" wire:click.stop="deleteComment" wire:key="delete-comment-{{ $comment->id }}" onclick="return confirm('Bạn có chắc muốn xóa bình luận này?')" class="dropdown-item">Xóa</button>
                                 </li>
                             </ul>
                         </div>

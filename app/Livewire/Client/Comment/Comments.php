@@ -68,8 +68,10 @@ class Comments extends Component
     public function postComment(): void
     {
         $this->validate([
-            'newCommentState.content' => 'required',
-            'newCommentState.content' => 'required|min:2'
+            'newCommentState.content' => 'required|min:2',
+        ], [
+            'newCommentState.content.required' => 'Vui lòng nhập nội dung.',
+            'newCommentState.content.min' => 'Bình luận phải có ít nhất 2 ký tự.',
         ]);
 
         // Tạo bình luận mới

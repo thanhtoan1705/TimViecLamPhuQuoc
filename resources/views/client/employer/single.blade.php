@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div class="box-company-profile">
-                    <div class="image-compay"><img src="{{ asset('storage/' . $employer->company_logo) }}"
+                    <div class="image-compay"><img src="{{ getStorageImageUrl($employer->company_logo, config('image.square-logo'))}}"
                                                    alt="jobBox" width="85px" height="85px"></div>
                     <div class="row mt-10">
                         <div class="col-lg-8 col-md-12">
@@ -83,7 +83,7 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="sidebar-icon-item"><i class="fi fi-rr-coins"></i></div>
+                                        <div class="sidebar-icon-item"><i class="fi fi-rr-id-badge"></i></div>
                                         <div class="sidebar-text-info"><span
                                                 class="text-description">Mã số thuế</span><strong
                                                 class="small-heading">{{$employer->tax_code}}</strong></div>
@@ -125,9 +125,6 @@
             </div>
         </section>
 
-        <!-- Component newsletter -->
-        <x-client.newsletter/>
-        <!-- End component newsletter -->
     </main>
 @endsection
 @push('css')

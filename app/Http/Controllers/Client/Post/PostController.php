@@ -26,8 +26,8 @@ class PostController extends Controller
         $searchResult = $this->post->searchBlogs($keyword);
 
         $data = [
-            'blogs' => $this->blogRepository->getBlogByStatusPaginate(1, 9),
-            'blogTrending' => $this->blogRepository->blogTrending(1, 5),
+            'blogs' => $this->blogRepository->getBlogByStatusPaginate(1, 6),
+            'blogTrending' => $this->blogRepository->blogTrending(1, 6),
             'searchResult' => $searchResult,
         ];
 

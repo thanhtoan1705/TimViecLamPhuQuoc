@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Client\Page;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Contact\ContactRequest;
+use App\Jobs\Client\NewsletterVerification;
 use App\Mail\Client\Contact\ContactNotification;
 use App\Mail\ContactFormNotification;
 use App\Models\Founder;
+use App\Models\User;
+use App\Models\NewsletterSubscription;
+use App\Mail\NewsletterVerificationMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
-
 class PageController extends Controller
 {
     public function about()
@@ -72,6 +76,51 @@ class PageController extends Controller
         );
 
         flash()->success('Email đã được gửi thành công.', [], 'Thành công!');
+        return back();
+    }
+
+    public function subscribe(Request $request)
+    {
+        $email = $request->input('email');
+        $checkMail = NewsletterSubscription::where('email', $email)->exists();
+        $verificationToken = Str::random(40);
+
+        if ($checkMail){
+            flash()->warning('Bạn đã đăng ký email này rồi!', [], 'Thông báo');
+            return back();
+        }else{
+            $userExists = User::where('email', $email)->exists();
+            $status = $userExists ? 1 : 0;
+
+            NewsletterSubscription::create([
+                'email' => $email,
+                'status' => $status,
+                'verification_token' => $verificationToken,
+            ]);
+            if ($userExists) {
+                flash()->success('Bạn đã đăng ký thành công! Những tin tức sẽ được cập nhật mới nhất!', [], 'Thành công!');
+            } else {
+                flash()->success('Vui lòng xác thực mail để nhận tin sớm nhất!', [], 'Thành công!');
+                dispatch(new NewsletterVerification($verificationToken, $email));
+            }
+            return back();
+        }
+    }
+
+    public function verifyEmail($token)
+    {
+        $subscription = NewsletterSubscription::where('verification_token', $token)->first();
+
+        if ($subscription) {
+            $subscription->status = 1;
+            $subscription->verification_token = null;
+            $subscription->save();
+
+            flash()->success('Email của bạn đã được xác thực thành công!', [], 'Thành công!');
+        } else {
+            flash()->error('Mã xác thực không hợp lệ hoặc đã hết hạn.', [], 'Lỗi!');
+        }
+
         return back();
     }
 }

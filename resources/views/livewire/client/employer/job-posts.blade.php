@@ -7,8 +7,8 @@
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="card-grid-2-image-left">
                                 <div class="image-box"><img
-                                        src="{{ asset('storage/' . $job->employer->company_logo) }}"
-                                        alt="jobBox" width="85px" height="85px"></div>
+                                        src="{{ getStorageImageUrl($job->employer->company_logo, 'default/photo-cover.png') }}"
+                                        alt="jobBox" width="60px" height="60px"></div>
                                 <div class="right-info"><a class="name-job" href="#">{{$job->employer->company_name}}</a><span
                                         class="location-small">{{$job->employer->address->province->name ?? ''}}</span>
                                 </div>

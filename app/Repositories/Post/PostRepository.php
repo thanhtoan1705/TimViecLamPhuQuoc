@@ -30,6 +30,7 @@ class PostRepository implements PostInterface
             ->where('title', 'LIKE', "%{$keyword}%")
             ->orWhere('content', 'LIKE', "%{$keyword}%")
             ->where('is_publish', 1)
+            ->orderBy('created_at', 'desc')
             ->paginate(6);
 
         return $searchResult;

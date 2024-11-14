@@ -19,7 +19,7 @@ class Comment extends Component
 
     public $comment;
     public $parentComment = null;
-    protected $listeners = ['deleteComment'];
+    protected $listeners = ['refreshCommentList' => '$refresh'];
 
     public $users = [];
 
@@ -84,6 +84,9 @@ class Comment extends Component
 
         $this->validate([
             'editState.content' => 'required|min:2'
+        ], [
+            'editState.content.required' => 'Vui lòng nhập nội dung.',
+            'editState.content.min' => 'Bình luận phải có ít nhất 2 ký tự.',
         ]);
 
         $this->comment->update($this->editState);
@@ -98,9 +101,10 @@ class Comment extends Component
     #[On('refresh')]
     public function deleteComment(): void
     {
+        // dd("tao trước");
         $this->comment->delete();
-        $this->showOptions = false;
-        $this->dispatch('refresh');
+        // $this->showOptions = false;
+        $this->dispatch('refreshCommentList');
     }
 
     public function mount()
@@ -127,6 +131,9 @@ class Comment extends Component
     {
         $this->validate([
             'replyState.content' => 'required'
+        ], [
+            'replyState.content.required' => 'Vui lòng nhập nội dung.',
+            'replyState.content.min' => 'Bình luận phải có ít nhất 2 ký tự.',
         ]);
         $reply = $this->comment->children()->make($this->replyState);
         $reply->user()->associate(auth()->user());

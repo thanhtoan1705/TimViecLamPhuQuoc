@@ -13,5 +13,7 @@ Route::prefix('/')->name('client.')->group(function () {
     Route::post('/lien-he', [PageController::class, 'sendMailContact'])->name('lien-he.post');
     Route::get('/video-call', [VideoCallController::class, 'index'])->name('video-call');
     Route::get('/room', [VideoCallController::class, 'room'])->name('room');
+    Route::post('/subscribe', [PageController::class, 'subscribe'])->name('subscribe');
+    Route::get('subscribe/verify/{token}', [PageController::class, 'verifyEmail'])->name('verifyEmail');
 });
 

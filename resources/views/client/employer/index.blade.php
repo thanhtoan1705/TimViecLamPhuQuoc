@@ -35,7 +35,7 @@
             <div class="container">
                 <div class="banner-hero banner-single banner-single-bg">
                     <div class="block-banner text-center">
-                        <h3 class="wow animate__animated animate__fadeInUp">Hiện có<span class="color-brand-2"> 22 Công
+                        <h3 class="wow animate__animated animate__fadeInUp">Hiện có<span class="color-brand-2"> {{count($employers)}} Công
                             ty</span></h3>
                         <div class="font-sm color-text-paragraph-2 mt-10 wow animate__animated animate__fadeInUp"
                              data-wow-delay=".1s">Tìm kiếm công việc phù hợp với bạn

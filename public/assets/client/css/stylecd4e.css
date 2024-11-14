@@ -971,8 +971,8 @@ h6,
   border-radius: 4px;
 }
 .btn-apply-big.btn-apply-icon {
-  padding-left: 50px;
-  background-position: 21px 17px;
+  padding-left: 40px;
+  /*background-position: 21px 17px;*/
 }
 .btn-apply-big:hover {
   color: #fff;

@@ -35,7 +35,7 @@
                                 <button type="submit" class="btn btn-white border">Lưu lại</button>
                             </form>
                         </div>
-                        <button class="btn btn-apply-icon btn-apply btn-apply-big hover-up"
+                        <button class="btn btn-apply-icon btn-apply btn-apply-big hover-up btn-sm"
                                 type="button"
                                 data-bs-toggle="modal"
                                 data-bs-target="{{ auth()->check() ? '#ModalApplyJobForm' : '#ModalLoginForm' }}">
@@ -179,14 +179,16 @@
                         <div class="sidebar-border">
                             <div class="sidebar-heading">
                                 <div class="avatar-sidebar">
-                                    <figure><img src="{{ asset('storage/' . $job->employer->company_logo) }}"
+                                    <figure>
+                                        <img src="{{ getStorageImageUrl($job->employer->company_logo, config('image.square-logo'))}}"
                                                  alt="jobBox" width="85px" height="85px">
                                     </figure>
-                                    <div class="sidebar-info"><span
-                                            class="sidebar-company">{{$job->employer->company_name}}</span><span
-                                            class="card-location">Cần Thơ</span><a class="link-underline mt-15"
-                                                                                   href="#"> {{ $jobsCount }} ứng tuyển
-                                            vào công ty</a>
+                                    <div class="sidebar-info">
+                                        <a href="{{ route('client.employer.single', ['slug' => $job->employer->slug]) }}">
+                                            <span class="sidebar-company">{{$job->employer->company_name}}</span>
+                                        </a>
+                                        <span class="card-location">Cần Thơ</span>
+                                        <a class="link-underline mt-15" href="#"> {{ $jobsCount }} ứng tuyển vào công ty</a>
                                     </div>
                                 </div>
                             </div>
