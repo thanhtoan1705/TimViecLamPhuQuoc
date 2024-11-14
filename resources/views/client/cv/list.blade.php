@@ -112,11 +112,26 @@
                                                data-bs-target="#previewModal{{ $template->id }}">
                                                 <i class="fi-rr-eye"></i> Xem trước
                                             </a>
-                                            <a href="#" class="p-0 btn btn-use p-md-1"
-                                               data-bs-toggle="modal"
-                                               data-bs-target="{{ auth()->check() ? '#chooseCreateTypeModal'.$template->id : '#ModalLoginForm' }}">
-                                                <i class="fi-rr-pencil"></i> Dùng mẫu
-                                            </a>
+                                            @php
+                                                $hasExistingCV = false;
+                                                if (Auth::check()) {
+                                                    $hasExistingCV = \App\Models\UserCv::where('user_id', Auth::id())
+                                                                              ->where('template_id', $template->id)
+                                                                              ->exists();
+                                                }
+                                            @endphp
+                                            @if($hasExistingCV)
+                                                <a href="#" class="p-0 btn btn-use p-md-1"
+                                                   data-bs-toggle="modal"
+                                                   data-bs-target="#chooseCreateTypeModal{{ $template->id }}">
+                                                    <i class="fi-rr-pencil"></i> Dùng mẫu
+                                                </a>
+                                            @else
+                                                <a href="{{ route('client.cv.show', ['id' => $template->id]) }}"
+                                                   class="p-0 btn btn-use p-md-1">
+                                                    <i class="fi-rr-pencil"></i> Dùng mẫu
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -147,52 +162,209 @@
                             </div>
                         </div>
 
-                        <!-- Modal lựa chọn c��ch tạo CV -->
-                        <div class="modal fade" id="chooseCreateTypeModal{{$template->id}}" tabindex="-1"
-                             aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header border-0">
-                                        <h5 class="modal-title">Chọn nội dung để bắt đầu tạo CV</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row g-3">
-                                            <div class="col-md-6">
-                                                <a href="{{ route('client.cv.show', ['id' => $template->id]) }}"
-                                                   class="card h-100 text-center p-4 text-decoration-none">
-                                                    <div class="mb-3">
-                                                        <img
-                                                            src="{{ asset('assets/client/imgs/template/icons/plus-document.svg') }}"
-                                                            alt="create"
-                                                            class="img-fluid"
-                                                            style="width: 48px;">
-                                                    </div>
-                                                    <h6 class="mb-2">Tạo CV từ đầu</h6>
-                                                    <p class="text-muted small mb-0">Tạo CV mới với mẫu này</p>
-                                                </a>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <a href="#"
-                                                   class="card h-100 text-center p-4 text-decoration-none">
-                                                    <div class="mb-3">
-                                                        <img
-                                                            src="{{ asset('assets/client/imgs/template/icons/refresh-document.svg') }}"
-                                                            alt="restore"
-                                                            class="img-fluid"
-                                                            style="width: 48px;">
-                                                    </div>
-                                                    <h6 class="mb-2">Khôi phục dữ liệu chưa lưu</h6>
-                                                    <p class="text-muted small mb-0">Tiếp tục với dữ liệu đã nhập trước
-                                                        đó</p>
-                                                </a>
+                        <!-- Modal lựa chọn cách tạo CV -->
+                        @if($hasExistingCV)
+                            <div class="modal fade" id="chooseCreateTypeModal{{$template->id}}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header border-0">
+                                            <h5 class="modal-title fw-bold">
+                                                <i class="fi-rr-file-edit me-2"></i>
+                                                Chọn cách tạo CV
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body p-4">
+                                            <div class="row g-4">
+                                                <div class="col-md-6">
+                                                    <a href="#"
+                                                       class="card h-100 text-center p-4 text-decoration-none create-new-cv option-card"
+                                                       data-template-id="{{ $template->id }}">
+                                                        <div class="mb-3 option-icon">
+                                                            <i class="fi-rr-file-plus icon-option"></i>
+                                                        </div>
+                                                        <h6 class="mb-2 fw-bold">Tạo CV mới</h6>
+                                                        <p class="text-muted small mb-0">
+                                                            <i class="fi-rr-refresh me-1"></i>
+                                                            Bắt đầu với mẫu CV mới hoàn toàn
+                                                        </p>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a href="{{ route('client.cv.show', ['id' => $template->id]) }}"
+                                                       class="card h-100 text-center p-4 text-decoration-none continue-edit option-card">
+                                                        <div class="mb-3 option-icon">
+                                                            <i class="fi-rr-edit icon-option"></i>
+                                                        </div>
+                                                        <h6 class="mb-2 fw-bold">Tiếp tục chỉnh sửa</h6>
+                                                        <p class="text-muted small mb-0">
+                                                            <i class="fi-rr-time-forward me-1"></i>
+                                                            Tiếp tục với CV đã lưu trước đó
+                                                        </p>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+                            @push('css')
+                            <style>
+                            /* Modal Styles */
+                            .modal-content {
+                                border: none;
+                                border-radius: 16px;
+                                box-shadow: 0 10px 34px -15px rgba(0, 0, 0, 0.24);
+                            }
+
+                            .modal-header {
+                                padding: 1.5rem 1.5rem 1rem;
+                                background: #fff;
+                            }
+
+                            .modal-title {
+                                color: #333;
+                                font-size: 1.25rem;
+                                display: flex;
+                                align-items: center;
+                            }
+
+                            .modal-title i {
+                                color: #3C65F5;
+                                font-size: 1.4rem;
+                            }
+
+                            .modal-body {
+                                background: #f8f9fa;
+                            }
+
+                            /* Option Cards */
+                            .option-card {
+                                border: 2px solid #e9ecef;
+                                border-radius: 12px;
+                                transition: all 0.3s ease;
+                                height: 100%;
+                                background: white;
+                            }
+
+                            .option-card:hover {
+                                border-color: #3C65F5;
+                                transform: translateY(-3px);
+                                box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+                            }
+
+                            .option-card .option-icon {
+                                width: 64px;
+                                height: 64px;
+                                margin: 0 auto;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                background: #f8f9fa;
+                                border-radius: 50%;
+                                transition: all 0.3s ease;
+                            }
+
+                            .option-card:hover .option-icon {
+                                background: #3C65F5;
+                            }
+
+                            .icon-option {
+                                font-size: 28px;
+                                color: #3C65F5;
+                                transition: all 0.3s ease;
+                            }
+
+                            .option-card:hover .icon-option {
+                                color: white;
+                                transform: scale(1.1);
+                            }
+
+                            .option-card h6 {
+                                color: #333;
+                                transition: color 0.3s ease;
+                            }
+
+                            .option-card:hover h6 {
+                                color: #3C65F5;
+                            }
+
+                            .option-card p i {
+                                font-size: 12px;
+                                color: #6c757d;
+                            }
+
+                            .option-card:hover p i {
+                                color: #3C65F5;
+                            }
+
+                            /* Modal Animation */
+                            .modal.fade .modal-dialog {
+                                transform: scale(0.8);
+                                transition: transform 0.3s ease-out;
+                            }
+
+                            .modal.show .modal-dialog {
+                                transform: scale(1);
+                            }
+
+                            /* Responsive Adjustments */
+                            @media (max-width: 768px) {
+                                .modal-dialog {
+                                    margin: 1rem;
+                                }
+
+                                .option-card {
+                                    padding: 1rem !important;
+                                }
+
+                                .option-card .option-icon {
+                                    width: 48px;
+                                    height: 48px;
+                                }
+
+                                .icon-option {
+                                    font-size: 24px;
+                                }
+
+                                .option-card h6 {
+                                    font-size: 1rem;
+                                }
+                            }
+
+                            /* Button Close Styling */
+                            .btn-close {
+                                opacity: 0.5;
+                                transition: all 0.2s ease;
+                            }
+
+                            .btn-close:hover {
+                                opacity: 1;
+                                transform: rotate(90deg);
+                            }
+
+                            /* Custom Scrollbar for Modal */
+                            .modal-body::-webkit-scrollbar {
+                                width: 6px;
+                            }
+
+                            .modal-body::-webkit-scrollbar-track {
+                                background: #f1f1f1;
+                                border-radius: 10px;
+                            }
+
+                            .modal-body::-webkit-scrollbar-thumb {
+                                background: #888;
+                                border-radius: 10px;
+                            }
+
+                            .modal-body::-webkit-scrollbar-thumb:hover {
+                                background: #555;
+                            }
+                            </style>
+                            @endpush
+                        @endif
                     @endforeach
                 </div>
                 <div class="paginations">
@@ -642,3 +814,68 @@
         </div>
     </div>
 </div>
+
+@push('script')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const useTemplateButtons = document.querySelectorAll('.use-template-btn');
+
+    useTemplateButtons.forEach(button => {
+        button.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const templateId = this.dataset.templateId;
+
+            try {
+                const response = await fetch(`/check-existing-cv/${templateId}`);
+                const data = await response.json();
+
+                if (data.exists) {
+                    // Nếu có CV đã lưu, hiện modal
+                    const modalId = `#chooseCreateTypeModal${templateId}`;
+                    const modal = new bootstrap.Modal(document.querySelector(modalId));
+                    modal.show();
+                } else {
+                    // Nếu chưa có CV, chuyển thẳng đến trang tạo CV
+                    window.location.href = `/cv/${templateId}`;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                // Nếu có lỗi, vẫn chuyển đến trang tạo CV
+                window.location.href = `/cv/${templateId}`;
+            }
+        });
+    });
+
+    // Xử lý nút "Tạo CV mới"
+    const createNewButtons = document.querySelectorAll('.create-new-cv');
+    createNewButtons.forEach(button => {
+        button.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const templateId = this.dataset.templateId;
+
+            try {
+                // Xóa template cũ
+                const deleteResponse = await fetch(`/cv/${templateId}/delete-template`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const deleteData = await deleteResponse.json();
+
+                if (deleteData.success) {
+                    window.location.href = `/cv/${templateId}`;
+                } else {
+                    console.error('Error deleting template:', deleteData.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+});
+</script>
+@endpush

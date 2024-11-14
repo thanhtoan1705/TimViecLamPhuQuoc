@@ -8,14 +8,10 @@
                         src="{{ asset('assets/client/imgs/page/candidates/img.png') }}"
                         alt="jobbox"><a class="btn-editor" href="#"></a></div>
                 <div class="box-company-profile">
-                    <div class="image-compay">
-                        @if(isset($candidate->image) && $candidate->image)
+                    <div class="image-compay" style="width: 85px; height: 85px;">
                             <img alt="jobBox" width="85px" height="85px"
-                                 src="{{ asset('storage/' . $candidate->image) }}">
-                        @else
-                            <img alt="jobBox" width="85px" height="85px"
-                                 src="{{ asset('assets/client/imgs/page/candidates/candidate-profile.png') }}">
-                        @endif
+                                 src="{{ getStorageImageUrl(Auth::user()->avatar_url, config('avatar')) }}">
+
                     </div>
                     <div class="row mt-10">
                         <div class="col-lg-8 col-md-12">

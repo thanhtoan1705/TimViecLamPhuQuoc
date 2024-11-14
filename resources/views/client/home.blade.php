@@ -148,10 +148,6 @@
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                        <div class="apply-btn">
-                                                            <a href="{{ route('client.job.single', ['jobSlug' => $job->slug]) }}"
-                                                               class="btn btn-apply">Ứng tuyển</a>
-                                                        </div>
                                                     </div>
                                                 @endforeach
 
@@ -192,8 +188,7 @@
                                                         <div class="text-center mt-3">
                                                             <a class="btn-view-more"
                                                                href="{{ route('client.employer.single', ['slug' => $employer->slug]) }}">
-                                                                Xem thêm {{ $employer->job_post->count() - 2 }} việc
-                                                                làm</a>
+                                                                Xem thêm</a>
                                                         </div>
                                                     @endif
                                                 @endif
@@ -1759,7 +1754,7 @@
             font-size: 14px;
             padding: 5px 15px;
             cursor: pointer;
-            display: flex;
+            /* display: flex; */
             align-items: center;
             gap: 5px;
             margin: 0 auto;
@@ -1845,29 +1840,18 @@
         }
 
         .employer-banner {
-            height: auto;
-            min-height: 600px;
+            height: 300px;
             background-size: cover;
             background-position: center;
             position: relative;
             border-radius: 16px;
-            overflow: visible;
             margin: 15px;
-        }
-
-        .employer-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.95) 100%);
+            overflow: visible; /* Cho phép nội dung tràn ra ngoài */
         }
 
         .banner-content {
             position: relative;
-            padding: 30px;
+            padding: 20px;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -1875,357 +1859,142 @@
 
         .employer-info {
             text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .employer-info .logo {
             margin-bottom: 15px;
         }
 
         .employer-info .logo img {
-            width: 120px;
-            height: 120px;
-            border-radius: 12px;
-            object-fit: cover;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .employer-info .info h3 {
-            color: #ff9900;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .employer-info .info p {
-            color: #666;
-            font-size: 14px;
         }
 
         .job-listing {
             background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            position: relative;
-            z-index: 2;
-            margin-top: 20px;
-        }
-
-        .job-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             padding: 15px;
-            border-bottom: 1px solid #eee;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            margin: 0 20px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -140px; /* Đẩy job listing xuống dưới */
+            max-height: 270px;
+            overflow-y: auto;
             transition: all 0.3s ease;
         }
 
-        .job-item:last-child {
-            border-bottom: none;
+        .job-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            border: 1px solid #eee;
         }
 
         .job-item:hover {
-            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-color: #ddd;
         }
 
         .job-details h4 {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
-            margin-bottom: 8px;
         }
 
         .job-details h4 a {
             color: #333;
             text-decoration: none;
+            transition: color 0.3s ease;
         }
 
         .job-details h4 a:hover {
-            color: #ff9900;
+            color: #3C65F5;
         }
 
         .job-meta {
             display: flex;
-            gap: 20px;
-            font-size: 13px;
+            gap: 12px;
+            font-size: 12px;
             color: #666;
         }
 
         .job-meta span {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #eee;
         }
 
         .job-meta i {
-            font-size: 14px;
-            color: #999;
+            color: #ff9900;
         }
 
         .btn-apply {
-            background: #ff9900;
+            background: linear-gradient(135deg, #ff9900, #ff7600);
             color: white;
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 12px;
             font-weight: 600;
             transition: all 0.3s ease;
             border: none;
             text-decoration: none;
+            box-shadow: 0 2px 8px rgba(255, 153, 0, 0.3);
         }
 
         .btn-apply:hover {
-            background: #ff8800;
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #ff7600, #ff9900);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 153, 0, 0.4);
             color: white;
         }
 
-        /* Swiper navigation buttons */
-        .swiper-button-next,
-        .swiper-button-prev {
-            background: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            top: 40%;
-            z-index: 10;
+
+        /* Tùy chỉnh thanh cuộn */
+        .job-listing::-webkit-scrollbar {
+            width: 6px;
         }
 
-        .swiper-button-next:after,
-        .swiper-button-prev:after {
-            font-size: 18px;
-            color: #333;
+        .job-listing::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .employer-banner {
-                height: auto;
-                min-height: 600px;
-            }
-
-            .job-item {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-
-            .job-meta {
-                justify-content: center;
-                flex-wrap: wrap;
-            }
+        .job-listing::-webkit-scrollbar-thumb {
+            background: #ffc266;
+            border-radius: 3px;
         }
 
-        /* Media query cho mobile */
-        @media screen and (max-width: 767px) {
-            .employer-banner .job-item .apply-btn {
-                display: none; /* Ẩn nút ứng tuyển */
+        .job-listing::-webkit-scrollbar-thumb:hover {
+            background: #ff9900;
         }
 
-            .employer-banner .job-item {
-                padding: 10px 0; /* Giảm padding để layout gọn hơn */
-            }
+        /* Điều chỉnh swiper container để phù hợp với job listing tràn ra */
+        .swiper-container {
+            padding-bottom: 130px; /* Tạo khoảng trống cho job listing */
+        }
 
-            .employer-banner .job-details {
-                width: 100%; /* Để job details chiếm full width khi không có nút apply */
+        /* Animation cho job items khi hiển thị */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
             }
-
-            /* Điều chỉnh layout của job meta trên mobile */
-            .employer-banner .job-meta {
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-
-            .employer-banner .job-meta span {
-                font-size: 12px; /* Giảm font size cho meta data */
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        /* Thêm CSS cho mobile view */
-        .mobile-job-card {
-            margin-bottom: 15px;
-        }
-
-        .mobile-job-content {
-            display: flex;
-            position: relative;
-        }
-
-        .company-logo {
-            width: 60px;
-            height: 60px;
-            flex-shrink: 0;
-            margin-right: 15px;
-        }
-
-        .company-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .job-info {
-            flex-grow: 1;
-        }
-
-        .job-title {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .job-title a {
-            color: #333;
-            text-decoration: none;
-        }
-
-        /* .company-name {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 5px;
-        } */
-
-        .job-details {
-            display: flex;
-            gap: 10px;
-            font-size: 13px;
-            color: #888;
-        }
-
-        .save-job {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .save-button {
-            background: none;
-            border: none;
-            padding: 5px;
-            cursor: pointer;
-        }
-
-        .save-button i {
-            font-size: 20px;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 767px) {
-            .mobile-job-card {
-                box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
-                border-radius: 10px;
-            }
-
-            .job-details {
-                flex-direction: column;
-                gap: 5px;
-            }
-        }
-
-        .job-meta-info {
-            display: flex;
-            gap: 10px;
-            margin-top: 8px;
-        }
-
-        .job-salary,
-        .job-location {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 4px 8px;
-            border-radius: 6px;
-            background-color: #f5f5f5;
-            font-size: 13px;
-            color: #666;
-        }
-
-        .job-salary i,
-        .job-location i {
-            font-size: 14px;
-            color: #888;
-        }
-
-        .mobile-job-content {
-            display: flex;
-            position: relative;
-            padding: 10px;
-            background: #fff;
-            border-radius: 10px;
-        }
-
-        .company-logo {
-            width: 95px;
-            height: 95px;
-            flex-shrink: 0;
-            margin-right: 15px;
-        }
-
-        .company-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .job-info {
-            flex-grow: 1;
-            padding-right: 40px; /* Space for save button */
-        }
-
-        .job-title {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .job-title a {
-            color: #333;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .company-namee {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 8px;
-        }
-
-        .save-job {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-        }
-
-        .save-button {
-            background: none;
-            border: none;
-            padding: 5px;
-            cursor: pointer;
-        }
-
-        .save-button i {
-            font-size: 20px;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 767px) {
-
-            .job-meta-info {
-                flex-wrap: wrap;
-            }
-        }
-
-        @media (max-width: 359px) {
-            .job-meta-info {
-                flex-direction: column;
-            }
-
-            .job-salary,
-            .job-location {
-                width: fit-content;
-            }
+        .job-item {
+            animation: fadeInUp 0.3s ease forwards;
+            animation-delay: calc(var(--item-index) * 0.1s);
         }
     </style>
 @endpush

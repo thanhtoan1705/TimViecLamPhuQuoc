@@ -1,7 +1,11 @@
 @extends('client.layouts.master')
 @section('title', 'Chỉnh sửa CV')
 @section('content')
-    <main class="main" style="background-color: #F1F2F6">
+    <div id="loading-overlay" class="loading-overlay">
+        <img src="{{ asset('default/favicon.svg') }}" class="loading-icon pulse" alt="Loading">
+    </div>
+
+    <main class="main" style="background-color: #F1F2F6; display: none;" id="main-content">
         <div class="cv-header sticky-top d-flex justify-content-between align-items-center p-3 bg-light">
             <div class="cv-toolbar d-flex justify-content-between p-3 bg-white">
                 <!-- Nhóm công cụ bên trái -->
@@ -60,7 +64,7 @@
                         <i class="bi bi-download me-2"></i>
                         <span>Lưu và tải xuống</span>
                     </button>
-                    <button class="custom-btn save-btn">
+                    <button class="custom-btn save-btn" id="saveCV">
                         <i class="bi bi-save me-2"></i>
                         <span>Lưu lại</span>
                     </button>
@@ -441,7 +445,7 @@
     }
 
     #themeColorPicker {
-        /* Giữ nguyên các thuộc tính hiện có */
+        /* Giữ nguycn các thuộc tính hiện có */
         margin-left: 0; /* Reset margin nếu có */
         vertical-align: middle; /* Căn giữa theo chiều dọc */
     }
@@ -1508,7 +1512,7 @@
     /* Thêm styles mới cho nút xóa section */
     .remove-section-btn {
         position: absolute;
-        top: 10px;
+        /* top: 10px; */
         right: 10px;
         width: 32px;
         height: 32px;
@@ -1579,10 +1583,55 @@
 .editable-section.active .section-controls {
     display: flex;
 }
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s;
+}
+
+.loading-icon {
+    width: 60px;
+    height: 60px;
+}
+
+.pulse {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
 </style>
 @endpush
 
 @push('script')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const mainContent = document.getElementById('main-content');
+
+        setTimeout(() => {
+            loadingOverlay.style.opacity = '0';
+            mainContent.style.display = 'block';
+            mainContent.classList.add('fade-in');
+
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+            }, 500);
+        }, 2000);
+    });
+</script
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
@@ -1590,10 +1639,15 @@
         const cvEditorElement = document.getElementById('cv-editor');
         const templateId = cvEditorElement.dataset.templateId;
         const templateContent = @json($cvTemplate->template_content);
+        const savedCvData = @json($userCv ? json_decode($userCv->cv_content) : null);
 
         const root = window.createRoot(cvEditorElement);
         root.render(
-            window.React.createElement(window.CV, { templateContent: templateContent, templateId: templateId })
+            window.React.createElement(window.CV, {
+                templateContent: templateContent,
+                templateId: templateId,
+                cvData: savedCvData
+            })
         );
 
         document.querySelector('.luu-tai-xuong').addEventListener('click', downloadCV);

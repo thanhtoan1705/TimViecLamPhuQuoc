@@ -15,6 +15,10 @@ class UserCv extends Model
         'cv_content',
     ];
 
+    protected $casts = [
+        'cv_content' => 'json'
+    ];
+
     public function template()
     {
         return $this->belongsTo(CvTemplate::class, 'template_id');

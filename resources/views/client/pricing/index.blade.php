@@ -24,51 +24,70 @@
         <section class="section-box mt-90">
             <div class="container">
                 <h2 class="text-center mb-15 wow animate__animated animate__fadeInUp">Bảng giá</h2>
-                <div class="font-lg color-text-paragraph-2 text-center wow animate__animated animate__fadeInUp">Chọn gói
-                    tin tốt nhất dành cho bạn
+                <div class="font-lg color-text-paragraph-2 text-center wow animate__animated animate__fadeInUp">
+                    Chọn gói tin tốt nhất dành cho bạn
                 </div>
                 <div class="max-width-price">
                     <div class="block-pricing mt-70">
-                        <div class="row">
+                        <div class="row justify-content-center">
                             @foreach($packages as $package)
                                 <div class="col-xl-4 col-lg-6 col-md-6 wow animate__animated animate__fadeInUp"
-                                     data-wow-delay=".1s">
-                                    <div class="box-pricing-item">
-                                        <h3>{{ $package -> title }}</h3>
-                                        <div class="box-info-price d-flex">
-                                            <h6 class="color-brand-2">{{ number_format($package->price, 0, ',', '.') }} VND</h6>
-                                            <span class="text-tháng">/{{ $package->period }} ngày</span>
-                                        </div>
-                                        <div class="border-bottom mb-30">
-                                            <p class="text-desc-package font-sm color-text-paragraph mb-30">
-                                                Dành cho hầu hết các doanh nghiệp muốn tối ưu
-                                            </p>
-                                        </div>
-                                        <ul class="features">
-                                            <li>Được bảo hành dịch vụ</li>
-                                            @if ($package->label != 0)
-                                                <li>
-                                                    @if ($package->label == 1)
-                                                        Tin tuyển dụng được gắn nhãn GẤP vào tiêu đề tin.
-                                                    @elseif ($package->label == 2)
-                                                        Tin tuyển dụng được gắn nhãn HOT vào tiêu đề tin.
-                                                    @endif
-                                                </li>
+                                     data-wow-delay=".{{ $loop->iteration }}s">
+                                    <div class="pricing-card">
+                                        <div class="pricing-header">
+                                            @if($package->display_best)
+                                                <div class="popular-label">Phổ biến nhất</div>
                                             @endif
-                                            @if (!($package->display_haste == 0 && $package->display_best == 0 && $package->display_top == 0))
+                                            <h3 class="text-brand">{{ $package->title }}</h3>
+                                            <div class="box-info-price">
+                                                <span class="text-price">{{ number_format($package->price, 0, ',', '.') }}</span>
+                                                <span class="text-month">VND/{{ $package->period }} ngày</span>
+                                            </div>
+                                            <div class="pricing-description">
+                                                <p>{{ $package->description ?? 'Gói dịch vụ phù hợp cho doanh nghiệp của bạn' }}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="pricing-content">
+                                            <ul class="features-list">
                                                 <li>
-                                                    @if ($package->display_top == 1)
-                                                        Đăng tin tuyển dụng với vị trí nổi bật.
-                                                    @elseif ($package->display_best == 1)
-                                                        Đăng tin tuyển dụng với vị trí tốt nhất.
-                                                    @elseif ($package->display_haste == 1)
-                                                        Đăng tin tuyển dụng với vị trí hàng đầu.
-                                                    @endif
+                                                    <i class="fi-rs-check"></i>
+                                                    Đăng {{ $package->limit_job_post }} tin tuyển dụng/tháng
                                                 </li>
-                                            @endif
-                                            <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
-                                        </ul>
-                                        <div><a class="btn btn-border" href="#">Mua ngay</a></div>
+
+                                                @if ($package->label != 0)
+                                                    <li>
+                                                        <i class="fi-rs-check"></i>
+                                                        @if ($package->label == 1)
+                                                            <span class="text-danger">GẤP</span> - Nổi bật với nhãn "GẤP"
+                                                        @elseif ($package->label == 2)
+                                                            <span class="text-warning">HOT</span> - Nổi bật với nhãn "HOT"
+                                                        @endif
+                                                    </li>
+                                                @endif
+
+                                                @if ($package->display_top == 1)
+                                                    <li><i class="fi-rs-check"></i> Hiển thị ưu tiên trên đầu trang</li>
+                                                @endif
+
+                                                @if ($package->display_best == 1)
+                                                    <li><i class="fi-rs-check"></i> Vị trí hiển thị tốt nhất</li>
+                                                @endif
+
+                                                @if ($package->display_haste == 1)
+                                                    <li><i class="fi-rs-check"></i> Ưu tiên hiển thị hàng đầu</li>
+                                                @endif
+
+                                                <li><i class="fi-rs-check"></i> Hỗ trợ 24/7</li>
+                                                <li><i class="fi-rs-check"></i> Bảo hành dịch vụ</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="pricing-button">
+                                            <a class="btn btn-border hover-up w-100" href="#">
+                                                Đăng ký ngay
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -193,4 +212,143 @@
     </main>
 
 @endsection
+
+@push('css')
+    <style>
+        .pricing-card {
+            height: 100%;
+            min-height: 700px;
+            background: #fff;
+            border: 1px solid #e0e6f7;
+            border-radius: 16px;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .pricing-card.active {
+            border-color: #3C65F5;
+            box-shadow: 0 10px 30px rgba(60, 101, 245, 0.1);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .pricing-header {
+            padding: 40px 30px 20px;
+            border-bottom: 1px solid #e0e6f7;
+        }
+
+        .popular-label {
+            position: absolute;
+            top: 15px;
+            right: -42px;
+            background: linear-gradient(to right, #3C65F5, #6084FF);
+            color: #fff;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 12px;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(60, 101, 245, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 1;
+            white-space: nowrap;
+            width: 170px;
+            text-align: center;
+        }
+
+        .text-price {
+            font-size: 25px !important;
+            font-weight: bold;
+            color: #05264E;
+            line-height: 1;
+        }
+
+        .text-month {
+            font-size: 16px;
+            color: #66789C;
+        }
+
+        .pricing-description {
+            margin-top: 15px;
+            color: #4F5E64;
+        }
+
+        .pricing-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .features-list li {
+            padding: 10px 0;
+            color: #4F5E64;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features-list i {
+            color: #3C65F5;
+            font-size: 16px;
+        }
+
+        .pricing-button {
+            padding: 0 30px 40px;
+            margin-top: auto;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-brand {
+            background-color: #3C65F5;
+            color: #fff;
+        }
+
+        .btn-border {
+            border: 1px solid #3C65F5;
+            color: #3C65F5;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Đảm bảo các cột trong row có chiều cao bằng nhau */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-xl-4 {
+            display: flex;
+            margin-bottom: 30px;
+        }
+
+        .pricing-card:has(.popular-label) {
+            border: 2px solid #3C65F5;
+        }
+
+        .pricing-card:has(.popular-label):hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(60, 101, 245, 0.15);
+        }
+    </style>
+@endpush
 

@@ -4,12 +4,8 @@
                 src="{{ asset('assets/client/imgs/page/candidates/img.png') }}"
                 alt="jobbox"><a class="btn-editor" href="#"></a></div>
         <div class="box-company-profile">
-            <div class="image-compay" style="width: 85px !important;">
-                @if(isset($candidate->image) && $candidate->user->image)
-                    <img alt="jobBox" width="50px" src="{{ asset('storage/' . $candidate->user->image) }}">
-                @else
-                    <img alt="jobBox" width="50px" src="{{ asset('storage/images/default.jpeg') }}">
-                @endif
+            <div class="image-compay" style="width: 85px !important; height:85px !important">
+                    <img alt="jobBox" width="50px" src="{{ getStorageImageUrl(Auth::user()->avatar_url, config('avatar')) }}">
             </div>
             <div class="row mt-10">
                 <div class="col-lg-8 col-md-12">

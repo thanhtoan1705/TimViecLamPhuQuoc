@@ -19,8 +19,8 @@
             </h5>
             <span class="card-location">
                 @foreach ($employer->addresses as $address)
-                    {{ $address->district->name }},
-                    {{ $address->province->name }}<br>
+                    {{ $address->district->name ?? '' }},
+                    {{ $address->province->name ?? '' }}<br>
                 @endforeach
             </span>
             <div class="mt-30">

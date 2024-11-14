@@ -4,7 +4,26 @@ import sampleData from './data/sampleData';
 
 
 const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
-    const [cvData, setCvData] = useState(initialCvData || sampleData);
+    const [cvData, setCvData] = useState(() => {
+        if (initialCvData) {
+            return {
+                ...sampleData,
+                ...initialCvData,
+                title_personal_info: initialCvData.title_personal_info || sampleData.title_personal_info,
+                title_skills: initialCvData.title_skills || sampleData.title_skills,
+                title_certificates: initialCvData.title_certificates || sampleData.title_certificates,
+                title_languages: initialCvData.title_languages || sampleData.title_languages,
+                title_career_objective: initialCvData.title_career_objective || sampleData.title_career_objective,
+                title_work_experience: initialCvData.title_work_experience || sampleData.title_work_experience,
+                title_education: initialCvData.title_education || sampleData.title_education,
+                title_projects: initialCvData.title_projects || sampleData.title_projects,
+                title_awards: initialCvData.title_awards || sampleData.title_awards,
+                title_extracurricular: initialCvData.title_extracurricular || sampleData.title_extracurricular,
+                title_references: initialCvData.title_references || sampleData.title_references,
+            };
+        }
+        return sampleData;
+    });
     const [removedSections, setRemovedSections] = useState([]);
     const [processedContent, setProcessedContent] = useState('');
     const cvRef = useRef(null);
@@ -432,16 +451,35 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
 
     const saveCV = async () => {
         try {
-            await axios.post('/api/save-cv', {
+            const response = await axios.post('/save-cv', {
                 template_id: templateId,
                 cv_content: JSON.stringify(cvData)
             });
-            alert('CV đã được lưu thành công!');
+
+            if (response.data.success) {
+                alert('CV đã được lưu thành công!');
+            } else {
+                throw new Error(response.data.message);
+            }
         } catch (error) {
             console.error('Lỗi khi lưu CV:', error);
-            alert('Có lỗi xảy ra khi lưu CV');
+            alert(error.response?.data?.message || 'Có lỗi xảy ra khi lưu CV');
         }
     };
+
+    useEffect(() => {
+        // Add event listener for save button
+        const saveButton = document.getElementById('saveCV');
+        if (saveButton) {
+            saveButton.addEventListener('click', saveCV);
+        }
+
+        return () => {
+            if (saveButton) {
+                saveButton.removeEventListener('click', saveCV);
+            }
+        };
+    }, [cvData]);
 
     const handleAddSection = (sectionKey, sectionTitle) => {
         setCvData(prevData => {
@@ -630,6 +668,8 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
 
     useEffect(() => {
         const fetchCandidateInfo = async () => {
+            if (initialCvData) return;
+
             try {
                 const response = await axios.get('/candidate-info');
                 const { user, candidate } = response.data;
@@ -722,7 +762,6 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
 
                     return newData;
                 });
-
             } catch (error) {
                 console.error('Error fetching candidate info:', error);
                 // Nếu có lỗi, sử dụng toàn bộ dữ liệu mẫu
@@ -731,7 +770,7 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
         };
 
         fetchCandidateInfo();
-    }, []);
+    }, [initialCvData]);
 
     useEffect(() => {
         const handleResize = () => {

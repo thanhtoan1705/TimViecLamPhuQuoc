@@ -23,6 +23,7 @@ class Profile extends Component
     public $image;
     public $date_of_birth;
     public $gender;
+    public $imageTemp;
 
     public $provinces;
     public $districts = [];
@@ -116,6 +117,56 @@ class Profile extends Component
 
         return redirect()->to(request()->header('Referer'));
 
+    }
+
+    public function updatedImage()
+    {
+        $this->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($this->image) {
+            $this->imageTemp = $this->image->temporaryUrl();
+        }
+    }
+
+    public function updateAvatar()
+    {
+        if (!$this->image) {
+            flash()->error('Vui lòng chọn ảnh trước khi cập nhật.', [], 'Lỗi!');
+            return;
+        }
+
+        $this->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = Auth::user();
+        $imageName = $this->image->store('images/profiles', 'public');
+
+        $user->update([
+            'avatar_url' => $imageName,
+        ]);
+
+        $this->image = null;
+        $this->imageTemp = null;
+
+        flash()->success('Ảnh đại diện đã được cập nhật thành công.', [], 'Thành công!');
+        return redirect()->to(request()->header('Referer'));
+    }
+
+    public function removeAvatar()
+    {
+        $user = Auth::user();
+        $user->update([
+            'avatar_url' => null,
+        ]);
+
+        $this->image = null;
+        $this->imageTemp = null;
+
+        flash()->success('Ảnh đại diện đã được xóa.', [], 'Thành công!');
+        return redirect()->to(request()->header('Referer'));
     }
 
     public function render()

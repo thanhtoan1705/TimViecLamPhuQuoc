@@ -2,16 +2,17 @@
     <h3 class="mt-0 mb-15 color-brand-1">Tài khoản của tôi</h3>
     <a class="font-md color-text-paragraph-2" href="#">Cập nhật hồ sơ</a>
     <div class="mt-35 mb-40 box-info-profie">
-        <div class="image-profile" style="width: 85px; height: 85px;">
-            <img width="85px" height="85px" id="profileImage" src="{{ asset('storage/' . Auth::user()->image) }}"
-                 alt="jobbox">
+        <div class="image-profile" style="width: 85px; height: 85px; cursor: pointer;" onclick="document.getElementById('uploadImage').click();">
+            @if($imageTemp)
+                <img width="85px" height="85px" id="profileImage" src="{{ $imageTemp }}" alt="jobbox">
+            @else
+                <img width="85px" height="85px" id="profileImage" src="{{ getStorageImageUrl(Auth::user()->avatar_url, config('avatar')) }}" alt="jobbox">
+            @endif
         </div>
-        {{--        <input type="file" name="image" id="uploadImage" style="display: none;" accept="image/*" onchange="uploadImage(event)">--}}
-        <input type="file" id="uploadImage" style="display: none;" accept="image/*" wire:model="image"
-               onchange="uploadImage(event)">
+        <input type="file" id="uploadImage" style="display: none;" accept="image/*" wire:model="image">
 
-        <a class="btn btn-apply" onclick="document.getElementById('uploadImage').click();">Cập nhật ảnh đại diện</a>
-        <a class="btn btn-link">Xóa</a>
+        <button class="btn btn-apply" wire:click="updateAvatar">Cập nhật ảnh đại diện</button>
+        <a class="btn btn-link" wire:click="removeAvatar">Xóa</a>
     </div>
     <div class="row form-contact">
             <div class="col-lg-6 col-md-6">
@@ -194,4 +195,10 @@
             reader.readAsDataURL(file);
         }
     }
+
+    document.addEventListener('livewire:load', function () {
+        Livewire.on('imageUploaded', imageUrl => {
+            document.getElementById('profileImage').src = imageUrl;
+        });
+    });
 </script>
