@@ -1512,7 +1512,7 @@ label {
 .box-swiper .swiper-button-next,
 .box-swiper .swiper-button-prev {
   width: 40px;
-  margin-top: -55px;
+    margin-top: -120px;
 }
 .box-swiper .swiper-button-next {
   left: auto;

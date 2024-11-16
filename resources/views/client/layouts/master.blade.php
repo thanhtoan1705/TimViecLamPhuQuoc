@@ -40,7 +40,7 @@
 
 </head>
 <body>
-<x-client.contact></x-client.contact>
+
 <x-client.utilities></x-client.utilities>
 <x-client.header></x-client.header>
 <script src="{{ asset('assets/client/js/app.js')}}"></script>

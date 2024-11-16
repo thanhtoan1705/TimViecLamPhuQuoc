@@ -200,7 +200,7 @@
 
                         <div class="single-apply-jobs">
                             <div class="row align-items-center">
-                                <div class="col-md-5 d-flex justify-content-center align-content-center">
+                                <div class="col-md-5 d-flex align-content-center">
                                     <button type="submit" class="btn btn-primary me-3">Nộp hồ sơ</button>
                                     <form action="{{ route('client.candidate.saveJob', ['job_id' => $job->id]) }}"
                                           method="POST">
@@ -236,7 +236,9 @@
                                             <span class="sidebar-company">{{$job->employer->company_name}}</span>
                                         </a>
                                         <span class="card-location">Cần Thơ</span>
-                                        <a class="link-underline mt-15" href="#"> {{ $jobsCount }} ứng tuyển vào công ty</a>
+                                        <a class="link-underline mt-15"
+                                           href="{{ route('client.employer.single', ['slug' => $job->employer->slug]) }}"> {{ $jobsCount }}
+                                            ứng tuyển vào công ty</a>
                                     </div>
                                 </div>
                             </div>
@@ -263,7 +265,7 @@
                                         <li>
                                             <div class="card-list-4 wow animate__animated animate__fadeIn hover-up">
                                                 <div class="image">
-                                                    <a href="">
+                                                    <a href="{{ route('client.job.single', ['jobSlug' => $otherJob->slug]) }}">
                                                         <img src="{{ getStorageImageUrl($otherJob->employer->company_logo, config('image.square-logo')) }}"
                                                              alt="jobBox">
                                                     </a>

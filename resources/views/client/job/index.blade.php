@@ -207,7 +207,7 @@
                                                             alt="{{ $item->title }}">
                                                     </div>
                                                     <div class="right-info"><a class='name-job'
-                                                                               href="{{route('client.job.single', ['jobSlug' => $item->slug])}}">
+                                                                               href="{{ route('client.employer.single', ['slug' => $item->employer->slug]) }}">
                                                             {{ $item->employer->company_name }}</a><span
                                                             class="location-small">{{ $item->employer->address->province->name ?? ''}}</span>
                                                     </div>

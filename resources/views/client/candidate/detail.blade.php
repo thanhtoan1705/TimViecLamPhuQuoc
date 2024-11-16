@@ -51,7 +51,7 @@
                         <div class="content-single bg-white p-4 rounded shadow-sm">
                             <div class="mb-5">
                                 <h5 class="mt-0">Giới thiệu</h5>
-                                <p>{{$candidate->description}}</p>
+                                <p>{{ limit_text($candidate->description, 180) }}</p>
                             </div>
                             <!-- Học vấn / bằng cấp -->
                             <div class="mb-5">

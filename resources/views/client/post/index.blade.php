@@ -12,7 +12,7 @@
                         </div>
                         <div class="col-lg-6 text-end">
                             <ul class="breadcrumbs mt-40">
-                                <li><a class='home-icon' href='index.html'>Trang chủ</a></li>
+                                <li><a class='home-icon' href='{{route('client.client.index')}}'>Trang chủ</a></li>
                                 <li>Bài Viết</li>
                             </ul>
                         </div>
@@ -34,7 +34,7 @@
                             <div class="row">
 
                                 @if(isset($searchResult) && !$searchResult->isEmpty())
-                                    @foreach($searchResult as $value)                                       
+                                    @foreach($searchResult as $value)
                                         <div class="col-lg-6 mb-30">
 
                                             <div class="card-grid-3 hover-up">

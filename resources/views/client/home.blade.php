@@ -1214,9 +1214,10 @@
                             </div>
                             <div class="mt-40">
                                 <div class="wow animate__animated animate__fadeInUp"><a class='btn btn-default'
-                                                                                        href='jobs-grid.html'>Tìm kiếm
-                                        cong việc</a><a class='btn btn-link'
-                                                        href='page-about.html'>Hơn nữa</a></div>
+                                                                                        href="{{route('client.job.index')}}">Tìm
+                                        kiếm
+                                        công việc</a><a class='btn btn-link'
+                                                        href="{{route('client.job.index')}}">Hơn nữa</a></div>
                             </div>
                         </div>
                     </div>
@@ -1278,11 +1279,7 @@
                 <div class="row mt-50">
                     @foreach($hotJobCategories as $hotJobCategory)
                         @php
-                            if($hotJobCategory->image){
-                               $img =  asset('storage/' . $hotJobCategory->image);
-                            }else{
-                                $img = asset('default/blog.jpg');
-                            }
+                            $img = getStorageImageUrl($hotJobCategory->image, config('image.blog'));
                         @endphp
                         <div class="
                                 @if($loop->index == 0) col-xl-3 col-lg-3 col-md-5 col-sm-12 col-12
@@ -1294,13 +1291,13 @@
                                 @endif
                                 ">
                             <div class="card-image-top hover-up">
-                                <a href='jobs-grid.html'>
+                                <a href="{{ route('client.job.index', array_merge(request()->all(), ['categories' => array_merge(request('categories', []), [$hotJobCategory->id])])) }}">
                                     <div class="image" style="background-image: url('{{ $img }}');">
                                         <span class="lbl-hot">Hot</span>
                                     </div>
                                 </a>
                                 <div class="informations">
-                                    <a href='jobs-grid.html'>
+                                    <a href="{{ route('client.job.index', array_merge(request()->all(), ['categories' => array_merge(request('categories', []), [$hotJobCategory->id])])) }}">
                                         <h5>{{ $hotJobCategory->name }}</h5>
                                     </a>
                                     <div class="row">

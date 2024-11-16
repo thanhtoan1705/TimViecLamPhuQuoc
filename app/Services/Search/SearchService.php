@@ -3,7 +3,6 @@
 namespace App\Services\Search;
 
 use App\Models\JobPost;
-use App\Models\Province;
 
 class SearchService
 {
@@ -16,9 +15,9 @@ class SearchService
         }
 
         if (!empty($filters['location']) && $filters['location'] != 0) {
-            $provinceName = Province::find($filters['location'])->name;
-
-            $query->where('address', 'LIKE', '%' . $provinceName . '%');
+            $query->whereHas('employer.address.province', function ($subQuery) use ($filters) {
+                $subQuery->where('id', $filters['location']);
+            });
         }
 
         if (!empty($filters['salary']) && $filters['salary'] != 0) {
