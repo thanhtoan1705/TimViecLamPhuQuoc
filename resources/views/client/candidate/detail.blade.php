@@ -253,15 +253,6 @@
         position: relative;
         padding-left: 20px;
     }
-    .timeline-item::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 2px;
-        background-color: #3498db;
-    }
     .timeline-content {
         border-left: 3px solid #3498db;
     }

@@ -455,7 +455,7 @@
                                                                 action="{{ route('client.candidate.saveJob', ['job_id' => $post->id]) }}"
                                                                 method="POST">
                                                                 @csrf
-                                                                <button type="submit" class="save-button mt-20">
+                                                                <button type="submit" class="save-button">
                                                                     <i class="bi bi-heart"></i>
                                                                 </button>
                                                             </form>
@@ -1995,6 +1995,221 @@
         .job-item {
             animation: fadeInUp 0.3s ease forwards;
             animation-delay: calc(var(--item-index) * 0.1s);
+        }
+
+        /* Mobile job card styles - New version */
+        @media (max-width: 767px) {
+            .mobile-job-card {
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                margin: 10px 0;
+                position: relative;
+            }
+
+            .mobile-job-content {
+                padding: 12px;
+                display: grid;
+                grid-template-columns: 80px 1fr; /* Điều chỉnh cột đầu tiên thành 80px */
+                gap: 12px;
+            }
+
+            /* Company Logo */
+            .mobile-job-content .company-logo {
+                width: 80px;  /* Tăng kích thước lên 80px */
+                height: 80px; /* Tăng kích thước lên 80px */
+                border: 1px solid #eee;
+                border-radius: 6px;
+                overflow: hidden;
+            }
+
+            .mobile-job-content .company-logo img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
+            /* Job Info Container - Các style khác giữ nguyên */
+            .mobile-job-content .job-info {
+                overflow: hidden;
+                padding-right: 25px;
+            }
+
+            /* Job Title */
+            .mobile-job-content .job-title {
+                font-size: 14px;
+                font-weight: 600;
+                color: #333;
+                margin-bottom: 4px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                line-height: 1.3;
+            }
+
+            /* Company Name */
+            .mobile-job-content .company-namee {
+                font-size: 13px;
+                color: #666;
+                margin-bottom: 6px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            /* Job Meta Info */
+            .mobile-job-content .job-meta-info {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                font-size: 12px;
+            }
+
+            .job-meta-info .job-salary,
+            .job-meta-info .job-location {
+                background: #f8f9fa;
+                padding: 3px 8px;
+                border-radius: 4px;
+                color: #05264E;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .job-meta-info .job-salary {
+                color: #05264E;
+            }
+
+            /* Save Button */
+            .mobile-job-content .save-job {
+                position: absolute;
+                top: 12px;
+                right: 12px;
+            }
+
+            .mobile-job-content .save-button {
+                background: none;
+                border: none;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 28px;
+                height: 28px;
+            }
+
+            .save-button i {
+                font-size: 16px;
+                color: #666;
+            }
+
+            /* Hide desktop version on mobile */
+            .d-none.d-md-flex {
+                display: none !important;
+            }
+
+            /* Show mobile version */
+            .d-md-none.mobile-job-card {
+                display: block !important;
+            }
+
+            /* Adjust container padding */
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            /* Tab adjustments for mobile */
+            .nav-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none; /* Firefox */
+            }
+
+            .nav-tabs::-webkit-scrollbar {
+                display: none; /* Chrome, Safari */
+            }
+
+            .nav-tabs li {
+                flex: 0 0 auto;
+            }
+
+            /* Điều chỉnh responsive cho màn hình rất nhỏ */
+            @media (max-width: 360px) {
+                .mobile-job-content {
+                    grid-template-columns: 80px 1fr; /* Giữ nguyên kích thước 80px */
+                    gap: 10px;
+                }
+
+                .mobile-job-content .company-logo {
+                    width: 80px;  /* Giữ nguyên kích thước 80px */
+                    height: 80px; /* Giữ nguyên kích thước 80px */
+                }
+            }
+
+            /* Điều chỉnh hiển thị job item trên mobile */
+            .job-item {
+                padding: 12px;
+                margin-bottom: 8px;
+            }
+
+            .job-details h4 {
+                font-size: 14px;
+                margin-bottom: 6px;
+                line-height: 1.3;
+            }
+
+            /* Tùy chỉnh job meta để hiển thị chỉ lương và địa điểm */
+            .job-meta {
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* Chia 2 cột bằng nhau */
+                gap: 6px;
+                margin-top: 8px;
+            }
+
+            /* Ẩn các thông tin không cần thiết trên mobile */
+            .job-meta .job-type,
+            .job-meta .card-time,
+            .job-meta span:not(.salary):not(.location) {
+                display: none !important;
+            }
+
+            /* Style cho salary và location */
+            .job-meta .salary,
+            .job-meta .location {
+                font-size: 12px;
+                padding: 4px 8px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .job-meta .salary {
+                color: #00b14f;
+            }
+
+            .job-meta .location {
+                color: #666;
+            }
+
+            /* Icon styles */
+            .job-meta i {
+                font-size: 12px;
+                flex-shrink: 0;
+            }
+
+            /* Đảm bảo text không bị tràn */
+            .job-meta span {
+                max-width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
         }
     </style>
 @endpush

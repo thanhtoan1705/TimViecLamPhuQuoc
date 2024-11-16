@@ -212,7 +212,7 @@
                                             <div class="card-list-4 wow animate__animated animate__fadeIn hover-up">
                                                 <div class="image">
                                                     <a href="">
-                                                        <img src="{{ asset('assets/client/imgs/brands/brand-1.png') }}"
+                                                        <img src="{{ getStorageImageUrl($otherJob->employer->company_logo, config('image.square-logo')) }}"
                                                              alt="jobBox">
                                                     </a>
                                                 </div>
@@ -229,7 +229,7 @@
                                                     <div class="mt-5">
                                                         <div class="row">
                                                             <div class="col-6">
-                                                                <h6 class="card-price">{{ formatSalary($otherJob->salary_min) }}</h6>
+                                                                <h6 class="card-price">{{ $otherJob->salary->name }}</h6>
                                                             </div>
                                                             <div class="col-6 text-end">
                                                                 <span

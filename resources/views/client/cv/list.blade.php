@@ -120,15 +120,21 @@
                                                                               ->exists();
                                                 }
                                             @endphp
-                                            @if($hasExistingCV)
-                                                <a href="#" class="p-0 btn btn-use p-md-1"
-                                                   data-bs-toggle="modal"
-                                                   data-bs-target="#chooseCreateTypeModal{{ $template->id }}">
-                                                    <i class="fi-rr-pencil"></i> Dùng mẫu
-                                                </a>
+                                            @if(Auth::check())
+                                                @if($hasExistingCV)
+                                                    <a href="#" class="p-0 btn btn-use p-md-1"
+                                                       data-bs-toggle="modal"
+                                                       data-bs-target="#chooseCreateTypeModal{{ $template->id }}">
+                                                        <i class="fi-rr-pencil"></i> Dùng mẫu
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('client.cv.show', ['id' => $template->id]) }}"
+                                                       class="p-0 btn btn-use p-md-1">
+                                                        <i class="fi-rr-pencil"></i> Dùng mẫu
+                                                    </a>
+                                                @endif
                                             @else
-                                                <a href="{{ route('client.cv.show', ['id' => $template->id]) }}"
-                                                   class="p-0 btn btn-use p-md-1">
+                                                <a href="#" class="p-0 btn btn-use p-md-1" data-bs-toggle="modal" data-bs-target="#ModalLoginForm">
                                                     <i class="fi-rr-pencil"></i> Dùng mẫu
                                                 </a>
                                             @endif

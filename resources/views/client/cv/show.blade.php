@@ -55,18 +55,20 @@
                 </div>
 
                 <!-- Nhóm nút bên phải -->
-                <div class="toolbar-group action-buttons d-flex align-items-center gap-2">
+                <div class="action-buttons">
                     <button type="button" class="custom-btn preview-btn" data-bs-toggle="modal" data-bs-target="#previewModal">
                         <i class="bi bi-eye me-2"></i>
                         <span>Xem trước</span>
                     </button>
-                    <button class="custom-btn download-btn cv-action-btn luu-tai-xuong" id="downloadCV">
-                        <i class="bi bi-download me-2"></i>
-                        <span>Lưu và tải xuống</span>
+
+                    <button id="downloadCV" class="custom-btn download-btn">
+                        <i class="bi bi-download me-1"></i>
+                        Tải xuống
                     </button>
-                    <button class="custom-btn save-btn" id="saveCV">
-                        <i class="bi bi-save me-2"></i>
-                        <span>Lưu lại</span>
+
+                    <button id="saveCV" class="custom-btn save-btn me-2">
+                        <i class="bi bi-save me-1"></i>
+                        Lưu CV
                     </button>
                 </div>
             </div>
@@ -1324,12 +1326,6 @@
         }
     }
 
-    @media (min-width: 415px) and (max-width: 768px) {
-        #pdf {
-            transform: scale(0.45);
-        }
-    }
-
     .item-controls {
         position: absolute;
         top: -40px;
@@ -1650,7 +1646,10 @@
             })
         );
 
-        document.querySelector('.luu-tai-xuong').addEventListener('click', downloadCV);
+        document.querySelector('.luu-tai-xuong').addEventListener('click', function() {
+            // Trigger nút Save CV
+            document.getElementById('saveCV').click();
+        });
 
         // Thêm sự kiện để ngăn chặn mất định dạng khi xóa
         document.addEventListener('keydown', function(e) {
@@ -1789,65 +1788,6 @@
         // Khởi tạo màu ban đầu
         updateThemeColor(themeColorPicker.value);
     });
-
-    function downloadCV() {
-        const content = document.getElementById('pdf');
-
-        html2canvas(content, {
-            scale: 2, // Tăng scale lên để có độ phân giải tốt hơn
-            useCORS: true,
-            logging: false,
-            backgroundColor: null
-        }).then(canvas => {
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF({
-                orientation: 'p',
-                unit: 'mm',
-                format: 'a4',
-                compress: true
-            });
-
-            const imgWidth = 210;
-            const pageHeight = 295;
-            const imgHeight = canvas.height * imgWidth / canvas.width;
-
-            let heightLeft = imgHeight;
-            let position = 0;
-
-            const imgData = canvas.toDataURL('image/jpeg', 0.9); // Tăng chất lượng lên 90%
-
-            pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-
-            while (heightLeft >= 0) {
-                position = heightLeft - imgHeight;
-                pdf.addPage();
-                pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-            }
-
-            pdf.save('my_cv.pdf');
-        }).catch(error => {
-            console.error('Error downloading CV:', error);
-            alert('Có lỗi xảy ra khi tải xuống CV');
-        });
-    }
-
-    function changeColor() {
-        // Implement color change logic
-    }
-
-    function toggleBold() {
-        // Implement bold toggle logic
-    }
-
-    function toggleItalic() {
-        // Implement italic toggle logic
-    }
-
-    function changeFont() {
-        // Implement font change logic
-    }
 
     document.addEventListener('DOMContentLoaded', function() {
         const previewModal = document.getElementById('previewModal');

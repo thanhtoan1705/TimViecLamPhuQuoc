@@ -12,8 +12,6 @@
                     </div>
                 </div>
                 <div class="box-company-profile">
-                    <div class="image-compay"><img
-                            src="{{ getStorageImageUrl($employer->company_logo, config('image.square-logo')) }}"
                     <div class="image-compay"><img src="{{ getStorageImageUrl($employer->company_logo, config('image.square-logo'))}}"
                                                    alt="jobBox" width="85px" height="85px"></div>
                     <div class="row mt-10">

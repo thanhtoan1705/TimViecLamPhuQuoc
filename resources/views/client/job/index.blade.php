@@ -750,7 +750,7 @@
                 padding: 4px 8px;
                 border-radius: 4px;
                 font-size: 13px;
-                color: #666;
+                color: #05264E;
                 display: inline-flex;
                 align-items: center;
             }
@@ -775,7 +775,7 @@
 
             .save-button i {
                 font-size: 20px;
-                color: #ff4757;
+                color: #666;
             }
 
             /* Hide desktop elements */
@@ -801,6 +801,11 @@
             .d-md-flex {
                 display: flex !important;
             }
+        }
+
+        .box-filters-job .dropdown-menu[data-bs-popper] {
+            right: 0;
+            /* left: unset; */
         }
 
         /* Mobile Filter Modal Styling */

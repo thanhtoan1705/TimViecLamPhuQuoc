@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import axios from 'axios';
 import sampleData from './data/sampleData';
+import html2canvas from 'html2canvas';
 
 
 const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
@@ -467,16 +468,74 @@ const CV = ({ templateContent, cvData: initialCvData, templateId }) => {
         }
     };
 
+    const downloadCV = async () => {
+        const cvContainer = document.getElementById('pdf');
+
+        // Tạm thời ẩn các nút điều khiển trước khi chụp
+        const controls = cvContainer.querySelectorAll('.item-controls, .control-btn, .remove-section-btn');
+        controls.forEach(control => control.style.display = 'none');
+
+        try {
+            const canvas = await html2canvas(cvContainer, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                backgroundColor: null
+            });
+
+            // Hiện lại các nút điều khiển
+            controls.forEach(control => control.style.display = '');
+
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({
+                orientation: 'p',
+                unit: 'mm',
+                format: 'a4',
+                compress: true
+            });
+
+            const imgWidth = 210;
+            const pageHeight = 295;
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 0;
+
+            const imgData = canvas.toDataURL('image/jpeg', 1.0);
+            pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+
+            while (heightLeft >= pageHeight) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save(`CV_${cvData.name || 'My_CV'}.pdf`);
+        } catch (error) {
+            console.error('Lỗi khi tải xuống CV:', error);
+            alert('Có lỗi xảy ra khi tải xuống CV');
+        }
+    };
+
     useEffect(() => {
-        // Add event listener for save button
+        // Add event listeners for save and download buttons
         const saveButton = document.getElementById('saveCV');
+        const downloadButton = document.getElementById('downloadCV');
+
         if (saveButton) {
             saveButton.addEventListener('click', saveCV);
+        }
+
+        if (downloadButton) {
+            downloadButton.addEventListener('click', downloadCV);
         }
 
         return () => {
             if (saveButton) {
                 saveButton.removeEventListener('click', saveCV);
+            }
+            if (downloadButton) {
+                downloadButton.removeEventListener('click', downloadCV);
             }
         };
     }, [cvData]);

@@ -30,11 +30,21 @@
                                                              alt="CV Template"
                                                              class="cv-preview-image">
                                                         <div class="cv-card-overlay">
-                                                            <a href="{{ route('client.cv.show', ['id' => $cv->template_id]) }}"
-                                                               class="btn btn-light btn-sm">
-                                                                <i class="bi bi-pencil-square"></i>
-                                                                Chỉnh sửa
-                                                            </a>
+                                                            <div class="d-flex gap-2">
+                                                                <a href="{{ route('client.cv.show', ['id' => $cv->template_id]) }}"
+                                                                   class="btn btn-light btn-sm">
+                                                                    <i class="bi bi-pencil-square me-1"></i>
+                                                                    Chỉnh sửa
+                                                                </a>
+                                                                <form action="{{ route('client.cv.destroy', $cv->id) }}" method="POST" class="delete-cv-form">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                                        <i class="bi bi-trash me-1"></i>
+                                                                        Hủy lưu
+                                                                    </button>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
 
@@ -45,45 +55,6 @@
                                                                 <i class="bi bi-clock me-1"></i>
                                                                 {{ $cv->updated_at->diffForHumans() }}
                                                             </p>
-                                                        </div>
-
-                                                        <div class="cv-card-actions">
-                                                            <div class="btn-group w-100">
-                                                                <a href="{{ route('client.cv.show', ['id' => $cv->template_id]) }}"
-                                                                   class="btn btn-primary flex-grow-1 d-flex align-items-center justify-content-center">
-                                                                    <i class="bi bi-pencil-square me-2"></i>
-                                                                    Chỉnh sửa
-                                                                </a>
-                                                                <div class="dropdown">
-                                                                    <button class="btn btn-primary dropdown-toggle px-3"
-                                                                            type="button"
-                                                                            data-bs-toggle="dropdown"
-                                                                            aria-expanded="false">
-                                                                        <i class="bi bi-three-dots-vertical"></i>
-                                                                    </button>
-                                                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                                                                        <li>
-                                                                            <a class="dropdown-item d-flex align-items-center download-cv"
-                                                                               href="#"
-                                                                               data-cv-id="{{ $cv->id }}">
-                                                                                <i class="bi bi-download me-2 text-primary"></i>
-                                                                                Tải xuống PDF
-                                                                            </a>
-                                                                        </li>
-                                                                        <li><hr class="dropdown-divider"></li>
-                                                                        <li>
-                                                                            <form action="{{ route('client.cv.destroy', $cv->id) }}" method="POST" class="delete-cv-form">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit" class="dropdown-item d-flex align-items-center text-danger">
-                                                                                    <i class="bi bi-trash me-2"></i>
-                                                                                    Xóa CV
-                                                                                </button>
-                                                                            </form>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -153,13 +124,18 @@
         transition: 0.3s;
     }
 
-    .cv-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    .cv-card-overlay .btn {
+        font-weight: 500;
+        padding: 0.5rem 1rem;
     }
 
     .cv-card:hover .cv-card-overlay {
         opacity: 1;
+    }
+
+    .cv-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
     }
 
     .cv-card:hover .cv-preview-image {
