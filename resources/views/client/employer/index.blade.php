@@ -184,16 +184,19 @@
                                     <div class="form-group">
                                         <ul class="list-checkbox">
                                             @foreach($companyTypes as $type)
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox" name="company_types[]"
-                                                               value="{{ $type->company_type }}"
-                                                            {{ in_array($type->company_type, request('company_types', [])) ? 'checked' : '' }}>
-                                                        <span class="text-small">{{ $type->company_type }}</span>
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                    <span class="number-item">{{ $type->company_count }}</span>
-                                                </li>
+                                                @if(!empty($type))
+                                                    <li>
+                                                        <label class="cb-container">
+                                                            <input type="checkbox" name="company_types[]"
+                                                                   value="{{ $type->company_type }}"
+                                                                {{ in_array($type->company_type, request('company_types', [])) ? 'checked' : '' }}>
+                                                            <span class="text-small">{{ $type->company_type }}</span>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                        <span class="number-item">{{ $type->company_count }}</span>
+                                                    </li>
+                                                @endif
+
                                             @endforeach
                                         </ul>
                                     </div>
@@ -203,16 +206,18 @@
                                     <div class="form-group mb-20">
                                         <ul class="list-checkbox">
                                             @foreach($years as $year)
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox" name="years[]"
-                                                               value="{{ $year->year }}"
-                                                            {{ in_array($year->year, request('years', [])) ? 'checked' : '' }}>
-                                                        <span class="text-small">{{ $year->year }}</span>
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                    <span class="number-item">{{ $year->company_count }}</span>
-                                                </li>
+                                                @if(isset($year))
+                                                    <li>
+                                                        <label class="cb-container">
+                                                            <input type="checkbox" name="years[]"
+                                                                   value="{{ $year->year }}"
+                                                                {{ in_array($year->year, request('years', [])) ? 'checked' : '' }}>
+                                                            <span class="text-small">{{ $year->year }}</span>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                        <span class="number-item">{{ $year->company_count }}</span>
+                                                    </li>
+                                                @endif
                                             @endforeach
                                         </ul>
                                     </div>

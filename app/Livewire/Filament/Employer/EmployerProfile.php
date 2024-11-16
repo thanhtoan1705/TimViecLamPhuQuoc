@@ -9,6 +9,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -106,12 +107,28 @@ class EmployerProfile extends Component implements HasForms
                                             ->label('Mã số thuế')
                                             ->maxLength(15),
 
-                                        TextInput::make('company_size')
-                                            ->label('Số nhân viên')
-                                            ->numeric(),
 
-                                        TextInput::make('company_type')
-                                            ->label('Loại công ty'),
+                                        Select::make('company_size')
+                                            ->label('Số nhân viên')
+                                            ->options([
+                                                '1 - 50' => '1 - 50',
+                                                '50 - 100' => '50 - 100',
+                                                '100 - 200' => '100 - 200',
+                                                'Trên 200' => 'Trên 200',
+                                                'Trên 500' => 'Trên 500',
+                                            ])
+                                            ->required(),
+
+                                        Select::make('company_type')
+                                            ->label(__('Loại hình công ty'))
+                                            ->options([
+                                                'Công ty TNHH' => 'Công ty TNHH',
+                                                'Công ty Cổ phần' => 'Công ty Cổ phần',
+                                                'Doanh nghiệp tư nhân' => 'Doanh nghiệp tư nhân',
+                                                'Khác' => 'Khác',
+                                            ])
+                                            ->required()
+
                                     ]),
                             ]),
 

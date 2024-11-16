@@ -113,7 +113,7 @@
                                             <div class="employer-info">
                                                 <div class="logo">
                                                     <img
-                                                        src="{{ asset('storage/' . ($employer->company_logo ?? 'default/company.png')) }}"
+                                                        src="{{ getStorageImageUrl($employer->company_logo, config('image.square-logo')) }}"
                                                         alt="{{ $employer->company_name }}">
                                                 </div>
                                                 <div class="info">
@@ -502,7 +502,7 @@
                                                 <div class="company-info">
                                                     <div class="company-logo">
                                                         @php
-                                                            $company_img = getStorageImageUrl($employer->company_logo ?? '', 'default/company.png');
+                                                            $company_img = getStorageImageUrl($employer->company_logo, config('image.square-logo'));
                                                         @endphp
                                                         <img src="{{ $company_img }}"
                                                              alt="{{ $employer->company_name ?? '' }}">
@@ -665,7 +665,8 @@
                                                 <div class="company-info">
                                                     <div class="company-logo">
                                                         @php
-                                                            $company_img = getStorageImageUrl($employer->company_logo ?? '', 'default/company.png');
+                                                            $company_img = getStorageImageUrl($employer->company_logo, config('image.square-logo'));
+
                                                         @endphp
                                                         <img src="{{ $company_img }}"
                                                              alt="{{ $employer->company_name ?? '' }}">
@@ -861,7 +862,8 @@
                                                 <div class="company-info">
                                                     <div class="company-logo">
                                                         @php
-                                                            $company_img = getStorageImageUrl($employer->company_logo ?? '', 'default/company.png');
+                                                            $company_img = getStorageImageUrl($employer->company_logo, config('image.square-logo'));
+
                                                         @endphp
                                                         <img src="{{ $company_img }}"
                                                              alt="{{ $employer->company_name ?? '' }}">
@@ -1024,7 +1026,8 @@
                                                 <div class="company-info">
                                                     <div class="company-logo">
                                                         @php
-                                                            $company_img = getStorageImageUrl($employer->company_logo ?? '', 'default/company.png');
+                                                            $company_img = getStorageImageUrl($employer->company_logo, config('image.square-logo'));
+
                                                         @endphp
                                                         <img src="{{ $company_img }}"
                                                              alt="{{ $employer->company_name ?? '' }}">

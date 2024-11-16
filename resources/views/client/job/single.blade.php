@@ -119,7 +119,7 @@
                                             src="{{ asset('assets/client/imgs/page/job-single/deadline.svg') }}"
                                             alt="jobBox"></div>
                                     <div class="sidebar-text-info ml-10"><span
-                                            class="text-description mb-10">Thời hạn ứng tuyển</span><strong
+                                            class="text-description mb-10">Thời hạn</span><strong
                                             class="small-heading">{{ \Carbon\Carbon::parse($job->end_date)->format('d/m/Y') }}</strong>
                                     </div>
                                 </div>
@@ -148,8 +148,56 @@
                             </div>
                         </div>
                         <div class="content-single">
-                            {!! $job->description !!}
+
+
+                            <div class="section">
+                                <div class="section-title-sm">Mô tả công việc</div>
+                                <p class="mt-5 mb-1">
+                                    {!! $job->description !!}
+                                </p>
+                            </div>
+                            <div class="section-sm">
+                                <div class="section-title-sm">Yêu cầu công việc</div>
+                                <p class="mt-5">
+                                    {!! $job->job_requirement !!}
+                                </p>
+                            </div>
+
+                            <div class="section">
+                                <div class="section-title-sm">Yêu cầu hồ sơ</div>
+                                <p class="mt-5 mb-1">
+                                    {!! $job->cv_requirement !!}
+                                </p>
+                            </div>
                         </div>
+
+
+
+
+
+                        <style>
+                            .section-title-sm {
+                                font-weight: bold;
+                                margin-top: 10px;
+                                font-size: 20px;
+                            }
+                            .section-title-sm::after {
+                                content: '';
+                                display: block;
+                                width: 50px;
+                                height: 2px;
+                                background-color: #007bff;
+                                margin-top: 5px;
+                            }
+                            .benefits-icons i {
+                                margin-right: 10px;
+                            }
+                            .benefits-icons {
+                                margin-bottom: 10px;
+                            }
+                        </style>
+
+
                         <div class="single-apply-jobs">
                             <div class="row align-items-center">
                                 <div class="col-md-5 d-flex justify-content-center align-content-center">
@@ -197,7 +245,11 @@
                                     <div id="map" style="height: 200px; width: 100%;"></div>
                                 </div>
                                 <ul class="ul-disc">
-                                    <li>{{$job->employer->address->street ?? null}}</li>
+                                    <li>Địa chỉ: {{$job->employer->address->street ?? null}}
+                                        , {{$job->employer->address->ward->name ?? null}}
+                                        , {{$job->employer->address->district->name ?? null}}
+                                        , {{$job->employer->address->province->name ?? null}}
+                                    </li>
                                     <li>Điện thoại: {{$job->employer->company_phone}}</li>
                                     <li>Email: {{$job->employer->user->email}}</li>
                                 </ul>
