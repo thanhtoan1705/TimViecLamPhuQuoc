@@ -504,11 +504,6 @@
             flex-wrap: wrap;
         }
 
-        .col-xl-3, .col-lg-4, .col-md-6 {
-            display: flex;
-            flex-direction: column;
-        }
-
         .card-grid-2 {
             display: flex;
             flex-direction: column;

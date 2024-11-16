@@ -204,48 +204,7 @@
                 </div>
             </div>
         </section>
-{{--        <div class="mt-100"></div>--}}
-{{--        <section class="section-box mt-80">--}}
-{{--            <div class="section-box wow animate__animated animate__fadeIn">--}}
-{{--                <div class="container">--}}
-{{--                    <div class="text-center">--}}
-{{--                        <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Tìm kiếm bằng danh--}}
-{{--                            mục</h2>--}}
-{{--                        <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Tìm công việc--}}
-{{--                            hoàn hảo cho bạn&rsquo; khoảng hơn 800 việc làm mới mỗi ngày</p>--}}
-{{--                    </div>--}}
-{{--                    <div class="box-swiper mt-50">--}}
-{{--                        <div class="swiper-container swiper-group-5 swiper">--}}
-{{--                            <div class="swiper-wrapper pb-70 pt-5">--}}
-{{--                                @foreach($jobCategories as $category)--}}
-{{--                                    <div class="swiper-slide hover-up">--}}
-{{--                                        <a class="m-1" href=''>--}}
-{{--                                            <div class="item-logo">--}}
-{{--                                                <div class="image-left">--}}
-{{--                                                        @php--}}
-{{--                                                            $category_img = getStorageImageUrl($category->image, 'default/square-logo.svg');--}}
-{{--                                                        @endphp--}}
-{{--                                                        <img alt="{{ $category->name }}" width="50px"--}}
-{{--                                                        src="{{ $category_img }}">--}}
-{{--                                                </div>--}}
-{{--                                                <div class="text-info-right">--}}
-{{--                                                    <h4 style="max-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $category->name }}</h4>--}}
-{{--                                                    <p class="font-xs">{{ $category->job_posts_count }}<span> công việc có sẵn</span>--}}
-{{--                                                    </p>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </a>--}}
-{{--                                    </div>--}}
-{{--                                @endforeach--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="swiper-button-next"></div>--}}
-{{--                        <div class="swiper-button-prev"></div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </section>--}}
-        <div class="section-box mb-30">
+        <div class="section-box mb-30 mt-85">
             <div class="container">
                 <div class="box-we-hiring">
                     <div class="text-1"><span class="text-we-are">Chúng tôi là</span><span class="text-hiring">Ứng

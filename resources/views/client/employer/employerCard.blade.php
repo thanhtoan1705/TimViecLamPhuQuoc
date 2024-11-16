@@ -18,10 +18,7 @@
                     href='{{ route('client.employer.single', ['slug' => $employer->slug]) }}'>{{ $employer->company_name }}</a>
             </h5>
             <span class="card-location">
-                @foreach ($employer->addresses as $address)
-                    {{ $address->district->name ?? '' }},
-                    {{ $address->province->name ?? '' }}<br>
-                @endforeach
+                    {{ $employer->address->province->name ?? '' }}
             </span>
             <div class="mt-30">
                 <a class='btn btn-grey-big' href='{{ route('client.employer.single', ['slug' => $employer->slug]) }}'>
