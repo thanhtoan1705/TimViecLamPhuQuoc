@@ -57,9 +57,11 @@ class JobPostRepository implements JobPostInterface
                 ->map(function ($post) {
                     $labels = $post->employer->userJobPackages
                         ->filter(function ($package) {
-                            return $package->expires_at && $package->expires_at > now();
+                            $jobPostPackage = $package->jobPostPackage;
+                            return $jobPostPackage && $package->expires_at
+                                && $package->expires_at > now() && $jobPostPackage->status === 1;
                         })
-                        ->map(fn($package) => optional($package->jobPostPackage)->label)
+                        ->map(fn($package) => $package->jobPostPackage->label)
                         ->filter()
                         ->toArray();
                     $post->package_labels = !empty($labels) ? $labels : [null];

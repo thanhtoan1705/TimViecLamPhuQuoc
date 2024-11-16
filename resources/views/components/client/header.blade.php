@@ -555,11 +555,13 @@
         loginButton.addEventListener('click', function () {
             loginModal.style.display = 'block';
             overlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
         });
 
         closeModalButton.addEventListener('click', function () {
             loginModal.style.display = 'none';
             overlay.style.display = 'none';
+            document.body.style.overflow = '';
 
         });
 

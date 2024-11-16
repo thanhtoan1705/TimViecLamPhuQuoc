@@ -57,26 +57,6 @@ class FilterService
             ->get();
     }
 
-//    public function getJobCategories()
-//    {
-//        return $this->jobCategory
-//            ->withCount('jobPosts')
-//            ->having('job_posts_count', '>', 0)
-//            ->orderBy('job_posts_count', 'desc')
-//            ->limit(5)
-//            ->get();
-//    }
-
-//    public function getSalaries()
-//    {
-//        return $this->salary
-//            ->withCount('jobPosts')
-//            ->having('job_posts_count', '>', 0)
-//            ->orderBy('job_posts_count', 'desc')
-//            ->limit(5)
-//            ->get();
-//    }
-
     public function getSalaries()
     {
         return $this->salary
@@ -91,27 +71,6 @@ class FilterService
             ->limit(5)
             ->get();
     }
-
-//    public function getKeywords()
-//    {
-//        return DB::table('job_posts')
-//            ->select(DB::raw('meta_keyword'))
-//            ->whereNotNull('meta_keyword')
-//            ->get()
-//            ->flatMap(function ($jobPost) {
-//                return explode(',', $jobPost->meta_keyword);
-//            })
-//            ->map(function ($keyword) {
-//                return trim($keyword);
-//            })
-//            ->filter()
-//            ->countBy()
-//            ->map(function ($count, $keyword) {
-//                return ['keyword' => $keyword, 'job_count' => $count];
-//            })
-//            ->sortByDesc('job_count')
-//            ->take(5);
-//    }
 
     public function getKeywords()
     {
@@ -135,18 +94,6 @@ class FilterService
             ->take(5);
     }
 
-//    public function getRanks()
-//    {
-//        return DB::table('ranks')
-//            ->leftJoin('job_posts', 'job_posts.rank_id', '=', 'ranks.id')
-//            ->select('ranks.id', 'ranks.name', DB::raw('COUNT(job_posts.id) as job_count'))
-//            ->groupBy('ranks.id', 'ranks.name')
-//            ->having('job_count', '>', 0)
-//            ->orderBy('job_count', 'desc')
-//            ->limit(5)
-//            ->get();
-//    }
-
     public function getRanks()
     {
         return DB::table('ranks')
@@ -161,18 +108,6 @@ class FilterService
             ->limit(5)
             ->get();
     }
-
-//    public function getExperiences()
-//    {
-//        return DB::table('experiences')
-//            ->leftJoin('job_posts', 'job_posts.experience_id', '=', 'experiences.id')
-//            ->select('experiences.id', 'experiences.name', DB::raw('COUNT(job_posts.id) as job_count'))
-//            ->groupBy('experiences.id', 'experiences.name')
-//            ->having('job_count', '>', 0)
-//            ->orderBy('job_count', 'desc')
-//            ->limit(5)
-//            ->get();
-//    }
 
     public function getExperiences()
     {
@@ -194,7 +129,7 @@ class FilterService
         return DB::table('job_types')
             ->leftJoin('job_posts', function ($join) {
                 $join->on('job_posts.job_type_id', '=', 'job_types.id')
-                    ->where('job_posts.end_date', '>', now()); // Thêm điều kiện end_date
+                    ->where('job_posts.end_date', '>', now());
             })
             ->select('job_types.id', 'job_types.name', DB::raw('COUNT(job_posts.id) as job_count'))
             ->groupBy('job_types.id', 'job_types.name')
@@ -203,26 +138,6 @@ class FilterService
             ->limit(5)
             ->get();
     }
-//    public function getJobTypes()
-//    {
-//        return DB::table('job_types')
-//            ->leftJoin('job_posts', 'job_posts.job_type_id', '=', 'job_types.id')
-//            ->select('job_types.id', 'job_types.name', DB::raw('COUNT(job_posts.id) as job_count'))
-//            ->groupBy('job_types.id', 'job_types.name')
-//            ->having('job_count', '>', 0)
-//            ->orderBy('job_count', 'desc')
-//            ->limit(5)
-//            ->get();
-//    }
-
-//    public function getJobsCountByTime()
-//    {
-//        return [
-//            '1_day' => $this->jobPost->where('created_at', '>=', now()->subDay())->count(),
-//            '7_days' => $this->jobPost->where('created_at', '>=', now()->subDays(7))->count(),
-//            '30_days' => $this->jobPost->where('created_at', '>=', now()->subDays(30))->count(),
-//        ];
-//    }
 
     public function getJobsCountByTime()
     {
@@ -233,10 +148,24 @@ class FilterService
         ];
     }
 
+//    public function getJobsCountByTime($timeFrames = ['1_day', '7_days', '30_days'])
+//    {
+//        $counts = [];
+//        foreach ($timeFrames as $timeFrame) {
+//            $counts[$timeFrame] = $this->jobPost
+//                ->where('created_at', '>=', now()->sub($timeFrame))
+//                ->where('end_date', '>', now())
+//                ->count();
+//        }
+//        return $counts;
+//    }
+
+
     public function getCompanyTypes()
     {
         return $this->employer
             ->select('company_type', DB::raw('COUNT(id) as company_count'))
+            ->whereNotNull('company_type')
             ->groupBy('company_type')
             ->orderBy('company_count', 'desc')
             ->limit(5)
@@ -247,6 +176,7 @@ class FilterService
     {
         return $this->employer
             ->select(DB::raw('YEAR(since) as year'), DB::raw('COUNT(id) as company_count'))
+            ->whereNotNull('since')
             ->groupBy(DB::raw('YEAR(since)'))
             ->orderBy('year', 'desc')
             ->limit(5)
@@ -257,6 +187,7 @@ class FilterService
     {
         return $this->employer
             ->select('company_size', DB::raw('COUNT(id) as company_count'))
+            ->whereNotNull('company_size')
             ->groupBy('company_size')
             ->orderBy('company_count', 'desc')
             ->limit(5)
@@ -323,7 +254,9 @@ class FilterService
         $jobs->where('end_date', '>', now());
 
         if (!empty($selectedLocation)) {
-            $jobs->where('address', 'LIKE', '%' . $selectedLocation . '%');
+            $jobs->whereHas('employer.address.province', function ($query) use ($selectedLocation) {
+                $query->where('name', 'LIKE', '%' . $selectedLocation . '%');
+            });
         }
 
         if (!empty($selectedCategories)) {

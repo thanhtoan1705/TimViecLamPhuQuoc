@@ -317,39 +317,30 @@
                                         <div class="card-grid-2 hover-up">
                                             <div class="card-grid-2-image-left"><span class="flash"></span>
                                                 <div class="image-box"><img
-                                                        src="{{ asset('storage/' . $relatedJob->employer->company_logo) }}"
+                                                        src="{{ getStorageImageUrl($relatedJob->employer->company_logo, config('image.square-logo')) }}"
                                                         alt="jobBox" width="85px" height="85px">
                                                 </div>
                                                 <div class="right-info"><a class='name-job'
-                                                                           href='company-details.html'>{{$relatedJob->employer->company_name}}</a><span
+                                                                           href='{{ route('client.employer.single', ['slug' => $relatedJob->employer->slug]) }}'>{{$relatedJob->employer->company_name}}</a><span
                                                         class="location-small">Cần Thơ</span></div>
                                             </div>
                                             <div class="card-block-info">
                                                 <h6>
-                                                    <a href="{{ route('client.job.single', ['jobSlug' => $relatedJob->slug]) }}">{{$relatedJob->title}}</a>
+                                                    <a href="{{ route('client.job.single', ['jobSlug' => $relatedJob->slug]) }}">{{ limit_text($relatedJob->title, 30)}}</a>
                                                 </h6>
                                                 <div class="mt-5"><span
-                                                        class="card-briefcase">{{$relatedJob->jobType->name}}</span>
+                                                        class="card-briefcase">{{ limit_text($relatedJob->jobType->name, 30)}}</span>
                                                     <span class="card-time">
                                                                 {{ \Carbon\Carbon::parse($relatedJob->start_date)->diffForHumans() }}
                                                         </span>
                                                 </div>
-                                                <p class="font-sm color-text-paragraph mt-15"> {!! $relatedJob->description !!}</p>
-                                                <div class="mt-30">
-                                                    @foreach($relatedJob->skills as $key => $skill)
-                                                        <a class='btn btn-grey-small mr-5'
-                                                           href=''>{{ $skill->name }}</a>
-                                                    @endforeach
-                                                </div>
+                                                <p class="font-sm color-text-paragraph mt-15"> {!! limit_text($relatedJob->description, 110) !!}</p>
                                                 <div class="card-2-bottom mt-30">
                                                     <div class="row">
                                                         <div class="col-lg-7 col-7"><span
-                                                                class="card-text-price">@if($relatedJob->salary_min == $relatedJob->salary_max || $relatedJob->salary_min <= 1000000 || $relatedJob->salary_max <= 1000000)
-                                                                    {{ formatSalary($relatedJob->salary_min) }}
-                                                                @else
-                                                                    {{ formatSalary($relatedJob->salary_min) }}
-                                                                    - {{ formatSalary($relatedJob->salary_max) }}
-                                                                @endif</span></div>
+                                                                class="card-text-price">
+                                                                {{ $relatedJob->salary->name  }}
+                                                            </span></div>
                                                         <div class="col-lg-5 col-5 text-end">
                                                             <div class="btn btn-apply-now" data-bs-toggle="modal"
                                                                  data-bs-target="{{ auth()->check() ? '#ModalApplyJobForm' : '#ModalLoginForm' }}">
@@ -506,6 +497,28 @@
 @endsection
 @push('css')
     <style>
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-xl-3, .col-lg-4, .col-md-6 {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-grid-2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+            height: 100%;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
         /* File Upload Button */
         input[type="file"] {
             display: none;

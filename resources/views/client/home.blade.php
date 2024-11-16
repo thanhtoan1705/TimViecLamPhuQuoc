@@ -204,47 +204,47 @@
                 </div>
             </div>
         </section>
-        <div class="mt-100"></div>
-        <section class="section-box mt-80">
-            <div class="section-box wow animate__animated animate__fadeIn">
-                <div class="container">
-                    <div class="text-center">
-                        <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Tìm kiếm bằng danh
-                            mục</h2>
-                        <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Tìm công việc
-                            hoàn hảo cho bạn&rsquo; khoảng hơn 800 việc làm mới mỗi ngày</p>
-                    </div>
-                    <div class="box-swiper mt-50">
-                        <div class="swiper-container swiper-group-5 swiper">
-                            <div class="swiper-wrapper pb-70 pt-5">
-                                @foreach($jobCategories as $category)
-                                    <div class="swiper-slide hover-up">
-                                        <a class="m-1" href=''>
-                                            <div class="item-logo">
-                                                <div class="image-left">
-                                                        @php
-                                                            $category_img = getStorageImageUrl($category->image, 'default/square-logo.svg');
-                                                        @endphp
-                                                        <img alt="{{ $category->name }}" width="50px"
-                                                        src="{{ $category_img }}">
-                                                </div>
-                                                <div class="text-info-right">
-                                                    <h4 style="max-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $category->name }}</h4>
-                                                    <p class="font-xs">{{ $category->job_posts_count }}<span> công việc có sẵn</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+{{--        <div class="mt-100"></div>--}}
+{{--        <section class="section-box mt-80">--}}
+{{--            <div class="section-box wow animate__animated animate__fadeIn">--}}
+{{--                <div class="container">--}}
+{{--                    <div class="text-center">--}}
+{{--                        <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Tìm kiếm bằng danh--}}
+{{--                            mục</h2>--}}
+{{--                        <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Tìm công việc--}}
+{{--                            hoàn hảo cho bạn&rsquo; khoảng hơn 800 việc làm mới mỗi ngày</p>--}}
+{{--                    </div>--}}
+{{--                    <div class="box-swiper mt-50">--}}
+{{--                        <div class="swiper-container swiper-group-5 swiper">--}}
+{{--                            <div class="swiper-wrapper pb-70 pt-5">--}}
+{{--                                @foreach($jobCategories as $category)--}}
+{{--                                    <div class="swiper-slide hover-up">--}}
+{{--                                        <a class="m-1" href=''>--}}
+{{--                                            <div class="item-logo">--}}
+{{--                                                <div class="image-left">--}}
+{{--                                                        @php--}}
+{{--                                                            $category_img = getStorageImageUrl($category->image, 'default/square-logo.svg');--}}
+{{--                                                        @endphp--}}
+{{--                                                        <img alt="{{ $category->name }}" width="50px"--}}
+{{--                                                        src="{{ $category_img }}">--}}
+{{--                                                </div>--}}
+{{--                                                <div class="text-info-right">--}}
+{{--                                                    <h4 style="max-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $category->name }}</h4>--}}
+{{--                                                    <p class="font-xs">{{ $category->job_posts_count }}<span> công việc có sẵn</span>--}}
+{{--                                                    </p>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </a>--}}
+{{--                                    </div>--}}
+{{--                                @endforeach--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="swiper-button-next"></div>--}}
+{{--                        <div class="swiper-button-prev"></div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
         <div class="section-box mb-30">
             <div class="container">
                 <div class="box-we-hiring">
@@ -304,32 +304,29 @@
                                             <!-- Desktop View -->
                                             <div class="card-grid-2 hover-up d-none d-md-flex">
                                                 <div class="card-grid-2-image-left">
-                                                    <div class="d-flex justify-content-around label-jobbox">
-                                                        @if (in_array(2, $post->package_labels))
-                                                            <span class="VLhot">hot</span>
-                                                        @endif
-
-                                                        @if (in_array(1, $post->package_labels))
-                                                            <span class="VLgap">gấp</span>
-                                                        @endif
-
-                                                        @if (!in_array(1, $post->package_labels) && !in_array(2, $post->package_labels))
+                                                    <div class="d-flex justify-content-around label-jobbox ms-1">
                                                             <span class="flash"></span>
-                                                        @endif
                                                     </div>
                                                     <div class="image-box">
-
                                                         @php
                                                             $blog_img = getStorageImageUrl($posts->first()->job_category->image, 'default/square-logo.svg');
                                                         @endphp
 
                                                         <img alt="{{ $post->title }}" width="50px"
                                                              src="{{ $blog_img }}">
-
                                                     </div>
-                                                    <div class="right-info">
+                                                    <div class="right-info pe-3" style="">
                                                         <a class='name-job'
-                                                           href='{{ route('client.employer.single', ['slug' => $post->employer->slug]) }}'>{{ $post->employer->company_name }}</a>
+                                                           href='{{ route('client.employer.single', ['slug' => $post->employer->slug]) }}'>
+                                                            @if (in_array(2, $post->package_labels))
+                                                                <span class="VLhot">hot</span>
+                                                            @endif
+
+                                                            @if (in_array(1, $post->package_labels))
+                                                                <span class="VLgap">gấp</span>
+                                                            @endif
+                                                            {{ $post->employer->company_name }}
+                                                        </a>
                                                         <span class="location-small">
                                                         {{ $post->address }}
                                                         </span>
