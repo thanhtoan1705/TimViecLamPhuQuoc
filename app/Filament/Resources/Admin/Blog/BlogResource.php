@@ -112,22 +112,13 @@ class BlogResource extends Resource implements HasShieldPermissions
                                             ->columnSpan(1),
 
                                         RichEditor::make('content')
-                                            ->label('Nội dung bình luận')
-                                            ->placeholder('Nhập nội dung bình luận...')
+                                            ->label('Nội dung bài viết')
+                                            ->placeholder('Nhập nội dung bài viết...')
                                             ->required()
                                             ->columnSpan(2),
                                         Section::make('Hình ảnh')
                                             ->schema([
-//                                                FileUpload::make('image')
-//                                                    ->label('Nhập ảnh .png, .jpg, .jpeg')
-//                                                    ->image()
-//                                                    ->imageEditor()
-//                                                    ->disk('public')
-//                                                    ->required()
-//                                                    ->directory('images/blog')
-//                                                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/jpg', 'image/webp'])
-//                                                    ->columnSpan(2),
-
+//
                                                 ImageUploadComponent::make(
                                                     'image',
                                                     'title',

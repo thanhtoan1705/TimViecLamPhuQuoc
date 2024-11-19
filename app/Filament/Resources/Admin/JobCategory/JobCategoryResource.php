@@ -47,6 +47,16 @@ class JobCategoryResource extends Resource implements HasShieldPermissions
         ];
     }
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'primary';
+    }
+
     public static function form(Form $form): Form
     {
         return $form

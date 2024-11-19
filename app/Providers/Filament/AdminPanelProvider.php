@@ -37,10 +37,14 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login(AdminLogin::class)
             ->databaseNotifications()
-            ->brandLogo(asset('storage/vieclamphuquoc/logo/pq.svg'))
+            ->brandLogo(asset('default/main-logo.svg'))
             ->colors([
                 'primary' => Color::Blue,
             ])
+            ->renderHook(
+                'panels::user-menu.before',
+                fn () => view('components.filament.home-icon')
+            )
             ->navigationItems([
                 NavigationItem::make('Cấu hình hệ thống')
                     ->group('Cấu hình chung')
@@ -49,7 +53,7 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-cog-6-tooth'),
 
             ])
-            ->favicon(asset('assets/client/imgs/template/favicon.svg'))
+            ->favicon(asset('default/favicon.svg'))
 
             ->discoverResources(in: app_path('Filament/Resources/Admin'), for: 'App\\Filament\\Resources\\Admin')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

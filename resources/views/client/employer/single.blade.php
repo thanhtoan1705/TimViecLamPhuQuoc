@@ -1,5 +1,12 @@
 @extends('client.layouts.master')
-@section('title', 'Chi tiết nhà tuyển dụng')
+
+@section('title', $employer->company_name . ' - '. config('app.name'))
+
+@section('seo_title', $employer->company_name . ' - '. config('app.name'))
+@section('seo_description', limit_text($employer->description, 200))
+@section('seo_keywords', limit_text($employer->description, 200))
+@section('seo_image', getStorageImageUrl($employer->company_logo, config('image.main-logo')))
+
 @section('content')
     <main class="main">
         <section class="section-box-2">

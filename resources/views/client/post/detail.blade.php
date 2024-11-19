@@ -8,19 +8,7 @@
 
 @section('content')
     <main class="main">
-        {{-- @php
-            if (isset($postDetail->user->avatar_url)) {
-                $user_img = asset('storage/' . $postDetail->user->avatar_url);
-            } else {
-                $user_img = asset('default/user.png');
-            }
 
-            if (isset($postDetail->image)) {
-                $blog_img = asset('storage/' . $postDetail->image);
-            } else {
-                $blog_img = asset('default/blog.jpg');
-            }
-        @endphp --}}
         <section class="section-box">
             <div><img src="{{ asset('assets/client/imgs/page/blog/img-single.png') }}"></div>
         </section>

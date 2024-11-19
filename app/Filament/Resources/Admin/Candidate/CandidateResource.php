@@ -30,9 +30,10 @@ use Filament\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Enums\FiltersLayout;
-use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 
 
@@ -317,33 +318,31 @@ class CandidateResource extends Resource implements HasShieldPermissions
         return $table
             ->defaultSort('created_at', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('row_number')
-                    ->label('STT')
-                    ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
 
+                ImageColumn::make('user.avatar_url')->grow(false)
+                    ->circular()
+                    ->defaultImageUrl(asset(config('image.avatar')))
+                    ->label('Avatar'),
                 TextColumn::make('user.name')
-                    ->label('Người dùng')
-                    ->sortable()
-                    ->searchable(),
+                    ->label('Họ tên')->limit(20),
 
-                TextColumn::make('major.name')
-                    ->label('Chuyên ngành')
-                    ->sortable()
-                    ->searchable(),
+                TextColumn::make('user.phone')->icon('heroicon-o-phone')
+                    ->label('Điện thoại'),
+                TextColumn::make('user.email')->icon('heroicon-o-envelope')
+                    ->label('Email'),
 
 
-                // TextColumn::make('education.institution')
-                //     ->label('Giáo dục')
-                //     ->sortable()
-                //     ->searchable(),
+                IconColumn::make('user.email_verified_at')
+                    ->label('Xác thực')
+                    ->getStateUsing(fn ($record) => $record->user->email_verified_at ? true : false) // Tự xác định giá trị true/false
+                    ->trueIcon('heroicon-s-check-circle')
+                    ->falseIcon('heroicon-s-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger'),
 
-                TextColumn::make('skills.name')
-                    ->label('Kỹ năng')
-                    ->sortable()
-                    ->searchable(),
+                ToggleColumn::make('status')
+                    ->label('Trạng thái'),
 
-                IconColumn::make('status')->boolean()->label('Hiển thị'),
-                IconColumn::make('featured')->boolean()->label('Nổi bật'),
 
             ])
             ->filters([
@@ -356,8 +355,6 @@ class CandidateResource extends Resource implements HasShieldPermissions
                 Tables\Filters\SelectFilter::make('skills')->label('Kỹ năng')
                     ->relationship('skills', 'name'),
 
-                Filter::make('status')->label('Hiển thị')->toggle(),
-                Filter::make('featured')->label('Nổi bật')->toggle(),
 
             ], layout: FiltersLayout::Dropdown)
             ->actions([

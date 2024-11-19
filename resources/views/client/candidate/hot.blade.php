@@ -1,5 +1,6 @@
 @extends('client.layouts.master')
-@section('title', 'Ứng viên nổi bật')
+@section('title', 'Hồ sơ ứng viên'. ' - '. config('app.name'))
+@section('seo_image', getStorageImageUrl('', config('image.main-logo')))
 @section('content')
     <?php
     function sanitizeString($string)

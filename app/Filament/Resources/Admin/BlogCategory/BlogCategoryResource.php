@@ -94,7 +94,7 @@ class BlogCategoryResource extends Resource implements HasShieldPermissions
                                         'danh-muc-bai-viet',
                                         'images/blog-category',
                                         'Hình ảnh danh mục',
-                                    )->maxSize(1024 * 5)->required()
+                                    )->maxSize(1024 * 5)
 
                                 ])->columnSpan(1),
 

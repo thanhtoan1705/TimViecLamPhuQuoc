@@ -1,5 +1,10 @@
 @extends('client.layouts.master')
-@section('title', 'Chi tiết ứng viên')
+@section('title', 'Hồ sơ ứng viên  - '. $candidate->user->name)
+@section('seo_title', 'Hồ sơ ứng viên  - '. $candidate->user->name)
+@section('seo_description', $candidate->description)
+@section('seo_keywords', $candidate->description)
+@section('seo_image',  getStorageImageUrl($candidate->user->avatar_url, config('image.main-logo')))
+
 @section('content')
     <main class="main">
         <section class="section-box-2">

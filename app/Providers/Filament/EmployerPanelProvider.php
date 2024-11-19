@@ -25,6 +25,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
+use Filament\Pages\Auth\EmailVerification\EmailVerificationPrompt;
 
 class EmployerPanelProvider extends PanelProvider
 {
@@ -35,14 +36,20 @@ class EmployerPanelProvider extends PanelProvider
             ->path('business')
             ->login(EmployerLogin::class)
             ->registration(RegistrationEmployer::class)
+            ->emailVerification()
             ->passwordReset(RequestPasswordReset::class)
             ->databaseNotifications()
+            ->brandLogo(asset('default/main-logo.svg'))
             ->colors([
                 'primary' => Color::Blue,
             ])
             ->renderHook(
                 'panels::user-menu.before',
                 fn () => view('components.filament.chat-icon')
+            )
+            ->renderHook(
+                'panels::user-menu.before',
+                fn () => view('components.filament.home-icon')
             )
             ->navigationItems([
                 NavigationItem::make('Đăng tin tuyển dụng')

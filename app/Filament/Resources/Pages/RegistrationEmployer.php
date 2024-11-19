@@ -17,6 +17,7 @@ use Filament\Pages\Auth\Register;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
+use Illuminate\Auth\Events\Registered;
 
 
 class RegistrationEmployer extends Register
@@ -166,7 +167,8 @@ class RegistrationEmployer extends Register
             'address_id' => $addressId,
         ]);
 
-        auth()->login($user);
+
+//        auth()->login($user);
 
         // Chạy seeder AssignEmployerPermissionsSeeder
         // Phân quyền Employer cho người dùng vừa đăng ký
@@ -211,7 +213,7 @@ class RegistrationEmployer extends Register
     {
         return TextInput::make('employers.company_phone')
             ->label(__('Số diện thoại'))
-            ->unique()
+            ->unique(Employer::class)
             ->maxLength(255)
             ->required();
     }

@@ -10,9 +10,7 @@
     <meta name="template-color" content="#0E0E0E">
     {{--    <link rel="manifest" href="manifest.html" crossorigin>--}}
     <meta name="msapplication-config" content="browserconfig.html">
-    <meta name="description" content="Index page">
-    <meta name="keywords" content="index, page">
-    <meta name="author" content="">
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('assets/client/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/client/css/stylecd4e.css?version=4.1') }}" rel="stylesheet">

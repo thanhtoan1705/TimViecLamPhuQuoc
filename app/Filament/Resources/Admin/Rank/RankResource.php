@@ -54,7 +54,6 @@ class RankResource extends Resource implements HasShieldPermissions
                                     TextInput::make('name')
                                         ->required()
                                         ->maxLength(255)
-                                        ->rules(['regex:/^[\w\s-]+$/u'])
                                         ->unique(Rank::class, 'name', ignoreRecord: true)
                                         ->live(onBlur: true)
                                         ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation

@@ -1,5 +1,7 @@
 @extends('client.layouts.master')
-@section('title', 'Trang Bài Viết')
+@section('title', 'Bài Viết - Tin tức mới nhất'. ' - '. config('app.name'))
+@section('seo_image', getStorageImageUrl('', config('image.main-logo')))
+
 @section('content')
     <main class="main">
         <section class="section-box">

@@ -68,7 +68,6 @@ class JobTypeResource extends Resource implements HasShieldPermissions
                                         ->rules([
                                             'min:2',
                                             'max:255',
-                                            'regex:/^[\pL\pM\pN\s]+$/u',
                                             'unique:job_types,name',
                                             function (\Filament\Forms\Get $get) {
                                                 return Rule::unique('job_types', 'name')->ignore($get('id'));

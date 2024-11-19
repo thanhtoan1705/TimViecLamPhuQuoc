@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -96,18 +97,24 @@ class JobPostResource extends Resource
                                         Forms\Components\Hidden::make('employer_id')
                                             ->default(Auth::user()->employer->id),
 
+                                        Forms\Components\Hidden::make('start_date')
+                                            ->default(now()),
+
+                                        Forms\Components\Hidden::make('status')
+                                            ->default(true),
+
                                         TextInput::make('title')
                                             ->required()
-                                            ->maxLength(255)
+                                            ->maxLength(180)
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null)
                                             ->label('Tiêu đề bài đăng')->placeholder('Tuyển dụng nhân viên...'),
-                                        TextInput::make('slug')
-                                            ->required()
-                                            ->dehydrated()
-                                            ->unique(JobPost::class, 'slug', ignoreRecord: true)
-                                            ->maxLength(255)
-                                            ->label('Slug'),
+//                                        TextInput::make('slug')
+//                                            ->required()
+//                                            ->dehydrated()
+//                                            ->unique(JobPost::class, 'slug', ignoreRecord: true)
+//                                            ->maxLength(255)
+//                                            ->label('Slug'),
 
                                         Forms\Components\Select::make('rank_id')
                                             ->required()
@@ -132,13 +139,13 @@ class JobPostResource extends Resource
                                             ->searchable()
                                             ->preload()
                                             ->label('Ngành nghề'),
-                                        Forms\Components\Select::make('major_id')
-                                            ->required()
-                                            ->relationship('majors', 'name')
-                                            ->placeholder('Chọn chuyên ngành')
-                                            ->searchable()
-                                            ->preload()
-                                            ->label('Chuyên ngành'),
+//                                        Forms\Components\Select::make('major_id')
+//                                            ->required()
+//                                            ->relationship('majors', 'name')
+//                                            ->placeholder('Chọn chuyên ngành')
+//                                            ->searchable()
+//                                            ->preload()
+//                                            ->label('Chuyên ngành'),
                                         Forms\Components\Select::make('salary_id')
                                             ->required()
                                             ->placeholder('Vui lòng chọn bằng cấp')
@@ -322,13 +329,52 @@ class JobPostResource extends Resource
                     ->form([
                         Select::make('value')
                             ->label('Trạng thái')
+                            ->searchable()
+                            ->preload()
                             ->options([
                                 'expired' => 'Hết hạn',
                                 'valid' => 'Còn hạn',
                             ])
                             ->placeholder('Chọn trạng thái hạn nộp')
-                    ])
-            ])
+                    ]),
+
+                Filter::make('job_category_id')
+                    ->label('Danh mục công việc')
+                    ->query(function (Builder $query, array $data) {
+                        if ($data['value']) {
+                            $query->where('job_category_id', $data['value']);
+                        }
+                    })
+                    ->form([
+                        Select::make('value')
+                            ->label('Danh mục')
+                            ->searchable()
+                            ->preload()
+                            ->options(function () {
+                                return \App\Models\Job_category::all()->pluck('name', 'id');
+                            }),
+                    ]),
+
+
+                Filter::make('salary_id')
+                    ->label('Mức lương')
+                    ->query(function (Builder $query, array $data) {
+                        if ($data['value']) {
+                            $query->where('salary_id', $data['value']);
+                        }
+                    })
+                    ->form([
+                        Select::make('value')
+                            ->label('Mức lương')
+                            ->searchable()
+                            ->preload()
+                            ->options(function () {
+                                return \App\Models\Salary::all()->pluck('name', 'id');
+                            }),
+                    ]),
+
+
+            ] ,layout: FiltersLayout::Modal)
             ->actions([
                 Action::make('editEndDate')
                     ->label('Gia hạn')

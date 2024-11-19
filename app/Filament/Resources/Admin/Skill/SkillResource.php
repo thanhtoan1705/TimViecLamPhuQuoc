@@ -23,6 +23,8 @@ class SkillResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Skill::class;
 
+    protected static ?string $slug  = 'skills';
+
     protected static ?string $navigationLabel = 'Kỹ năng';
 
     protected static ?string $modelLabel = 'Kỹ năng';

@@ -8,20 +8,30 @@ use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 
 class JobPostResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = JobPost::class;
+
+    protected static ?string $slug = 'job-posts';
 
     protected static ?string $navigationLabel = 'Bài đăng vệc làm';
 
@@ -40,6 +50,16 @@ class JobPostResource extends Resource implements HasShieldPermissions
             'delete',
             'delete_any',
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return 'primary';
     }
 
 //Forms\Components\Select::make('employer_id')
@@ -61,6 +81,11 @@ class JobPostResource extends Resource implements HasShieldPermissions
                                     Grid::make(2)->schema([
 //                                        Forms\Components\Hidden::make('employer_id')
 //                                            ->default(Auth::user()->employer->id),
+                                        Forms\Components\Hidden::make('start_date')
+                                            ->default(now()),
+
+                                        Forms\Components\Hidden::make('status')
+                                            ->default(true),
 
                                         TextInput::make('title')
                                             ->required()
@@ -109,13 +134,13 @@ class JobPostResource extends Resource implements HasShieldPermissions
                                             ->preload()
 //                                        ->maxItems(6)
                                             ->label('Ngành nghề'),
-                                        Forms\Components\Select::make('major_id')
-                                            ->required()
-                                            ->relationship('majors', 'name')
-                                            ->placeholder('Chọn chuyên ngành')
-                                            ->searchable()
-                                            ->preload()
-                                            ->label('Chuyên ngành'),
+//                                        Forms\Components\Select::make('major_id')
+//                                            ->required()
+//                                            ->relationship('majors', 'name')
+//                                            ->placeholder('Chọn chuyên ngành')
+//                                            ->searchable()
+//                                            ->preload()
+//                                            ->label('Chuyên ngành'),
                                         Forms\Components\Select::make('salary_id')
                                             ->required()
                                             ->placeholder('Vui lòng chọn bằng cấp')
@@ -256,24 +281,139 @@ class JobPostResource extends Resource implements HasShieldPermissions
                 Tables\Columns\TextColumn::make('row_number')
                     ->label('STT')
                     ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
-                Tables\Columns\TextColumn::make('title')->label('Tên')->searchable(),
-                Tables\Columns\TextColumn::make('employer.company_name')->label('Tên công ty')->searchable(),
-                Tables\Columns\TextColumn::make('major.name')->label('Chuyên ngành')->searchable(),
-                Tables\Columns\TextColumn::make('experience.name')->label('Kinh nghiệm')->searchable(),
-                Tables\Columns\TextColumn::make('rank.name')->label('Chức vụ')->searchable(),
-                Tables\Columns\TextColumn::make('quantity')->label('Số lượng')->searchable()
+//                    ->getStateUsing(function ($rowLoop, $record, $livewire) {
+//                        // Lấy số bản ghi mỗi trang (pagination)
+//                        $recordsPerPage = $livewire->getTableRecordsPerPage();
+//
+//                        // Lấy số trang hiện tại
+//                        $currentPage = $livewire->getTable()->getPaginator()->currentPage();
+//
+//                        // Tính toán số thứ tự
+//                        return ($currentPage - 1) * $recordsPerPage + $rowLoop->index + 1;
+//                    }),
+                Tables\Columns\TextColumn::make('title')
+                    ->label('Tiêu đề')
+                    ->limit(60),
+
+
+                Tables\Columns\TextColumn::make('employer.company_name')
+                    ->label('Nhà tuyển dụng')
+                    ->limit(60),
+
+                Tables\Columns\TextColumn::make('end_date')
+                    ->label('Hạn nộp')
+                    ->formatStateUsing(function ($state) {
+                        return $state
+                            ? Carbon::parse($state)->format('d/m/Y H:i')
+                            : null;
+                    })
+                    ->color(function ($state) {
+                        // Apply text color: Red (danger) if expired, Green (success) if valid
+                        return Carbon::parse($state)->isPast() ? 'danger' : 'success';
+                    })
+                    ->description(function ($state) {
+                        return Carbon::parse($state)->isPast()
+                            ? 'Hết hạn'
+                            : 'Còn hạn';
+                    }),
+
+                ToggleColumn::make('status')
+                    ->label('Trạng thái'),
+
 
             ])
             ->filters([
+
+//                // Lọc theo trạng thái hết hạn hoặc còn hạn
+                Filter::make('end_date_status')
+                    ->label('Lọc theo trạng thái hạn nộp')
+                    ->query(function (Builder $query, array $data) {
+                        if ($data['value'] === 'expired') {
+                            // Filter for expired records
+                            $query->whereDate('end_date', '<', now());
+                        } elseif ($data['value'] === 'valid') {
+                            // Filter for valid records
+                            $query->whereDate('end_date', '>=', now());
+                        }
+                    })
+                    ->form([
+                        Select::make('value')
+                            ->label('Hạn nộp')
+                            ->searchable()
+                            ->preload()
+                            ->options([
+                                'expired' => 'Hết hạn',
+                                'valid' => 'Còn hạn',
+                            ])
+                    ]),
+
+                Filter::make('employer_id')
+                    ->label('Nhà tuyển dụng')
+                    ->query(function (Builder $query, array $data) {
+                        if ($data['value']) {
+                            $query->where('employer_id', $data['value']);
+                        }
+                    })
+                    ->form([
+                        Select::make('value')
+                            ->label('Tên nhà tuyển dụng')
+                            ->searchable()
+                            ->preload()
+                            ->options(function () {
+                                return \App\Models\Employer::all()->pluck('company_name', 'id');
+                            }),
+                    ]),
+
+                Filter::make('job_category_id')
+                    ->label('Danh mục công việc')
+                    ->query(function (Builder $query, array $data) {
+                        if ($data['value']) {
+                            $query->where('job_category_id', $data['value']);
+                        }
+                    })
+                    ->form([
+                        Select::make('value')
+                            ->label('Danh mục')
+                            ->searchable()
+                            ->preload()
+                            ->options(function () {
+                                return \App\Models\Job_category::all()->pluck('name', 'id');
+                            }),
+                    ]),
+
+
+                Filter::make('salary_id')
+                    ->label('Mức lương')
+                    ->query(function (Builder $query, array $data) {
+                        if ($data['value']) {
+                            $query->where('salary_id', $data['value']);
+                        }
+                    })
+                    ->form([
+                        Select::make('value')
+                            ->label('Mức lương')
+                            ->searchable()
+                            ->preload()
+                            ->options(function () {
+                                return \App\Models\Salary::all()->pluck('name', 'id');
+                            }),
+                    ]),
+
                 Filter::make('title')
-                    ->label('Lọc theo tên')
-                    ->query(fn(Builder $query, array $data) => $query->where('title', 'like', '%' . $data['value'] . '%'))
+                    ->label('Tiêu đề')
+                    ->query(function (Builder $query, array $data) {
+                        if ($data['value']) {
+                            $query->where('title', 'like', '%' . $data['value'] . '%'); // 'like' for partial matching
+                        }
+                    })
                     ->form([
                         TextInput::make('value')
-                            ->label('Tên kinh nghiệm')
-                            ->placeholder('Nhập tên để lọc...')
+                            ->label('Tiêu đề')
+                            ->placeholder('Tìm kiếm theo tiêu đề')
                     ]),
-            ])
+
+            ],layout: FiltersLayout::Dropdown)
+
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),

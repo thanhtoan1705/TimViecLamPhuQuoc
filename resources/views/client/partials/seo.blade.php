@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="@yield('seo_title', $settings->seo_title)">
     <meta property="og:description" content="@yield('seo_description', $settings->seo_description)">
-    <meta property="og:image" content="{{ asset('storage').'/' }}@yield('seo_image', $settings->seo_image)">
+    <meta property="og:image" content="@yield('seo_image', $settings->seo_image)">
     <meta property="og:url" content="{{ url()->current() }}">
 
     <!-- Twitter Meta Tags -->
@@ -20,7 +20,7 @@
     <meta property="twitter:url" content="{{ url()->current() }}">
     <meta name="twitter:title" content="@yield('seo_title', $settings->seo_title)">
     <meta name="twitter:description" content="@yield('seo_description', $settings->seo_description)">
-    <meta name="twitter:image" content="{{ asset('storage').'/' }}@yield('seo_image', $settings->seo_image)">
+    <meta name="twitter:image" content="@yield('seo_image', $settings->seo_image)">
 
     <!-- Favicon -->
     @php
@@ -38,7 +38,7 @@
             "@type": "Organization",
             "name": "{{ $settings->company_name }}",
             "url": "{{ url()->current() }}",
-            "logo": "{{ asset('storage').'/' }}@yield('seo_image', $settings->seo_image)",
+            "logo": "@yield('seo_image', $settings->seo_image)",
             "contactPoint": {
                 "@type": "ContactPoint",
                 "telephone": "{{ $settings->hotline }}",

@@ -523,7 +523,7 @@
                                                                 @endif
                                                                 <a href="{{ route('client.job.single', ['jobSlug' => $position->slug]) }}"
                                                                    class="position-title">
-                                                                    {{ $position->title }}
+                                                                    {{ limit_text($position->title, 20) }}
                                                                 </a>
                                                             </div>
                                                             <div class="position-meta">
@@ -578,7 +578,7 @@
                                                                         @endif
                                                                         <a href="{{ route('client.job.single', ['jobSlug' => $position->slug]) }}"
                                                                            class="position-title">
-                                                                            {{ $position->title }}
+                                                                            {{ limit_text($position->title, 25) }}
                                                                         </a>
                                                                     </div>
                                                                     <div class="position-meta">
@@ -687,7 +687,7 @@
                                                                 @endif
                                                                 <a href="{{ route('client.job.single', ['jobSlug' => $position->slug]) }}"
                                                                    class="position-title">
-                                                                    {{ $position->title }}
+                                                                    {{ limit_text($position->title, 25) }}
                                                                 </a>
                                                             </div>
                                                             <div class="position-meta">
@@ -747,7 +747,7 @@
                                                                         @endif
                                                                         <a href="{{ route('client.job.single', ['jobSlug' => $position->slug]) }}"
                                                                            class="position-title">
-                                                                            {{ $position->title }}
+                                                                            {{ limit_text($position->title, 25) }}
                                                                         </a>
                                                                     </div>
                                                                     <div class="position-meta">
@@ -884,7 +884,7 @@
                                                                 @endif
                                                                 <a href="{{ route('client.job.single', ['jobSlug' => $position->slug]) }}"
                                                                    class="position-title">
-                                                                    {{ $position->title }}
+                                                                    {{ limit_text($position->title, 25) }}
                                                                 </a>
                                                             </div>
                                                             <div class="position-meta">
@@ -939,7 +939,7 @@
                                                                         @endif
                                                                         <a href="{{ route('client.job.single', ['jobSlug' => $position->slug]) }}"
                                                                            class="position-title">
-                                                                            {{ $position->title }}
+                                                                            {{ limit_text($position->title, 25) }}
                                                                         </a>
                                                                     </div>
                                                                     <div class="position-meta">
@@ -1048,7 +1048,7 @@
                                                                 @endif
                                                                 <a href="{{ route('client.job.single', ['jobSlug' => $position->slug]) }}"
                                                                    class="position-title">
-                                                                    {{ $position->title }}
+                                                                    {{ limit_text($position->title, 25) }}
                                                                 </a>
                                                             </div>
                                                             <div class="position-meta">
@@ -1108,7 +1108,7 @@
                                                                         @endif
                                                                         <a href="{{ route('client.job.single', ['jobSlug' => $position->slug]) }}"
                                                                            class="position-title">
-                                                                            {{ $position->title }}
+                                                                            {{ limit_text($position->title, 25) }}
                                                                         </a>
                                                                     </div>
                                                                     <div class="position-meta">

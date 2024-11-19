@@ -4,7 +4,7 @@
 @section('seo_title', 'Việc làm '. $job->title .' - '.  $job->employer->company_name)
 @section('seo_description', $job->meta_description)
 @section('seo_keywords', $job->meta_keywords)
-@section('seo_image',  asset('storage').'/'. $job->employer->company_logo)
+@section('seo_image', getStorageImageUrl($job->employer->company_logo, config('image.main-logo')))
 
 @section('content')
     <main class="main">

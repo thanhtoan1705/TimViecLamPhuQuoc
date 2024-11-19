@@ -7,6 +7,8 @@ use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class EditJobPost extends EditRecord
 {
@@ -21,6 +23,20 @@ class EditJobPost extends EditRecord
         ];
     }
 
+    // Tạo slug
+    public function mutateFormDataBeforeSave(array $data): array
+    {
+        // Lấy ID của bản ghi hiện tại (cần lấy từ model nếu có)
+        $recordId = static::getRecord()?->id;
+
+        $companyName = Auth::user()->employer->company_name;
+        // Chỉ tạo slug nếu đã có ID
+        if ($recordId) {
+            $data['slug'] = Str::slug($companyName . '-tuyen-dung-' . $data['title'] . '-' . $recordId);
+        }
+
+        return $data;
+    }
 
     protected function beforeSave(): void
     {
