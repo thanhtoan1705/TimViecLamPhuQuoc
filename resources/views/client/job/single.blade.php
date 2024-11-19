@@ -211,13 +211,13 @@
                                 </div>
                                 <div class="col-md-7 text-lg-end social-share">
                                     <h6 class="color-text-paragraph-2 d-inline-block d-baseline mr-10">Chia sẻ </h6><a
-                                        class="mr-5 d-inline-block d-middle" href="#"><img alt="jobBox"
+                                        class="mr-5 d-inline-block d-middle" target="_blank" href="{{ $shareUrls['facebook'] }}"><img alt="facebook"
                                                                                            src="{{ asset('assets/client/imgs/template/icons/share-fb.svg') }}"></a><a
-                                        class="mr-5 d-inline-block d-middle" href="#"><img alt="jobBox"
+                                        class="mr-5 d-inline-block d-middle" target="_blank" href="{{ $shareUrls['twitter'] }}"><img alt="twitter"
                                                                                            src="{{ asset('assets/client/imgs/template/icons/share-tw.svg') }}"></a><a
-                                        class="mr-5 d-inline-block d-middle" href="#"><img alt="jobBox"
+                                        class="mr-5 d-inline-block d-middle" target="_blank" href="{{ $shareUrls['reddit'] }}"><img alt="reddit"
                                                                                            src="{{ asset('assets/client/imgs/template/icons/share-red.svg') }}"></a><a
-                                        class="d-inline-block d-middle" href="#"><img alt="jobBox"
+                                        class="d-inline-block d-middle" target="_blank" href="{{ $shareUrls['whatsapp'] }}"><img alt="whatsapp"
                                                                                       src="{{ asset('assets/client/imgs/template/icons/share-whatsapp.svg') }}"></a>
                                 </div>
                             </div>

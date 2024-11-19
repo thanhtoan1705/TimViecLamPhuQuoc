@@ -77,15 +77,17 @@
                                                 năng</a>
                                         </div> --}}
                                         <div class="col-md-12 text-lg-end social-share">
-                                            <h6 class="color-text-paragraph-2 d-inline-block d-baseline mr-20 mt-10">
-                                                Chia sẻ</h6><a class="mr-20 d-inline-block d-middle hover-up"
-                                                href="{{ $shareUrls['facebook'] }}"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/page/blog/fb.svg') }}"></a><a
-                                                class="mr-20 d-inline-block d-middle hover-up"
-                                                href="{{ $shareUrls['twitter'] }}"><img alt="jobBox"
-                                                    src="{{ asset('assets/client/imgs/page/blog/tw.svg') }}"></a><a
-                                                class="mr-0 d-inline-block d-middle hover-up"
-                                                href="{{ $shareUrls['pinterest'] }}"><img alt="jobBox"
+                                            <h6 class="color-text-paragraph-2 d-inline-block d-baseline mr-20 mt-10">Chia sẻ</h6>
+                                            <a class="mr-20 d-inline-block d-middle hover-up" target="_blank"
+                                                href="{{ $shareUrls['facebook'] }}"><img alt="facebook"
+                                                    src="{{ asset('assets/client/imgs/page/blog/fb.svg') }}"></a>
+                                            <a
+                                                class="mr-20 d-inline-block d-middle hover-up" target="_blank"
+                                                href="{{ $shareUrls['twitter'] }}"><img alt="twitter"
+                                                    src="{{ asset('assets/client/imgs/page/blog/tw.svg') }}"></a>
+                                            <a
+                                                class="mr-0 d-inline-block d-middle hover-up" target="_blank"
+                                                href="{{ $shareUrls['pinterest'] }}"><img alt="pinterest"
                                                     src="{{ asset('assets/client/imgs/page/blog/pi.svg') }}"></a>
                                         </div>
                                     </div>

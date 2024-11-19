@@ -112,6 +112,13 @@ class JobController extends Controller
         $jobsCount = $jobsInCompany->count();
         $otherJobs = $this->jobRepository->findOtherJobsByEmployer($job->employer_id, $job->id);
         $relatedJobs = $this->jobRepository->findJobsByMajor($job->major_id, $job->id);
+        
+        $shareButton = \Share::page(
+            url($job->slug . '.html'),
+            "Cơ hội việc làm hấp dẫn: \"{$job->title}\" tại vieclamphuquoc.com.vn! 
+            Ứng tuyển ngay để không bỏ lỡ!"
+        )->facebook()->twitter()->reddit()->whatsapp();
+        $shareUrls = $shareButton->getRawLinks();
 
         $data = [
             'job' => $job,
@@ -119,6 +126,7 @@ class JobController extends Controller
             'otherJobs' => $otherJobs,
             'relatedJobs' => $relatedJobs,
             'jobsCount' => $jobsCount,
+            'shareUrls' => $shareUrls,
         ];
 
         return view('client.job.single', $data);

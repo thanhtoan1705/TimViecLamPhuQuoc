@@ -39,8 +39,9 @@ class PostController extends Controller
         $postDetail = $this->post->getPostDetail($slug);
 
         $shareButton = \Share::page(
-            url('bai-viet/' . $postDetail->slug),
-            'test share'
+            url('bai-viet/'.$postDetail->slug.'.html'),
+            "Khám phá bài viết \"{$postDetail->title}\" của {$postDetail->user->name}!
+            Đọc ngay để không bỏ lỡ những thông tin thú vị!"
         )->facebook()->twitter()->pinterest();
 
         $shareUrls = $shareButton->getRawLinks();

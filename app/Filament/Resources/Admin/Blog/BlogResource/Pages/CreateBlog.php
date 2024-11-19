@@ -11,16 +11,16 @@ class CreateBlog extends CreateRecord
 {
     protected static string $resource = BlogResource::class;
 
-    protected function afterCreate(): void
-    {
-        $blog = $this->record;
-
-        $subscribers = NewsletterSubscription::where('status', 1)->pluck('email');
-
-        foreach ($subscribers as $email) {
-            dispatch(new NewBlogPostNotification($blog, $email));
-        }
-    }
+//    protected function afterCreate(): void
+//    {
+//        $blog = $this->record;
+//
+//        $subscribers = NewsletterSubscription::where('status', 1)->pluck('email');
+//
+//        foreach ($subscribers as $email) {
+//            dispatch(new NewBlogPostNotification($blog, $email));
+//        }
+//    }
 
     protected function getRedirectUrl(): string
     {
