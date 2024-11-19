@@ -121,14 +121,14 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-{{--                                                <div class="box-view-type">--}}
-{{--                                                    <a class='view-type' href='#'><img--}}
-{{--                                                            src="{{ asset('assets/client/imgs/template/icons/icon-list.svg') }}"--}}
-{{--                                                            alt="jobBox"></a>--}}
-{{--                                                    <a class='view-type' href='#'><img--}}
-{{--                                                            src="{{ asset('assets/client/imgs/template/icons/icon-grid-hover.svg') }}"--}}
-{{--                                                            alt="jobBox"></a>--}}
-{{--                                                </div>--}}
+                                                {{--                                                <div class="box-view-type">--}}
+                                                {{--                                                    <a class='view-type' href='#'><img--}}
+                                                {{--                                                            src="{{ asset('assets/client/imgs/template/icons/icon-list.svg') }}"--}}
+                                                {{--                                                            alt="jobBox"></a>--}}
+                                                {{--                                                    <a class='view-type' href='#'><img--}}
+                                                {{--                                                            src="{{ asset('assets/client/imgs/template/icons/icon-grid-hover.svg') }}"--}}
+                                                {{--                                                            alt="jobBox"></a>--}}
+                                                {{--                                                </div>--}}
                                                 <select name="perPage" class="d-none">
                                                     <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
                                                     <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10
@@ -171,7 +171,7 @@
                                 <div class="filter-block mb-30">
                                     <div class="form-group select-style select-style-icon">
                                         <select name="location" id="location-select"
-                                                class="form-control form-icons">
+                                                class="form-control form-icons select-active">
                                             <option value="">Chọn địa điểm</option>
                                             @foreach($locations as $location)
                                                 <option value="{{ sanitizeString($location) }}">{{ $location }}</option>
@@ -196,7 +196,6 @@
                                                         <span class="number-item">{{ $type->company_count }}</span>
                                                     </li>
                                                 @endif
-
                                             @endforeach
                                         </ul>
                                     </div>
@@ -227,16 +226,18 @@
                                     <div class="form-group">
                                         <ul class="list-checkbox">
                                             @foreach($sizes as $size)
-                                                <li>
-                                                    <label class="cb-container">
-                                                        <input type="checkbox" name="sizes[]"
-                                                               value="{{ $size->company_size }}"
-                                                            {{ in_array($size->company_size, request('sizes', [])) ? 'checked' : '' }}>
-                                                        <span class="text-small">{{ $size->company_size }}</span>
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                    <span class="number-item">{{ $size->company_count }}</span>
-                                                </li>
+                                                @if(!empty($size))
+                                                    <li>
+                                                        <label class="cb-container">
+                                                            <input type="checkbox" name="sizes[]"
+                                                                   value="{{ $size->company_size }}"
+                                                                {{ in_array($size->company_size, request('sizes', [])) ? 'checked' : '' }}>
+                                                            <span class="text-small">{{ $size->company_size }}</span>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                        <span class="number-item">{{ $size->company_count }}</span>
+                                                    </li>
+                                                @endif
                                             @endforeach
                                         </ul>
                                     </div>
@@ -280,6 +281,33 @@
             updateFilter('company_types[]');
             updateFilter('years[]');
             updateFilter('sizes[]');
+        });
+
+        $('#location-select').on('change', function () {
+            const selectedLocation = $(this).val();
+            console.log('Selected location:', selectedLocation);
+
+            // Nếu cần cập nhật URL:
+            const url = new URL(window.location.href);
+            const params = new URLSearchParams(url.search);
+
+            if (selectedLocation) {
+                params.set('locations', selectedLocation);
+            } else {
+                params.delete('locations');
+            }
+
+            url.search = params.toString();
+            window.location.href = url.toString();
+        });
+
+
+        $(document).ready(function () {
+            $('#location-select').select2({
+                placeholder: 'Chọn địa điểm', // Placeholder cho ô input
+                allowClear: true, // Cho phép xóa lựa chọn
+                width: '100%' // Căn chỉnh cho phù hợp với bố cục
+            });
         });
     </script>
 @endsection

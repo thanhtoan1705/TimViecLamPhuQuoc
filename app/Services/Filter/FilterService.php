@@ -148,19 +148,6 @@ class FilterService
         ];
     }
 
-//    public function getJobsCountByTime($timeFrames = ['1_day', '7_days', '30_days'])
-//    {
-//        $counts = [];
-//        foreach ($timeFrames as $timeFrame) {
-//            $counts[$timeFrame] = $this->jobPost
-//                ->where('created_at', '>=', now()->sub($timeFrame))
-//                ->where('end_date', '>', now())
-//                ->count();
-//        }
-//        return $counts;
-//    }
-
-
     public function getCompanyTypes()
     {
         return $this->employer

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from jobbox-html.netlify.app/frontend/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 07 Jun 2024 11:15:51 GMT -->
-<!-- Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=UTF-8"/><!-- /Added by HTTrack -->
 <head>
     <meta charset="UTF-8">
@@ -24,9 +22,9 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @viteReactRefresh
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     @livewireStyles
     @stack('css')
@@ -37,7 +35,11 @@
     @include('client.partials.seo')
 
     <!-- End SEO -->
-
+    <style>
+        .fl-wrapper {
+            z-index: 2147483647 !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -51,9 +53,9 @@
 @stack('script')
 
 @livewireScripts
+<script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
 {{--    <script src="//unpkg.com/alpinejs" defer></script>--}}
 <script src="{{ asset('assets/client/js/vendor/modernizr-3.6.0.min.js') }}"></script>
-<script src="{{ asset('assets/client/js/vendor/jquery-3.6.0.min.js') }}"></script>
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="{{ asset('vendor/livewire/livewire.js') }}"></script>
 {{--    <script src="{{ asset('assets/client/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>--}}

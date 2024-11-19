@@ -55,7 +55,8 @@
                                         <!-- Mobile Controls -->
                                         <div class="d-flex d-lg-none align-items-center gap-2 w-100">
                                             <!-- Filter Button -->
-                                            <button class="btn btn-filter-mobile" type="button" data-bs-toggle="modal" data-bs-target="#mobileFilterModal">
+                                            <button class="btn btn-filter-mobile" type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#mobileFilterModal">
                                                 <i class="fi-rr-filter"></i>
                                                 <div class="filter-count"></div>
                                             </button>
@@ -70,10 +71,17 @@
                                                         <span>{{ $perPage }}</span>
                                                         <i class="fi-rr-angle-small-down"></i>
                                                     </button>
-                                                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort">
-                                                        <li><a class="dropdown-item {{ $perPage == 12 ? 'active' : '' }}" href="#" data-per-page="12">12</a></li>
-                                                        <li><a class="dropdown-item {{ $perPage == 24 ? 'active' : '' }}" href="#" data-per-page="24">24</a></li>
-                                                        <li><a class="dropdown-item {{ $perPage == 36 ? 'active' : '' }}" href="#" data-per-page="36">36</a></li>
+                                                    <ul class="dropdown-menu dropdown-menu-light"
+                                                        aria-labelledby="dropdownSort">
+                                                        <li>
+                                                            <a class="dropdown-item {{ $perPage == 12 ? 'active' : '' }}"
+                                                               href="#" data-per-page="12">12</a></li>
+                                                        <li>
+                                                            <a class="dropdown-item {{ $perPage == 24 ? 'active' : '' }}"
+                                                               href="#" data-per-page="24">24</a></li>
+                                                        <li>
+                                                            <a class="dropdown-item {{ $perPage == 36 ? 'active' : '' }}"
+                                                               href="#" data-per-page="36">36</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -94,13 +102,14 @@
                                                         </span>
                                                         <i class="fi-rr-angle-small-down"></i>
                                                     </button>
-                                                    <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort2">
+                                                    <ul class="dropdown-menu dropdown-menu-light"
+                                                        aria-labelledby="dropdownSort2">
                                                         <li>
                                                             <a class="dropdown-item {{ request('sortBy') == 'newest' || !request('sortBy') ? 'active' : '' }}"
                                                                href="#"
                                                                data-per-page="{{ $perPage }}"
                                                                data-sort-by="newest">
-                                                               Mới nhất
+                                                                Mới nhất
                                                             </a>
                                                         </li>
                                                         <li>
@@ -184,14 +193,14 @@
                                                     </ul>
                                                 </div>
                                             </div>
-{{--                                            <div class="box-view-type">--}}
-{{--                                                <a class='view-type' href='#'><img--}}
-{{--                                                        src="{{ asset('assets/client/imgs/template/icons/icon-list.svg') }}"--}}
-{{--                                                        alt="jobBox"></a>--}}
-{{--                                                <a class='view-type' href='#'><img--}}
-{{--                                                        src="{{ asset('assets/client/imgs/template/icons/icon-grid-hover.svg') }}"--}}
-{{--                                                        alt="jobBox"></a>--}}
-{{--                                            </div>--}}
+                                            {{--                                            <div class="box-view-type">--}}
+                                            {{--                                                <a class='view-type' href='#'><img--}}
+                                            {{--                                                        src="{{ asset('assets/client/imgs/template/icons/icon-list.svg') }}"--}}
+                                            {{--                                                        alt="jobBox"></a>--}}
+                                            {{--                                                <a class='view-type' href='#'><img--}}
+                                            {{--                                                        src="{{ asset('assets/client/imgs/template/icons/icon-grid-hover.svg') }}"--}}
+                                            {{--                                                        alt="jobBox"></a>--}}
+                                            {{--                                            </div>--}}
                                             <select name="perPage" class="d-none">
                                                 <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
                                                 <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
@@ -295,10 +304,12 @@
                                     <!-- Filter địa điểm -->
                                     <div class="filter-block mb-30">
                                         <div class="form-group select-style select-style-icon">
-                                            <select id="location-select" name="locations" class="form-control form-icons desktop-filter">
+                                            <select id="location-select" name="locations"
+                                                    class="form-control form-icons desktop-filter">
                                                 <option value="">Chọn địa điểm</option>
                                                 @foreach($locations as $location)
-                                                    <option value="{{ $location }}" {{ request('locations') == $location ? 'selected' : '' }}>
+                                                    <option
+                                                        value="{{ $location }}" {{ request('locations') == $location ? 'selected' : '' }}>
                                                         {{ $location }}
                                                     </option>
                                                 @endforeach
@@ -315,9 +326,10 @@
                                                 @foreach($majors as $major)
                                                     <li>
                                                         <label class="cb-container">
-                                                            <input type="checkbox" class="desktop-filter" name="majors[]"
+                                                            <input type="checkbox" class="desktop-filter"
+                                                                   name="majors[]"
                                                                    value="{{ $major->id }}"
-                                                                   {{ in_array($major->id, request('majors', [])) ? 'checked' : '' }}>
+                                                                {{ in_array($major->id, request('majors', [])) ? 'checked' : '' }}>
                                                             <span class="text-small">{{ $major->name }}</span>
                                                             <span class="checkmark"></span>
                                                         </label>
@@ -336,9 +348,10 @@
                                                 @foreach($salaries as $salary)
                                                     <li>
                                                         <label class="cb-container">
-                                                            <input type="checkbox" name="salaries[]" class="desktop-filter"
+                                                            <input type="checkbox" name="salaries[]"
+                                                                   class="desktop-filter"
                                                                    value="{{ $salary->id }}"
-                                                                   {{ in_array($salary->id, request('salaries', [])) ? 'checked' : '' }}>
+                                                                {{ in_array($salary->id, request('salaries', [])) ? 'checked' : '' }}>
                                                             <span class="text-small">{{ $salary->name }}</span>
                                                             <span class="checkmark"></span>
                                                         </label>
@@ -383,10 +396,11 @@
                             </div>
                             <div id="locationFilter" class="collapse">
                                 <div class="filter-content">
-                                    <select name="locations" class="form-control mobile-filter">
+                                    <select name="locations" class="form-control mobile-filter select-active">
                                         <option value="">Chọn địa điểm</option>
                                         @foreach($locations as $location)
-                                            <option value="{{ $location }}" {{ request('locations') == $location ? 'selected' : '' }}>
+                                            <option
+                                                value="{{ $location }}" {{ request('locations') == $location ? 'selected' : '' }}>
                                                 {{ $location }}
                                             </option>
                                         @endforeach
@@ -408,16 +422,18 @@
                                 <div class="filter-content">
                                     <div class="checkbox-group">
                                         @foreach($majors as $major)
-                                            <label class="custom-checkbox">
-                                                <input type="checkbox"
-                                                       name="majors[]"
-                                                       class="mobile-filter"
-                                                       value="{{ $major->id }}"
-                                                       data-name="{{ $major->name }}"
-                                                       {{ in_array($major->id, request('majors', [])) ? 'checked' : '' }}>
-                                                <span class="checkbox-label">{{ $major->name }}</span>
-                                                <span class="checkbox-count">{{ $major->candidate_count }}</span>
-                                            </label>
+                                            @if(!empty($major))
+                                                <label class="custom-checkbox">
+                                                    <input type="checkbox"
+                                                           name="majors[]"
+                                                           class="mobile-filter"
+                                                           value="{{ $major->id }}"
+                                                           data-name="{{ $major->name }}"
+                                                        {{ in_array($major->id, request('majors', [])) ? 'checked' : '' }}>
+                                                    <span class="checkbox-label">{{ $major->name }}</span>
+                                                    <span class="checkbox-count">{{ $major->candidate_count }}</span>
+                                                </label>
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>
@@ -437,16 +453,18 @@
                                 <div class="filter-content">
                                     <div class="checkbox-group">
                                         @foreach($salaries as $salary)
-                                            <label class="custom-checkbox">
-                                                <input type="checkbox"
-                                                       name="salaries[]"
-                                                       class="mobile-filter"
-                                                       value="{{ $salary->id }}"
-                                                       data-name="{{ $salary->name }}"
-                                                       {{ in_array($salary->id, request('salaries', [])) ? 'checked' : '' }}>
-                                                <span class="checkbox-label">{{ $salary->name }}</span>
-                                                <span class="checkbox-count">{{ $salary->candidate_count }}</span>
-                                            </label>
+                                            @if(!empty($salary))
+                                                <label class="custom-checkbox">
+                                                    <input type="checkbox"
+                                                           name="salaries[]"
+                                                           class="mobile-filter"
+                                                           value="{{ $salary->id }}"
+                                                           data-name="{{ $salary->name }}"
+                                                        {{ in_array($salary->id, request('salaries', [])) ? 'checked' : '' }}>
+                                                    <span class="checkbox-label">{{ $salary->name }}</span>
+                                                    <span class="checkbox-count">{{ $salary->candidate_count }}</span>
+                                                </label>
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>
@@ -631,7 +649,7 @@
                 width: 100%;
                 padding: 8px 0;
                 margin-top: 8px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             }
 
             .dropdown-item {
@@ -874,21 +892,21 @@
         });
 
         // Desktop filter handling
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Handle desktop filters
             document.querySelectorAll('.desktop-filter').forEach(filter => {
-                filter.addEventListener('change', function() {
+                filter.addEventListener('change', function () {
                     document.getElementById('desktopFilterForm').submit();
                 });
             });
 
             // Handle sorting and per page selection for desktop
             document.querySelectorAll('[data-per-page]').forEach(item => {
-                item.addEventListener('click', function(e) {
+                item.addEventListener('click', function (e) {
                     e.preventDefault();
                     const form = document.getElementById('desktopFilterForm');
                     form.querySelector('input[name="perPage"]').value = this.dataset.perPage;
-                    if(this.dataset.sortBy) {
+                    if (this.dataset.sortBy) {
                         form.querySelector('input[name="sortBy"]').value = this.dataset.sortBy;
                     }
                     form.submit();
@@ -897,12 +915,39 @@
 
             // Handle sort by selection
             document.querySelectorAll('[data-sort-by]').forEach(item => {
-                item.addEventListener('click', function(e) {
+                item.addEventListener('click', function (e) {
                     e.preventDefault();
                     const form = document.getElementById('desktopFilterForm');
                     form.querySelector('input[name="sortBy"]').value = this.dataset.sortBy;
                     form.submit();
                 });
+            });
+        });
+
+        $('#location-select').on('change', function () {
+            const selectedLocation = $(this).val();
+            console.log('Selected location:', selectedLocation);
+
+            // Nếu cần cập nhật URL:
+            const url = new URL(window.location.href);
+            const params = new URLSearchParams(url.search);
+
+            if (selectedLocation) {
+                params.set('locations', selectedLocation);
+            } else {
+                params.delete('locations');
+            }
+
+            url.search = params.toString();
+            window.location.href = url.toString();
+        });
+
+
+        $(document).ready(function () {
+            $('#location-select').select2({
+                placeholder: 'Chọn địa điểm', // Placeholder cho ô input
+                allowClear: true, // Cho phép xóa lựa chọn
+                width: '100%' // Căn chỉnh cho phù hợp với bố cục
             });
         });
     </script>

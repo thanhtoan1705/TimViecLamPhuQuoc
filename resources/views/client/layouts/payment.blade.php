@@ -24,6 +24,11 @@
     @livewireStyles
     @stack('css')
     <title>@yield('title', 'Thanh toán')</title>
+    <style>
+        .fl-wrapper {
+            z-index: 2147483647 !important;
+        }
+    </style>
 </head>
 <body>
 
