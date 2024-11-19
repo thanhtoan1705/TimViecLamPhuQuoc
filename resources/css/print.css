@@ -1,0 +1,43 @@
+@media print {
+    /* Đảm bảo mỗi section không bị cắt giữa các trang */
+    section, .section {
+        break-inside: avoid;
+    }
+
+    /* Đảm bảo các phần tử quan trọng không bị cắt */
+    h1, h2, h3, h4, h5, h6,
+    .header, .section-header {
+        break-after: avoid;
+    }
+
+    /* Đảm bảo các list items không bị cắt */
+    li {
+        break-inside: avoid;
+    }
+
+    /* Đảm bảo các bảng không bị cắt */
+    table, tr, td {
+        break-inside: avoid;
+    }
+
+    /* Thiết lập margins cho trang in */
+    @page {
+        margin: 0;
+        size: A4 portrait;
+    }
+
+    .template-wrapper {
+        padding: 20mm 15mm !important;
+    }
+
+    /* Ẩn các elements không cần thiết khi in */
+    .no-print {
+        display: none !important;
+    }
+
+    /* Đảm bảo background và màu sắc được in */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}

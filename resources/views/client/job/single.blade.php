@@ -264,7 +264,7 @@
                                     @foreach($otherJobs as $otherJob)
                                         <li>
                                             <div class="card-list-4 wow animate__animated animate__fadeIn hover-up">
-                                                <div class="image">
+                                                <div class="image" style="width: 50px; height: 50px;">
                                                     <a href="{{ route('client.job.single', ['jobSlug' => $otherJob->slug]) }}">
                                                         <img src="{{ getStorageImageUrl($otherJob->employer->company_logo, config('image.square-logo')) }}"
                                                              alt="jobBox">

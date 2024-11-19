@@ -1,0 +1,244 @@
+/* Section title */
+.section-title {
+    font-size: 1.5em;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary-color);
+    font-weight: 600;
+}
+
+/* Thêm styles cho hover state nếu cần */
+.section-title:hover {
+    color: var(--primary-color);
+    opacity: 0.9;
+}
+
+/* Thêm styles cho các elements con khác nếu cần */
+.section-title i {
+    color: var(--primary-color);
+}
+
+.section-title::after {
+    background-color: var(--primary-color);
+}
+
+/* Content container */
+.section-content {
+    position: relative;
+}
+
+/* Overlay effect */
+.section-content.has-active-item::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    bottom: -10px;
+    background: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(1px);
+    z-index: 10;
+    pointer-events: none;
+    border-radius: 8px;
+}
+
+/* Item styles */
+.editable-item {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.item-wrapper {
+    position: relative;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.item-wrapper:hover {
+    background: #f1f3f5;
+}
+
+.editable-item.active {
+    position: relative;
+    z-index: 11;
+}
+
+.editable-item.active .item-wrapper {
+    background: #ffffff;
+    border-color: #4dabf7;
+    box-shadow: 0 0 0 2px rgba(77, 171, 247, 0.2);
+}
+
+.item-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Controls Menu - Đặt ở trên */
+.controls-menu {
+    position: absolute;
+    top: -12px;
+    right: 10px;
+    z-index: 12;
+}
+
+.controls-buttons {
+    display: flex;
+    gap: 4px;
+    background: white;
+    padding: 4px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Control buttons */
+.control-btn {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background: #f8f9fa;
+    color: #495057;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.15s ease;
+}
+
+.control-btn:hover {
+    background: #e9ecef;
+}
+
+.control-btn.add {
+    color: #2b8a3e;
+}
+
+.control-btn.add:hover {
+    background: #d3f9d8;
+}
+
+.control-btn.up,
+.control-btn.down {
+    color: #1971c2;
+}
+
+.control-btn.up:hover,
+.control-btn.down:hover {
+    background: #d0ebff;
+}
+
+.control-btn.delete {
+    color: #e03131;
+}
+
+.control-btn.delete:hover {
+    background: #ffe3e3;
+}
+
+.control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f8f9fa !important;
+    color: #adb5bd !important;
+}
+
+/* Contenteditable styles */
+[contenteditable="true"] {
+    cursor: text;
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: background 0.2s ease;
+}
+
+[contenteditable="true"]:focus {
+    outline: none;
+    background: rgba(74, 171, 247, 0.1);
+}
+
+/* Animation cho controls */
+.controls-menu {
+    opacity: 0;
+    transform: translateY(5px);
+    animation: slideIn 0.2s ease forwards;
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tooltip styles */
+.control-btn {
+    position: relative;
+}
+
+.control-btn:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background: #495057;
+    color: white;
+    font-size: 12px;
+    border-radius: 3px;
+    white-space: nowrap;
+    margin-bottom: 6px;
+    pointer-events: none;
+    opacity: 0;
+    animation: fadeIn 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Highlight cho phần được chọn */
+.editable-item.active .item-content [contenteditable="true"] {
+    background: rgba(74, 171, 247, 0.05);
+}
+
+.editable-item.active .item-content [contenteditable="true"]:focus {
+    background: rgba(74, 171, 247, 0.1);
+}
+
+/* Section header container */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Section delete button */
+.section-delete-btn {
+    padding: 4px 8px;
+    background: transparent;
+    border: none;
+    color: #e03131;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+.editable-section:hover .section-delete-btn {
+    opacity: 1;
+}
+
+.section-delete-btn:hover {
+    background: #ffe3e3;
+}

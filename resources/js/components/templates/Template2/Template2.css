@@ -1,0 +1,410 @@
+/* Main Container */
+.cv-template-2 {
+    min-height: 297mm;
+    width: 210mm;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Layout */
+.t2-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    min-height: calc(100% - 100px);
+}
+
+/* Sidebar Styling */
+.t2-sidebar {
+    padding: 1.5rem 1rem;
+    position: relative;
+    border-right: 1px solid #e0e0e0;
+}
+
+.t2-sidebar-content {
+    position: sticky;
+    top: 1.5rem;
+}
+
+/* Main Content Styling */
+.t2-main {
+    padding: 1.5rem 2rem;
+}
+
+/* Section Wrappers */
+.t2-section-wrapper {
+    margin-bottom: 1.2rem;
+    transition: all 0.2s ease;
+    position: relative;
+    padding-top: 5px;
+}
+
+/* Sidebar Section Styling */
+.t2-sidebar .t2-section-wrapper {
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+
+.t2-main .t2-section-wrapper:hover::before {
+    opacity: 1;
+}
+
+/* Section Headers */
+.t2-section-content h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.t2-sidebar .t2-section-content h2 {
+    color: var(--primary-color);
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.t2-main .t2-section-content h2 {
+    color: var(--primary-color);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+/* Control Buttons */
+.t2-section-controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 0.2rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2px;
+    border-radius: 4px;
+    z-index: 10;
+}
+
+.t2-section-wrapper:hover .t2-section-controls {
+    opacity: 1;
+}
+
+.t2-drag-handle,
+.t2-delete-button {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.t2-drag-handle:hover {
+    background-color: #e9ecef;
+    color: #333;
+}
+
+.t2-delete-button:hover {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+/* Personal Info Special Styling */
+.t2-sidebar .personal-info {
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+.t2-sidebar .personal-info img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    padding: 2px;
+    margin-bottom: 1rem;
+}
+
+.t2-sidebar .personal-info h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.3rem;
+}
+
+.t2-sidebar .personal-info .job-title {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+}
+
+/* Skills Section Special Styling */
+.t2-sidebar .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.t2-sidebar .skill-item {
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #444;
+    border: 1px solid #eee;
+}
+
+.t2-sidebar .skill-item:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Languages Section Special Styling */
+.t2-sidebar .language-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 0.4rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+/* Experience & Education Styling */
+.t2-main .timeline-item {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: 1rem;
+    color: #444;
+}
+
+.t2-main .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.4rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+}
+
+/* Text Styling */
+.t2-section-content p,
+.t2-section-content li {
+    color: #444;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.t2-sidebar .t2-section-content p,
+.t2-sidebar .t2-section-content li {
+    color: #444;
+    font-size: 0.85rem;
+}
+
+/* Dragging States */
+.dragging {
+    opacity: 0.8;
+    transform: scale(0.98);
+}
+
+.drag-over {
+    background-color: #f8f9fa;
+}
+
+/* Template1 CSS */
+.profile-image-container {
+    width: 150px;
+    height: 150px;
+    margin-right: 20px;
+}
+
+/* Template2 CSS */
+.t2-header-avatar {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+/* Đảm bảo avatar lấp đầy container */
+.t2-header-avatar .avatar-container,
+.t2-header-avatar .avatar-wrapper,
+.t2-header-avatar .avatar-image {
+    width: 100%;
+    height: 100%;
+}
+
+/* Điều chỉnh layout cho phù hợp */
+.profile-section,
+.t2-header-main {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-info,
+.t2-header-title {
+    flex: 1;
+}
+
+/* Responsive Design */
+@media print {
+    .cv-template-2 {
+        box-shadow: none;
+    }
+
+    .t2-section-controls {
+        display: none;
+    }
+
+    .t2-section-wrapper {
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .t2-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .t2-sidebar {
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+}
+
+/* Header Styling */
+.t2-header {
+    padding: 2rem 2.5rem;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.t2-header-main {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.t2-header-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.t2-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.t2-header-title {
+    flex: 1;
+    min-width: 0;
+}
+
+.t2-name {
+    margin-bottom: 0.5rem;
+    padding: 0.2rem 0.4rem;
+}
+
+.t2-job-title {
+    padding: 0.2rem 0.4rem;
+}
+
+.t2-header-contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.t2-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.t2-contact-item i {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    width: 20px;
+    text-align: center;
+}
+
+.t2-contact-item .editable-field {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .t2-header {
+        padding: 1.5rem;
+    }
+
+    .t2-header-main {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .t2-header-contact {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .t2-contact-item {
+        justify-content: center;
+    }
+}
+
+/* Template Modal Styles */
+.template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.template-item {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.template-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.template-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.template-item h3 {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    text-align: center;
+}

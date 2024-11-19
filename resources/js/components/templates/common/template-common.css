@@ -1,0 +1,178 @@
+/* Common Section Hover Effects */
+.t1-cv-section {
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    position: relative;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Common Experience & Education Items */
+.t1-experience-item,
+.t1-education-item,
+.t1-project-item {
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.t1-experience-item::before,
+.t1-education-item::before,
+.t1-project-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px dashed transparent;
+    border-radius: 8px;
+    pointer-events: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.t1-experience-item:hover::before,
+.t1-education-item:hover::before,
+.t1-project-item:hover::before {
+    border-color: #3b82f6;
+}
+
+/* Common List Items */
+.t1-skills-list li,
+.t1-languages-list li,
+.t1-certificates-list li {
+    padding: 8px 16px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    background: #f3f4f6;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.t1-skills-list li::before,
+.t1-languages-list li::before,
+.t1-certificates-list li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px dashed transparent;
+    border-radius: 4px;
+    pointer-events: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.t1-skills-list li:hover::before,
+.t1-languages-list li:hover::before,
+.t1-certificates-list li:hover::before {
+    border-color: #3b82f6;
+}
+
+/* Common Editable Elements Style */
+[contenteditable="true"] {
+    outline: none;
+    padding: 2px 6px;
+    border-radius: 4px;
+    position: relative;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+[contenteditable="true"]:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+[contenteditable="true"]:focus {
+    background-color: rgba(59, 130, 246, 0.05);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+
+.t1-cv-section:hover .section-title::after {
+    width: 100%;
+}
+
+/* Optimize performance */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent layout shifts */
+.t1-cv-section,
+.t1-experience-item,
+.t1-education-item,
+.t1-project-item,
+[contenteditable="true"] {
+    will-change: transform, opacity;
+}
+
+/* Section Controls Container */
+.t1-section-controls {
+    position: absolute;
+    top: -10px;
+    left: -30px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 100;
+}
+
+.t1-section-wrapper:hover .t1-section-controls {
+    opacity: 1;
+}
+
+/* Style chung cho các nút */
+.t1-drag-handle,
+.t1-delete-button {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Style riêng cho từng nút */
+.t1-drag-handle {
+    background: #4a5568;
+    color: white;
+}
+
+.t1-drag-handle:hover {
+    background: #2d3748;
+    transform: translateY(-2px);
+}
+
+.t1-delete-button {
+    background: #dc2626;
+    color: white;
+}
+
+.t1-delete-button:hover {
+    background: #b91c1c;
+    transform: translateY(-2px);
+}
+
+/* Icon styles */
+.t1-drag-handle i.bi,
+.t1-delete-button i.bi {
+    font-size: 14px;
+    color: white !important;
+}
+
+/* Đảm bảo section wrapper có khoảng trống bên trái cho controls */
+.t1-section-wrapper {
+    position: relative;
+}

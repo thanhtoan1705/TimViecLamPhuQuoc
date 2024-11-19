@@ -48,8 +48,8 @@ class JobRepository implements JobInterface
             return collect();
         }
 
-        $jobs = $this->jobPost::whereHas('majors', function ($query) use ($majorId) {
-            $query->where('majors.id', $majorId);
+        $jobs = $this->jobPost::whereHas('job_category', function ($query) use ($majorId) {
+            $query->where('id', $majorId);
         })
             ->where('id', '!=', $excludeJobId)
             ->limit(10)
@@ -87,12 +87,9 @@ class JobRepository implements JobInterface
 
     public function findJobsByMajorAndSkills($candidate)
     {
-        $majorId = $candidate->major_id;
-
-
+        $categoryId = $candidate->job_category_id;
         $skillIds = $candidate->skills->pluck('id')->toArray();
-
-        $jobs = $this->jobPost::where('major_id', $majorId)
+        $jobs = $this->jobPost::where('job_category_id', $categoryId)
             ->whereHas('skills', function ($query) use ($skillIds) {
                 $query->whereIn('skills.id', $skillIds);
             })

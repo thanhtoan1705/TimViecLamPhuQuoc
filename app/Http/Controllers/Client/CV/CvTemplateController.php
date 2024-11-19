@@ -209,4 +209,32 @@ class CvTemplateController extends Controller
         }
     }
 
+    public function previewTemplate($id)
+    {
+        // Validate template ID
+        if (!in_array($id, [1, 2])) {
+            abort(404);
+        }
+
+        return view('client.cv.cv-preview', [
+            'templateId' => $id
+        ]);
+    }
+
+    public function listTemplates()
+    {
+        return view('client.cv.template-list');
+    }
+
+    public function viewTemplate($id)
+    {
+        if (!in_array($id, [1, 2, 3])) {
+            abort(404);
+        }
+
+        return view('client.cv.template-view', [
+            'templateId' => $id
+        ]);
+    }
+
 }

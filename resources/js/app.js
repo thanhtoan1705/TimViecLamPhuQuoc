@@ -15,12 +15,15 @@ import {createRoot} from 'react-dom/client';
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-import './components/TemplateCV.jsx';
-
+// import './components/TemplateCV.jsx';
+// import './components/TemplateViewer';
 import CV from './components/CV';
 import ReviewCV from './components/ReviewCV';
+import TemplateView from './components/TemplateView';
 
 window.React = React;
 window.createRoot = createRoot;
 window.CV = CV;
 window.ReviewCV = ReviewCV;
+// window.Template1 = Template1;
+window.TemplateView = TemplateView;

@@ -100,7 +100,7 @@
                 <div class="text-center">
                     <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Nhà tuyển dụng hàng đầu</h2>
                     <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Khám phá bước đi
-                        sự nghiệp tiếp theo của bạn, hợp đồng biểu diễn tự do hoặc thực tập</p>
+                        sự nghiệp tiếp theo của bạn, hợp đồng bi���u diễn tự do hoặc thực tập</p>
                 </div>
                 <div class="box-swiper mt-50">
                     <div class="swiper-container swiper-group-1 swiper">
@@ -268,11 +268,10 @@
                                                     </div>
                                                     <div class="image-box">
                                                         @php
-                                                            $blog_img = getStorageImageUrl($posts->first()->job_category->image, 'default/square-logo.svg');
+                                                            $company_logo = getStorageImageUrl($post->employer->company_logo ?? '', 'default/square-logo.svg');
                                                         @endphp
-
                                                         <img alt="{{ $post->title }}" width="50px"
-                                                             src="{{ $blog_img }}">
+                                                             src="{{ $company_logo }}">
                                                     </div>
                                                     <div class="right-info pe-3" style="">
                                                         <a class='name-job'

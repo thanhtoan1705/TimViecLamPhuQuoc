@@ -9,6 +9,8 @@ const sampleData = {
     linkedin: 'https://www.linkedin.com',
     github: 'https://github.com',
     website: 'https://nguyenvana.com',
+    title_experience: "Kinh nghiệm làm việc",
+    title_personalInfo: "Thông tin cá nhân",
 
     title_skills: 'Kỹ năng',
     skills: ['JavaScript', 'React', 'Node.js'],
