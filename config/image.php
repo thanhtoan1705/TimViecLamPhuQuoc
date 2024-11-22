@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'no-image' => '',
+    'no-image' => 'default/no-image.png',
     'favicon' => 'default/favicon.svg',
     'main-logo' => 'default/main-logo.svg',
     'square-logo' => 'default/square-logo.svg',

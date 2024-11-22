@@ -267,7 +267,7 @@
 
 
                             <div  class="d-flex justify-content-center mt-1">
-                                <a style="width: 200px" href="{{ route('filament.employer.resources.employer.candidate.candidate-applies.index') }}" class="btn dropdown-employer_list__child">
+                                <a style="width: 200px" href="{{ route('filament.employer.resources.candidate-applies.index') }}" class="btn dropdown-employer_list__child">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0)">
                                             <path d="M15.0906 10.4657C13.7189 9.60027 12.1484 9.12544 10.5254 9.03662C10.9006 9.21228 11.272 9.39777 11.6243 9.62001C12.4729 10.1547 13.0002 11.1229 13.0002 12.1464V14.9999H16.0002V12.1464C16.0002 11.4638 15.6516 10.8197 15.0906 10.4657Z" fill="#02528E"></path>

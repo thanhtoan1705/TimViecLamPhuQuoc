@@ -5,27 +5,40 @@ namespace App\Filament\Resources\Admin\Employer;
 use App\Filament\Resources\Admin\Employer\EmployerResource\Pages\CreateEmployer;
 use App\Filament\Resources\Employer\EmployerResource\Pages;
 use App\Filament\Resources\Employer\EmployerResource\RelationManagers;
+use App\Jobs\Client\SendNewsletterEmail;
 use App\Models\District;
 use App\Models\Employer;
 use App\Models\Province;
 use App\Models\Ward;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class EmployerResource extends Resource implements HasShieldPermissions
@@ -269,6 +282,12 @@ class EmployerResource extends Resource implements HasShieldPermissions
 //                                            ->numeric(),
                                     ]),
 
+                                Section::make('Xác thực')
+                                    ->schema([
+                                        DateTimePicker::make('user.email_verified_at')
+                                            ->label('Xác thực')
+                                    ]),
+
                                 Section::make('Thời gian')
                                     ->schema([
                                         Placeholder::make('created_at')
@@ -293,23 +312,246 @@ class EmployerResource extends Resource implements HasShieldPermissions
                 Tables\Columns\TextColumn::make('row_number')
                     ->label('STT')
                     ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
-                Tables\Columns\TextColumn::make('company_name')->label('Tên công ty'),
-                Tables\Columns\TextColumn::make('company_phone')->label('Điện thoại'),
-                Tables\Columns\TextColumn::make('company_type')->label('Loại công ty'),
-                Tables\Columns\IconColumn::make('status')->boolean()->label('Công khai'),
+
+                ImageColumn::make('company_logo')->grow(false)
+                    ->defaultImageUrl(asset(config('image.no-image')))
+                    ->label('Logo'),
+                TextColumn::make('company_name')
+                    ->label('Tên công ty')
+                    ->limit(20)
+                    ->searchable(),
+
+                TextColumn::make('company_phone')->icon('heroicon-o-phone')
+                    ->label('Điện thoại')
+                    ->searchable(),
+                TextColumn::make('user.email')->icon('heroicon-o-envelope')
+                    ->label('Email')
+                    ->searchable(),
+
+                TextColumn::make('job_posts_count')
+                    ->label('Số bài đăng')
+                    ->counts('jobPosts'), // Đếm số lượng từ mối quan hệ `jobPosts`
+
+
+                IconColumn::make('user.email_verified_at')
+                    ->label('Xác thực')
+                    ->getStateUsing(fn ($record) => $record->user->email_verified_at ? true : false) // Tự xác định giá trị true/false
+                    ->trueIcon('heroicon-s-check-circle')
+                    ->falseIcon('heroicon-s-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger'),
+
+                ToggleColumn::make('status')
+                    ->label('Trạng thái'),
             ])
             ->filters([
                 //
+//                Tables\Filters\SelectFilter::make('address.province')->label('Bằng cấp')
+//                    ->relationship('address', 'name')
+//                    ->searchable()
+//                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
+
+                    Action::make('editPassword')
+                        ->label('Đổi mật khẩu')
+                        ->icon('heroicon-o-key')
+                        ->action(function ($record, array $data) {
+                            // Kiểm tra nếu liên kết tới model user và cập nhật mật khẩu
+                            $record->user->update([
+                                'password' => Hash::make(($data['password'])), // Mã hóa mật khẩu
+                            ]);
+                        })
+                        ->form([
+                            TextInput::make('email')
+                                ->label('Email')
+                                ->default(fn ($record) => $record->user->email) // Hiển thị email từ mối quan hệ
+                                ->disabled() // Không cho phép chỉnh sửa
+                                ->dehydrated(false), // Không gửi dữ liệu này vào request
+                            TextInput::make('password')
+                                ->label('Mật khẩu mới')
+                                ->password() // Ẩn giá trị đầu vào
+                                ->required()
+                                ->maxLength(200),
+                        ])
+                        ->modalHeading('Đổi mật khẩu')
+                        ->modalButton('Cập nhật'),
+
+                    Action::make('editMailVerify')
+                        ->label('Xác thực tài khoản')
+                        ->icon('heroicon-o-check-badge')
+                        ->action(function ($record, array $data) {
+                            // Cập nhật email_verified_at nếu có giá trị
+                            $record->user->update([
+                                'email_verified_at' => $data['email_verified_at'],
+                            ]);
+                        })
+                        ->form(function ($record) {
+                            // Chỉ hiển thị trường email_verified_at nếu giá trị hiện tại là null hoặc rỗng
+                            $fields = [
+                                TextInput::make('email')
+                                    ->label('Email')
+                                    ->default(fn ($record) => $record->user->email) // Hiển thị email từ mối quan hệ
+                                    ->disabled() // Không cho phép chỉnh sửa
+                                    ->dehydrated(false), // Không gửi dữ liệu này vào request
+
+                                TextInput::make('company_name')
+                                    ->label('Tên công ty')
+                                    ->default(fn ($record) => $record->company_name)
+                                    ->disabled()
+                                    ->dehydrated(false),
+                            ];
+
+                            if (empty($record->user->email_verified_at)) {
+                                $fields[] = DateTimePicker::make('email_verified_at')
+                                    ->label('Ngày giờ xác thực')
+                                    ->required(); // Bắt buộc nhập
+                            }else {
+                                $fields[] = TextInput::make('email_verified_at')
+                                    ->label('Ngày giờ xác thực (Tài khoản đã xác thực)')
+                                    ->default(fn ($record) => $record->user->email_verified_at) // Hiển thị email từ mối quan hệ
+                                    ->disabled() // Không cho phép chỉnh sửa
+                                    ->dehydrated(false); // Không gửi dữ
+                            }
+
+                            return $fields;
+                        })
+                        ->modalHeading('Xác thực tài khoản')
+                        ->modalButton('Cập nhật'),
+
                     Tables\Actions\DeleteAction::make(),
                 ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+
+                    BulkAction::make('Gửi mail nhà tuyển dụng')
+                        ->icon('heroicon-o-envelope')
+                        ->color('primary')
+                        ->form([
+                            Textarea::make('subject')
+                                ->label('Tiêu đề email')
+                                ->required()
+                                ->placeholder('Nhập tiêu đề email...'),
+
+//                            RichEditor::make('content')
+//                                ->label('Nội dung email')
+//                                ->required()
+//                                ->default('
+//<p><strong>Tiêu đề:</strong> Thông báo về ứng viên nộp hồ sơ ứng tuyển - [Tên vị trí công việc]</p>
+//
+//<p><strong>Nội dung:</strong></p>
+//
+//<p>Kính gửi [Tên Nhà Tuyển Dụng],</p>
+//
+//<p>Chúng tôi rất vui khi thông báo rằng có một ứng viên đã nộp hồ sơ ứng tuyển cho vị trí <strong>[Tên vị trí công việc]</strong> mà bạn đã đăng trên hệ thống của chúng tôi.</p>
+//
+//<p><strong>Thông tin ứng viên:</strong></p>
+//<ul>
+//    <li><strong>Tên ứng viên:</strong> [Tên ứng viên]</li>
+//    <li><strong>Email:</strong> [Email ứng viên]</li>
+//    <li><strong>Số điện thoại:</strong> [Số điện thoại ứng viên]</li>
+//    <li><strong>Kinh nghiệm làm việc:</strong> [Kinh nghiệm làm việc của ứng viên]</li>
+//    <li><strong>Trình độ học vấn:</strong> [Trình độ học vấn của ứng viên]</li>
+//    <li><strong>Link hồ sơ (nếu có):</strong> [Link đến hồ sơ ứng viên]</li>
+//</ul>
+//
+//<p><strong>Thông tin về công việc:</strong></p>
+//<ul>
+//    <li><strong>Vị trí tuyển dụng:</strong> [Tên vị trí công việc]</li>
+//    <li><strong>Mô tả công việc:</strong> [Mô tả ngắn gọn về công việc]</li>
+//    <li><strong>Yêu cầu:</strong> [Yêu cầu công việc]</li>
+//</ul>
+//
+//<p>Chúng tôi hy vọng bạn sẽ tìm thấy ứng viên phù hợp cho vị trí của mình. Nếu bạn cần thêm thông tin hoặc muốn lên lịch phỏng vấn, vui lòng liên hệ với ứng viên qua email hoặc số điện thoại đã cung cấp.</p>
+//
+//<p>Chúc bạn một ngày làm việc hiệu quả!</p>
+//
+//<p>Trân trọng,</p>
+//<p><strong>[Chữ ký của website việc làm]</strong></p>
+//<p>[Thông tin liên hệ của website việc làm]</p>
+//<p>[Địa chỉ website]</p>
+//<p>[Email hỗ trợ]</p>
+//    ')
+//                                ->placeholder('Nhập nội dung email...'),
+//                        ])
+//                        ->action(function (Collection $records, array $data) {
+//                            $subject = $data['subject'];
+//                            $content = $data['content'];
+//
+//                            $records->where('status', 1)->each(function ($record) use ($subject, $content) {
+//                                dispatch(new SendNewsletterEmail($record->user->email, $subject, $content));
+//                            });
+//                            Notification::make()
+//                                ->title('Đã gửi mail cho ứng viên  thành công!')
+//                                ->success()
+//                                ->send();
+//                        })
+//                        ->deselectRecordsAfterCompletion(),
+
+                            RichEditor::make('content')
+                                ->label('Nội dung email')
+                                ->required()
+                                ->default('
+<p><strong>Tiêu đề:</strong> Thông báo về ứng viên nộp hồ sơ ứng tuyển - [Tên vị trí công việc]</p>
+
+<p><strong>Nội dung:</strong></p>
+
+<p>Kính gửi [USER_NAME],</p>
+
+<p>Chúng tôi rất vui khi thông báo rằng có một ứng viên đã nộp hồ sơ ứng tuyển cho vị trí <strong>[Tên vị trí công việc]</strong> mà bạn đã đăng trên hệ thống của chúng tôi.</p>
+
+<p><strong>Thông tin ứng viên:</strong></p>
+<ul>
+    <li><strong>Tên ứng viên:</strong> [Tên ứng viên]</li>
+    <li><strong>Email:</strong> [Email ứng viên]</li>
+    <li><strong>Số điện thoại:</strong> [Số điện thoại ứng viên]</li>
+    <li><strong>Kinh nghiệm làm việc:</strong> [Kinh nghiệm làm việc của ứng viên]</li>
+    <li><strong>Trình độ học vấn:</strong> [Trình độ học vấn của ứng viên]</li>
+    <li><strong>Link hồ sơ (nếu có):</strong> [Link đến hồ sơ ứng viên]</li>
+</ul>
+
+<p><strong>Thông tin về công việc:</strong></p>
+<ul>
+    <li><strong>Vị trí tuyển dụng:</strong> [Tên vị trí công việc]</li>
+    <li><strong>Mô tả công việc:</strong> [Mô tả ngắn gọn về công việc]</li>
+    <li><strong>Yêu cầu:</strong> [Yêu cầu công việc]</li>
+</ul>
+
+<p>Chúng tôi hy vọng bạn sẽ tìm thấy ứng viên phù hợp cho vị trí của mình. Nếu bạn cần thêm thông tin hoặc muốn lên lịch phỏng vấn, vui lòng liên hệ với ứng viên qua email hoặc số điện thoại đã cung cấp.</p>
+
+<p>Chúc bạn một ngày làm việc hiệu quả!</p>
+
+<p>Trân trọng,</p>
+<p><strong>[Chữ ký của website việc làm]</strong></p>
+<p>[Thông tin liên hệ của website việc làm]</p>
+<p>[Địa chỉ website]</p>
+<p>[Email hỗ trợ]</p>
+    ')
+                                ->placeholder('Nhập nội dung email...')
+                        ])
+                        ->action(function (Collection $records, array $data) {
+                            $subject = $data['subject'];
+                            $content = $data['content'];
+
+                            $records->where('status', 1)->each(function ($record) use ($subject, $content) {
+                                // Thay thế các placeholder trong nội dung email
+                                $content = str_replace('[USER_NAME]', $record->company_name, $content);
+                                $content = str_replace('[Email ứng viên]', $record->user->email, $content);
+
+                                // Gửi email
+                                dispatch(new SendNewsletterEmail($record->user->email, $subject, $content));
+                            });
+
+                            Notification::make()
+                                ->title('Đã gửi mail cho ứng viên thành công!')
+                                ->success()
+                                ->send();
+                        })
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ]);
     }

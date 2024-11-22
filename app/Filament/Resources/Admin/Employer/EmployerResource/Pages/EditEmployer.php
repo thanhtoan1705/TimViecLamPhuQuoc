@@ -26,6 +26,7 @@ class EditEmployer extends EditRecord
         $user = $employer->user;
         $user->name = $data['user']['name'];
         $user->phone = $data['user']['phone'];
+        $user->email_verified_at = $data['user']['email_verified_at'] ?? null;
         if (!empty($data['user']['password'])) {
             $user->password = Hash::make($data['user']['password']);
         }
@@ -76,6 +77,7 @@ class EditEmployer extends EditRecord
         $data['user']['phone'] = $user->phone;
 //        $data['user']['password'] = $user->password;
         $data['user']['image'] = $user->image;
+        $data['user']['email_verified_at'] = $user->email_verified_at;
 
         if ($address) {
             $data['province_id'] = $address->province_id;

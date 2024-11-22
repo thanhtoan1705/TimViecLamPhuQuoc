@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Admin\Candidate;
 use App\Filament\Resources\Admin\Candidate\CandidateResource\Pages\CreateCandidate;
 use App\Filament\Resources\Candidate\CandidateResource\Pages;
 use App\Filament\Resources\Candidate\CandidateResource\RelationManagers;
+use App\Jobs\Client\SendNewsletterEmail;
 use App\Models\Address;
 use App\Models\Candidate;
 use App\Models\Degree;
@@ -16,6 +17,7 @@ use App\Models\Salary;
 use App\Models\Ward;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
@@ -23,18 +25,24 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
 
 
 class CandidateResource extends Resource implements HasShieldPermissions
@@ -235,6 +243,13 @@ class CandidateResource extends Resource implements HasShieldPermissions
                                         Toggle::make('status')
                                             ->label('Kích hoạt'),
                                     ]),
+
+                                Section::make('Xác thực')
+                                    ->schema([
+                                        DateTimePicker::make('user.email_verified_at')
+                                        ->label('Xác thực')
+                                    ]),
+
                                 Section::make('Nổi bật')
                                     ->schema([
 
@@ -318,17 +333,24 @@ class CandidateResource extends Resource implements HasShieldPermissions
         return $table
             ->defaultSort('created_at', 'desc')
             ->columns([
+//                TextColumn::make('row_number')
+//                    ->label('STT')
+//                    ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
+
 
                 ImageColumn::make('user.avatar_url')->grow(false)
                     ->circular()
                     ->defaultImageUrl(asset(config('image.avatar')))
                     ->label('Avatar'),
                 TextColumn::make('user.name')
+                    ->searchable()
                     ->label('Họ tên')->limit(20),
 
                 TextColumn::make('user.phone')->icon('heroicon-o-phone')
+                    ->searchable()
                     ->label('Điện thoại'),
                 TextColumn::make('user.email')->icon('heroicon-o-envelope')
+                    ->searchable()
                     ->label('Email'),
 
 
@@ -347,25 +369,132 @@ class CandidateResource extends Resource implements HasShieldPermissions
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('degree')->label('Bằng cấp')
-                    ->relationship('degree', 'name'),
+                    ->relationship('degree', 'name')
+                    ->searchable()
+                    ->preload(),
 
                 Tables\Filters\SelectFilter::make('major')->label('Chuyên ngành')
-                    ->relationship('major', 'name'),
+                    ->relationship('major', 'name')
+                    ->searchable()
+                    ->preload(),
 
-                Tables\Filters\SelectFilter::make('skills')->label('Kỹ năng')
-                    ->relationship('skills', 'name'),
+                Tables\Filters\SelectFilter::make('experience')->label('Kinh nghiệm')
+                    ->relationship('experience', 'name')
+                    ->searchable()
+                    ->preload(),
+
+                Tables\Filters\SelectFilter::make('salary')->label('Khoảng lương')
+                    ->relationship('salary', 'name')
+                    ->searchable()
+                    ->preload(),
+
 
 
             ], layout: FiltersLayout::Dropdown)
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
+
+                    Action::make('editPassword')
+                        ->label('Đổi mật khẩu')
+                        ->icon('heroicon-o-key')
+                        ->action(function ($record, array $data) {
+                            // Kiểm tra nếu liên kết tới model user và cập nhật mật khẩu
+                            $record->user->update([
+                                'password' => Hash::make(($data['password'])), // Mã hóa mật khẩu
+                            ]);
+                        })
+                        ->form([
+                            TextInput::make('email')
+                                ->label('Email')
+                                ->default(fn ($record) => $record->user->email) // Hiển thị email từ mối quan hệ
+                                ->disabled() // Không cho phép chỉnh sửa
+                                ->dehydrated(false), // Không gửi dữ liệu này vào request
+                            TextInput::make('password')
+                                ->label('Mật khẩu mới')
+                                ->password() // Ẩn giá trị đầu vào
+                                ->required()
+                                ->maxLength(200),
+                        ])
+                        ->modalHeading('Đổi mật khẩu')
+                        ->modalButton('Cập nhật'),
+
+                    Action::make('editMailVerify')
+                        ->label('Xác thực tài khoản')
+                        ->icon('heroicon-o-check-badge')
+                        ->action(function ($record, array $data) {
+                            // Cập nhật email_verified_at nếu có giá trị
+                            $record->user->update([
+                                'email_verified_at' => $data['email_verified_at'],
+                            ]);
+                        })
+                        ->form(function ($record) {
+                            // Chỉ hiển thị trường email_verified_at nếu giá trị hiện tại là null hoặc rỗng
+                            $fields = [
+                                TextInput::make('email')
+                                    ->label('Email')
+                                    ->default(fn ($record) => $record->user->email)
+                                    ->disabled() // Không cho phép chỉnh sửa
+                                    ->dehydrated(false),
+
+                                TextInput::make('name')
+                                    ->label('Họ tên')
+                                    ->default(fn ($record) => $record->user->name)
+                                    ->disabled()
+                                    ->dehydrated(false),
+                            ];
+
+                            if (empty($record->user->email_verified_at)) {
+                                $fields[] = DateTimePicker::make('email_verified_at')
+                                    ->label('Ngày giờ xác thực')
+                                    ->required(); // Bắt buộc nhập
+                            }else {
+                                $fields[] = TextInput::make('email_verified_at')
+                                    ->label('Tài khoản đã xác thực')
+                                    ->default(fn ($record) => $record->user->email_verified_at) // Hiển thị email từ mối quan hệ
+                                    ->disabled() // Không cho phép chỉnh sửa
+                                    ->dehydrated(false); // Không gửi dữ
+                            }
+
+                            return $fields;
+                        })
+                        ->modalHeading('Xác thực tài khoản')
+                        ->modalButton('Cập nhật'),
+
                     Tables\Actions\DeleteAction::make(),
                 ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
+
+                    BulkAction::make('Gửi mail')
+                        ->icon('heroicon-o-envelope')
+                        ->color('primary')
+                        ->form([
+                            Textarea::make('subject')
+                                ->label('Tiêu đề email')
+                                ->required()
+                                ->placeholder('Nhập tiêu đề email...'),
+
+                            RichEditor::make('content')
+                                ->label('Nội dung email')
+                                ->required()
+                                ->placeholder('Nhập nội dung email...'),
+                        ])
+                        ->action(function (Collection $records, array $data) {
+                            $subject = $data['subject'];
+                            $content = $data['content'];
+
+                            $records->where('status', 1)->each(function ($record) use ($subject, $content) {
+                                dispatch(new SendNewsletterEmail($record->user->email, $subject, $content));
+                            });
+                            Notification::make()
+                                ->title('Đã gửi mail cho ứng viên  thành công!')
+                                ->success()
+                                ->send();
+                        })
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ]);
     }

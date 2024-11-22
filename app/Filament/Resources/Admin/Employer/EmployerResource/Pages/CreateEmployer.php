@@ -36,6 +36,7 @@ class CreateEmployer extends CreateRecord
                 'phone' => $data['user']['phone'],
                 'password' => Hash::make($data['user']['password']),
                 'image' => $data['user']['image'] ?? null,
+                'email_verified_at' => $data['user']['email_verified_at'] ?? null,
             ]);
         } else {
             $user = $existingUser;
