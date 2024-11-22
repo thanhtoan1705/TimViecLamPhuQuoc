@@ -5,7 +5,7 @@
 
         <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
             <div class="flex justify-between items-center mb-6">
-                <a href="http://127.0.0.1:8000/panel/employer/employer/buy-services/buy-services" class="text-blue-600">Quay
+                <a href="{{ route('filament.employer.resources.employer.buy-services.buy-services.index') }}" class="text-blue-600">Quay
                     lại trang gói dịch vụ</a>
             </div>
 
@@ -13,15 +13,12 @@
                 <div class="w-1/2 bg-gray-100 p-6 rounded">
                     <h2 class="text-lg font-semibold mb-4">Bạn muốn thanh toán như thế nào?</h2>
                     <div class="grid grid-cols-3 gap-4">
-                        <img
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCROhLRjX3VVIFNvry5__GAa8U2CTlQyhYlA&s"
-                            alt="Visa" class="rounded rounded-logo payment-method" data-method="Visa">
-                        <img
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5TmYtrb-zQEppk0up4S5LDpCazv20kY7eMQ&s"
-                            alt="MasterCard" class="rounded rounded-logo payment-method" data-method="MasterCard">
-                        <img
-                            src="https://rgb.vn/wp-content/uploads/2014/05/rgb_vn_new_branding_paypal_2014_logo_detail.png"
-                            alt="PayPal" class="rounded rounded-logo payment-method" data-method="PayPal">
+                        {{--                        <img--}}
+                        {{--                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCROhLRjX3VVIFNvry5__GAa8U2CTlQyhYlA&s"--}}
+                        {{--                            alt="Visa" class="rounded rounded-logo payment-method" data-method="Visa">--}}
+                        {{--                        <img--}}
+                        {{--                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5TmYtrb-zQEppk0up4S5LDpCazv20kY7eMQ&s"--}}
+                        {{--                            alt="MasterCard" class="rounded rounded-logo payment-method" data-method="MasterCard">--}}
                         <img
                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp1v7T287-ikP1m7dEUbs2n1SbbLEqkMd1ZA&s"
                             alt="VN pay" class="rounded rounded-logo payment-method" data-method="VN pay">
@@ -29,8 +26,11 @@
                              class="rounded rounded-logo payment-method"
                              data-method="Momo">
                         <img
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe6SEQ293X0nfFojf6nsCWKA8dNGOrqn21jg&s"
-                            alt="Zalo Pay" class="rounded rounded-logo payment-method" data-method="Zalo Pay">
+                            src="https://rgb.vn/wp-content/uploads/2014/05/rgb_vn_new_branding_paypal_2014_logo_detail.png"
+                            alt="PayPal" class="rounded rounded-logo payment-method" data-method="PayPal">
+{{--                        <img--}}
+{{--                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe6SEQ293X0nfFojf6nsCWKA8dNGOrqn21jg&s"--}}
+{{--                            alt="Zalo Pay" class="rounded rounded-logo payment-method" data-method="Zalo Pay">--}}
                     </div>
                 </div>
 
@@ -67,9 +67,11 @@
                             toán
                         </button>
                     </form>
-                    <button type="button" class="continue-payment w-full bg-gray-300 text-gray-700 py-3 rounded">Hủy
-                        thanh toán
-                    </button>
+                    <a href="{{ route('filament.employer.resources.employer.buy-services.buy-services.index') }}">
+                        <button type="button" class="continue-payment w-full bg-gray-300 text-gray-700 py-3 rounded">Hủy
+                            thanh toán
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>

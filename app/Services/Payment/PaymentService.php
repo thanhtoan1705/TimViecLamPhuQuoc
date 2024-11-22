@@ -96,14 +96,14 @@ class PaymentService
             $finalPrice = $package->price - $promo->discount;
         }
 
-        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        $vnp_Url = config('vnpay.vnp_url');
         $vnp_Returnurl = route('client.employer.vnpay.callback', [
             'employer_id' => $employerId,
             'package_id' => $package->id,
             'promo_id' => $promo ? $promo->id : null
         ]);
-        $vnp_TmnCode = "K352G5ON";
-        $vnp_HashSecret = "F1GCU0VW1JEOZZNDZ80D3C6MHW8N7M8Y";
+        $vnp_TmnCode = config('vnpay.vnp_tmncode');
+        $vnp_HashSecret = config('vnpay.vnp_hashsecret');
 
         $vnp_TxnRef = 'TXN' . time() . '_' . $employerId . '_' . $package->id . '_' . ($promo ? $promo->id : 0);
         $vnp_OrderInfo = "Thanh toán gói " . $package->name . " cho nhà tuyển dụng #" . $employerId;
@@ -135,7 +135,6 @@ class PaymentService
             $inputData['vnp_Bill_State'] = $vnp_Bill_State;
         }
 
-        //var_dump($inputData);
         ksort($inputData);
         $query = "";
         $i = 0;
@@ -228,13 +227,12 @@ class PaymentService
         $jsonResult = json_decode($result, true);
 
         if (isset($jsonResult['payUrl'])) {
-            // Chuyển hướng đến trang thanh toán MoMo
             header('Location: ' . $jsonResult['payUrl']);
             exit;
         } else {
-            dd('Lỗi: Không tìm thấy URL thanh toán MoMo.', $jsonResult);
+            logger()->error('Lỗi thanh toán MoMo', $jsonResult);
+            dd('Lỗi: ' . ($jsonResult['message'] ?? 'Không xác định'), $jsonResult);
         }
-//        header('Location: ' . $jsonResult['payUrl']);
         exit;
     }
 
@@ -246,26 +244,26 @@ class PaymentService
             $finalPrice = $package->price - $promo->discount;
         }
 
-        $config = [
-            "app_id" => 2553,
-            "key1" => "PcY4iZIKFCIdgZvA6ueMcMHHUbRLYjPL",
-            "key2" => "kLtgPl8HHhfvMuDHPwKfgfsY4Ydm9eIz",
-            "endpoint" => "https://sb-openapi.zalopay.vn/v2/create"
-        ];
+        $appId = config('zalo.app_id');
+        $key1 = config('zalo.key1');
+        $key2 = config('zalo.key2');
+        $endpoint = config('zalo.endpoint');
+
 
         $embeddata = '{}';
         $items = '[]';
         $transID = rand(0, 1000000);
 
         $order = [
-            "app_id" => $config["app_id"],
-            "app_time" => round(microtime(true) * 1000), // miliseconds
-            "app_trans_id" => date("ymd") . "_" . $transID, // translation missing: vi.docs.shared.sample_code.comments.app_trans_id
+            "app_id" => $appId,
+            "app_time" => round(microtime(true) * 1000),
+            "app_trans_id" => date("ymd") . "_" . $transID,
             "app_user" => "user_" . $employerId,
             "item" => $items,
             "embed_data" => $embeddata,
             "amount" => $finalPrice,
             "description" => "Thanh toán gói " . $package->name . " cho nhà tuyển dụng #" . $employerId,
+//            "bank_code" => "zalopay",
             "bank_code" => "zalopayapp",
             "callback_url" => route('client.employer.zalopay.callback', [
                 'employer_id' => $employerId,
@@ -276,7 +274,7 @@ class PaymentService
 
         $data = $order["app_id"] . "|" . $order["app_trans_id"] . "|" . $order["app_user"] . "|" . $order["amount"]
             . "|" . $order["app_time"] . "|" . $order["embed_data"] . "|" . $order["item"];
-        $order["mac"] = hash_hmac("sha256", $data, $config["key1"]);
+        $order["mac"] = hash_hmac("sha256", $data, $key1);
 
         $context = stream_context_create([
             "http" => [
@@ -286,7 +284,7 @@ class PaymentService
             ]
         ]);
 
-        $resp = file_get_contents($config["endpoint"], false, $context);
+        $resp = file_get_contents($endpoint, false, $context);
         $result = json_decode($resp, true);
 
         if ($result['return_code'] == 1) {
@@ -312,9 +310,7 @@ class PaymentService
         );
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        //execute post
         $result = curl_exec($ch);
-        //close connection
         curl_close($ch);
         return $result;
     }
@@ -383,7 +379,7 @@ class PaymentService
 
             // Kiểm tra nếu thời gian hết hạn vẫn còn hiệu lực
             if ($expiresAt > now()) {
-                // Gia hạn thêm 30 ngày từ ngày hết hạn hiện tại
+                // Gia hạn thêm $package->period ngày từ ngày hết hạn hiện tại
                 $userJobPackage->expires_at = $expiresAt->addDays($package->period);
             } else {
                 // Nếu đã hết hạn, bắt đầu lại từ thời điểm hiện tại
