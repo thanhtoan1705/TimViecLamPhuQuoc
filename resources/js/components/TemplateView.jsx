@@ -8,7 +8,7 @@ import PreviewModal from './common/Modals/PreviewModal';
 import SectionModal from './common/Modals/SectionModal';
 import MainToolbar from './common/MainToolbar';
 
-const TemplateView = ({templateId}) => {
+const TemplateView = ({templateId, isPreview = false}) => {
     const {textStyles, updateTextStyle, applyStyleToSelection} = useEditMode();
 
     const [cvData, setCvData] = useState({
@@ -130,26 +130,68 @@ const TemplateView = ({templateId}) => {
 
     const handleSave = async () => {
         try {
-            const response = await fetch('/api/cv/save', {
+            const pathArray = window.location.pathname.split('/');
+            const template_id = pathArray[pathArray.length - 1];
+
+            // Thu thập styles từ tất cả các phần tử có định dạng
+            const textStyles = {};
+            document.querySelectorAll('[contenteditable="true"]').forEach(element => {
+                if (!element.id) {
+                    element.id = `element-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+                }
+                textStyles[element.id] = {
+                    fontWeight: element.style.fontWeight || 'normal',
+                    fontStyle: element.style.fontStyle || 'normal',
+                    textDecoration: element.style.textDecoration || 'none',
+                    fontFamily: element.style.fontFamily || 'Arial, sans-serif',
+                    fontSize: element.style.fontSize || '14px',
+                    color: element.style.color || '#000000'
+                };
+            });
+
+            const saveData = {
+                template_id: template_id,
+                cv_content: JSON.stringify({
+                    data: {
+                        ...cvData,
+                        sections: sections,
+                        textStyles: textStyles
+                    },
+                    styles: {
+                        ...styles,
+                        currentStyles: currentStyles,
+                        elementStyles: textStyles
+                    }
+                })
+            };
+
+            console.log('Saving data:', saveData);
+
+            const response = await fetch('/save-cv', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
                 },
-                body: JSON.stringify({
-                    data: cvData,
-                    styles: {
-                        ...styles,
-                        backgroundImage: styles.backgroundImage
-                    }
-                })
+                body: JSON.stringify(saveData)
             });
 
-            if (response.ok) {
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Lỗi khi lưu CV');
+            }
+
+            const result = await response.json();
+
+            if (result.success) {
                 alert('CV đã được lưu thành công!');
+            } else {
+                throw new Error(result.message || 'Lỗi không xác định khi lưu CV');
             }
         } catch (error) {
-            console.error('Lỗi khi lưu CV:', error);
-            alert('Có lỗi xảy ra khi lưu CV');
+            console.error('Lỗi chi tiết:', error);
+            alert('Có lỗi xảy ra khi lưu CV: ' + error.message);
         }
     };
 
@@ -315,23 +357,25 @@ const TemplateView = ({templateId}) => {
 
     // Render toolbar vào container
     useEffect(() => {
-        const toolbarContainer = document.getElementById('toolbar-root');
-        if (toolbarContainer) {
-            const toolbarRoot = window.createRoot(toolbarContainer);
-            toolbarRoot.render(
-                <MainToolbar
-                    onFormatText={handleFormatText}
-                    currentStyles={currentStyles}
-                    onPrimaryColorChange={handlePrimaryColorChange}
-                    primaryColor={styles.primaryColor}
-                    onBackgroundImageChange={handleBackgroundImageChange}
-                    onDownload={handleDownloadClick}
-                    onPreview={handlePreviewClick}
-                    onSave={handleSave}
-                />
-            );
+        if (!isPreview) {
+            const toolbarContainer = document.getElementById('toolbar-root');
+            if (toolbarContainer) {
+                const toolbarRoot = window.createRoot(toolbarContainer);
+                toolbarRoot.render(
+                    <MainToolbar
+                        onFormatText={handleFormatText}
+                        currentStyles={currentStyles}
+                        onPrimaryColorChange={handlePrimaryColorChange}
+                        primaryColor={styles.primaryColor}
+                        onBackgroundImageChange={handleBackgroundImageChange}
+                        onDownload={handleDownloadClick}
+                        onPreview={handlePreviewClick}
+                        onSave={handleSave}
+                    />
+                );
+            }
         }
-    }, [currentStyles, styles.primaryColor, styles.backgroundImage]);
+    }, [currentStyles, styles.primaryColor, styles.backgroundImage, isPreview]);
 
     // Thêm state để theo dõi các sections có sẵn
     const availableSections = [
@@ -339,7 +383,7 @@ const TemplateView = ({templateId}) => {
         {id: 'careerObjective', name: 'Mục tiêu nghề nghiệp', icon: 'bullseye'},
         {id: 'experience', name: 'Kinh nghiệm làm việc', icon: 'briefcase'},
         {id: 'education', name: 'Học vấn', icon: 'graduation-cap'},
-        {id: 'skills', name: 'Kỹ năng', icon: 'tools'},
+        {id: 'skills', name: 'K năng', icon: 'tools'},
         {id: 'projects', name: 'Dự án', icon: 'project-diagram'},
         {id: 'certificates', name: 'Chứng chỉ', icon: 'certificate'},
         {id: 'languages', name: 'Ngoại ngữ', icon: 'language'},
@@ -435,6 +479,105 @@ const TemplateView = ({templateId}) => {
         });
         setCvData(newData);
     };
+
+    // Thêm useEffect để load dữ liệu đã lưu
+    useEffect(() => {
+        const loadSavedData = async () => {
+            try {
+                const pathArray = window.location.pathname.split('/');
+                const template_id = pathArray[pathArray.length - 1];
+
+                console.log('Loading data for template:', template_id);
+
+                const response = await fetch(`/api/cv-templates/${template_id}`);
+                const result = await response.json();
+
+                console.log('Loaded data:', result);
+
+                if (result.userCv) {
+                    const savedContent = result.userCv;
+
+                    if (savedContent.data) {
+                        // Cập nhật cvData
+                        setCvData(prevData => ({
+                            ...prevData,
+                            ...savedContent.data
+                        }));
+
+                        // Cập nhật sections
+                        if (savedContent.data.sections) {
+                            setSections(savedContent.data.sections);
+                        }
+
+                        // Khôi phục định dạng văn bản
+                        if (savedContent.data.textStyles) {
+                            // Đợi một chút để DOM được render
+                            setTimeout(() => {
+                                Object.entries(savedContent.data.textStyles).forEach(([elementId, styles]) => {
+                                    const element = document.getElementById(elementId);
+                                    if (element) {
+                                        element.style.fontWeight = styles.fontWeight || 'normal';
+                                        element.style.fontStyle = styles.fontStyle || 'normal';
+                                        element.style.textDecoration = styles.textDecoration || 'none';
+                                        element.style.fontFamily = styles.fontFamily || 'Arial, sans-serif';
+                                        element.style.fontSize = styles.fontSize || '14px';
+                                        element.style.color = styles.color || '#000000';
+                                    }
+                                });
+                            }, 100);
+                        }
+                    }
+
+                    if (savedContent.styles) {
+                        // Cập nhật styles chung
+                        setStyles(prevStyles => ({
+                            ...prevStyles,
+                            ...savedContent.styles
+                        }));
+
+                        // Cập nhật currentStyles
+                        if (savedContent.styles.currentStyles) {
+                            setCurrentStyles(prevCurrentStyles => ({
+                                ...prevCurrentStyles,
+                                ...savedContent.styles.currentStyles
+                            }));
+                        }
+
+                        // Khôi phục định dạng cho các phần tử đã được style
+                        if (savedContent.styles.elementStyles) {
+                            setTimeout(() => {
+                                Object.entries(savedContent.styles.elementStyles).forEach(([elementId, styles]) => {
+                                    const element = document.getElementById(elementId);
+                                    if (element) {
+                                        Object.assign(element.style, styles);
+                                    }
+                                });
+                            }, 100);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Lỗi khi load dữ liệu CV:', error);
+            }
+        };
+
+        loadSavedData();
+    }, []); // Chạy một lần khi component mount
+
+    // Thêm một useEffect khác để theo dõi thay đổi của cvData
+    useEffect(() => {
+        // Áp dụng lại styles khi cvData thay đổi
+        if (cvData && cvData.textStyles) {
+            setTimeout(() => {
+                Object.entries(cvData.textStyles).forEach(([elementId, styles]) => {
+                    const element = document.getElementById(elementId);
+                    if (element) {
+                        Object.assign(element.style, styles);
+                    }
+                });
+            }, 100);
+        }
+    }, [cvData]);
 
     // Thêm hàm để chọn template dựa vào templateId
     const renderTemplate = () => {

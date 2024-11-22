@@ -49,7 +49,7 @@
 
                 <div class="cv-workspace">
                     <div class="template-container">
-                        <div id="example" data-template-id="{{ $templateId }}"></div>
+                        <div id="example" data-template-id="{{ $template->template_content }}"></div>
                     </div>
                 </div>
             </div>

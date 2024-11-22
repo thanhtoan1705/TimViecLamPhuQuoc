@@ -45,6 +45,8 @@ class JobPostRepository implements JobPostInterface
     {
         $jobPosts = $this->jobPost
             ->with(['employer.userJobPackages.jobPostPackage'])
+            ->where('end_date', '>=', now())
+            ->where('status', 1)
             ->get();
 
         $groupedJobPosts = $jobPosts->groupBy(function ($item) {

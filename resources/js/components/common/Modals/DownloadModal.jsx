@@ -17,8 +17,8 @@ const DownloadModal = ({isOpen, onClose, onDownload}) => {
     if (!isOpen) return null;
 
     return (
-        <div className="modal-overlay">
-            <div className="modal-content">
+        <div className="download-modal-overlay">
+            <div className="download-modal-content">
                 <h2>Tải xuống CV</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -34,10 +34,10 @@ const DownloadModal = ({isOpen, onClose, onDownload}) => {
                         <span className="file-extension">.pdf</span>
                     </div>
                     <div className="modal-actions">
-                        <button type="button" onClick={onClose} className="btn-secondary">
+                        <button type="button" onClick={onClose} className="download-modal-cancel">
                             Hủy
                         </button>
-                        <button type="submit" className="btn-primary">
+                        <button type="submit" className="download-modal-submit">
                             Tải xuống
                         </button>
                     </div>

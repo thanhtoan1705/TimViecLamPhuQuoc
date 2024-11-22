@@ -19,15 +19,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cv/download/{id}', [CvTemplateController::class, 'downloadPDF'])->name('cv.download.pdf');
 });
 
-Route::get('/cv/template/{id}', [CvTemplateController::class, 'previewTemplate'])
-    ->name('cv.previewTemplate')
-    ->where('id', '[0-9]+');
-
-// Trang danh sách template
-Route::get('/cv/templates', [CvTemplateController::class, 'listTemplates'])
-    ->name('cv.templates');
-
 // Trang xem template riêng
-Route::get('/cv/template-view/{id}', [CvTemplateController::class, 'viewTemplate'])
-    ->name('cv.viewTemplate')
-    ->where('id', '[1-9]+');
+// Route::get('/cv/mau-cv/{id}', [CvTemplateController::class, 'viewTemplate'])
+//     ->name('cv.viewTemplate');
+
+    Route::get('/cv/mau-cv/{id}', [CvTemplateController::class, 'viewTemplate'])
+    ->name('cv.viewTemplate');
+
+Route::get('/cv/preview/{id}', [CvTemplateController::class, 'previewTemplate'])->name('cv.preview');

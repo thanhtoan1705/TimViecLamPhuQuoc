@@ -12,11 +12,9 @@
 }
 
 .modal-content {
-    background: white;
-    padding: 24px;
     border-radius: 8px;
     min-width: 400px;
-    max-width: 90%;
+    max-width: 100%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -144,4 +142,93 @@
     text-align: center;
     color: #6b7280;
     padding: 24px;
+}
+
+/* Preview Modal specific styles */
+.preview-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.preview-modal-content {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* Download Modal specific styles */
+.download-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.download-modal-content {
+    background: white;
+    border-radius: 8px;
+    width: 400px;
+    padding: 24px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Preview Modal buttons */
+.preview-modal-close {
+    background: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.preview-modal-close:hover {
+    background: #2563eb;
+}
+
+/* Download Modal buttons */
+.download-modal-cancel {
+    background: #e5e7eb;
+    color: #374151;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.download-modal-cancel:hover {
+    background: #d1d5db;
+}
+
+.download-modal-submit {
+    background: #10b981;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.download-modal-submit:hover {
+    background: #059669;
 }

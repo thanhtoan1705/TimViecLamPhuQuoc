@@ -5,8 +5,8 @@ const PreviewModal = ({isOpen, onClose, children}) => {
     if (!isOpen) return null;
 
     return (
-        <div className="modal-overlay">
-            <div className="modal-content preview-modal">
+        <div className="preview-modal-overlay">
+            <div className="preview-modal-content">
                 <div className="modal-header pt-0">
                     <h2>Xem trước CV</h2>
                     <button onClick={onClose} className="close-button">×</button>
@@ -17,7 +17,7 @@ const PreviewModal = ({isOpen, onClose, children}) => {
                     </div>
                 </div>
                 <div className="modal-actions">
-                    <button onClick={onClose} className="btn-primary">
+                    <button onClick={onClose} className="preview-modal-close">
                         Đóng
                     </button>
                 </div>

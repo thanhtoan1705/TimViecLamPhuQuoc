@@ -89,6 +89,9 @@ class CvTemplateController extends Controller
                 'data' => $userCv
             ]);
 
+            flash()->success('CV đã được lưu thành công', [], 'Thành công!');
+
+
         } catch (\Exception $e) {
             \Log::error('Error saving CV: ' . $e->getMessage());
             return response()->json([
@@ -163,8 +166,7 @@ class CvTemplateController extends Controller
             $userCv->delete();
             flash()->success('Xóa thành công CV đã lưu.', [], 'Thành công!');
 
-            return redirect()->route('client.cv.saved')
-                ->with('success', 'CV đã được xóa thành công');
+            return redirect()->route('client.cv.saved');
 
         } catch (\Exception $e) {
             flash()->success('Có lỗi xảy ra khi xóa CV.', [], 'Thành công!');
@@ -211,14 +213,8 @@ class CvTemplateController extends Controller
 
     public function previewTemplate($id)
     {
-        // Validate template ID
-        if (!in_array($id, [1, 2])) {
-            abort(404);
-        }
-
-        return view('client.cv.cv-preview', [
-            'templateId' => $id
-        ]);
+        $template = CvTemplate::findOrFail($id);
+        return view('client.cv.preview', ['template' => $template]);
     }
 
     public function listTemplates()
@@ -228,12 +224,9 @@ class CvTemplateController extends Controller
 
     public function viewTemplate($id)
     {
-        if (!in_array($id, [1, 2, 3])) {
-            abort(404);
-        }
-
+        $template = CvTemplate::findOrFail($id);
         return view('client.cv.template-view', [
-            'templateId' => $id
+            'template' => $template
         ]);
     }
 

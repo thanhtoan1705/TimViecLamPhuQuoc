@@ -128,7 +128,7 @@
                                                         <i class="fi-rr-pencil"></i> Dùng mẫu
                                                     </a>
                                                 @else
-                                                    <a href="{{ route('client.cv.show', ['id' => $template->id]) }}"
+                                                    <a href="{{ route('client.cv.viewTemplate', ['id' => $template->id]) }}"
                                                        class="p-0 btn btn-use p-md-1">
                                                         <i class="fi-rr-pencil"></i> Dùng mẫu
                                                     </a>
@@ -144,7 +144,7 @@
                                 <div class="card-block-info">
                                     <h6><a href="">{{ $template->template_name }}</a></h6>
                                     <div class="mt-5">
-                                        <span class="card-briefcase">{{ $template->template_description }}</span>
+                                        <span class="card-briefcase">{!! $template->template_description !!}</span>
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +162,7 @@
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <div id="reviewCV{{ $template->id }}"></div>
+                                        <div id="previewContainer{{ $template->id }}" class="template-preview-container"></div>
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +197,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a href="{{ route('client.cv.show', ['id' => $template->id]) }}"
+                                                    <a href="{{ route('client.cv.viewTemplate', ['id' => $template->id]) }}"
                                                        class="card h-100 text-center p-4 text-decoration-none continue-edit option-card">
                                                         <div class="mb-3 option-icon">
                                                             <i class="fi-rr-edit icon-option"></i>
@@ -842,12 +842,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     modal.show();
                 } else {
                     // Nếu chưa có CV, chuyển thẳng đến trang tạo CV
-                    window.location.href = `/cv/${templateId}`;
+                    window.location.href = `/cv/mau-cv/${templateId}`;
                 }
             } catch (error) {
                 console.error('Error:', error);
                 // Nếu có lỗi, vẫn chuyển đến trang tạo CV
-                window.location.href = `/cv/${templateId}`;
+                window.location.href = `/cv/mau-cv/${templateId}`;
             }
         });
     });
@@ -873,7 +873,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const deleteData = await deleteResponse.json();
 
                 if (deleteData.success) {
-                    window.location.href = `/cv/${templateId}`;
+                    window.location.href = `/cv/mau-cv/${templateId}`;
                 } else {
                     console.error('Error deleting template:', deleteData.message);
                 }
@@ -885,3 +885,24 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endpush
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @foreach($templates as $template)
+            const modal = document.getElementById('previewModal{{ $template->id }}');
+            modal.addEventListener('shown.bs.modal', function () {
+                const container = document.getElementById('previewContainer{{ $template->id }}');
+                if (!container.hasChildNodes()) { // Chỉ render nếu chưa render
+                    const root = window.createRoot(container);
+                    root.render(
+                        React.createElement(window.TemplateView, {
+                            templateId: '{{ $template->template_content }}',
+                            isPreview: false // Truyền thêm prop để nhận biết chế độ xem trước
+                        })
+                    );
+                }
+            });
+        @endforeach
+    });
+</script>
