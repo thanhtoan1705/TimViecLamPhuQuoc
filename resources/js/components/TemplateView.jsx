@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import Template1 from './templates/Template1/Template1';
 import Template2 from './templates/Template2/Template2';
+import Template3 from './templates/Template3/Template3';
 import sampleData from './data/sampleData';
 import useEditMode from '../hooks/useEditMode';
 import DownloadModal from './common/Modals/DownloadModal';
 import PreviewModal from './common/Modals/PreviewModal';
 import SectionModal from './common/Modals/SectionModal';
 import MainToolbar from './common/MainToolbar';
+import { createPortal } from 'react-dom';
 
 const TemplateView = ({templateId, isPreview = false}) => {
     const {textStyles, updateTextStyle, applyStyleToSelection} = useEditMode();
@@ -50,6 +52,8 @@ const TemplateView = ({templateId, isPreview = false}) => {
     const [isSectionModalOpen, setIsSectionModalOpen] = useState(false);
     const [unusedSections, setUnusedSections] = useState([]);
     const [buttonPosition, setButtonPosition] = useState(null);
+    const [showToolbar, setShowToolbar] = useState(true);
+    const [showModal, setShowModal] = useState(true);
 
     const [sections, setSections] = useState([
         {id: 'personalInfo', column: 'sidebar', order: 0},
@@ -355,27 +359,51 @@ const TemplateView = ({templateId, isPreview = false}) => {
         }));
     };
 
-    // Render toolbar vào container
-    useEffect(() => {
-        if (!isPreview) {
-            const toolbarContainer = document.getElementById('toolbar-root');
-            if (toolbarContainer) {
-                const toolbarRoot = window.createRoot(toolbarContainer);
-                toolbarRoot.render(
-                    <MainToolbar
-                        onFormatText={handleFormatText}
-                        currentStyles={currentStyles}
-                        onPrimaryColorChange={handlePrimaryColorChange}
-                        primaryColor={styles.primaryColor}
-                        onBackgroundImageChange={handleBackgroundImageChange}
-                        onDownload={handleDownloadClick}
-                        onPreview={handlePreviewClick}
-                        onSave={handleSave}
-                    />
-                );
-            }
+    // Render toolbar using portal
+    const renderToolbar = () => {
+        const toolbarContainer = document.getElementById('toolbar-root');
+        if (!isPreview && toolbarContainer && showToolbar) {
+            return createPortal(
+                <MainToolbar
+                    onFormatText={handleFormatText}
+                    currentStyles={currentStyles}
+                    onPrimaryColorChange={handlePrimaryColorChange}
+                    primaryColor={styles.primaryColor}
+                    onBackgroundImageChange={handleBackgroundImageChange}
+                    onDownload={handleDownloadClick}
+                    onPreview={handlePreviewClick}
+                    onSave={handleSave}
+                />,
+                toolbarContainer
+            );
         }
-    }, [currentStyles, styles.primaryColor, styles.backgroundImage, isPreview]);
+        return null;
+    };
+
+    // Render modal using portal
+    const renderModal = () => {
+        const modalContainer = document.getElementById('sectionModalContainer');
+        if (modalContainer && showModal) {
+            return createPortal(
+                <SectionModal
+                    isOpen={isSectionModalOpen}
+                    onClose={handleCloseModal}
+                    unusedSections={unusedSections}
+                    onAddSection={handleAddSection}
+                />,
+                modalContainer
+            );
+        }
+        return null;
+    };
+
+    // Cleanup effect
+    useEffect(() => {
+        return () => {
+            setShowToolbar(false);
+            setShowModal(false);
+        };
+    }, []);
 
     // Thêm state để theo dõi các sections có sẵn
     const availableSections = [
@@ -447,27 +475,6 @@ const TemplateView = ({templateId, isPreview = false}) => {
         const sidebarSections = ['personalInfo', 'skills', 'references'];
         return sidebarSections.includes(sectionId) ? 'sidebar' : 'main';
     };
-
-    // Render modal
-    useEffect(() => {
-        const modalContainer = document.getElementById('sectionModalContainer');
-        if (modalContainer) {
-            const modalRoot = window.createRoot(modalContainer);
-            modalRoot.render(
-                <SectionModal
-                    isOpen={isSectionModalOpen}
-                    onClose={handleCloseModal}
-                    unusedSections={unusedSections}
-                    onAddSection={handleAddSection}
-                />
-            );
-
-            // Cleanup khi component unmount
-            return () => {
-                modalRoot.unmount();
-            };
-        }
-    }, [isSectionModalOpen, unusedSections]);
 
     const handleSectionReorder = (updatedSections) => {
         setSections(updatedSections);
@@ -604,6 +611,17 @@ const TemplateView = ({templateId, isPreview = false}) => {
                         onSectionReorder={handleSectionReorder}
                     />
                 );
+            case '3':
+                return (
+                    <Template3
+                        data={cvData}
+                        onUpdate={handleUpdateData}
+                        isEditable={true}
+                        styles={styles}
+                        sections={sections}
+                        onSectionReorder={handleSectionReorder}
+                    />
+                );
             default:
                 return (
                     <Template1
@@ -621,6 +639,8 @@ const TemplateView = ({templateId, isPreview = false}) => {
     return (
         <div className="template-container">
             {renderTemplate()}
+            {renderToolbar()}
+            {renderModal()}
 
             <DownloadModal
                 isOpen={isDownloadModalOpen}

@@ -46,15 +46,13 @@
 /* Item styles */
 .editable-item {
     position: relative;
-    margin-bottom: 12px;
 }
 
 .item-wrapper {
     position: relative;
-    padding: 12px 16px;
-    background: #f8f9fa;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border-radius: 6px;
-    border: 1px solid #e9ecef;
     cursor: pointer;
     transition: all 0.2s ease;
 }

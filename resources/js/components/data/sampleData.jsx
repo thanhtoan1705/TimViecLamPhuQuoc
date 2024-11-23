@@ -2,7 +2,7 @@ const sampleData = {
     avatar: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y',
     title_personal_info: 'Thông tin cá nhân',
     name: 'Nguyễn Văn A',
-    birthdate: '01/01/1990',
+    birthday: '01/01/1990',
     address: 'Hà Nội, Việt Nam',
     phone: '0123 456 789',
     email: 'nguyenvana@example.com',

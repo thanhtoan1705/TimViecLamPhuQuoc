@@ -1,0 +1,216 @@
+/* Main container styles */
+.cv-template-3 {
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 30px;
+    color: var(--text-color);
+}
+
+/* Header styles */
+.t3-header {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.t3-header-left {
+    flex: 0 0 200px;
+}
+
+.t3-avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.t3-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.t3-header-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.t3-name-title {
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+.t3-name {
+    color: var(--primary-color);
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.t3-job-title {
+    color: #666;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.t3-objective {
+    font-style: italic;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Main content layout */
+.template3-main {
+    display: flex;
+    gap: 30px;
+}
+
+.left-column {
+    flex: 1;
+    border-right: 2px solid var(--primary-color);
+    padding-right: 20px;
+}
+
+.right-column {
+    flex: 2;
+}
+
+
+.section-title {
+    color: var(--primary-color);
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+/* Controls for edit mode */
+.section-wrapper {
+    position: relative;
+    margin-top: 35px;
+    margin-bottom: 20px;
+}
+
+.section-controls-wrapper {
+    position: absolute;
+    left: 0;
+    top: -35px;
+    z-index: 10;
+}
+
+.section-controls {
+    display: flex !important;
+    gap: 4px !important;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.section-wrapper:hover .section-controls {
+    opacity: 1;
+}
+
+.control-btn,
+.control-btn:hover,
+.control-btn:focus,
+.control-btn:active {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    position: static;
+}
+
+.control-btn::after,
+.control-btn::before,
+.control-btn:hover::after,
+.control-btn:hover::before {
+    display: none !important;
+    content: none !important;
+}
+
+.drag-btn {
+    background-color: #333 !important;
+}
+
+.delete-btn {
+    background-color: #dc3545 !important;
+}
+
+.control-btn i {
+    font-size: 14px;
+    color: white;
+}
+
+/* Dragging states */
+.drag-over {
+    background: rgba(0, 128, 0, 0.05);
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
+/* Contact info section */
+.contact-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.contact-item i {
+    color: var(--primary-color);
+    font-size: 16px;
+}
+
+/* Timeline styles for experience and projects */
+.timeline-item {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -6px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 0;
+    top: 17px;
+    bottom: -5px;
+    width: 2px;
+    background: var(--primary-color);
+}
+/* Print styles */
+@media print {
+    .cv-template-3 {
+        padding: 0;
+        max-width: none;
+    }
+
+    .section-controls {
+        display: none;
+    }
+}
+

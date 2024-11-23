@@ -108,7 +108,7 @@
                                         <img src="{{ asset('storage/' . $template->template_image) }}"
                                              alt="{{ $template->template_name }}" class="w-100">
                                         <div class="overlay-buttons">
-                                            <a href="#" class="p-0 btn btn-preview p-md-1" data-bs-toggle="modal"
+                                            <a href="#" class="p-10 btn btn-preview p-md-1" data-bs-toggle="modal"
                                                data-bs-target="#previewModal{{ $template->id }}">
                                                 <i class="fi-rr-eye"></i> Xem trước
                                             </a>
@@ -122,19 +122,19 @@
                                             @endphp
                                             @if(Auth::check())
                                                 @if($hasExistingCV)
-                                                    <a href="#" class="p-0 btn btn-use p-md-1"
+                                                    <a href="#" class="p-10 btn btn-use p-md-1"
                                                        data-bs-toggle="modal"
                                                        data-bs-target="#chooseCreateTypeModal{{ $template->id }}">
                                                         <i class="fi-rr-pencil"></i> Dùng mẫu
                                                     </a>
                                                 @else
                                                     <a href="{{ route('client.cv.viewTemplate', ['id' => $template->id]) }}"
-                                                       class="p-0 btn btn-use p-md-1">
+                                                       class="p-10 btn btn-use p-md-1">
                                                         <i class="fi-rr-pencil"></i> Dùng mẫu
                                                     </a>
                                                 @endif
                                             @else
-                                                <a href="#" class="p-0 btn btn-use p-md-1" data-bs-toggle="modal" data-bs-target="#ModalLoginForm">
+                                                <a href="#" class="p-10 btn btn-use p-md-1" data-bs-toggle="modal" data-bs-target="#ModalLoginForm">
                                                     <i class="fi-rr-pencil"></i> Dùng mẫu
                                                 </a>
                                             @endif
@@ -674,6 +674,47 @@
         #reviewCV .btn,
         #reviewCV .cv-toolbar {
             display: none !important;
+        }
+
+        /* Thêm styles mới để cân bằng chiều cao card */
+        .card-grid-2 {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-grid-2 .image-box {
+            position: relative;
+            padding-top: 100%;
+            width: 100%;
+        }
+
+        .card-grid-2 .image-box img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-grid-2 .card-block-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            min-height: 60px;
+        }
+
+        .card-grid-2 .card-block-info h6 {
+            margin-bottom: 10px;
+        }
+
+        /* Đảm bảo các col có chiều cao bằng nhau */
+        .row > [class*='col-'] {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
         }
     </style>
 @endpush
