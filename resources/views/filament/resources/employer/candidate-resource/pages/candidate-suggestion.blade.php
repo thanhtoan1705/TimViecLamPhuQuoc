@@ -30,7 +30,13 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="candidate-description">{!! $candidate->description !!}</div>
+                        <div class="candidate-description">
+                            @if ($candidate->description)
+                                {!! $candidate->description !!}
+                            @else
+                                Chưa cập nhật
+                            @endif
+                        </div>
 
                         <div class="skills">
                             @foreach($candidate->skills->take(4) as $skill)
@@ -45,10 +51,16 @@
                             @if ($candidate->address)
                                 {{ $candidate->address->province->name }}
                             @else
-                                N/A
+                                Chưa cập nhật
                             @endif
                         </div>
-                        <div class="price">{{ $candidate->salary->name }} VNĐ</div>
+{{--                        @if(optional(optional($candidate->candidate)->salary)->name)--}}
+{{--                            <div class="price">{{ optional(optional($candidate->candidate)->salary)->name }} VNĐ</div>--}}
+{{--                        @endif--}}
+
+{{--                        <div class="price">{{ $candidate->salary->name}} VNĐ</div>--}}
+
+                        <div class="price">{{ $candidate->salary->name ?? '' }}</div>
                     </div>
                 </div>
             @endforeach

@@ -21,9 +21,11 @@ class ServiceTrackingResource extends Resource
 
     protected static ?string $modelLabel = 'Dịch vụ đã mua';
 
-    protected static ?string $navigationGroup = 'Dịch vụ';
+    protected static ?string $navigationGroup = 'Quản lý dịch vụ';
 
     protected static ?string $navigationIcon = 'heroicon-o-square-3-stack-3d';
+
+    protected static ?int $navigationSort = 7;
 
     public static function getNavigationBadge(): ?string
     {

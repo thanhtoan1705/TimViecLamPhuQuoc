@@ -17,13 +17,17 @@ class CandidateSaveResource extends Resource
 {
     protected static ?string $model = SaveCandidate::class;
 
+    protected static ?string $slug = 'candidate-saves';
+
     protected static ?string $navigationLabel = 'Ứng viên đã lưu';
 
     protected static ?string $modelLabel = 'Ứng viên đã lưu';
 
-    protected static ?string $navigationGroup = 'Ứng viên';
+    protected static ?string $navigationGroup = 'Quản lý ứng viên';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bookmark';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {

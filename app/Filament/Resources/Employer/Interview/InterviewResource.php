@@ -31,6 +31,8 @@ class InterviewResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
 
+    protected static ?int $navigationSort = 8;
+
     public static function getNavigationBadge(): ?string
     {
         $employerId = Auth::user()->employer->id;

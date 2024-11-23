@@ -32,7 +32,7 @@ class JobPostResource extends Resource
 
     protected static ?string $modelLabel = 'Tin tuyển dụng';
     protected static ?string $navigationGroup = 'Quản lý tin đăng';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
@@ -108,7 +108,8 @@ class JobPostResource extends Resource
                                             ->maxLength(180)
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null)
-                                            ->label('Tiêu đề bài đăng')->placeholder('Tuyển dụng nhân viên...'),
+                                            ->label('Tiêu đề bài đăng')->placeholder('Tuyển dụng nhân viên...')
+                                            ->columnSpanFull(),
 //                                        TextInput::make('slug')
 //                                            ->required()
 //                                            ->dehydrated()
@@ -165,10 +166,12 @@ class JobPostResource extends Resource
                                             ->maxDate(Carbon::now()->addDays(90)),
                                         Forms\Components\RichEditor::make('description')
                                             ->label('Mô tả công việc')
+                                            ->required()
                                             ->placeholder('Mô tả chi tiết công việc để ứng viên hiểu rõ về yêu cầu của công ty với vị trí này. VD:
                                             - Kiểm tra các order trước khi thanh toán, trực tiếp thực hiện quá trình thanh toán.
                                             - Các công việc khác theo yêu cầu của quản lý.')
-                                            ->columnSpanFull(),
+                                            ->columnSpanFull()
+                                            ->helperText('Xem hướng dẫn chi tiết về cách viết mô tả công việc tại <a href="https://example.com/huong-dan-viet-mo-ta-cong-viec" target="_blank" style="color: #007bff; text-decoration: underline;">đây</a>.'),
                                     ]),
                                 ]),
 

@@ -156,4 +156,24 @@ class User extends Authenticatable implements HasAvatar, FilamentUser, MustVerif
                 return true; // Cho phép truy cập các panel khác
         }
     }
+
+
+//    public function getAvatarUrlAttribute()
+//    {
+//        $path = $this->attributes['avatar_url'] ?? null;
+//        $default = config('image.avatar'); // Đường dẫn ảnh mặc định
+//
+//        // Kiểm tra nếu $path là URL
+//        if (filter_var($path, FILTER_VALIDATE_URL)) {
+//            return $path;
+//        }
+//
+//        // Kiểm tra ảnh trong storage
+//        if ($path && Storage::disk('public')->exists($path)) {
+//            return asset('storage/' . $path);
+//        }
+//
+//        // Trả về ảnh mặc định
+//        return asset($default);
+//    }
 }

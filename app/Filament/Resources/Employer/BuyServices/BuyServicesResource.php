@@ -13,8 +13,10 @@ class BuyServicesResource extends Resource
     protected static ?string $model = JobPostPackage::class;
 
     protected static ?string $navigationLabel = 'Mua gói đăng tin';
-    protected static ?string $navigationGroup = 'Dịch vụ';
+    protected static ?string $navigationGroup = 'Quản lý dịch vụ';
     protected static ?string $navigationIcon = 'heroicon-o-cube';
+
+    protected static ?int $navigationSort = 6;
 
     public static function table(Table $table): Table
     {

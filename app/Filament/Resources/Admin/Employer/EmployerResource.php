@@ -308,13 +308,19 @@ class EmployerResource extends Resource implements HasShieldPermissions
     public static function table(Table $table): Table
     {
         return $table
+            ->query(
+                Employer::whereHas('user', function ($query) {
+                    $query->where('role', 'employer'); // Lọc role bạn muốn
+                })
+            )
+            ->defaultSort('created_at', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('row_number')
+                TextColumn::make('row_number')
                     ->label('STT')
                     ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
 
-                ImageColumn::make('company_logo')->grow(false)
-                    ->defaultImageUrl(asset(config('image.no-image')))
+                ImageColumn::make('company_logo')
+                    ->getStateUsing(fn($record) => getStorageImageUrl($record->company_logo, config('image.no-photo')))
                     ->label('Logo'),
                 TextColumn::make('company_name')
                     ->label('Tên công ty')
@@ -437,60 +443,6 @@ class EmployerResource extends Resource implements HasShieldPermissions
                                 ->required()
                                 ->placeholder('Nhập tiêu đề email...'),
 
-//                            RichEditor::make('content')
-//                                ->label('Nội dung email')
-//                                ->required()
-//                                ->default('
-//<p><strong>Tiêu đề:</strong> Thông báo về ứng viên nộp hồ sơ ứng tuyển - [Tên vị trí công việc]</p>
-//
-//<p><strong>Nội dung:</strong></p>
-//
-//<p>Kính gửi [Tên Nhà Tuyển Dụng],</p>
-//
-//<p>Chúng tôi rất vui khi thông báo rằng có một ứng viên đã nộp hồ sơ ứng tuyển cho vị trí <strong>[Tên vị trí công việc]</strong> mà bạn đã đăng trên hệ thống của chúng tôi.</p>
-//
-//<p><strong>Thông tin ứng viên:</strong></p>
-//<ul>
-//    <li><strong>Tên ứng viên:</strong> [Tên ứng viên]</li>
-//    <li><strong>Email:</strong> [Email ứng viên]</li>
-//    <li><strong>Số điện thoại:</strong> [Số điện thoại ứng viên]</li>
-//    <li><strong>Kinh nghiệm làm việc:</strong> [Kinh nghiệm làm việc của ứng viên]</li>
-//    <li><strong>Trình độ học vấn:</strong> [Trình độ học vấn của ứng viên]</li>
-//    <li><strong>Link hồ sơ (nếu có):</strong> [Link đến hồ sơ ứng viên]</li>
-//</ul>
-//
-//<p><strong>Thông tin về công việc:</strong></p>
-//<ul>
-//    <li><strong>Vị trí tuyển dụng:</strong> [Tên vị trí công việc]</li>
-//    <li><strong>Mô tả công việc:</strong> [Mô tả ngắn gọn về công việc]</li>
-//    <li><strong>Yêu cầu:</strong> [Yêu cầu công việc]</li>
-//</ul>
-//
-//<p>Chúng tôi hy vọng bạn sẽ tìm thấy ứng viên phù hợp cho vị trí của mình. Nếu bạn cần thêm thông tin hoặc muốn lên lịch phỏng vấn, vui lòng liên hệ với ứng viên qua email hoặc số điện thoại đã cung cấp.</p>
-//
-//<p>Chúc bạn một ngày làm việc hiệu quả!</p>
-//
-//<p>Trân trọng,</p>
-//<p><strong>[Chữ ký của website việc làm]</strong></p>
-//<p>[Thông tin liên hệ của website việc làm]</p>
-//<p>[Địa chỉ website]</p>
-//<p>[Email hỗ trợ]</p>
-//    ')
-//                                ->placeholder('Nhập nội dung email...'),
-//                        ])
-//                        ->action(function (Collection $records, array $data) {
-//                            $subject = $data['subject'];
-//                            $content = $data['content'];
-//
-//                            $records->where('status', 1)->each(function ($record) use ($subject, $content) {
-//                                dispatch(new SendNewsletterEmail($record->user->email, $subject, $content));
-//                            });
-//                            Notification::make()
-//                                ->title('Đã gửi mail cho ứng viên  thành công!')
-//                                ->success()
-//                                ->send();
-//                        })
-//                        ->deselectRecordsAfterCompletion(),
 
                             RichEditor::make('content')
                                 ->label('Nội dung email')

@@ -23,12 +23,16 @@ class PromotionalResource extends Resource
 {
     protected static ?string $model = Promotion::class;
 
+    protected static ?string $slug = 'promotionals';
+
     protected static ?string $navigationLabel = 'Mã ưu đãi';
 
     protected static ?string $modelLabel = 'Mã ưu đãi';
 
-    protected static ?string $navigationGroup = 'Mã ưu đãi';
+    protected static ?string $navigationGroup = 'Quản lý dịch vụ';
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
+
+    protected static ?int $navigationSort = 11;
 
     public static function getNavigationBadge(): ?string
     {

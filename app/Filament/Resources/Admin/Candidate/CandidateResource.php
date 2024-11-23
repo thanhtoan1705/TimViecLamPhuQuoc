@@ -331,16 +331,25 @@ class CandidateResource extends Resource implements HasShieldPermissions
     public static function table(Table $table): Table
     {
         return $table
+            ->query(
+                Candidate::whereHas('user', function ($query) {
+                    $query->where('role', 'candidate'); // Lọc role bạn muốn
+                })
+            )
             ->defaultSort('created_at', 'desc')
             ->columns([
 //                TextColumn::make('row_number')
 //                    ->label('STT')
 //                    ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
+                Tables\Columns\TextColumn::make('row_number')
+                    ->label('STT')
+                    ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
 
 
-                ImageColumn::make('user.avatar_url')->grow(false)
+                ImageColumn::make('user.avatar_url')
+                    ->grow(false)
                     ->circular()
-                    ->defaultImageUrl(asset(config('image.avatar')))
+                    ->getStateUsing(fn($record) => getStorageImageUrl($record->user->avatar_url, config('image.avatar')))
                     ->label('Avatar'),
                 TextColumn::make('user.name')
                     ->searchable()

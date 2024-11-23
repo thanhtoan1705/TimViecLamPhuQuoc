@@ -19,6 +19,9 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,9 +40,11 @@ class CandidateApplyResource extends Resource
 
     protected static ?string $modelLabel = 'Hồ sơ ứng tuyển';
 
-    protected static ?string $navigationGroup = 'Ứng viên';
+    protected static ?string $navigationGroup = 'Quản lý ứng viên';
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-minus';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -53,14 +58,29 @@ class CandidateApplyResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('stt')
-                    ->label('STT')
-                    ->getStateUsing(fn($rowLoop) => $rowLoop->iteration),
+
 
                 Tables\Columns\TextColumn::make('candidate.user.name')
-                    ->label('Tên hồ sơ')
-                    ->searchable()
-                    ->html(),
+                    ->label('Tên ứng viên')
+                    ->limit('40')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('jobPost.title')
+                    ->label('Bài đăng')
+                    ->limit('40')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('candidate_info')
+                    ->label('Thông tin liên hệ')
+                    ->getStateUsing(function ($record) {
+                        return $record->candidate->user->phone . ' - ' . $record->candidate->user->email;
+                    }),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Ngày nộp HS')
+                    ->extraAttributes(['style' => 'font-weight: bold;'])
+                    ->date('d/m/Y')
+                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('viewed')
                     ->label('Trạng thái')
@@ -77,16 +97,8 @@ class CandidateApplyResource extends Resource
                     ->sortable() // Thêm khả năng sắp xếp
                     ->html(),
 
-                Tables\Columns\TextColumn::make('candidate_info')
-                    ->label('Thông tin liên hệ')
-                    ->getStateUsing(function ($record) {
-                        return $record->candidate->user->phone . ' - ' . $record->candidate->user->email;
-                    }),
 
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Ngày nộp HS')
-                    ->date('d/m/Y')
-                    ->sortable(),
+
 
 //                Tables\Columns\SelectColumn::make('status')
 //                    ->label('Tình trạng hồ sơ')
@@ -131,17 +143,21 @@ class CandidateApplyResource extends Resource
 
             ])
             ->actions([
-                Tables\Actions\ButtonAction::make('viewDetails')
-                    ->label('Xem chi tiết')
-                    ->url(fn($record) => static::getUrl('view', ['record' => $record->id]))
-                    ->action(function ($record) {
-                        $record->viewed = true;
-                        $record->save();
-                    })
-                    ->openUrlInNewTab(),
+                ActionGroup::make([
+                    // ...
+
+                    Action::make('viewDetails')
+                        ->label('Xem chi tiết')
+                        ->url(fn($record) => static::getUrl('view', ['record' => $record->id]))
+                        ->action(function ($record) {
+                            $record->viewed = true;
+                            $record->save();
+                        })
+                        ->icon('heroicon-o-eye')
+                        ->openUrlInNewTab(),
 
 
-                Action::make('Gửi mail')
+                Action::make('Gửi mail - ứng viên')
                     ->icon('heroicon-o-envelope')
                     ->color('primary')
                     ->form(fn ($record) => [
@@ -210,6 +226,7 @@ class CandidateApplyResource extends Resource
                                 'accepted' => 'Thời gian nhận việc',
                                 default => 'Ngày phỏng vấn',
                             })
+                            ->minDate(now())
                             //Hiển thị thời gian nếu Phỏng vấn và Trúng tuyển
                             ->visible(fn (callable $get) => in_array($get('status'), ['accepted', 'interview']))
                             ->required(fn (callable $get) => in_array($get('status'), ['accepted', 'interview'])),
@@ -224,11 +241,12 @@ class CandidateApplyResource extends Resource
                             ->required()
                             ->reactive()
                             ->placeholder('Nội dung sẽ tự động cập nhật...')
-                            ->extraAttributes(['readonly' => true])
+                            ->extraInputAttributes(['contentEditable' => 'false'])
                             ->default(function () use ($record) {
-
                                 return '<p>Chọn trạng thái ứng tuyển để hiển thị nội dung email</p>';
-                            }),
+                            })
+                            ->extraAttributes(['style' => 'background-color: #e9ecef;'])
+                            ->toolbarButtons([]),
                     ])
                     ->action(function ($record, array $data) {
                         $subject = $data['subject'];
@@ -247,6 +265,8 @@ class CandidateApplyResource extends Resource
                             ->send();
                     })
                     ->deselectRecordsAfterCompletion(),
+                ])->button()
+                ->label('Thao tác')
 
             ])
             ->bulkActions([

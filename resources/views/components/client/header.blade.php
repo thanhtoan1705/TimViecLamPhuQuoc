@@ -89,7 +89,7 @@
 
 
 
-                    <div class="dropdown me-3"  style="z-index: 1002;">
+                    <div class="dropdown me-3"  >
                         <button class="btn btn-grey position-relative" id="notificationButton" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                             <i class="bi bi-person-fill"></i> Tài khoản
@@ -179,7 +179,7 @@
 
                 @elseif(auth()->check() && auth()->user()->role == 'employer')
 
-                    <div class="dropdown me-3" style="z-index: 1002;">
+                    <div class="dropdown me-3" >
                         <button class="btn btn-grey position-relative" id="notificationButton" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                             <i class="bi bi-bell-fill"></i>
@@ -225,7 +225,7 @@
                     </div>
 
 
-                    <div class="dropdown me-3"  style="z-index: 1002;">
+                    <div class="dropdown me-3"  >
                         <button class="btn btn-grey position-relative" id="notificationButton" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                             <i class="bi bi-person-fill"></i> Tài khoản
@@ -346,7 +346,7 @@
 
                 @elseif(auth()->check() && auth()->user()->role == 'admin')
 
-                    <div class="dropdown me-3" style="z-index: 1002;">
+                    <div class="dropdown me-3" >
                         <button class="btn btn-grey position-relative" id="notificationButton" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                             <i class="bi bi-bell-fill"></i>
@@ -392,7 +392,7 @@
                     </div>
 
 
-                    <div class="dropdown me-3"  style="z-index: 1002;">
+                    <div class="dropdown me-3"  >
                         <button class="btn btn-grey position-relative" id="notificationButton" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                             <i class="bi bi-person-fill"></i> Tài khoản

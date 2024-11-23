@@ -287,6 +287,6 @@
     </div>
     <div>
         <h1 class="pricing-title-h1">Giá tiền đã bao gồm VAT</h1>
-        <a class="pricing-title-a" href="tel:0354233642">Liên hệ: 0354233642</a>
+        <a target="_blank" class="pricing-title-a" href="https://zalo.me/0336216546">Liên hệ: 0336216546</a>
     </div>
 </x-filament::page>

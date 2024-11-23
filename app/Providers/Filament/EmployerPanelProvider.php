@@ -39,6 +39,7 @@ class EmployerPanelProvider extends PanelProvider
             ->emailVerification()
             ->passwordReset(RequestPasswordReset::class)
             ->databaseNotifications()
+            ->databaseNotificationsPolling('30s')
             ->brandLogo(asset('default/main-logo.svg'))
             ->colors([
                 'primary' => Color::Blue,
@@ -58,7 +59,14 @@ class EmployerPanelProvider extends PanelProvider
                     ->sort(1)
                     ->icon('heroicon-o-folder-plus'),
 
+                NavigationItem::make('Đăng xuất')
+                    ->group('Tài khoản và thương hiệu')
+                    ->url(config('app.url'). '/logout/business')
+                    ->sort(60)
+                    ->icon('heroicon-o-arrow-left-end-on-rectangle'),
+
             ])
+            ->favicon(asset('default/favicon.svg'))
             ->discoverResources(in: app_path('Filament/Resources/Employer'), for: 'App\\Filament\\Resources\\Employer')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -97,10 +105,11 @@ class EmployerPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentEditProfilePlugin::make()
-                    ->setIcon('heroicon-o-user')
-                    ->setTitle('Cập nhật hồ sơ')
-                    ->setNavigationLabel('Cập nhật hồ sơ')
-                    ->setNavigationGroup('Tài khoản')
+                    ->setIcon('heroicon-o-cog-6-tooth')
+                    ->setTitle('Thông tin công ty')
+                    ->setNavigationLabel('Thông tin công ty')
+                    ->setNavigationGroup('Tài khoản và thương hiệu')
+                    ->setSort(59)
                     ->shouldRegisterNavigation(true)
                     ->shouldShowDeleteAccountForm(false)
                     ->shouldShowEditProfileForm(false)

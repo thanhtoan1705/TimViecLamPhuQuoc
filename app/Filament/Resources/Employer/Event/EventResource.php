@@ -27,6 +27,8 @@ class EventResource extends Resource
     protected static ?string $navigationGroup = 'Sự kiện';
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
 
+    protected static ?int $navigationSort = 9;
+
 
     public static function getNavigationBadge(): ?string
     {

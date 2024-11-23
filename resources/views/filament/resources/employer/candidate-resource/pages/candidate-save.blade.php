@@ -45,10 +45,13 @@
                             @if ($candidate->candidate->address)
                                 {{ $candidate->candidate->address->province->name }}
                             @else
-                                N/A
+                                Chưa cập nhật
                             @endif
                         </div>
-                        <div class="price">{{ $candidate->candidate->salary->name }} VNĐ</div>
+                        @if(optional(optional($candidate->candidate)->salary)->name)
+                            <div class="price">{{ optional(optional($candidate->candidate)->salary)->name }}</div>
+                        @endif
+
                     </div>
                 </div>
             @endforeach
