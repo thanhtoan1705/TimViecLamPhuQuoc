@@ -187,7 +187,7 @@
                                                        class="card h-100 text-center p-4 text-decoration-none create-new-cv option-card"
                                                        data-template-id="{{ $template->id }}">
                                                         <div class="mb-3 option-icon">
-                                                            <i class="fi-rr-file-plus icon-option"></i>
+                                                            <i class="fi-rr-file-add icon-option"></i>
                                                         </div>
                                                         <h6 class="mb-2 fw-bold">Tạo CV mới</h6>
                                                         <p class="text-muted small mb-0">

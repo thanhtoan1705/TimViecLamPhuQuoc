@@ -1,0 +1,528 @@
+.cv-template-4 {
+    max-width: 210mm;
+    margin: 0 auto;
+    padding: 40px;
+    background-image: var(--background-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.cv-template-4::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+}
+
+.t4-header-section,
+.t4-main-content {
+    position: relative;
+    z-index: 1;
+}
+
+.t4-header-section {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 30px;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    margin-bottom: 20px;
+    box-shadow: none;
+}
+
+.t4-main-content {
+    position: relative;
+    min-height: 100px;
+    padding: 10px;
+}
+
+.t4-section {
+    position: relative;
+    margin-bottom: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.section-controls-wrapper {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 100;
+}
+
+.section-controls {
+    display: flex;
+    gap: 5px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3px;
+    border-radius: 4px;
+}
+
+.t4-section:hover .section-controls {
+    opacity: 1;
+}
+
+.control-btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+.drag-btn {
+    cursor: grab;
+}
+
+.drag-btn:active {
+    cursor: grabbing;
+}
+
+.delete-btn {
+    color: #dc3545;
+}
+
+.delete-btn:hover {
+    color: #c82333;
+}
+
+.dragging {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Timeline style for experience and education */
+.timeline-item {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 20px;
+    border-left: 2px solid var(--primary-color);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+/* Skills section */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.skill-item {
+    background: transparent;
+    border-radius: 6px;
+}
+
+/* Section headers */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 5px;
+}
+
+.section-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0 !important;
+    color: var(--primary-color);
+    text-transform: uppercase;
+}
+
+/* Avatar styles */
+.t4-avatar .avatar-wrapper {
+    border-radius: 8px !important;
+    width: 150px !important;
+    height: 200px !important;
+    overflow: hidden !important;
+    border: none !important;
+}
+
+.t4-avatar .avatar-wrapper img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 8px !important;
+    border: none !important;
+}
+
+/* Tắt viền khi hover hoặc focus */
+.t4-avatar .avatar-wrapper:hover,
+.t4-avatar .avatar-wrapper:focus {
+    border: none !important;
+    outline: none !important;
+}
+
+/* Header section styles */
+.t4-header {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 30px;
+    align-items: start;
+    padding: 20px;
+}
+
+.t4-header-right {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.t4-name {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.t4-job-title {
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Contact info styles */
+.contact-info {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.contact-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    padding: 15px;
+    background-color: var(--primary-color);
+}
+
+.contact-icons i {
+    color: white;
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    line-height: 19px;
+}
+
+.contact-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    padding: 15px 20px;
+    background: transparent;
+}
+
+.contact-item {
+    min-height: 19px;
+}
+
+.contact-item span {
+    display: block;
+    width: 100%;
+    padding: 0;
+    color: #666;
+    font-size: 14px;
+    line-height: 19px;
+    border: none;
+}
+
+/* Bỏ style cho trạng thái edit */
+.contact-item span[contenteditable="true"] {
+    outline: none;
+}
+
+/* Drag and drop styles */
+.t4-main-content.drag-over {
+    background-color: rgba(0, 0, 0, 0.02);
+    border: 2px dashed var(--primary-color);
+}
+
+.t4-section {
+    transition: background-color 0.2s ease;
+    margin-bottom: 15px;
+}
+
+.t4-section.dragging {
+    background: white !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    opacity: 0.8;
+}
+
+/* Style cho placeholder khi drag */
+.t4-main-content [data-rbd-placeholder-context-id] {
+    margin: 10px 0;
+    min-height: 50px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 2px dashed var(--primary-color);
+    border-radius: 4px;
+}
+
+/* Education section styles */
+.education-section {
+    position: relative;
+}
+
+/* Thêm style cho EditableSection trong education */
+.education-section .section-content {
+    position: relative;
+    padding-left: 30px;
+    margin-top: 20px;
+}
+
+.education-section .section-content::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--primary-color);
+}
+
+.education-section .education-item {
+    position: relative;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    padding-right: 30px; /* Thêm space cho nút delete */
+}
+
+.education-section .education-item::before {
+    content: '';
+    position: absolute;
+    left: -34px;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+
+.education-section .education-content {
+    position: relative;
+}
+
+.education-section .education-degree {
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.education-section .education-school {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.education-section .education-year {
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Style cho nút thêm mới */
+.education-section .add-item-btn {
+    margin-top: 10px;
+    margin-left: 30px; /* Căn lề trái theo timeline */
+}
+
+/* Style cho controls */
+.education-section .section-controls {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Section title style */
+.section-title {
+    color: var(--primary-color);
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+/* Ensure section content is above drag overlay */
+.section-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Experience section styles */
+.experience-section {
+    position: relative;
+}
+
+.experience-section .section-content {
+    position: relative;
+    padding-left: 30px;
+    margin-top: 20px;
+}
+
+.experience-section .section-content::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--primary-color);
+}
+
+.experience-section .experience-item {
+    position: relative;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    padding-right: 30px;
+}
+
+.experience-section .experience-item::before {
+    content: '';
+    position: absolute;
+    left: -34px;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+
+.experience-section .experience-content {
+    position: relative;
+}
+
+.experience-section .position {
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.experience-section .company {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.experience-section .date-range {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.experience-section .responsibilities {
+    color: #666;
+    font-size: 0.9em;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+/* Style cho nút thêm mới */
+.experience-section .add-item-btn {
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+/* Style cho controls */
+.experience-section .section-controls {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Project section styles */
+.project-section {
+    position: relative;
+}
+
+.project-section .section-content {
+    position: relative;
+    padding-left: 30px;
+    margin-top: 20px;
+}
+
+.project-section .section-content::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: var(--primary-color);
+}
+
+.project-section .project-item {
+    position: relative;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    padding-right: 30px;
+}
+
+.project-section .project-item::before {
+    content: '';
+    position: absolute;
+    left: -34px;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+
+.project-section .project-content {
+    position: relative;
+}
+
+.project-section .position {
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.project-section .company {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.project-section .responsibilities {
+    color: #666;
+    font-size: 0.9em;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+/* Style cho nút thêm mới */
+.project-section .add-item-btn {
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+/* Style cho controls */
+.project-section .section-controls {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+

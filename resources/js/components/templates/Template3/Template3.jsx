@@ -142,6 +142,7 @@ const Template3 = ({data, onUpdate, isEditable, styles}) => {
             fontSize: styles.fontSize,
             '--primary-color': styles.primaryColor || '#008000',
             '--text-color': styles.textColor || '#333',
+            '--background-image': styles.backgroundImage ? `url(${styles.backgroundImage})` : 'none'
         }}>
             <Header data={data} onUpdate={onUpdate} isEditable={isEditable}/>
 

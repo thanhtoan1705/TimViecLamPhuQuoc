@@ -4,6 +4,29 @@
     margin: 0 auto;
     padding: 30px;
     color: var(--text-color);
+    background-image: var(--background-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+/* Điều chỉnh overlay để trong suốt hơn */
+.cv-template-3::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: 0;
+}
+
+/* Đảm bảo nội dung nằm trên overlay */
+.cv-template-3 > * {
+    position: relative;
+    z-index: 1;
 }
 
 /* Header styles */
@@ -65,16 +88,19 @@
 .template3-main {
     display: flex;
     gap: 30px;
+    background: transparent;
 }
 
 .left-column {
     flex: 1;
     border-right: 2px solid var(--primary-color);
     padding-right: 20px;
+    background: transparent;
 }
 
 .right-column {
     flex: 2;
+    background: transparent;
 }
 
 
@@ -93,6 +119,7 @@
     position: relative;
     margin-top: 35px;
     margin-bottom: 20px;
+    background: transparent;
 }
 
 .section-controls-wrapper {
@@ -152,7 +179,7 @@
 
 /* Dragging states */
 .drag-over {
-    background: rgba(0, 128, 0, 0.05);
+    background: rgba(0, 128, 0, 0.1);
 }
 
 .dragging {
@@ -182,6 +209,7 @@
     position: relative;
     padding-left: 20px;
     margin-bottom: 20px;
+    background: transparent;
 }
 
 .timeline-dot {
@@ -207,6 +235,11 @@
     .cv-template-3 {
         padding: 0;
         max-width: none;
+        background: white;
+    }
+
+    .cv-template-3::before {
+        display: none;
     }
 
     .section-controls {

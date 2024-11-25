@@ -19,7 +19,6 @@
                                         </a>
                                     </div>
                                 </div>
-
                                 @if($savedCVs->count() > 0)
                                     <div class="row g-4">
                                         @foreach($savedCVs as $cv)
@@ -31,7 +30,7 @@
                                                              class="cv-preview-image">
                                                         <div class="cv-card-overlay">
                                                             <div class="d-flex gap-2">
-                                                                <a href="{{ route('client.cv.show', ['id' => $cv->template_id]) }}"
+                                                                <a href="{{ route('client.cv.viewTemplate', ['id' => $cv->template_id]) }}"
                                                                    class="btn btn-light btn-sm">
                                                                     <i class="bi bi-pencil-square me-1"></i>
                                                                     Chỉnh sửa

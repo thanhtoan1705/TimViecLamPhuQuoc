@@ -254,23 +254,24 @@
             <div class="tab-content">
                 <div id="validTab" class="custom-tab-pane custom-active">
                     <div wire:snapshot="{&quot;data&quot;:{&quot;statusCode&quot;:1,&quot;paginators&quot;:[{&quot;page&quot;:1}]},&quot;memo&quot;:{&quot;id&quot;:&quot;FognjQF9Pk8akJyCO76w&quot;,&quot;name&quot;:&quot;promotions-table&quot;,&quot;path&quot;:&quot;business\/employer\/promotional\/promotionals&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;children&quot;:[],&quot;scripts&quot;:[],&quot;assets&quot;:[],&quot;errors&quot;:[],&quot;locale&quot;:&quot;vi&quot;},&quot;checksum&quot;:&quot;b99ec097b1f8645eeb32a421f8bbd837357ef2d231a99c6238fbb4ace30207c9&quot;}" wire:effects="{&quot;url&quot;:{&quot;paginators.page&quot;:{&quot;as&quot;:&quot;page&quot;,&quot;use&quot;:&quot;push&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null}}}" wire:id="FognjQF9Pk8akJyCO76w">
-                        @livewire('promotions-table', ['status' => 1])
+                        <div style="height: 100%;">
+                            @livewire('promotions-table', ['status' => 1])
+                        </div>
                     </div>
                 </div>
 
                 <div id="usedTab" class="custom-tab-pane">
                     <div wire:snapshot="{&quot;data&quot;:{&quot;statusCode&quot;:0,&quot;paginators&quot;:[{&quot;page&quot;:1}]},&quot;memo&quot;:{&quot;id&quot;:&quot;nZh0ZqHrT6SxngA83XGD&quot;,&quot;name&quot;:&quot;promotions-table&quot;,&quot;path&quot;:&quot;business\/employer\/promotional\/promotionals&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;children&quot;:[],&quot;scripts&quot;:[],&quot;assets&quot;:[],&quot;errors&quot;:[],&quot;locale&quot;:&quot;vi&quot;},&quot;checksum&quot;:&quot;b920dd8030724e8964bf57b9f913a8f51e29f4abeef51f921a0a646286bfedda&quot;}" wire:effects="{&quot;url&quot;:{&quot;paginators.page&quot;:{&quot;as&quot;:&quot;page&quot;,&quot;use&quot;:&quot;push&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null}}}" wire:id="nZh0ZqHrT6SxngA83XGD">
-                        @livewire('promotions-table', ['status' => 0])
+                        <div style="height: 100%;">
+                            @livewire('promotions-table', ['status' => 0])
+                        </div>
                     </div>
                 </div>
 
                 <div id="expiredTab" class="custom-tab-pane">
                     <div wire:snapshot="{&quot;data&quot;:{&quot;statusCode&quot;:2,&quot;paginators&quot;:[{&quot;page&quot;:1}]},&quot;memo&quot;:{&quot;id&quot;:&quot;cpPTLdq9ykwxnH37fwkx&quot;,&quot;name&quot;:&quot;promotions-table&quot;,&quot;path&quot;:&quot;business\/employer\/promotional\/promotionals&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;children&quot;:[],&quot;scripts&quot;:[],&quot;assets&quot;:[],&quot;errors&quot;:[],&quot;locale&quot;:&quot;vi&quot;},&quot;checksum&quot;:&quot;c4f2275ec71aec70af6cd2a5f336acbc4a2bbe91998d6c22d0e540888cf2a324&quot;}" wire:effects="{&quot;url&quot;:{&quot;paginators.page&quot;:{&quot;as&quot;:&quot;page&quot;,&quot;use&quot;:&quot;push&quot;,&quot;alwaysShow&quot;:false,&quot;except&quot;:null}}}" wire:id="cpPTLdq9ykwxnH37fwkx">
-                        <div style="display: flex; justify-content: center; align-items: center; min-height: 300px;">
-                            <div class="empty-state">
-                                <img src="https://cdn-icons-png.flaticon.com/512/7486/7486744.png" alt="No promotions" style="width: 100px; opacity: 0.7;">
-                                <p style="color: #64748b; font-size: 0.95rem; margin-top: 1rem;">Không có mã giảm giá nào</p>
-                            </div>
+                        <div style="height: 100%;">
+                            @livewire('promotions-table', ['status' => 2])
                         </div>
                     </div>
                 </div>

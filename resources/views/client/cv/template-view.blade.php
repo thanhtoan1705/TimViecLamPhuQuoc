@@ -59,7 +59,7 @@
             .editor-toolbar-container {
                 position: sticky;
                 top: 0;
-                z-index: 1000;
+                z-index: 500;
                 background-color: rgba(255, 255, 255, 0.95);
                 backdrop-filter: blur(8px);
                 margin-bottom: 20px;

@@ -45,18 +45,24 @@ class JobPostRepository implements JobPostInterface
     {
         $jobPosts = $this->jobPost
             ->with(['employer.userJobPackages.jobPostPackage'])
+            ->whereHas('employer')
             ->where('end_date', '>=', now())
             ->where('status', 1)
             ->get();
 
         $groupedJobPosts = $jobPosts->groupBy(function ($item) {
-            return $item->job_category->name;
+            return optional($item->job_category)->name ?? 'Uncategorized';
         });
 
         $groupedJobPosts->transform(function ($posts) {
             return $posts->sortByDesc('created_at')
                 ->take(8)
                 ->map(function ($post) {
+                    if (!$post->employer) {
+                        $post->package_labels = [];
+                        return $post;
+                    }
+
                     $labels = $post->employer->userJobPackages
                         ->filter(function ($package) {
                             $jobPostPackage = $package->jobPostPackage;
@@ -108,6 +114,7 @@ class JobPostRepository implements JobPostInterface
     {
         return $this->jobPost
             ->with(['employer.userJobPackages.jobPostPackage', 'job_category', 'jobType', 'skills'])
+            ->whereHas('employer')
             ->whereHas('employer.userJobPackages', function ($query) {
                 $query->whereHas('jobPostPackage', function ($q) {
                     $q->where('display_best', 1);
@@ -122,6 +129,7 @@ class JobPostRepository implements JobPostInterface
     {
         return $this->jobPost
             ->with(['employer.userJobPackages.jobPostPackage', 'job_category', 'jobType', 'skills'])
+            ->whereHas('employer')
             ->whereHas('employer.userJobPackages', function ($query) {
                 $query->whereHas('jobPostPackage', function ($q) {
                     $q->where('display_haste', 1);

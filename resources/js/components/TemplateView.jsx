@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Template1 from './templates/Template1/Template1';
 import Template2 from './templates/Template2/Template2';
 import Template3 from './templates/Template3/Template3';
+import Template4 from './templates/Template4/template4';
 import sampleData from './data/sampleData';
 import useEditMode from '../hooks/useEditMode';
 import DownloadModal from './common/Modals/DownloadModal';
@@ -614,6 +615,18 @@ const TemplateView = ({templateId, isPreview = false}) => {
             case '3':
                 return (
                     <Template3
+                        data={cvData}
+                        onUpdate={handleUpdateData}
+                        isEditable={true}
+                        styles={styles}
+                        sections={sections}
+                        onSectionReorder={handleSectionReorder}
+                    />
+                );
+
+            case '4':
+                return (
+                    <Template4
                         data={cvData}
                         onUpdate={handleUpdateData}
                         isEditable={true}
