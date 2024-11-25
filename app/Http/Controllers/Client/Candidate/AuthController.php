@@ -93,30 +93,40 @@ class AuthController extends Controller
 
     public function handleLogin(LoginRequest $request)
     {
+        $user = User::where('email', $request->input('email'))->first();
+
+        if (is_null($user)) {
+            flash()->error('Tài khoản không tồn tại.', [], 'Thất bại!');
+            return redirect()->back();
+        }
+
+        if(is_null($user->email_verified_at)) {
+            VerificationEmailRegister::dispatch($user);
+
+            flash()->error('Tài khoản chưa được xác thực vui lòng kiểm tra email.', [],'Thất bại!');
+
+            return redirect()->back();
+        }
+
         $credentials = [
             'email' =>  $request->input('email'),
             'password' => $request->input('password'),
         ];
 
         if (Auth::attempt($credentials)) {
-            if (!empty(Auth::user()->email_verified_at)) {
-                $request->session()->regenerate();
+            $request->session()->regenerate();
 
-                // Kiểm tra và chuyển hướng về trang trước đó
-                $previousUrl = $request->input('previous_url');
-                if ($previousUrl) {
-                    flash()->success('Đăng nhập thành công.', [],'Thành công!');
-                    return redirect()->to($previousUrl);
-                }
-
-                // Nếu không có previous_url thì chuyển về trang mặc định
+            // Kiểm tra và chuyển hướng về trang trước đó
+            $previousUrl = $request->input('previous_url');
+            if ($previousUrl) {
                 flash()->success('Đăng nhập thành công.', [],'Thành công!');
-                return redirect()->route('client.client.index');
-            } else {
-                flash()->error('Tài khoản chưa được xác thực vui lòng kiểm tra email.', [],'Thất bại!');
-                VerificationEmailRegister::dispatch(Auth::user());
-                return redirect()->route('client.candidate.login');
+                return redirect()->to($previousUrl);
             }
+
+            // Nếu không có previous_url thì chuyển về trang mặc định
+            flash()->success('Đăng nhập thành công.', [],'Thành công!');
+            return redirect()->route('client.client.index');
+
         }
 
         flash()->error('Email hoặc mật khẩu không chính xác.', [],'Thất bại!');
@@ -126,6 +136,12 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
+        // Xóa tất cả dữ liệu session
+        $request->session()->invalidate();
+
+        // Tạo session mới để tránh sử dụng lại session cũ
+        $request->session()->regenerate();
+
         flash()->success('Đăng xuất thành công.', [],'Thành công!');
 
         return redirect()->route('client.candidate.login');

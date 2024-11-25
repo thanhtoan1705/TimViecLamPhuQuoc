@@ -177,7 +177,7 @@
                     </div>
 
 
-                @elseif(auth()->check() && auth()->user()->role == 'employer')
+                @elseif(auth()->check() && auth()->user()->role == 'employer' && !is_null(auth()->user()->email_verified_at))
 
                     <div class="dropdown me-3" >
                         <button class="btn btn-grey position-relative" id="notificationButton" data-bs-toggle="dropdown"

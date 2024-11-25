@@ -13,7 +13,7 @@ Route::get('/check-existing-cv/{templateId}', [CvTemplateController::class, 'che
 Route::delete('/cv/{id}/delete-template', [CvTemplateController::class, 'deleteExistingTemplate'])->name('cv.delete-template');
 Route::post('/save-cv', [CvTemplateController::class, 'saveCV'])->name('cv.saveCV')->middleware('auth');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'is_candidate'])->group(function () {
     Route::get('/cv-da-luu', [CvTemplateController::class, 'savedCVs'])->name('cv.saved');
     Route::delete('/cv/{id}', [CvTemplateController::class, 'destroy'])->name('cv.destroy');
     Route::get('/cv/download/{id}', [CvTemplateController::class, 'downloadPDF'])->name('cv.download.pdf');

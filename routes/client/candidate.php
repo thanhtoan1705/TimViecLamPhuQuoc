@@ -3,7 +3,7 @@
 use App\Http\Controllers\Client\Candidate\CandidateController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('/ung-vien')->name('candidate.')->group(function(){
+Route::prefix('/ung-vien')->name('candidate.')->middleware('is_candidate')->group(function(){
     Route::get('/noi-bat', [CandidateController::class, 'hot'])->name('hot');
     Route::get('/ho-so', [CandidateController::class, 'profile'])->name('profile');
     Route::get('/tuyen-dung-da-xem', [CandidateController::class, 'watched'])->name('watched');
@@ -16,6 +16,7 @@ Route::prefix('/ung-vien')->name('candidate.')->group(function(){
     Route::put('/doi-mat-khau', [CandidateController::class, 'updatePassword'])->name('update_password');
     Route::get('/{slug}.html', [CandidateController::class, 'detail'])->name('detail');
 });
+
 Route::get('/districts/{province}', [CandidateController::class, 'getDistricts']);
 Route::get('/wards/{district}', [CandidateController::class, 'getWards']);
 Route::get('/candidate-info', [CandidateController::class, 'getCandidateInfo'])->middleware('auth');
