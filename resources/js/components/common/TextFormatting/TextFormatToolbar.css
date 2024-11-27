@@ -275,3 +275,35 @@
 .image-input {
     max-width: 200px;
 }
+
+@media (max-width: 768px) {
+    .format-controls {
+        width: auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 10px;
+        touch-action: pan-x;
+    }
+
+    .format-group {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex-shrink: 0;
+    }
+
+    .format-btn,
+    .format-select,
+    .color-control {
+        flex-shrink: 0;
+    }
+
+    .format-select {
+        width: 60px;
+    }
+
+    .format-select[value*="font-family"] {
+        width: 100px;
+    }
+}

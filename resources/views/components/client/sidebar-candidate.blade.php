@@ -8,12 +8,6 @@
                 </a>
             </li>
             <li class="rounded-3 my-3 w-100">
-                <a class="btn btn-border w-100" href="{{route('client.candidate.watched')}}" role="tab"
-                    aria-controls="tab-my-jobs" aria-selected="false">
-                    <i class="bi bi-bank me-2" style="font-size: 15px"></i>Nhà tuyển dụng đã xem hồ sơ
-                </a>
-            </li>
-            <li class="rounded-3 my-3 w-100">
                 <a class="btn btn-border w-100" href="{{route('client.candidate.viewSavedJobs')}}" role="tab"
                     aria-controls="tab-saved-jobs" aria-selected="false">
                     <i class="bi bi-briefcase-fill me-2" style="font-size: 15px"></i>Việc làm đã lưu

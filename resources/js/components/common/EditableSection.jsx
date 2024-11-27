@@ -74,7 +74,7 @@ const EditableSection = ({
         <section className={`editable-section ${sectionClassName}`} ref={sectionRef}>
             <div className="section-header">
                 <h2
-                    className="section-title"
+                    className="editable-section-heading"
                     contentEditable={isEditable}
                     onBlur={handleTitleUpdate}
                     suppressContentEditableWarning={true}

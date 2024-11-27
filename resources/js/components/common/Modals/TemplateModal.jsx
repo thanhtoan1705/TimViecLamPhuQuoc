@@ -1,33 +1,42 @@
 import React from 'react';
-import Modal from 'react-modal';
+import './Modal.css';
 
-const TemplateModal = ({isOpen, onClose, templates, onSelectTemplate}) => {
+const TemplateModal = ({isOpen, onClose, templates, onSelectTemplate, currentTemplateId}) => {
+    if (!isOpen) return null;
+
     return (
-        <Modal
-            isOpen={isOpen}
-            onRequestClose={onClose}
-            className="modal-content"
-            overlayClassName="modal-overlay"
-        >
-            <div className="modal-header">
-                <h2>Chọn mẫu CV</h2>
-                <button onClick={onClose} className="close-btn">
+        <div className="section-modal">
+            <div className="section-modal-header">
+                <h3>Đổi mẫu CV</h3>
+                <button onClick={onClose} className="close-button">
                     <i className="bi bi-x"></i>
                 </button>
             </div>
-            <div className="template-grid">
-                {templates.map(template => (
-                    <div
-                        key={template.id}
-                        className="template-item"
-                        onClick={() => onSelectTemplate(template.id)}
-                    >
-                        <img src={template.thumbnail} alt={template.name}/>
-                        <h3>{template.name}</h3>
+
+            <div className="section-modal-content">
+                <div className="section-group">
+                    <h4>Chọn mẫu CV</h4>
+                    <p className="section-hint">Click vào mẫu CV bạn muốn sử dụng</p>
+                    <div className="template-grid">
+                        {templates.map(template => (
+                            <div
+                                key={template.id}
+                                className={`template-item ${template.id === currentTemplateId ? 'active' : ''}`}
+                                onClick={() => onSelectTemplate(template.id)}
+                            >
+                                <div className="template-image">
+                                    <img src={`${window.appUrl}/storage/${template.template_image}`}
+                                         alt={template.template_name}/>
+                                </div>
+                                <div className="template-info">
+                                    <span>{template.template_name}</span>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
             </div>
-        </Modal>
+        </div>
     );
 };
 

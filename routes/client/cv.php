@@ -12,6 +12,7 @@ Route::get('/mau-cv', [CvTemplateController::class, 'index'])->name('cv.list');
 Route::get('/check-existing-cv/{templateId}', [CvTemplateController::class, 'checkExistingCV'])->name('cv.check-existing');
 Route::delete('/cv/{id}/delete-template', [CvTemplateController::class, 'deleteExistingTemplate'])->name('cv.delete-template');
 Route::post('/save-cv', [CvTemplateController::class, 'saveCV'])->name('cv.saveCV')->middleware('auth');
+Route::get('/api/cv-templates', [CvTemplateController::class, 'getTemplates']);
 
 Route::middleware(['auth', 'is_candidate'])->group(function () {
     Route::get('/cv-da-luu', [CvTemplateController::class, 'savedCVs'])->name('cv.saved');

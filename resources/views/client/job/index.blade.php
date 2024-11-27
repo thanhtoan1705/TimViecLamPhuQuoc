@@ -77,15 +77,15 @@
                                                                     class="fi-rr-angle-small-down"></i></button>
                                                             <ul class="dropdown-menu dropdown-menu-light"
                                                                 aria-labelledby="dropdownSort">
-                                                                <li><a class="dropdown-item" href="#" data-per-page="2"
+                                                                <li><a class="dropdown-item" href="#" data-per-page="3"
                                                                        data-sort-by="{{ $sortBy }}"
-                                                                       data-sort-order="{{ $sortOrder }}">2</a></li>
+                                                                       data-sort-order="{{ $sortOrder }}">3</a></li>
                                                                 <li><a class="dropdown-item" href="#" data-per-page="12"
                                                                        data-sort-by="{{ $sortBy }}"
                                                                        data-sort-order="{{ $sortOrder }}">12</a></li>
-                                                                <li><a class="dropdown-item" href="#" data-per-page="20"
+                                                                <li><a class="dropdown-item" href="#" data-per-page="18"
                                                                        data-sort-by="{{ $sortBy }}"
-                                                                       data-sort-order="{{ $sortOrder }}">20</a></li>
+                                                                       data-sort-order="{{ $sortOrder }}">18</a></li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -136,15 +136,15 @@
                                                             class="fi-rr-angle-small-down"></i></button>
                                                     <ul class="dropdown-menu dropdown-menu-light"
                                                         aria-labelledby="dropdownSort">
-                                                        <li><a class="dropdown-item" href="#" data-per-page="2"
+                                                        <li><a class="dropdown-item" href="#" data-per-page="3"
                                                                data-sort-by="{{ $sortBy }}"
-                                                               data-sort-order="{{ $sortOrder }}">2</a></li>
+                                                               data-sort-order="{{ $sortOrder }}">3</a></li>
                                                         <li><a class="dropdown-item" href="#" data-per-page="12"
                                                                data-sort-by="{{ $sortBy }}"
                                                                data-sort-order="{{ $sortOrder }}">12</a></li>
-                                                        <li><a class="dropdown-item" href="#" data-per-page="20"
+                                                        <li><a class="dropdown-item" href="#" data-per-page="18"
                                                                data-sort-by="{{ $sortBy }}"
-                                                               data-sort-order="{{ $sortOrder }}">20</a></li>
+                                                               data-sort-order="{{ $sortOrder }}">18</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -561,7 +561,7 @@
                 </div>
             </div>
         </section>
-
+        {{--        <x-client.blog></x-client.blog>--}}
     </main>
     <style>
         .row {
@@ -832,8 +832,7 @@
         }
 
         .box-filters-job .dropdown-menu[data-bs-popper] {
-            right: 0;
-            /* left: unset; */
+            right: unset !important;
         }
 
         /* Mobile Filter Modal Styling */

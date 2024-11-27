@@ -9,7 +9,8 @@ import DownloadModal from './common/Modals/DownloadModal';
 import PreviewModal from './common/Modals/PreviewModal';
 import SectionModal from './common/Modals/SectionModal';
 import MainToolbar from './common/MainToolbar';
-import { createPortal } from 'react-dom';
+import {createPortal} from 'react-dom';
+import TemplateModal from './common/Modals/TemplateModal';
 
 const TemplateView = ({templateId, isPreview = false}) => {
     const {textStyles, updateTextStyle, applyStyleToSelection} = useEditMode();
@@ -69,6 +70,9 @@ const TemplateView = ({templateId, isPreview = false}) => {
         {id: 'awards', column: 'main', order: 6},
         {id: 'extracurricular', column: 'main', order: 7}
     ]);
+
+    const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
+    const [templates, setTemplates] = useState([]);
 
     const handleFormatChange = (type, value) => {
         setStyles(prev => ({
@@ -649,24 +653,76 @@ const TemplateView = ({templateId, isPreview = false}) => {
         }
     };
 
+    // Thêm useEffect để load templates
+    useEffect(() => {
+        const loadTemplates = async () => {
+            try {
+                const response = await fetch('/api/cv-templates');
+                const data = await response.json();
+                setTemplates(data);
+            } catch (error) {
+                console.error('Error loading templates:', error);
+            }
+        };
+        loadTemplates();
+    }, []);
+
+    // Thêm handler cho việc chọn template
+    const handleTemplateSelect = async (newTemplateId) => {
+        if (window.confirm('Bạn có chắc muốn đổi mẫu CV? Nội dung hiện tại sẽ được giữ nguyên.')) {
+            try {
+                window.location.href = `/cv/mau-cv/${newTemplateId}`;
+            } catch (error) {
+                console.error('Error changing template:', error);
+            }
+        }
+    };
+
+    // Thêm event listener cho nút template
+    useEffect(() => {
+        const templateBtn = document.querySelector('.template-btn');
+        if (templateBtn) {
+            const clickHandler = () => setIsTemplateModalOpen(true);
+            templateBtn.addEventListener('click', clickHandler);
+            return () => templateBtn.removeEventListener('click', clickHandler);
+        }
+    }, []);
+
     return (
         <div className="template-container">
             {renderTemplate()}
             {renderToolbar()}
             {renderModal()}
 
-            <DownloadModal
-                isOpen={isDownloadModalOpen}
-                onClose={() => setIsDownloadModalOpen(false)}
-                onDownload={handleDownload}
-            />
+            {createPortal(
+                <TemplateModal
+                    isOpen={isTemplateModalOpen}
+                    onClose={() => setIsTemplateModalOpen(false)}
+                    templates={templates}
+                    onSelectTemplate={handleTemplateSelect}
+                    currentTemplateId={templateId}
+                />,
+                document.getElementById('templateModalContainer')
+            )}
 
-            <PreviewModal
-                isOpen={isPreviewModalOpen}
-                onClose={() => setIsPreviewModalOpen(false)}
-            >
-                {renderTemplate()}
-            </PreviewModal>
+            {createPortal(
+                <DownloadModal
+                    isOpen={isDownloadModalOpen}
+                    onClose={() => setIsDownloadModalOpen(false)}
+                    onDownload={handleDownload}
+                />,
+                document.getElementById('modalContainer')
+            )}
+
+            {createPortal(
+                <PreviewModal
+                    isOpen={isPreviewModalOpen}
+                    onClose={() => setIsPreviewModalOpen(false)}
+                >
+                    {renderTemplate()}
+                </PreviewModal>,
+                document.getElementById('modalContainer')
+            )}
         </div>
     );
 };

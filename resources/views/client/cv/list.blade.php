@@ -108,10 +108,10 @@
                                         <img src="{{ asset('storage/' . $template->template_image) }}"
                                              alt="{{ $template->template_name }}" class="w-100">
                                         <div class="overlay-buttons">
-                                            <a href="#" class="p-10 btn btn-preview p-md-1" data-bs-toggle="modal"
-                                               data-bs-target="#previewModal{{ $template->id }}">
-                                                <i class="fi-rr-eye"></i> Xem trước
-                                            </a>
+                                            {{--                                            <a href="#" class="p-10 btn btn-preview p-md-1" data-bs-toggle="modal"--}}
+                                            {{--                                               data-bs-target="#previewModal{{ $template->id }}">--}}
+                                            {{--                                                <i class="fi-rr-eye"></i> Xem trước--}}
+                                            {{--                                            </a>--}}
                                             @php
                                                 $hasExistingCV = false;
                                                 if (Auth::check()) {

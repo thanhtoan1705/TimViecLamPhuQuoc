@@ -1,6 +1,7 @@
 /* Main container styles */
 .cv-template-3 {
     max-width: 210mm;
+    width: 21cm;
     margin: 0 auto;
     padding: 30px;
     color: var(--text-color);
@@ -9,6 +10,8 @@
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
+    min-height: 29.7cm;
+    box-sizing: border-box;
 }
 
 /* Điều chỉnh overlay để trong suốt hơn */
@@ -104,7 +107,7 @@
 }
 
 
-.section-title {
+.editable-section-heading {
     color: var(--primary-color);
     font-size: 18px;
     font-weight: bold;
@@ -244,6 +247,16 @@
 
     .section-controls {
         display: none;
+    }
+}
+
+/* Thêm media query cho mobile */
+@media (max-width: 768px) {
+    .cv-template-3 {
+        width: 21cm;
+        padding: 20px;
+        transform-origin: top left;
+        margin: 0;
     }
 }
 

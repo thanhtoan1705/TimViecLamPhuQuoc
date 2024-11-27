@@ -140,7 +140,7 @@
     padding-bottom: 5px;
 }
 
-.section-title {
+.editable-section-heading {
     font-size: 1.2em;
     font-weight: bold;
     margin: 0 !important;
@@ -354,7 +354,7 @@
 }
 
 /* Section title style */
-.section-title {
+.editable-section-heading {
     color: var(--primary-color);
     font-size: 1.2em;
     font-weight: bold;

@@ -1,5 +1,5 @@
 /* Section title */
-.section-title {
+.editable-section-heading {
     font-size: 1.5em;
     color: var(--primary-color);
     margin-bottom: 20px;
@@ -9,17 +9,17 @@
 }
 
 /* Thêm styles cho hover state nếu cần */
-.section-title:hover {
+.editable-section-heading:hover {
     color: var(--primary-color);
     opacity: 0.9;
 }
 
 /* Thêm styles cho các elements con khác nếu cần */
-.section-title i {
+.editable-section-heading i {
     color: var(--primary-color);
 }
 
-.section-title::after {
+.editable-section-heading::after {
     background-color: var(--primary-color);
 }
 
@@ -239,4 +239,14 @@
 
 .section-delete-btn:hover {
     background: #ffe3e3;
+}
+
+.editable-section-heading[contenteditable="true"]:focus {
+    outline: 1px solid var(--primary-color);
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+.editable-section-heading[contenteditable="true"]:hover {
+    background-color: rgba(0, 0, 0, 0.05);
 }

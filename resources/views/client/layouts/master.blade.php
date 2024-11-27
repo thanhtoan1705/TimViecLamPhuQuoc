@@ -4,7 +4,8 @@
 <meta http-equiv="content-type" content="text/html;charset=UTF-8"/><!-- /Added by HTTrack -->
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> --}}
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=0.25">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="msapplication-TileColor" content="#0E0E0E">
     <meta name="template-color" content="#0E0E0E">
@@ -45,8 +46,12 @@
 <x-client.header></x-client.header>
 <script src="{{ asset('assets/client/js/app.js')}}"></script>
 @yield('content')
-<x-client.newsletter></x-client.newsletter>
-<x-client.footer></x-client.footer>
+@if(!View::hasSection('hide_newsletter'))
+    <x-client.newsletter></x-client.newsletter>
+@endif
+@if(!View::hasSection('hide_footer'))
+    <x-client.footer></x-client.footer>
+@endif
 
 @stack('script')
 

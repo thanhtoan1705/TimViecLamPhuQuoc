@@ -12,6 +12,7 @@ import Awards from './sections/Awards';
 import Extracurricular from './sections/Extracurricular';
 import References from './sections/References';
 import CareerObjective from './sections/CareerObjective';
+import '../common/template-common.css';
 import './template4.css';
 
 const Template4 = ({data, onUpdate, isEditable, styles}) => {
@@ -122,7 +123,7 @@ const Template4 = ({data, onUpdate, isEditable, styles}) => {
     };
 
     return (
-        <div className="cv-template-4" style={{
+        <div className="cv-template-4 template-wrapper" style={{
             fontFamily: styles.fontFamily || 'Arial, sans-serif',
             fontSize: styles.fontSize,
             '--primary-color': styles.primaryColor || '#2D9CDB',

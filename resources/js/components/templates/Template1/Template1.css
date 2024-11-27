@@ -448,7 +448,7 @@
     background-color: var(--primary-color);
 }
 
-/* Style cho c��c icons khác */
+/* Style cho cc icons khác */
 .cv-template-1 .bi {
     color: var(--primary-color);
 }
@@ -461,4 +461,14 @@
 
 .section-title[contenteditable="true"]:hover {
     background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Đổi .section-title thành .t1-section-title */
+.t1-section-title {
+    color: var(--primary-color);
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--primary-color);
 }

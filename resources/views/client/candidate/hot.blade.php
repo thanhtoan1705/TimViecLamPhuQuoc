@@ -75,14 +75,14 @@
                                                     <ul class="dropdown-menu dropdown-menu-light"
                                                         aria-labelledby="dropdownSort">
                                                         <li>
+                                                            <a class="dropdown-item {{ $perPage == 3 ? 'active' : '' }}"
+                                                               href="#" data-per-page="3">3</a></li>
+                                                        <li>
                                                             <a class="dropdown-item {{ $perPage == 12 ? 'active' : '' }}"
                                                                href="#" data-per-page="12">12</a></li>
                                                         <li>
-                                                            <a class="dropdown-item {{ $perPage == 24 ? 'active' : '' }}"
-                                                               href="#" data-per-page="24">24</a></li>
-                                                        <li>
-                                                            <a class="dropdown-item {{ $perPage == 36 ? 'active' : '' }}"
-                                                               href="#" data-per-page="36">36</a></li>
+                                                            <a class="dropdown-item {{ $perPage == 18 ? 'active' : '' }}"
+                                                               href="#" data-per-page="18">18</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -147,19 +147,19 @@
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-light"
                                                         aria-labelledby="dropdownSort">
-                                                        <li><a class="dropdown-item {{ $perPage == 5 ? 'active' : '' }}"
+                                                        <li><a class="dropdown-item {{ $perPage == 3 ? 'active' : '' }}"
                                                                href="#"
-                                                               onclick="document.querySelector('select[name=perPage]').value='5'; this.closest('form').submit();">5</a>
+                                                               onclick="document.querySelector('select[name=perPage]').value='3'; this.closest('form').submit();">3</a>
                                                         </li>
                                                         <li>
-                                                            <a class="dropdown-item {{ $perPage == 10 ? 'active' : '' }}"
+                                                            <a class="dropdown-item {{ $perPage == 12 ? 'active' : '' }}"
                                                                href="#"
-                                                               onclick="document.querySelector('select[name=perPage]').value='10'; this.closest('form').submit();">10</a>
+                                                               onclick="document.querySelector('select[name=perPage]').value='12'; this.closest('form').submit();">12</a>
                                                         </li>
                                                         <li>
-                                                            <a class="dropdown-item {{ $perPage == 20 ? 'active' : '' }}"
+                                                            <a class="dropdown-item {{ $perPage == 18 ? 'active' : '' }}"
                                                                href="#"
-                                                               onclick="document.querySelector('select[name=perPage]').value='20'; this.closest('form').submit();">20</a>
+                                                               onclick="document.querySelector('select[name=perPage]').value='18'; this.closest('form').submit();">18</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -203,9 +203,9 @@
                                             {{--                                                        alt="jobBox"></a>--}}
                                             {{--                                            </div>--}}
                                             <select name="perPage" class="d-none">
-                                                <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
-                                                <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
-                                                <option value="20" {{ $perPage == 20 ? 'selected' : '' }}>20</option>
+                                                <option value="3" {{ $perPage == 3 ? 'selected' : '' }}>3</option>
+                                                <option value="12" {{ $perPage == 12 ? 'selected' : '' }}>12</option>
+                                                <option value="18" {{ $perPage == 18 ? 'selected' : '' }}>18</option>
                                             </select>
                                             <select name="sortBy" class="d-none">
                                                 <option value="newest" {{ $sortBy == 'newest' ? 'selected' : '' }}>

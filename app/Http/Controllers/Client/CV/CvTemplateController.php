@@ -230,4 +230,12 @@ class CvTemplateController extends Controller
         ]);
     }
 
+    public function getTemplates()
+    {
+        $templates = CvTemplate::select('id', 'template_name', 'template_image', 'template_description')
+            ->get();
+
+        return response()->json($templates);
+    }
+
 }
