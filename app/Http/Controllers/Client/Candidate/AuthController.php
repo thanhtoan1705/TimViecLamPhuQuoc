@@ -100,6 +100,11 @@ class AuthController extends Controller
             return redirect()->back();
         }
 
+        if($user->candidate->status == 0) {
+            flash()->error('Tài khoản đã bị tạm dùng hoạt động. Liên hệ quản trị viên để biết thêm chi tiết.', [], 'Thất bại!');
+            return redirect()->back();
+        }
+
         if(is_null($user->email_verified_at)) {
             VerificationEmailRegister::dispatch($user);
 
@@ -167,10 +172,29 @@ class AuthController extends Controller
         return $slug;
     }
 
+    private function isAccountActive(string $email): bool
+    {
+        $user = User::where('email', $email)->first();
+        $candidate = $user->candidate;
+        return $candidate && $candidate->status === 1;
+    }
+
     public function handleGoogleCallback()
     {
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
+
+
+            //Kiểm tra tài khoản còn hoạt động
+            if (!$this->isAccountActive($googleUser->email)) {
+                flash()->warning(
+                    'Tài khoản đã bị tạm dùng hoạt động. Liên hệ quản trị viên để biết thêm chi tiết.',
+                    [],
+                    'Thông báo!'
+                );
+                return redirect()->route('client.candidate.login');
+            }
+            //end Kiểm tra tài khoản còn hoạt động
 
             $user = $this->userRepository->createOrUpdateGoogleUser([
                 'name' => $googleUser->name,

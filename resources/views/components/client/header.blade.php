@@ -347,15 +347,15 @@
                 @elseif(auth()->check() && auth()->user()->role == 'admin')
 
                     <div class="dropdown me-3" >
-                        <button class="btn btn-grey position-relative" id="notificationButton" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                            <i class="bi bi-bell-fill"></i>
-                            <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{ auth()->user()->unreadNotifications->filter(function($notification) {
-                                return isset($notification->data['message']) && !empty($notification->data['message']);
-                            })->count() }}
-                        </span>
+{{--                        <button class="btn btn-grey position-relative" id="notificationButton" data-bs-toggle="dropdown"--}}
+{{--                                aria-expanded="false">--}}
+{{--                            <i class="bi bi-bell-fill"></i>--}}
+{{--                            <span--}}
+{{--                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">--}}
+{{--                            {{ auth()->user()->unreadNotifications->filter(function($notification) {--}}
+{{--                                return isset($notification->data['message']) && !empty($notification->data['message']);--}}
+{{--                            })->count() }}--}}
+{{--                        </span>--}}
                         </button>
 
                         <ul class="dropdown-menu dropdown-menu-end p-3"

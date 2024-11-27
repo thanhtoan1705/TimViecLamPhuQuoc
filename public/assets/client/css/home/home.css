@@ -1,0 +1,909 @@
+.section-title-job-category-hot {
+    color: #0d6efd;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.job-card {
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.job-card:hover {
+    background-color: #ffffff;
+    border: 1px solid #0d6efd;
+}
+.job-card img {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.job-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #212529;
+}
+.job-count {
+    color: #0d6efd;
+    font-size: 14px;
+}
+
+
+
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-xl-3, .col-lg-4, .col-md-6 {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-grid-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+
+    height: 63px;
+    line-height: 20px;
+}
+
+.description:only-child {
+    margin-bottom: 23px;
+}
+
+.card-block-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.card-grid-2-image-left {
+    padding: 10px 20px 15px 20px;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.image-box {
+    flex-shrink: 0;
+}
+
+.right-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    max-width: 70%;
+}
+
+.location-small {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+
+    height: 42px;
+    line-height: 20px;
+}
+
+
+.card-grid-2 .label-jobbox {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 5px;
+}
+
+.card-grid-2 .VLgap {
+    background-color: #FFD700;
+    color: #ffffff;
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+}
+
+.card-grid-2 .VLhot {
+    background-color: #FF4444;
+    color: white;
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(255, 68, 68, 0.2);
+}
+
+.best-jobs-header {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.best-jobs-header .section-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #05264E;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.featured-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #FFE5D3, #FFF4ED);
+    border-radius: 12px;
+    margin-right: 5px;
+}
+
+.featured-icon i {
+    font-size: 20px;
+    color: #FF9837;
+}
+
+.best-jobs-header::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 2px;
+    background: #FF9837;
+    margin: 15px auto 0;
+}
+
+.color-text-paragraph-2 {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #66789C;
+    margin-top: 15px;
+}
+
+/* Animation cho icon */
+@keyframes starPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.featured-icon i {
+    animation: starPulse 2s infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .best-jobs-header .section-title {
+        font-size: 26px;
+    }
+
+    .featured-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .featured-icon i {
+        font-size: 18px;
+    }
+
+    .color-text-paragraph-2 {
+        font-size: 14px;
+    }
+}
+
+.job-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.company-info {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.company-logo {
+    width: 100%;
+    height: 80px;
+    margin-right: 15px;
+}
+
+.company-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+}
+
+/* .company-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #005587;
+    margin-bottom: 5px;
+} */
+
+.company-address {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.company-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 13px;
+    color: #666;
+}
+
+.company-meta i {
+    margin-right: 5px;
+}
+
+.job-position {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.position-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-save-job {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.position-title {
+    color: #2d2d2d;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.position-title:hover {
+    color: #005587;
+}
+
+.position-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 13px;
+    color: #666;
+}
+
+.position-meta i {
+    margin-right: 5px;
+}
+
+.salary {
+    color: #00b14f;
+}
+
+.btn-view-more {
+    background: none;
+    border: none;
+    color: #005587;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px 15px;
+}
+
+.btn-view-more:hover {
+    text-decoration: underline;
+}
+
+.best-jobs-content .row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.job-card {
+    height: 100%;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+.job-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.company-info {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.company-logo {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    margin-right: 15px;
+}
+
+.company-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.company-name {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.company-address {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.company-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 13px;
+    color: #666;
+}
+
+.company-meta span {
+    display: flex;
+    align-items: center;
+}
+
+.company-meta i {
+    margin-right: 5px;
+}
+
+.job-position {
+    padding: 12px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.job-position:last-child {
+    border-bottom: none;
+}
+
+.position-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.position-title {
+    color: #333;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.position-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #666;
+}
+
+.salary {
+    color: #00b14f;
+}
+
+.btn-view-more {
+    background: none;
+    border: none;
+    color: #0d6efd;
+    font-size: 14px;
+    padding: 5px 15px;
+    cursor: pointer;
+    /* display: flex; */
+    align-items: center;
+    gap: 5px;
+    margin: 0 auto;
+}
+
+.btn-view-more:hover {
+    text-decoration: underline;
+}
+
+.hidden-positions {
+    transition: all 0.3s ease;
+}
+
+.job-position {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 992px) {
+}
+
+.swiper-slide {
+    height: auto !important;
+}
+
+.job-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.job-listings {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.box-swiper {
+    position: relative;
+    margin: 0 -15px;
+}
+
+.swiper-wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+.row {
+    height: 100%;
+}
+
+.btn-save-job {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-save-job:hover {
+    /* Add your hover styles here */
+}
+
+.card-grid-2 .VLgap:hover,
+.card-grid-2 .VLhot:hover {
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+.card-grid-2 .VLgap:hover {
+    background-color: #FFE44D;
+}
+
+.card-grid-2 .VLhot:hover {
+    background-color: #FF3333;
+}
+
+.employer-banner {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 16px;
+    margin: 15px;
+    overflow: visible; /* Cho phép nội dung tràn ra ngoài */
+}
+
+.banner-content {
+    position: relative;
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.employer-info {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.employer-info .logo img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.job-listing {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    margin: 0 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -140px; /* Đẩy job listing xuống dưới */
+    max-height: 270px;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+}
+
+.job-item {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.job-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-color: #ddd;
+}
+
+.job-details h4 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.job-details h4 a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.job-details h4 a:hover {
+    color: #3C65F5;
+}
+
+.job-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    color: #666;
+}
+
+.job-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+}
+
+.job-meta i {
+    color: #ff9900;
+}
+
+.btn-apply {
+    background: linear-gradient(135deg, #ff9900, #ff7600);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(255, 153, 0, 0.3);
+}
+
+.btn-apply:hover {
+    background: linear-gradient(135deg, #ff7600, #ff9900);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 153, 0, 0.4);
+    color: white;
+}
+
+
+/* Tùy chỉnh thanh cuộn */
+.job-listing::-webkit-scrollbar {
+    width: 6px;
+}
+
+.job-listing::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.job-listing::-webkit-scrollbar-thumb {
+    background: #ffc266;
+    border-radius: 3px;
+}
+
+.job-listing::-webkit-scrollbar-thumb:hover {
+    background: #ff9900;
+}
+
+/* Điều chỉnh swiper container để phù hợp với job listing tràn ra */
+.swiper-container {
+    padding-bottom: 130px; /* Tạo khoảng trống cho job listing */
+}
+
+/* Animation cho job items khi hiển thị */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.job-item {
+    animation: fadeInUp 0.3s ease forwards;
+    animation-delay: calc(var(--item-index) * 0.1s);
+}
+
+/* Mobile job card styles - New version */
+@media (max-width: 767px) {
+    .mobile-job-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        margin: 10px 0;
+        position: relative;
+    }
+
+    .mobile-job-content {
+        padding: 12px;
+        display: grid;
+        grid-template-columns: 80px 1fr; /* Điều chỉnh cột đầu tiên thành 80px */
+        gap: 12px;
+    }
+
+    /* Company Logo */
+    .mobile-job-content .company-logo {
+        width: 80px;  /* Tăng kích thước lên 80px */
+        height: 80px; /* Tăng kích thước lên 80px */
+        border: 1px solid #eee;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .mobile-job-content .company-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    /* Job Info Container - Các style khác giữ nguyên */
+    .mobile-job-content .job-info {
+        overflow: hidden;
+        padding-right: 25px;
+    }
+
+    /* Job Title */
+    .mobile-job-content .job-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 4px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.3;
+    }
+
+    /* Company Name */
+    .mobile-job-content .company-namee {
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Job Meta Info */
+    .mobile-job-content .job-meta-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    .job-meta-info .job-salary,
+    .job-meta-info .job-location {
+        background: #f8f9fa;
+        padding: 3px 8px;
+        border-radius: 4px;
+        color: #05264E;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .job-meta-info .job-salary {
+        color: #05264E;
+    }
+
+    /* Save Button */
+    .mobile-job-content .save-job {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+    }
+
+    .mobile-job-content .save-button {
+        background: none;
+        border: none;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+    }
+
+    .save-button i {
+        font-size: 16px;
+        color: #666;
+    }
+
+    /* Hide desktop version on mobile */
+    .d-none.d-md-flex {
+        display: none !important;
+    }
+
+    /* Show mobile version */
+    .d-md-none.mobile-job-card {
+        display: block !important;
+    }
+
+    /* Adjust container padding */
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* Tab adjustments for mobile */
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+        display: none; /* Chrome, Safari */
+    }
+
+    .nav-tabs li {
+        flex: 0 0 auto;
+    }
+
+    /* Điều chỉnh responsive cho màn hình rất nhỏ */
+    @media (max-width: 360px) {
+        .mobile-job-content {
+            grid-template-columns: 80px 1fr; /* Giữ nguyên kích thước 80px */
+            gap: 10px;
+        }
+
+        .mobile-job-content .company-logo {
+            width: 80px;  /* Giữ nguyên kích thước 80px */
+            height: 80px; /* Giữ nguyên kích thước 80px */
+        }
+    }
+
+    /* Điều chỉnh hiển thị job item trên mobile */
+    .job-item {
+        padding: 12px;
+        margin-bottom: 8px;
+    }
+
+    .job-details h4 {
+        font-size: 14px;
+        margin-bottom: 6px;
+        line-height: 1.3;
+    }
+
+    /* Tùy chỉnh job meta để hiển thị chỉ lương và địa điểm */
+    .job-meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Chia 2 cột bằng nhau */
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    /* Ẩn các thông tin không cần thiết trên mobile */
+    .job-meta .job-type,
+    .job-meta .card-time,
+    .job-meta span:not(.salary):not(.location) {
+        display: none !important;
+    }
+
+    /* Style cho salary và location */
+    .job-meta .salary,
+    .job-meta .location {
+        font-size: 12px;
+        padding: 4px 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .job-meta .salary {
+        color: #00b14f;
+    }
+
+    .job-meta .location {
+        color: #666;
+    }
+
+    /* Icon styles */
+    .job-meta i {
+        font-size: 12px;
+        flex-shrink: 0;
+    }
+
+    /* Đảm bảo text không bị tràn */
+    .job-meta span {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

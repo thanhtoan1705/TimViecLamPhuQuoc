@@ -561,7 +561,7 @@
                 </div>
             </div>
         </section>
-        <x-client.blog></x-client.blog>
+
     </main>
     <style>
         .row {

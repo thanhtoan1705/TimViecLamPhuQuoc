@@ -250,7 +250,7 @@
                 </div>
             </div>
         </section>
-        <x-client.blog></x-client.blog>
+
     </main>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
