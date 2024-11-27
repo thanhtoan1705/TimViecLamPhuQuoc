@@ -86,7 +86,7 @@ class Comment extends Component
             'editState.content' => 'required|min:2'
         ], [
             'editState.content.required' => 'Vui lòng nhập nội dung.',
-            'editState.content.min' => 'Bình luận phải có ít nhất 2 ký tự.',
+            'editState.content.min' => 'Nội dung phải có ít nhất 2 ký tự.',
         ]);
 
         $this->comment->update($this->editState);
@@ -101,7 +101,6 @@ class Comment extends Component
     #[On('refresh')]
     public function deleteComment(): void
     {
-        // dd("tao trước");
         $this->comment->delete();
         // $this->showOptions = false;
         $this->dispatch('refreshCommentList');
@@ -133,7 +132,7 @@ class Comment extends Component
             'replyState.content' => 'required'
         ], [
             'replyState.content.required' => 'Vui lòng nhập nội dung.',
-            'replyState.content.min' => 'Bình luận phải có ít nhất 2 ký tự.',
+            'replyState.content.min' => 'Nội dung phải có ít nhất 2 ký tự.',
         ]);
         $reply = $this->comment->children()->make($this->replyState);
         $reply->user()->associate(auth()->user());

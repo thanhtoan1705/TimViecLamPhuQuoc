@@ -32,10 +32,14 @@ class SearchService
         if (!empty($filters['keyword'])) {
             $query->where(function ($subQuery) use ($filters) {
                 $subQuery->where('title', 'LIKE', '%' . $filters['keyword'] . '%')
-                    ->orWhere('description', 'LIKE', '%' . $filters['keyword'] . '%');
+                    ->orWhere('description', 'LIKE', '%' . $filters['keyword'] . '%')
+                    ->orWhereHas('employer', function ($employerQuery) use ($filters) {
+                        $employerQuery->where('company_name', 'LIKE', '%' . $filters['keyword'] . '%');
+                    });
             });
         }
 
+        $query->where('status', 1);
         $query->orderBy('created_at', 'desc');
 
         return $query->paginate(10);

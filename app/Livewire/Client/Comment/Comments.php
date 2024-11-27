@@ -68,10 +68,19 @@ class Comments extends Component
     public function postComment(): void
     {
         $this->validate([
-            'newCommentState.content' => 'required|min:2',
+            'newCommentState.content' => [
+                'required',
+                'min:2',
+                function ($attribute, $value, $fail) {
+                    $wordCount = str_word_count(strip_tags($value));
+                    if ($wordCount > 200) { // Giới hạn 200 từ
+                        $fail('Nội dung quá dài! không được vượt quá 200 từ.');
+                    }
+                },
+            ],
         ], [
             'newCommentState.content.required' => 'Vui lòng nhập nội dung.',
-            'newCommentState.content.min' => 'Bình luận phải có ít nhất 2 ký tự.',
+            'newCommentState.content.min' => 'Nội dung phải có ít nhất 2 ký tự.',
         ]);
 
         // Tạo bình luận mới

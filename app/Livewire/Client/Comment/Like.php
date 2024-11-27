@@ -24,6 +24,11 @@ class Like extends Component
 
     public function like(): void
     {
+        if (!auth()->check()) {
+            flash()->error('Vui lòng đăng nhập để thực hiện thao tác này!', [], 'Lỗi!');
+            return;
+        }
+
         $ip = request()->ip();
         $userAgent = request()->userAgent();
         $userId = auth()->id();
