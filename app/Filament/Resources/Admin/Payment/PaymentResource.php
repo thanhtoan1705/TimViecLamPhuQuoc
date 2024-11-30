@@ -154,7 +154,7 @@ class PaymentResource extends Resource implements HasShieldPermissions
                 Tables\Columns\TextColumn::make('payment_date')->label('Ngày thanh toán')->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)
                     ->format('d/m/Y - h:i A'))->sortable(),
                 Tables\Columns\TextColumn::make('expiration_date')->label('Ngày hết hạn')->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->format('d/m/Y - h:i A')),
-                Tables\Columns\TextColumn::make('payment_method')->label('Phương thức thanh toán')->searchable(),
+                Tables\Columns\TextColumn::make('paymentMethod.method_type')->label('Phương thức thanh toán')->searchable(),
                 Tables\Columns\BooleanColumn::make('payment_status')->label('Trạng thái')->default(true),
             ])
             ->filters([

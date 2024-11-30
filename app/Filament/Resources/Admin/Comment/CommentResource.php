@@ -4,19 +4,24 @@ namespace App\Filament\Resources\Admin\Comment;
 
 use App\Filament\Resources\Comment\CommentResource\Pages;
 use App\Filament\Resources\Comment\CommentResource\RelationManagers;
+use App\Models\Comment;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Hash;
 
 class CommentResource extends Resource implements HasShieldPermissions
 {
@@ -124,12 +129,20 @@ class CommentResource extends Resource implements HasShieldPermissions
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Comment::orderBy('created_at', 'desc'))
             ->columns([
                 Tables\Columns\TextColumn::make('row_number')
                     ->label('STT')
                     ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
                 Tables\Columns\TextColumn::make('user.name')->label('Người bình luận')->searchable(),
-                Tables\Columns\TextColumn::make('blog.title')->label('Tên bài viết')->searchable()->wrap(),
+                Tables\Columns\TextColumn::make('blog.title')
+                    ->label('Tên bài viết')
+                    ->searchable()
+                    ->wrap()
+                    ->icon('heroicon-m-link')
+                    ->limit(50)
+                    ->url(fn($record) => route('client.post.detail', ['slug' => $record->blog->slug]) . '#comment-' . $record->id)
+                    ->openUrlInNewTab(),
             ])
             ->filters([
                 Filter::make('user_id')
@@ -152,7 +165,44 @@ class CommentResource extends Resource implements HasShieldPermissions
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
-//                    Tables\Actions\EditAction::make(),
+                    Action::make('reply')
+                        ->label('Phản hồi')
+                        ->icon('heroicon-o-chat-bubble-oval-left-ellipsis')
+                        ->action(function ($record, array $data) {
+                            // Tạo một bình luận mới (trả lời bình luận)
+                            $newComment = $record->children()->create([
+                                'blog_id' => $record->blog->id,
+                                'content' => $data['content-reply'],
+                                'parent_id' => $record->id,
+                                'user_id' => auth()->id(),
+//                                'commentable_id' => $record->commentable_id,
+//                                'commentable_type' => $record->commentable_type,
+                            ]);
+                            $userToNotify = $record->user; // Người bình luận gốc
+                            $userToNotify->notify(new \App\Notifications\CommentReplyNotification($newComment));
+                            Notification::make()
+                                ->title('Đã gửi phản hồi')
+                                ->success()
+                                ->send();
+                        })
+                        ->form([
+                            Textarea::make('content')
+                                ->label(function ($record) {
+                                    return 'Từ: ' . $record->user->name;
+                                })
+                                ->default(function ($record) {
+                                    return $record->content;
+                                })
+                                ->disabled(),
+
+                            RichEditor::make('content-reply')
+                                ->label('Nội dung')
+                                ->required()
+                                ->placeholder('Nhập nội dung...'),
+                        ])
+                        ->modalHeading('Trả lời bình luận')
+                        ->modalButton('Gửi'),
+                    Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
                 ])
             ])

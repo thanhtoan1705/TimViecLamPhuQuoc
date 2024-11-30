@@ -62,8 +62,8 @@
                 </div>
 
             </footer>
-            <p class="text-muted m-0">
-                {!! $comment->presenter()->replaceUserMentions($comment->presenter()->markdownBody()) !!}
+            <p class="text-muted m-0" id="comment-{{ $comment->id }}">
+                {!! $comment['content'] !!}
             </p>
 
             <div class="d-flex align-items-center mt-2">
@@ -112,6 +112,15 @@
                 }
             }
         }
+        document.addEventListener('DOMContentLoaded', function() {
+            var hash = window.location.hash;
+            if (hash) {
+                var commentElement = document.querySelector(hash);
+                if (commentElement) {
+                    commentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
     </script>
 
 </div>
