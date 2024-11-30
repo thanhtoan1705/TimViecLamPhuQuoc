@@ -98,6 +98,10 @@ class User extends Authenticatable implements HasAvatar, FilamentUser, MustVerif
         return $this->hasOne(Employer::class);
     }
 
+    public function chatMessages()
+    {
+        return $this->hasMany(ChMessage::class, 'to_id');
+    }
     public function userJobPackages()
     {
         return $this->hasMany(UserJobPackage::class, 'user_id');

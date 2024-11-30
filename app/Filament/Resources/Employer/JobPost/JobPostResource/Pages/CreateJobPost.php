@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Employer\JobPost\JobPostResource\Pages;
 
 use App\Filament\Resources\Employer\JobPost\JobPostResource;
+use App\Models\JobPost;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,13 @@ class CreateJobPost extends CreateRecord
     public function mutateFormDataBeforeCreate(array $data): array
     {
         $companyName = Auth::user()->employer->company_name;
+
+        //Id của jobpost
+        $maxId = JobPost::max('id');
+        $id = $maxId + 1;
+
         // Tạo slug trước khi tạo bản ghi mới
-        $data['slug'] = Str::slug($companyName . '-tuyen-dung-' . $data['title']);
+        $data['slug'] = Str::slug($companyName . '-tuyen-dung-' . $data['title']. '-'. $id);
         return $data;
     }
 

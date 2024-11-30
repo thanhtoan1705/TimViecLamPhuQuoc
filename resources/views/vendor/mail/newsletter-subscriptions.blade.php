@@ -15,7 +15,7 @@
         <div style="margin-top: 15px;">
             <p>Chúng tôi vừa cập nhật tin tức mới mà có thể bạn quan tâm:</p>
             <strong style="display: inline-block; text-align: center; font-size: 18px; width: 100%;">{{ $subject }}</strong>
-            
+
             <div style="margin-top: 20px;">
                 {!! $content !!}
             </div>
@@ -27,7 +27,7 @@
 
         <div style="margin-top: 20px;">
             <div style="text-align: center;">
-                <img src="{{ asset('assets/client/imgs/template/pq2.svg') }}" alt="ViecLamPhuQuoc" style="width: 150px;">
+                <img src="{{ getStorageImageUrl($settings->logo_website, config('image.main-logo')) }}" alt="ViecLamPhuQuoc" style="width: 150px;">
             </div>
             <div style="text-align: center; margin-top: 15px;">
                 <p><strong>Việc Làm Phú Quốc</strong></p>

@@ -5,6 +5,8 @@ namespace App\Filament\Resources\Employer\JobPost;
 use App\Filament\Resources\Employer\JobPost\JobPostResource\RelationManagers;
 use App\Models\Employer;
 use App\Models\JobPost;
+use App\Models\Notification;
+use App\Models\UserJobPackage;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
@@ -22,6 +24,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class JobPostResource extends Resource
@@ -53,63 +56,131 @@ class JobPostResource extends Resource
         return 'primary';
     }
 
+
     public static function form(Form $form): Form
     {
-        $operation = $form->getOperation();
+        $user = Auth::user();
+        $employer = $user->employer;
 
-        $employer = Employer::where('id', Auth::user()->employer->id)->first();
-
+        // Nếu không phải nhà tuyển dụng
         if (!$employer) {
-            session()->flash('error', 'Không tìm thấy thông tin nhà tuyển dụng.');
-
             return $form->schema([
                 Forms\Components\Placeholder::make('Thông báo')
-                    ->content('Vui lòng kiểm tra lại thông tin tài khoản.')
-                    ->extraAttributes(['class' => 'bg-danger text-white p-3 rounded']),
+                    ->content('Bạn không phải nhà tuyển dụng.'),
             ]);
         }
 
-//        $maxPosts = $employer->max_posts_per_day;
+        // Lấy operation hiện tại
+        $operation = $form->getOperation();
+
+        // Kiểm tra nếu operation là 'create'
+        if ($operation === 'create') {
+
+            // Lấy tất cả các gói còn hạn và có remaining_posts > 0
+            $jobPackages = UserJobPackage::where('employer_id', $employer->id)
+                ->where('expires_at', '>=', now())
+                ->where('remaining_posts', '>', 0)
+                ->get();
+
+            // Kiểm tra lượt đăng miễn phí trong ngày
+            $today = now()->toDateString();
+            $freePostToday = JobPost::where('employer_id', $employer->id)
+                ->whereDate('created_at', $today)
+                ->exists();
+
+//            dd($freePostToday);
+
+            // Kiểm tra nếu có ít nhất một gói hợp lệ
+            if ($jobPackages->isNotEmpty()) {
+                // Tìm gói có số bài đăng còn lại nhiều nhất
+                $availablePackage = $jobPackages->sortByDesc('remaining_posts')->first();
+
+                // Nếu có gói và còn bài đăng trong gói, hiển thị form tạo bài đăng
+                if ($availablePackage && $availablePackage->remaining_posts > 0) {
+                    return $form->schema(
+                        static::formAddJobPost()
+                    );
+                }
+            }
+
+            // Nếu không còn gói hợp lệ và chưa sử dụng bài đăng miễn phí hôm nay
+            if (!$freePostToday) {
+                return $form->schema(
+                    static::formAddJobPost()
+                );
+            } else {
+                // Nếu không còn lượt đăng miễn phí và chưa có gói, yêu cầu mua gói
+                return $form->schema(
+                    static::notificationExpired(
+                        fn() => new HtmlString('
+                    Bạn đã sử dụng hết lượt đăng tin miễn phí hôm nay. Vui lòng mua gói vip để đăng nhiều tin hơn trong 1 ngày.
+                    <br><br>
+                    <a
+                        href="'.route('filament.employer.resources.employer.buy-services.buy-services.index') .'"
+                        target="_blank"
+                        class="fi-btn-label"
+                        style="margin-top: 20px; padding: 10px 20px; background-color: #2563eb; color: white; border-radius: 6px;">
+                        Mua Gói Đăng Tin
+                    </a>
+                ')
+                    )
+                );
+            }
+        }
+
+        // Nếu đang update (operation là "update"), hiển thị form bình thường
+        return $form->schema(
+            static::formAddJobPost()
+        );
+    }
+
+
+//    public static function afterCreate(JobPost $record): void
+//    {
+//        $employerId = $record->employer_id;
 //
-//        $hasPostedToday = JobPost::where('employer_id', $employer->id)
-//            ->whereDate('created_at', now()->format('Y-m-d'))
-//            ->count();
+//        $jobPackage = UserJobPackage::where('employer_id', $employerId)
+//            ->where('expires_at', '>=', now())
+//            ->first();
 //
-//        if ($operation === 'create' && $hasPostedToday >= $maxPosts) {
-//            session()->flash('error', 'Bạn chỉ được phép đăng ' . $maxPosts . ' bài hôm nay.');
-//
-//            return $form->schema([
-//                Forms\Components\Placeholder::make('Thông báo')
-//                    ->content('Bạn đã đăng ' . $hasPostedToday . ' bài hôm nay. Hãy nâng cấp tài khoản để đăng thêm.')
-//                    ->extraAttributes(['class' => 'bg-warning text-dark p-3 rounded']),
-//            ]);
+//        if ($jobPackage) {
+//            $jobPackage->decrement('remaining_posts'); // Giảm số lượng bài đăng còn lại
 //        }
+//    }
 
-        return $form
-            ->schema([
-                Grid::make(3)
-                    ->schema([
-                        Grid::make(2)->schema([
+    public static function formAddJobPost()
+    {
+        return [
+            Grid::make(3)
+                ->schema([
+                    Grid::make(2)->schema([
 
-                            Section::make('Thông tin công việc')
-                                ->schema([
-                                    Grid::make(2)->schema([
-                                        Forms\Components\Hidden::make('employer_id')
-                                            ->default(Auth::user()->employer->id),
+                        Section::make('Thông tin công việc')
+                            ->schema([
+                                Grid::make(2)->schema([
+                                    Forms\Components\Hidden::make('employer_id')
+                                        ->default(Auth::user()->employer->id),
 
-                                        Forms\Components\Hidden::make('start_date')
-                                            ->default(now()),
+                                    Forms\Components\Hidden::make('start_date')
+                                        ->default(now()),
 
-                                        Forms\Components\Hidden::make('status')
-                                            ->default(true),
+                                    Forms\Components\Hidden::make('status')
+                                        ->default(true),
 
-                                        TextInput::make('title')
-                                            ->required()
-                                            ->maxLength(180)
-                                            ->live(onBlur: true)
-                                            ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null)
-                                            ->label('Tiêu đề bài đăng')->placeholder('Tuyển dụng nhân viên...')
-                                            ->columnSpanFull(),
+                                    TextInput::make('title')
+                                        ->required()
+                                        ->maxLength(180)
+                                        ->live(onBlur: true)
+                                        ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null)
+                                        ->label('Tiêu đề bài đăng')->placeholder('Tuyển dụng nhân viên...')
+                                        ->columnSpanFull(),
+//                                        ->helperText(fn($get) => new HtmlString(
+//                                            '<a href="' . route('client.job.single', ['jobSlug' => $get('slug')]) . '"
+//                                                    target="_blank" style="color: #007bff;">
+//                                                    ' . route('client.job.single', ['jobSlug' => $get('slug')]) . '
+//                                                </a>'
+//
+//                                        )),
 //                                        TextInput::make('slug')
 //                                            ->required()
 //                                            ->dehydrated()
@@ -117,161 +188,180 @@ class JobPostResource extends Resource
 //                                            ->maxLength(255)
 //                                            ->label('Slug'),
 
-                                        Forms\Components\Select::make('rank_id')
-                                            ->required()
-                                            ->placeholder('Cấp bậc')
-                                            ->relationship('rank', 'name')
-                                            ->label('Cấp bậc')
-                                            ->searchable()
-                                            ->preload()
-                                            ->columnSpan(1),
-                                        Forms\Components\Select::make('job_type_id')
-                                            ->required()
-                                            ->relationship('jobType', 'name')
-                                            ->placeholder('Chọn loại hình công việc')
-                                            ->label('Loại hình công việc')
-                                            ->searchable()
-                                            ->preload()
-                                            ->columnSpan(1),
-                                        Forms\Components\Select::make('job_category_id')
-                                            ->required()
-                                            ->relationship('job_category', 'name')
-                                            ->placeholder('Chọn ngành nghề (tối đa 6)')
-                                            ->searchable()
-                                            ->preload()
-                                            ->label('Ngành nghề'),
-//                                        Forms\Components\Select::make('major_id')
-//                                            ->required()
-//                                            ->relationship('majors', 'name')
-//                                            ->placeholder('Chọn chuyên ngành')
-//                                            ->searchable()
-//                                            ->preload()
-//                                            ->label('Chuyên ngành'),
-                                        Forms\Components\Select::make('salary_id')
-                                            ->required()
-                                            ->placeholder('Vui lòng chọn bằng cấp')
-                                            ->relationship('salary', 'name')
-                                            ->label('Mức lương')
-                                            ->searchable()
-                                            ->preload(),
-                                        TextInput::make('quantity')
-                                            ->numeric()
-                                            ->rule('min:1')
-                                            ->label('Số lượng')
-                                            ->placeholder('Vui lòng nhập số lượng'),
-                                        Forms\Components\DateTimePicker::make('end_date')
-                                            ->required()
-                                            ->label('Hạn nộp hồ sơ (Tối đa 90 ngày)')
-                                            ->minDate(now()) // Ngày nhỏ nhất là ngày hiện tại
-                                            ->maxDate(Carbon::now()->addDays(90)),
-                                        Forms\Components\RichEditor::make('description')
-                                            ->label('Mô tả công việc')
-                                            ->required()
-                                            ->placeholder('Mô tả chi tiết công việc để ứng viên hiểu rõ về yêu cầu của công ty với vị trí này. VD:
+                                    Forms\Components\Select::make('rank_id')
+                                        ->required()
+                                        ->placeholder('Cấp bậc')
+                                        ->relationship('rank', 'name')
+                                        ->label('Cấp bậc')
+                                        ->searchable()
+                                        ->preload()
+                                        ->columnSpan(1),
+                                    Forms\Components\Select::make('job_type_id')
+                                        ->required()
+                                        ->relationship('jobType', 'name')
+                                        ->placeholder('Chọn loại hình công việc')
+                                        ->label('Loại hình công việc')
+                                        ->searchable()
+                                        ->preload()
+                                        ->columnSpan(1),
+                                    Forms\Components\Select::make('job_category_id')
+                                        ->required()
+                                        ->relationship('job_category', 'name')
+                                        ->searchable()
+                                        ->preload()
+                                        ->label('Ngành nghề'),
+
+                                    Forms\Components\Select::make('salary_id')
+                                        ->required()
+                                        ->placeholder('Vui lòng chọn bằng cấp')
+                                        ->relationship('salary', 'name')
+                                        ->label('Mức lương')
+                                        ->searchable()
+                                        ->preload(),
+                                    TextInput::make('quantity')
+                                        ->numeric()
+                                        ->rule('min:1')
+                                        ->label('Số lượng')
+                                        ->placeholder('Vui lòng nhập số lượng'),
+                                    Forms\Components\DateTimePicker::make('end_date')
+                                        ->required()
+                                        ->label('Hạn nộp hồ sơ (Tối đa 90 ngày)')
+                                        ->minDate(now()) // Ngày nhỏ nhất là ngày hiện tại
+                                        ->maxDate(Carbon::now()->addDays(90)),
+                                    Forms\Components\RichEditor::make('description')
+                                        ->label(fn() => new HtmlString('
+                                            Mô tả công việc (Giới hạn <span style="font-weight: bold; color: #007bff;">2.000</span> ký tự).
+                                        '))
+                                        ->maxLength(2000)
+                                        ->required()
+                                        ->placeholder('Mô tả chi tiết công việc để ứng viên hiểu rõ về yêu cầu của công ty với vị trí này. VD:
                                             - Kiểm tra các order trước khi thanh toán, trực tiếp thực hiện quá trình thanh toán.
                                             - Các công việc khác theo yêu cầu của quản lý.')
-                                            ->columnSpanFull()
-                                            ->helperText('Xem hướng dẫn chi tiết về cách viết mô tả công việc tại <a href="https://example.com/huong-dan-viet-mo-ta-cong-viec" target="_blank" style="color: #007bff; text-decoration: underline;">đây</a>.'),
-                                    ]),
+                                        ->columnSpanFull()
+                                        ->helperText(fn() => new HtmlString('
+                                            Xem hướng dẫn chi tiết về cách viết mô tả công việc: <a href="" target="_blank" style="color: #007bff; text-decoration: underline;">Xem hướng dẫn</a>.
+                                        '))
+                                        ->toolbarButtons([]),
                                 ]),
+                            ]),
 
-                            Section::make('Yêu cầu công việc')
-                                ->schema([
-                                    Grid::make(3)->schema([
-                                        Forms\Components\Select::make('experience_id')
-                                            ->required()
-                                            ->relationship('experience', 'name')
-                                            ->placeholder('Vui lòng chọn số năm kinh nghiệm')
-                                            ->label('Kinh nghiệm')
-                                            ->searchable()
-                                            ->preload(),
-                                        Forms\Components\Select::make('degree_id')
-                                            ->required()
-                                            ->placeholder('Vui lòng chọn bằng cấp')
-                                            ->relationship('degree', 'name')
-                                            ->label('Yêu cầu bằng cấp')
-                                            ->searchable()
-                                            ->preload(),
+                        Section::make('Yêu cầu công việc')
+                            ->schema([
+                                Grid::make(3)->schema([
+                                    Forms\Components\Select::make('experience_id')
+                                        ->required()
+                                        ->relationship('experience', 'name')
+                                        ->placeholder('Vui lòng chọn số năm kinh nghiệm')
+                                        ->label('Kinh nghiệm')
+                                        ->searchable()
+                                        ->preload(),
+                                    Forms\Components\Select::make('degree_id')
+                                        ->required()
+                                        ->placeholder('Vui lòng chọn bằng cấp')
+                                        ->relationship('degree', 'name')
+                                        ->label('Yêu cầu bằng cấp')
+                                        ->searchable()
+                                        ->preload(),
 
-                                        Forms\Components\Select::make('gender')
-                                            ->label('Giới tính')
-                                            ->options([
-                                                'male' => 'Nam',
-                                                'female' => 'Nữ',
-                                                'not_required' => 'Không yêu cầu',
-                                            ])
-                                            ->required()
-                                            ->placeholder('Chọn giới tính')
-                                            ->searchable()
-                                            ->preload(),
-                                        Forms\Components\RichEditor::make('job_requirement')
-                                            ->label('Yêu cầu tuyển dụng')
-                                            ->required()
-                                            ->placeholder('- Số lượng: 02 (Nam/Nữ).
+                                    Forms\Components\Select::make('gender')
+                                        ->label('Giới tính')
+                                        ->options([
+                                            'male' => 'Nam',
+                                            'female' => 'Nữ',
+                                            'not_required' => 'Không yêu cầu',
+                                        ])
+                                        ->required()
+                                        ->placeholder('Chọn giới tính')
+                                        ->searchable()
+                                        ->preload(),
+                                    Forms\Components\RichEditor::make('job_requirement')
+                                        ->label(fn() => new HtmlString('
+                                            Yêu cầu tuyển dụng (Giới hạn <span style="font-weight: bold; color: #007bff;">1.000</span> ký tự).
+                                        '))
+                                        ->maxLength(1000)
+                                        ->required()
+                                        ->placeholder('- Số lượng: 02 (Nam/Nữ).
                                         - Thời gian làm việc 8 tiếng/ngày.
                                         - Giao tiếp tiếng Anh cơ bản.')
-                                            ->columnSpanFull(),
+                                        ->toolbarButtons([])
+                                        ->columnSpanFull(),
 
-                                    ]),
                                 ]),
+                            ]),
 
-                            Section::make('Yêu cầu hồ sơ')
-                                ->schema([
-                                    Forms\Components\RichEditor::make('cv_requirement')
-                                        ->label('Giới hạn 1.000 ký tự')
-                                        ->placeholder('- Đơn xin việc.
+                        Section::make('Yêu cầu hồ sơ')
+                            ->schema([
+                                Forms\Components\RichEditor::make('cv_requirement')
+                                    ->label(fn() => new HtmlString('
+                                            Giới hạn <span style="font-weight: bold; color: #007bff;">1.000</span> ký tự
+                                        '))
+                                    ->maxLength(1000)
+                                    ->toolbarButtons([])
+                                    ->placeholder('- Đơn xin việc.
                                         - Sơ yếu lý lịch.
                                         - Hộ khẩu, chứng minh nhân dân và giấy khám sức khỏe.
                                         - Các bằng cấp có liên quan.
                                        '),
 
-                                ]),
+                            ]),
 
-                            Section::make('Cách nộp hồ sơ')
-                                ->schema([
-                                    Grid::make(2)->schema([
-                                        TextInput::make('email')
-                                            ->label('Ứng tuyển online qua email:')
-                                            ->default(auth()->user()->email)
-                                            ->maxLength(255)
-                                            ->required(),
-
-                                        TextInput::make('phone')
-                                            ->label('Ứng viên có thể liên hệ qua hotline:')
-                                            ->default(auth()->user()->phone)
-                                            ->maxLength(50)
-                                            ->required(),
-
-                                        TextInput::make('department')
-                                            ->label('Người liên hệ')
-                                            ->default('Phòng nhân sự')
-                                            ->maxLength(255)
-                                            ->required(),
-
-                                        TextInput::make('address')
-                                            ->label('Đia chỉ liên hệ')
-                                            ->maxLength(255)
-                                            ->required(),
-                                    ]),
-                                ]),
-
-                            Section::make('SEO')->schema([
+                        Section::make('Cách nộp hồ sơ')
+                            ->schema([
                                 Grid::make(2)->schema([
-                                    TextInput::make('meta_title')
-                                        ->placeholder('Vui lòng nhập Meta Title')
-                                        ->label('Meta Title'),
-                                    TextInput::make('meta_keyword')
-                                        ->placeholder('Vui lòng nhập Meta Keyword')
-                                        ->label('Meta Keyword'),
-                                    TextInput::make('meta_description')
-                                        ->placeholder('Vui lòng nhập Meta Description')
-                                        ->label('Meta Description')
-                                        ->columnSpanFull(),
+                                    TextInput::make('email')
+                                        ->label('Ứng tuyển online qua email:')
+                                        ->default(auth()->user()->email)
+                                        ->maxLength(255)
+                                        ->required(),
+
+                                    TextInput::make('phone')
+                                        ->label('Ứng viên có thể liên hệ qua hotline:')
+                                        ->default(auth()->user()->phone)
+                                        ->maxLength(50)
+                                        ->required(),
+
+                                    TextInput::make('department')
+                                        ->label('Người liên hệ')
+                                        ->default('Phòng nhân sự')
+                                        ->maxLength(255)
+                                        ->required(),
+
+                                    TextInput::make('address')
+                                        ->label('Đia chỉ liên hệ')
+                                        ->maxLength(255)
+                                        ->required(),
                                 ]),
                             ]),
-                        ])->columnSpan(3),
-                    ]),
-            ]);
+
+                        Section::make('SEO')->schema([
+                            Grid::make(2)->schema([
+                                TextInput::make('meta_title')
+                                    ->placeholder('Vui lòng nhập Meta Title')
+                                    ->label('Meta Title'),
+                                TextInput::make('meta_keyword')
+                                    ->placeholder('Vui lòng nhập Meta Keyword')
+                                    ->label('Meta Keyword'),
+                                TextInput::make('meta_description')
+                                    ->placeholder('Vui lòng nhập Meta Description')
+                                    ->label('Meta Description')
+                                    ->columnSpanFull(),
+                            ]),
+                        ]),
+                    ])->columnSpan(3),
+                ])
+        ];
+    }
+
+
+    public static function notificationExpired($notification) {
+        return [
+            Section::make('Thông báo')
+                ->schema([
+                    Forms\Components\Placeholder::make('')
+                        ->content($notification)
+                        ->extraAttributes(['class' => 'bg-warning text-dark p-3 rounded']),
+                ])
+        ];
     }
 
     public static function table(Table $table): Table
@@ -397,7 +487,13 @@ class JobPostResource extends Resource
                     ->modalButton('Cập nhật'),
 
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\ViewAction::make(),
+                    Action::make('view_live')
+                        ->label('Xem thực tế') // Đổi nhãn thành "Xem thực tế"
+                        ->url(fn ($record) => route('client.job.single', ['jobSlug' => $record->slug])) // Tạo URL dựa vào slug của công việc
+                        ->icon('heroicon-o-link') // Thêm biểu tượng
+                        ->openUrlInNewTab(), // Mở liên kết trong tab mới
+
+                    Tables\Actions\ViewAction::make()->modalWidth('xxl'),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
 
