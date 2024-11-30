@@ -13,24 +13,35 @@ return new class extends Migration
     {
         Schema::create('interviews', function (Blueprint $table) {
             $table->id();
-//            $table->foreignId('candidate_id')->nullable()->constrained('candidates')->onDelete('set null');
-            $table->foreignId('job_id')->nullable()->constrained('job_posts')->onDelete('set null');
+
+            $table->foreignId('job_post_id')->nullable()->constrained('job_posts')->onDelete('set null');
             $table->foreignId('employer_id')->nullable()->constrained('employers')->onDelete('set null');
-            $table->string('name',255)->nullable();
-            $table->string('phone',255)->nullable();
-            $table->string('email',255)->nullable();
-//            $table->time('time')->nullable();
-//            $table->string('viewer',255)->nullable();
-            $table->string('location',255)->nullable();
-            $table->boolean('status')->default(0);
+            $table->foreignId('candidate_id')->nullable()->constrained('candidates')->onDelete('set null');
+
+            $table->string('title')->nullable();
+            $table->enum('interview_type', ['online', 'offline'])->default('online');
+            $table->string('location')->nullable();
+            $table->dateTime('start_time')->nullable();
+            $table->integer('duration')->nullable(); // Thời lượng (phút)
+            $table->text('description')->nullable();
+
+            $table->enum('status', ['pending', 'scheduled', 'completed', 'cancelled'])->default('pending');
             $table->text('feedback')->nullable();
-//            $table->date('date')->nullable();
-            $table->dateTime('start_at')->nullable();
-            $table->dateTime('end_at')->nullable();
-            $table->string('color',255)->nullable();
-            $table->json('job_post_candidates')->nullable(); // Lưu danh sách ứng viên dưới dạng JSON
-            $table->text('note')->nullable();
+            $table->text('notes')->nullable();
+
+            // Thông tin Zoom Meeting (cho phỏng vấn online)
+            $table->string('zoom_meeting_id', 100)->nullable();
+            $table->string('zoom_password', 100)->nullable();
+            $table->text('zoom_join_url')->nullable();
+            $table->text('zoom_start_url')->nullable();
+
+            $table->string('contact_email')->nullable();
+            $table->string('contact_phone')->nullable();
+
+            $table->string('color')->nullable();
+
             $table->timestamps();
+            $table->softDeletes(); // Thêm soft delete
         });
     }
 

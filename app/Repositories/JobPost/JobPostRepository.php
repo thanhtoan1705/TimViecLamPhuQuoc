@@ -44,7 +44,7 @@ class JobPostRepository implements JobPostInterface
     public function getAllJobPost($limit = 10)
     {
         $jobPosts = $this->jobPost
-            ->with(['employer.userJobPackages.jobPostPackage'])
+            ->with(['employer.userJobPackages.jobPostPackage', 'job_category'])
             ->whereHas('employer')
             ->where('end_date', '>=', now())
             ->where('status', 1)
@@ -54,7 +54,13 @@ class JobPostRepository implements JobPostInterface
             return optional($item->job_category)->name ?? 'Uncategorized';
         });
 
-        $groupedJobPosts->transform(function ($posts) {
+        $topCategories = $groupedJobPosts
+            ->sortByDesc(function($posts) {
+                return $posts->count();
+            })
+            ->take(6);
+
+        $topCategories->transform(function ($posts) {
             return $posts->sortByDesc('created_at')
                 ->take(8)
                 ->map(function ($post) {
@@ -78,7 +84,7 @@ class JobPostRepository implements JobPostInterface
                 });
         });
 
-        return $groupedJobPosts;
+        return $topCategories;
     }
 
     public function getApplyCandidatesByJobPost($jobPostID = null, $sortOrder = 'newest')
@@ -110,7 +116,7 @@ class JobPostRepository implements JobPostInterface
             ->delete();
     }
 
-    public function getBestJobs($limit = 8)
+    public function getBestJobs()
     {
         return $this->jobPost
             ->with(['employer.userJobPackages.jobPostPackage', 'job_category', 'jobType', 'skills'])
@@ -121,11 +127,12 @@ class JobPostRepository implements JobPostInterface
                 })
                     ->where('expires_at', '>', now());
             })
-            ->limit($limit)
+            ->orderBy('created_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->get();
     }
 
-    public function getHasteJobs($limit = 8)
+    public function getHasteJobs()
     {
         return $this->jobPost
             ->with(['employer.userJobPackages.jobPostPackage', 'job_category', 'jobType', 'skills'])
@@ -136,7 +143,6 @@ class JobPostRepository implements JobPostInterface
                 })
                     ->where('expires_at', '>', now());
             })
-            ->limit($limit)
             ->get();
     }
 

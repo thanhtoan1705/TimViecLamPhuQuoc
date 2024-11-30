@@ -907,3 +907,12 @@
         white-space: nowrap;
     }
 }
+
+.info a .company-name-highlight {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;  /* Màu xanh sáng hơn */
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
+}
+

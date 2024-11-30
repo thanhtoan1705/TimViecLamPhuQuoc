@@ -63,4 +63,9 @@ class Employer extends Model
         return $this->hasMany(UserJobPackage::class, 'employer_id');
     }
 
+    public function zoomMeetings()
+    {
+        return $this->hasMany(ZoomMeeting::class);
+    }
+
 }

@@ -60,9 +60,7 @@
                                     <div class="sidebar-text-info ml-10"><span
                                             class="text-description industry-icon mb-10">Ngành nghề</span>
                                         <strong class="small-heading">
-                                            @foreach($job->majors as $key => $major)
-                                                {{ $major->name }}{{ $key != $job->majors->count() - 1 ? ' / ' : '' }}
-                                            @endforeach
+                                            {{ $job->job_category->name ?? '' }}
                                         </strong>
 
                                     </div>

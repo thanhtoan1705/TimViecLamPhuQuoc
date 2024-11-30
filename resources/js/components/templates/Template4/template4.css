@@ -492,18 +492,20 @@
 
 .project-section .project-content {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .project-section .position {
-    font-weight: 500;
+    font-weight: bold;
     color: var(--text-color);
-    margin-bottom: 5px;
+    font-size: 1em;
 }
 
 .project-section .company {
     color: var(--primary-color);
-    font-weight: bold;
-    margin-bottom: 5px;
+    font-size: 0.9em;
 }
 
 .project-section .responsibilities {
@@ -511,6 +513,7 @@
     font-size: 0.9em;
     line-height: 1.5;
     white-space: pre-wrap;
+    margin-top: 5px;
 }
 
 /* Style cho nút thêm mới */

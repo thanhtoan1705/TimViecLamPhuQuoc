@@ -5,31 +5,38 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Services\ZoomService;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Interview extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
-        'candidate_id',
-        'job_id',
+        'job_post_id',
         'employer_id',
-        'name',
-        'phone',
-        'email',
-        'time',
-        'viewer',
+        'candidate_id',
+        'title',
+        'interview_type',
         'location',
+        'start_time',
+        'duration',
+        'description',
         'status',
-        'interview_feeback',
-        'start_at',
-        'end_at',
+        'feedback',
+        'notes',
+        'zoom_meeting_id',
+        'zoom_password',
+        'zoom_join_url',
+        'zoom_start_url',
+        'contact_email',
+        'contact_phone',
         'color',
-        'job_post_candidates',
-        'note',
     ];
 
     protected $casts = [
-        'job_post_candidates' => 'array',
+        'start_time' => 'datetime',
+        'status' => 'string',
+        'interview_type' => 'string',
     ];
 
     public function candidate()
@@ -39,7 +46,7 @@ class Interview extends Model
 
     public function job_post()
     {
-        return $this->belongsTo(JobPost::class, 'job_id');
+        return $this->belongsTo(JobPost::class, 'job_post_id');
     }
 
     public function employer()
@@ -69,7 +76,51 @@ class Interview extends Model
         return $this->belongsToMany(Candidate::class, 'candidate_interviews', 'interview_id', 'candidate_id');
     }
 
+    // Tạo Zoom meeting khi lưu interview online
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::creating(function ($interview) {
+            if (!$interview->employer_id) {
+                $interview->employer_id = auth()->user()->employer->id;
+            }
 
+            if ($interview->interview_type === 'online') {
+                $zoomService = app(ZoomService::class);
 
+                $meetingData = [
+                    'topic' => $interview->title,
+                    'type' => 2, // Scheduled meeting
+                    'start_time' => $interview->start_time->format('Y-m-d\TH:i:s'),
+                    'duration' => $interview->duration,
+                    'timezone' => 'Asia/Ho_Chi_Minh',
+                    'settings' => [
+                        'host_video' => true,
+                        'participant_video' => true,
+                        'join_before_host' => false,
+                        'waiting_room' => true,
+                    ]
+                ];
+
+                try {
+                    $zoomMeeting = $zoomService->createMeeting($meetingData);
+
+                    $interview->zoom_meeting_id = $zoomMeeting['id'];
+                    $interview->zoom_password = $zoomMeeting['password'];
+                    $interview->zoom_join_url = $zoomMeeting['join_url'];
+                    $interview->zoom_start_url = $zoomMeeting['start_url'];
+                } catch (\Exception $e) {
+                    // Log lỗi và xử lý
+                    \Log::error('Zoom Meeting Creation Error: ' . $e->getMessage());
+                }
+            }
+        });
+
+        static::saving(function ($interview) {
+            if (!$interview->employer_id) {
+                $interview->employer_id = auth()->user()->employer->id;
+            }
+        });
+    }
 }

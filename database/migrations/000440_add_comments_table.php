@@ -10,11 +10,10 @@ return new class extends Migration
     {
         Schema::table('comments', function (Blueprint $table) {
             $table->foreignId('parent_id')->nullable()->constrained('comments')->onDelete('cascade');
-            $table->morphs('commentable');
+            $table->nullableMorphs('commentable');
             $table->softDeletes();
         });
     }
-
     public function down()
     {
         Schema::table('comments', function (Blueprint $table) {

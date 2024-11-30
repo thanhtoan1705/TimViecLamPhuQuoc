@@ -14,14 +14,11 @@
                                 <img src="{{asset('assets/client/imgs/template/icons/facebook.svg')}}" alt="jobbox">
                                 <strong>Đăng nhập Facebook</strong>
                             </a>
-                            <button class="btn social-login hover-up mb-20">
-                                <a href="{{ route('client.auth.google') }}">
+                            <a href="{{ route('client.auth.google') }}" class="btn social-login hover-up mb-20">
                                     <img src="{{ asset('assets/client/imgs/template/icons/icon-google.svg') }}"
                                          alt="Google Login">
                                     <strong>Đăng nhập Google</strong>
-                                </a>
-                            </button>
-
+                            </a>
                             <div class="divider-text-center"><span>hoặc tiếp tục với</span></div>
                         </div>
                         <form class="login-register text-start mt-20" method="post"

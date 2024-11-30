@@ -67,12 +67,12 @@
                                 </div>
 
                                 <x-client.search></x-client.search>
-                                <div class="list-tags-banner mt-60 wow animate__animated animate__fadeInUp"
-                                     data-wow-delay=".3s"><strong>Tìm kiếm phổ biến:</strong><a
-                                        href="#">Designer</a>, <a href="#">Web</a>, <a
-                                        href="#">IOS</a>, <a href="#">Developer</a>, <a
-                                        href="#">PHP</a>, <a href="#">Senior</a>, <a
-                                        href="#">Engineer</a></div>
+{{--                                <div class="list-tags-banner mt-60 wow animate__animated animate__fadeInUp"--}}
+{{--                                     data-wow-delay=".3s"><strong>Tìm kiếm phổ biến:</strong><a--}}
+{{--                                        href="#">Designer</a>, <a href="#">Web</a>, <a--}}
+{{--                                        href="#">IOS</a>, <a href="#">Developer</a>, <a--}}
+{{--                                        href="#">PHP</a>, <a href="#">Senior</a>, <a--}}
+{{--                                        href="#">Engineer</a></div>--}}
                             </div>
                         </div>
                         <div class="col-xl-1 col-lg-12 d-none d-xl-block col-md-6">
@@ -100,7 +100,7 @@
                 <div class="text-center">
                     <h2 class="section-title mb-10 wow animate__animated animate__fadeInUp">Nhà tuyển dụng hàng đầu</h2>
                     <p class="font-lg color-text-paragraph-2 wow animate__animated animate__fadeInUp">Khám phá bước đi
-                        sự nghiệp tiếp theo của bạn, hợp đồng bi���u diễn tự do hoặc thực tập</p>
+                        sự nghiệp tiếp theo ca bạn, hợp đồng biểu diễn tự do hoặc thực tập</p>
                 </div>
                 <div class="box-swiper mt-50">
                     <div class="swiper-container swiper-group-1 swiper">
@@ -118,7 +118,7 @@
                                                 </div>
                                                 <div class="info">
                                                     <a href="{{ route('client.employer.single', ['slug' => $employer->slug]) }}">
-                                                        <h3 class="company-name">{{ $employer->company_name ?? '' }}</h3>
+                                                        <h3 class="company-name-highlight">{{ $employer->company_name ?? '' }}</h3>
                                                     </a>
                                                     <p>{{ $employer->address->province->name ?? '' }}</p>
                                                 </div>
@@ -286,7 +286,7 @@
                                                             {{ $post->employer->company_name }}
                                                         </a>
                                                         <span class="location-small">
-                                                        {{ $post->address }}
+                                                        {{ $post->employer->address->province->name ?? '' }}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -447,6 +447,7 @@
                         <div class="swiper-wrapper pb-70 pt-5">
                             <div class="swiper-slide h-auto">
                                 <div class="row m-0">
+                                    {{-- @dd($bestJobs) --}}
                                     @foreach($bestJobs->groupBy('employer_id')->take(3) as $employerJobs)
                                         @php
                                             $firstJob = $employerJobs->first();
@@ -466,7 +467,7 @@
                                                         <a href="{{ route('client.employer.single', ['slug' => $employer->slug]) }}">
                                                             <h3 class="company-name">{{ $employer->company_name ?? '' }}</h3>
                                                         </a>
-                                                        <p class="company-address">{{ $firstJob->address }}</p>
+                                                        <p class="company-address">{{ $employer->address->province->name ?? '' }}</p>
                                                         <div class="company-meta">
                                                             <span class="employee-count">
                                                                 <i class="bi bi-people"></i>
@@ -607,180 +608,180 @@
                                     @endforeach
                                 </div>
                             </div>
-
-                            <div class="swiper-slide h-auto">
-                                <div class="row m-0">
-                                    @foreach($bestJobs->groupBy('employer_id')->skip(3)->take(3) as $employerJobs)
-                                        @php
-                                            $firstJob = $employerJobs->first();
-                                            $employer = $firstJob->employer;
-                                        @endphp
-                                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-                                            <div class="job-card h-100">
-                                                <div class="company-info">
-                                                    <div class="company-logo">
-                                                        @php
-                                                            $company_img = getStorageImageUrl($employer->company_logo, config('image.square-logo'));
-
-                                                        @endphp
-                                                        <img src="{{ $company_img }}"
-                                                             alt="{{ $employer->company_name ?? '' }}">
-                                                    </div>
-                                                    <div class="company-details">
-                                                        <a href="{{ route('client.employer.single', ['slug' => $employer->slug]) }}">
-                                                            <h3 class="company-name">{{ $employer->company_name ?? '' }}</h3>
-                                                        </a>
-                                                        <p class="company-address">{{ $firstJob->address }}</p>
-                                                        <div class="company-meta">
-                                                            <span class="employee-count">
-                                                                <i class="bi bi-people"></i>
-                                                                {{ $employer->company_size ?? '100-200' }}
-                                                            </span>
-                                                            <span class="company-type">
-                                                                <i class="bi bi-building"></i>
-                                                                {{ $employer->company_type ?? 'Công ty TNHH' }}
-                                                            </span>
-                                                            <span class="company-industry">
-                                                                <i class="bi bi-briefcase"></i>
-                                                                {{ $firstJob->job_category->name ?? 'Kinh doanh dịch vụ' }}
-                                                            </span>
+                            @if($bestJobs->groupBy('employer_id')->count() > 3)
+                                <div class="swiper-slide h-auto">
+                                    <div class="row m-0">
+                                        @foreach($bestJobs->groupBy('employer_id')->skip(3)->take(3) as $employerJobs)
+                                            @php
+                                                $firstJob = $employerJobs->first();
+                                                $employer = $firstJob->employer;
+                                            @endphp
+                                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                                                <div class="job-card h-100">
+                                                    <div class="company-info">
+                                                        <div class="company-logo">
+                                                            @php
+                                                                $company_img = getStorageImageUrl($employer->company_logo, config('image.square-logo'));
+                                                            @endphp
+                                                            <img src="{{ $company_img }}"
+                                                                 alt="{{ $employer->company_name ?? '' }}">
+                                                        </div>
+                                                        <div class="company-details">
+                                                            <a href="{{ route('client.employer.single', ['slug' => $employer->slug]) }}">
+                                                                <h3 class="company-name">{{ $employer->company_name ?? '' }}</h3>
+                                                            </a>
+                                                            <p class="company-address">{{ $firstJob->address }}</p>
+                                                            <div class="company-meta">
+                                                                <span class="employee-count">
+                                                                    <i class="bi bi-people"></i>
+                                                                    {{ $employer->company_size ?? '100-200' }}
+                                                                </span>
+                                                                <span class="company-type">
+                                                                    <i class="bi bi-building"></i>
+                                                                    {{ $employer->company_type ?? 'Công ty TNHH' }}
+                                                                </span>
+                                                                <span class="company-industry">
+                                                                    <i class="bi bi-briefcase"></i>
+                                                                    {{ $firstJob->job_category->name ?? 'Kinh doanh dịch vụ' }}
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="job-listings">
-                                                    @foreach($employerJobs->take(2) as $position)
-                                                        <div class="job-position">
-                                                            <div class="position-info">
-                                                                @php
-                                                                    $isSaved = in_array($position->id, $savedJobIds);
-                                                                @endphp
-                                                                @if ($isSaved)
-                                                                    <!-- Nút bỏ lưu -->
-                                                                    <form
-                                                                        action="{{ route('client.candidate.unsave', ['job_id' => $position->id]) }}"
-                                                                        method="POST"
-                                                                        style="display: inline-block;">
-                                                                        @csrf
-                                                                        <button type="submit"
-                                                                                class="btn-save-job"
-                                                                                style="border: 0; background: none; padding: 0;">
-                                                                            <i class="bi bi-heart-fill text-danger"
-                                                                               style="font-size: 16px;"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                @else
-                                                                    <!-- Nút lưu -->
-                                                                    <form
-                                                                        action="{{ route('client.candidate.saveJob', ['job_id' => $position->id]) }}"
-                                                                        method="POST"
-                                                                        style="display: inline-block;">
-                                                                        @csrf
-                                                                        <button type="submit"
-                                                                                class="btn-save-job"
-                                                                                style="border: 0; background: none; padding: 0;">
-                                                                            <i class="bi bi-heart"
-                                                                               style="font-size: 16px;"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                @endif
-                                                                <a href="{{ route('client.job.single', ['jobSlug' => $position->slug]) }}"
-                                                                   class="position-title">
-                                                                    {{ limit_text($position->title, 25) }}
-                                                                </a>
-                                                            </div>
-                                                            <div class="position-meta">
-                                                                <span class="salary">
-                                                                    <i class="bi bi-cash"></i>
-                                                                    @if($position->salary_min == $position->salary_max)
-                                                                        {{ formatSalary($position->salary_min) }}
+                                                    <div class="job-listings">
+                                                        @foreach($employerJobs->take(2) as $position)
+                                                            <div class="job-position">
+                                                                <div class="position-info">
+                                                                    @php
+                                                                        $isSaved = in_array($position->id, $savedJobIds);
+                                                                    @endphp
+                                                                    @if ($isSaved)
+                                                                        <!-- Nút bỏ lưu -->
+                                                                        <form
+                                                                            action="{{ route('client.candidate.unsave', ['job_id' => $position->id]) }}"
+                                                                            method="POST"
+                                                                            style="display: inline-block;">
+                                                                            @csrf
+                                                                            <button type="submit"
+                                                                                    class="btn-save-job"
+                                                                                    style="border: 0; background: none; padding: 0;">
+                                                                                <i class="bi bi-heart-fill text-danger"
+                                                                                   style="font-size: 16px;"></i>
+                                                                            </button>
+                                                                        </form>
                                                                     @else
-                                                                        {{ formatSalary($position->salary_min) }}
-                                                                        - {{ formatSalary($position->salary_max) }}
+                                                                        <!-- Nút lưu -->
+                                                                        <form
+                                                                            action="{{ route('client.candidate.saveJob', ['job_id' => $position->id]) }}"
+                                                                            method="POST"
+                                                                            style="display: inline-block;">
+                                                                            @csrf
+                                                                            <button type="submit"
+                                                                                    class="btn-save-job"
+                                                                                    style="border: 0; background: none; padding: 0;">
+                                                                                <i class="bi bi-heart"
+                                                                                   style="font-size: 16px;"></i>
+                                                                            </button>
+                                                                        </form>
                                                                     @endif
-                                                                </span>
-                                                                <span class="deadline">
-                                                                    <i class="bi bi-clock"></i>
-                                                                    {{ \Carbon\Carbon::parse($position->end_date)->format('d/m') }}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-
-                                                    @if($employerJobs->count() > 2)
-                                                        <div class="hidden-positions" style="display: none;">
-                                                            @foreach($employerJobs->slice(2) as $position)
-                                                                <div class="job-position">
-                                                                    <div class="position-info">
-                                                                        @php
-                                                                            $isSaved = in_array($position->id, $savedJobIds);
-                                                                        @endphp
-                                                                        @if ($isSaved)
-                                                                            <!-- Nút bỏ lưu -->
-                                                                            <form
-                                                                                action="{{ route('client.candidate.unsave', ['job_id' => $position->id]) }}"
-                                                                                method="POST"
-                                                                                style="display: inline-block;">
-                                                                                @csrf
-                                                                                <button type="submit"
-                                                                                        class="btn-save-job"
-                                                                                        style="border: 0; background: none; padding: 0;">
-                                                                                    <i class="bi bi-heart-fill text-danger"
-                                                                                       style="font-size: 16px;"></i>
-                                                                                </button>
-                                                                            </form>
-                                                                        @else
-                                                                            <!-- Nút lưu -->
-                                                                            <form
-                                                                                action="{{ route('client.candidate.saveJob', ['job_id' => $position->id]) }}"
-                                                                                method="POST"
-                                                                                style="display: inline-block;">
-                                                                                @csrf
-                                                                                <button type="submit"
-                                                                                        class="btn-save-job"
-                                                                                        style="border: 0; background: none; padding: 0;">
-                                                                                    <i class="bi bi-heart"
-                                                                                       style="font-size: 16px;"></i>
-                                                                                </button>
-                                                                            </form>
-                                                                        @endif
-                                                                        <a href="{{ route('client.job.single', ['jobSlug' => $position->slug]) }}"
-                                                                           class="position-title">
-                                                                            {{ limit_text($position->title, 25) }}
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="position-meta">
-                                                                        <span class="salary">
-                                                                            <i class="bi bi-cash"></i>
-                                                                            @if($position->salary_min == $position->salary_max)
-                                                                                {{ formatSalary($position->salary_min) }}
-                                                                            @else
-                                                                                {{ formatSalary($position->salary_min) }}
-                                                                                - {{ formatSalary($position->salary_max) }}
-                                                                            @endif
-                                                                        </span>
-                                                                        <span class="deadline">
-                                                                            <i class="bi bi-clock"></i>
-                                                                            {{ \Carbon\Carbon::parse($position->end_date)->format('d/m') }}
-                                                                        </span>
-                                                                    </div>
+                                                                    <a href="{{ route('client.job.single', ['jobSlug' => $position->slug]) }}"
+                                                                       class="position-title">
+                                                                        {{ limit_text($position->title, 25) }}
+                                                                    </a>
                                                                 </div>
-                                                            @endforeach
-                                                        </div>
-                                                        <div class="text-center mt-3">
-                                                            <button class="btn-view-more"
-                                                                    onclick="togglePositions(this)">
-                                                                Xem thêm {{ $employerJobs->count() - 2 }} vị trí khác
-                                                                <i class="bi bi-chevron-down"></i>
-                                                            </button>
-                                                        </div>
-                                                    @endif
+                                                                <div class="position-meta">
+                                                                    <span class="salary">
+                                                                        <i class="bi bi-cash"></i>
+                                                                        @if($position->salary_min == $position->salary_max)
+                                                                            {{ formatSalary($position->salary_min) }}
+                                                                        @else
+                                                                            {{ formatSalary($position->salary_min) }}
+                                                                            - {{ formatSalary($position->salary_max) }}
+                                                                        @endif
+                                                                    </span>
+                                                                    <span class="deadline">
+                                                                        <i class="bi bi-clock"></i>
+                                                                        {{ \Carbon\Carbon::parse($position->end_date)->format('d/m') }}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+
+                                                        @if($employerJobs->count() > 2)
+                                                            <div class="hidden-positions" style="display: none;">
+                                                                @foreach($employerJobs->slice(2) as $position)
+                                                                    <div class="job-position">
+                                                                        <div class="position-info">
+                                                                            @php
+                                                                                $isSaved = in_array($position->id, $savedJobIds);
+                                                                            @endphp
+                                                                            @if ($isSaved)
+                                                                                <!-- Nút bỏ lưu -->
+                                                                                <form
+                                                                                    action="{{ route('client.candidate.unsave', ['job_id' => $position->id]) }}"
+                                                                                    method="POST"
+                                                                                    style="display: inline-block;">
+                                                                                    @csrf
+                                                                                    <button type="submit"
+                                                                                            class="btn-save-job"
+                                                                                            style="border: 0; background: none; padding: 0;">
+                                                                                        <i class="bi bi-heart-fill text-danger"
+                                                                                           style="font-size: 16px;"></i>
+                                                                                    </button>
+                                                                                </form>
+                                                                            @else
+                                                                                <!-- Nút lưu -->
+                                                                                <form
+                                                                                    action="{{ route('client.candidate.saveJob', ['job_id' => $position->id]) }}"
+                                                                                    method="POST"
+                                                                                    style="display: inline-block;">
+                                                                                    @csrf
+                                                                                    <button type="submit"
+                                                                                            class="btn-save-job"
+                                                                                            style="border: 0; background: none; padding: 0;">
+                                                                                        <i class="bi bi-heart"
+                                                                                           style="font-size: 16px;"></i>
+                                                                                    </button>
+                                                                                </form>
+                                                                            @endif
+                                                                            <a href="{{ route('client.job.single', ['jobSlug' => $position->slug]) }}"
+                                                                               class="position-title">
+                                                                                {{ limit_text($position->title, 25) }}
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="position-meta">
+                                                                            <span class="salary">
+                                                                                <i class="bi bi-cash"></i>
+                                                                                @if($position->salary_min == $position->salary_max)
+                                                                                    {{ formatSalary($position->salary_min) }}
+                                                                                @else
+                                                                                    {{ formatSalary($position->salary_min) }}
+                                                                                    - {{ formatSalary($position->salary_max) }}
+                                                                                @endif
+                                                                            </span>
+                                                                            <span class="deadline">
+                                                                                <i class="bi bi-clock"></i>
+                                                                                {{ \Carbon\Carbon::parse($position->end_date)->format('d/m') }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                            <div class="text-center mt-3">
+                                                                <button class="btn-view-more"
+                                                                        onclick="togglePositions(this)">
+                                                                    Xem thêm {{ $employerJobs->count() - 2 }} vị trí khác
+                                                                    <i class="bi bi-chevron-down"></i>
+                                                                </button>
+                                                            </div>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="swiper-button-next swiper-button-next-1"></div>
@@ -827,7 +828,7 @@
                                                         <a href="{{ route('client.employer.single', ['slug' => $employer->slug]) }}">
                                                             <h3 class="company-name">{{ $employer->company_name ?? '' }}</h3>
                                                         </a>
-                                                        <p class="company-address">{{ $firstJob->address }}</p>
+                                                        <p class="company-address">{{ $employer->address->province->name ?? '' }}</p>
                                                         <div class="company-meta">
                                                             <span class="employee-count">
                                                                 <i class="bi bi-people"></i>
@@ -1207,7 +1208,7 @@
                         <div class="text-center">
                             <h1 class="color-brand-2"><span class="count">86</span><span> +</span></h1>
                             <h5>Người có tay nghề</h5>
-                            <p class="font-sm color-text-paragraph mt-10">Chúng tôi luôn cung cấp cho mọi người một <br
+                            <p class="font-sm color-text-paragraph mt-10">Chúng t��i luôn cung cấp cho mọi người một <br
                                     class="d-none d-lg-block">giải pháp hoàn chỉnh tập trung vào <br
                                     class="d-none d-lg-block">mọi hoạt động kinh doanh</p>
                         </div>

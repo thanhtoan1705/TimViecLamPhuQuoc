@@ -1,5 +1,5 @@
 /* Main container styles */
-.cv-template-3 {
+.cv-template-5 {
     max-width: 210mm;
     width: 21cm;
     margin: 0 auto;
@@ -15,7 +15,7 @@
 }
 
 /* Điều chỉnh overlay để trong suốt hơn */
-.cv-template-3::before {
+.cv-template-5::before {
     content: '';
     position: absolute;
     top: 0;
@@ -27,68 +27,64 @@
 }
 
 /* Đảm bảo nội dung nằm trên overlay */
-.cv-template-3 > * {
+.cv-template-5 > * {
     position: relative;
     z-index: 1;
 }
 
 /* Header styles */
-.t3-header {
+.t5-header {
     display: flex;
     gap: 30px;
+    align-items: flex-start;
     margin-bottom: 30px;
 }
 
-.t3-header-left {
-    flex: 0 0 200px;
+.t5-header-left {
+    flex-shrink: 0;
 }
 
-.t3-avatar {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
+.t5-avatar {
+    width: 170px !important;
+    height: 210px !important;
+    border-radius: 8px;
     overflow: hidden;
 }
 
-.t3-avatar img {
+.t5-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.t3-header-right {
+.t5-header-right {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 8px;
 }
 
-.t3-name-title {
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 10px;
-}
-
-.t3-name {
+.t5-name {
     color: var(--primary-color);
-    font-size: 32px;
+    font-size: 24px;
     font-weight: bold;
     margin: 0;
 }
 
-.t3-job-title {
+.t5-job-title {
     color: #666;
-    font-style: italic;
-    margin-top: 5px;
+    font-size: 16px;
+    margin-bottom: 4px;
 }
 
-.t3-objective {
-    font-style: italic;
+.t5-objective {
+    font-size: 14px;
     color: #666;
     line-height: 1.5;
 }
 
 /* Main content layout */
-.template3-main {
+.template5-main {
     display: flex;
     gap: 30px;
     background: transparent;
@@ -117,12 +113,6 @@
     margin-bottom: 15px;
 }
 
-/* Controls for edit mode */
-.section-wrapper {
-    position: relative;
-    margin-bottom: 20px;
-    background: transparent;
-}
 
 .section-controls-wrapper {
     position: absolute;
@@ -190,7 +180,6 @@
 
 /* Contact info section */
 .contact-info {
-    display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
 }
@@ -234,13 +223,13 @@
 }
 /* Print styles */
 @media print {
-    .cv-template-3 {
+    .cv-template-5 {
         padding: 0;
         max-width: none;
         background: white;
     }
 
-    .cv-template-3::before {
+    .cv-template-5::before {
         display: none;
     }
 
@@ -251,7 +240,7 @@
 
 /* Thêm media query cho mobile */
 @media (max-width: 768px) {
-    .cv-template-3 {
+    .cv-template-5 {
         width: 21cm;
         padding: 20px;
         transform-origin: top left;

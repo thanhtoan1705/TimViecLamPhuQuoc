@@ -12,6 +12,8 @@
         "blade-ui-kit/blade-heroicons": "^2.4",
         "filament/filament": "^3.2",
         "filament/tables": "^3.2",
+        "firebase/php-jwt": "^6.10",
+        "guzzlehttp/guzzle": "^7.9",
         "joaopaulolndev/filament-edit-profile": "^1.0",
         "jorenvanhocht/laravel-share": "^4.2",
         "laravel/framework": "^11.9",

@@ -19,6 +19,12 @@ class EditInterview extends EditRecord
         ];
     }
 
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+
+        return $data;
+    }
+
 //    public function save(bool $shouldRedirect = true, bool $shouldSendSavedNotification = true): void
 //    {
 //        $data = $this->form->getState();

@@ -15,8 +15,6 @@ const TemplateModal = ({isOpen, onClose, templates, onSelectTemplate, currentTem
 
             <div className="section-modal-content">
                 <div className="section-group">
-                    <h4>Chọn mẫu CV</h4>
-                    <p className="section-hint">Click vào mẫu CV bạn muốn sử dụng</p>
                     <div className="template-grid">
                         {templates.map(template => (
                             <div

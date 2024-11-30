@@ -120,4 +120,9 @@ class Candidate extends Model
     {
         return $this->hasMany(LanguageProficiency::class);
     }
+
+    public function zoomMeetings()
+    {
+        return $this->hasMany(ZoomMeeting::class);
+    }
 }

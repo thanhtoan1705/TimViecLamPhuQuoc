@@ -35,12 +35,23 @@ const Header = ({data, onUpdate, isEditable}) => {
                         onBlur={(e) => handleEdit('jobTitle', e.target.textContent)}
                         suppressContentEditableWarning={true}
                     >
-                        {data.jobTitle || 'Job Title'}
+                        {data.jobTitle || 'Vị trí ứng tuyển'}
                     </div>
                 </div>
             </div>
 
             <div className="t2-header-contact">
+                <div className="t2-contact-item">
+                    <i className="bi bi-calendar"></i>
+                    <div
+                        contentEditable={isEditable}
+                        onBlur={(e) => handleEdit('birthday', e.target.textContent)}
+                        suppressContentEditableWarning={true}
+                    >
+                        {data.birthday || 'Ngày sinh'}
+                    </div>
+                </div>
+
                 <div className="t2-contact-item">
                     <i className="bi bi-telephone"></i>
                     <div

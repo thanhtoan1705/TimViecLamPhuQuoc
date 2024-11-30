@@ -15,7 +15,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('assets/client/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/client/css/stylecd4e.css?version=4.1') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
           integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -39,6 +38,12 @@
             z-index: 2147483647 !important;
         }
     </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
 </head>
 <body>
 
@@ -57,7 +62,7 @@
 
 @livewireScripts
 <script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
-{{--    <script src="//unpkg.com/alpinejs" defer></script>--}}
+  {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
 <script src="{{ asset('assets/client/js/vendor/modernizr-3.6.0.min.js') }}"></script>
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="{{ asset('vendor/livewire/livewire.js') }}"></script>

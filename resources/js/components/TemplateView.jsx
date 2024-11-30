@@ -3,6 +3,7 @@ import Template1 from './templates/Template1/Template1';
 import Template2 from './templates/Template2/Template2';
 import Template3 from './templates/Template3/Template3';
 import Template4 from './templates/Template4/template4';
+import Template5 from './templates/Template5/Template5';
 import sampleData from './data/sampleData';
 import useEditMode from '../hooks/useEditMode';
 import DownloadModal from './common/Modals/DownloadModal';
@@ -631,6 +632,17 @@ const TemplateView = ({templateId, isPreview = false}) => {
             case '4':
                 return (
                     <Template4
+                        data={cvData}
+                        onUpdate={handleUpdateData}
+                        isEditable={true}
+                        styles={styles}
+                        sections={sections}
+                        onSectionReorder={handleSectionReorder}
+                    />
+                );
+            case '5':
+                return (
+                    <Template5
                         data={cvData}
                         onUpdate={handleUpdateData}
                         isEditable={true}
