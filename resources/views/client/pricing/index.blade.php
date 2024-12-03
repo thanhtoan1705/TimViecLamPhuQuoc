@@ -31,6 +31,16 @@
                     <div class="block-pricing mt-70">
                         <div class="row justify-content-center">
                             @foreach($packages as $package)
+                                @php
+                                    $purchased = $userPackages->filter(function ($userPackage) use ($package) {
+                                        return $userPackage->packages_id == $package->id;
+                                    })->isNotEmpty();
+                                    $canPurchase = $package->display_best == 1
+                                        ? $packages->where('display_best', 1)->count() < 6
+                                        : ($package->display_top == 1
+                                            ? $packages->where('display_top', 1)->count() < 6
+                                            : true);
+                                @endphp
                                 <div class="col-xl-4 col-lg-6 col-md-6 wow animate__animated animate__fadeInUp"
                                      data-wow-delay=".{{ $loop->iteration }}s">
                                     <div class="pricing-card">
@@ -40,7 +50,8 @@
                                             @endif
                                             <h3 class="text-brand">{{ $package->title }}</h3>
                                             <div class="box-info-price">
-                                                <span class="text-price">{{ number_format($package->price, 0, ',', '.') }}</span>
+                                                <span
+                                                    class="text-price">{{ number_format($package->price, 0, ',', '.') }}</span>
                                                 <span class="text-month">VND/{{ $package->period }} ngày</span>
                                             </div>
                                             <div class="pricing-description">
@@ -59,9 +70,11 @@
                                                     <li>
                                                         <i class="fi-rs-check"></i>
                                                         @if ($package->label == 1)
-                                                            <span class="text-danger">GẤP</span> - Nổi bật với nhãn "GẤP"
+                                                            <span class="text-danger">GẤP</span> - Nổi bật với nhãn
+                                                            "GẤP"
                                                         @elseif ($package->label == 2)
-                                                            <span class="text-warning">HOT</span> - Nổi bật với nhãn "HOT"
+                                                            <span class="text-warning">HOT</span> - Nổi bật với nhãn
+                                                            "HOT"
                                                         @endif
                                                     </li>
                                                 @endif
@@ -84,9 +97,19 @@
                                         </div>
 
                                         <div class="pricing-button">
-                                            <a class="btn btn-border hover-up w-100" href="#">
-                                                Đăng ký ngay
-                                            </a>
+                                            <form action="{{ route('client.employer.payment') }}" method="GET">
+                                                <input type="hidden" name="package_id" value="{{ $package->id }}">
+                                                <button type="submit"
+                                                        class="btn btn-border hover-up w-100"
+                                                        @if(!$canPurchase) disabled @endif
+                                                        style="@if(!$canPurchase) opacity: 0.5; cursor: not-allowed; @endif">
+                                                    @if(!$canPurchase)
+                                                        Đã đủ số lượng
+                                                    @else
+                                                        {{ $purchased ? 'Gia hạn' : 'Đăng ký' }}
+                                                    @endif
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

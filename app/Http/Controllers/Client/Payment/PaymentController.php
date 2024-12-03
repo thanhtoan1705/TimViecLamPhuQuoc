@@ -34,6 +34,16 @@ class PaymentController extends Controller
 
     public function payment(Request $request)
     {
+        if (!auth()->check()) {
+            flash()->error("Bạn cần đăng nhập để mua gói.", [], 'Thất bại!');
+            return redirect()->route('filament.employer.auth.login');
+        }
+        $user = auth()->user();
+        if (!$user->employer) {
+            flash()->error("Vui lòng sử dụng tài khoản nhà tuyển dụng.", [], 'Thất bại!');
+            return redirect()->route('client.client.index');
+        }
+
         $employerId = auth()->user()->employer->id;
         $packageId = $request->input('package_id');
 

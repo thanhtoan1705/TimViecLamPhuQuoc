@@ -416,6 +416,11 @@ class JobPostResource extends Resource implements HasShieldPermissions
 
             ->actions([
                 Tables\Actions\ActionGroup::make([
+                    Action::make('redirect_to_url')
+                        ->label('Xem chi tiết bài đăng')
+                        ->url(fn ($record) => url("/{$record->slug}.html"))
+                        ->icon('heroicon-o-link')
+                        ->openUrlInNewTab(),
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
