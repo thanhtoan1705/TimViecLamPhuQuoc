@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\JobPostCandidate;
 use App\Models\User;
+use App\Models\Comment;
+use App\Observers\CommentObserver;
 use App\Observers\JobPostCandidateObserver;
 use App\Observers\UserObserver;
 use App\Repositories\Blog\BlogInterface;
@@ -57,5 +59,6 @@ class AppServiceProvider extends ServiceProvider
     {
         User::observe(UserObserver::class);
         JobPostCandidate::observe(JobPostCandidateObserver::class);
+        Comment::observe(CommentObserver::class);
     }
 }

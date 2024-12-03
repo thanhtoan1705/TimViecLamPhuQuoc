@@ -3,9 +3,12 @@
 namespace App\Livewire\Client\Comment;
 
 
+use App\Models\User;
+use App\Notifications\CommentReplyNotification;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Notification;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -91,6 +94,10 @@ class Comments extends Component
         $comment->commentable_id = $this->model->id;
 
         $comment->save();
+
+        // Gửi thông báo cho admin
+//        $admins = User::where('role', 'admin')->get();
+//        Notification::send($admins, new CommentReplyNotification($comment));
 
         $this->reset('newCommentState');
 

@@ -4,6 +4,7 @@ namespace App\Livewire\Client\Comment;
 
 
 use App\Models\User;
+use App\Notifications\CommentReplyNotification;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -140,12 +141,19 @@ class Comment extends Component
         $reply->blog_id = $this->comment->blog_id;
         $reply->save();
 
+        // Gửi thông báo cho người dùng đã bình luận
+        $originalCommenter = $this->comment->user;
+        if ($originalCommenter->id !== auth()->id()) { // Không tự gửi thông báo cho chính mình
+            $originalCommenter->notify(new CommentReplyNotification($reply));
+        }
+
         $this->replyState = [
             'content' => ''
         ];
         $this->isReplying = false;
         $this->showOptions = false;
         $this->dispatch('refresh')->self();
+        flash()->success('Bình luận đã được đăng thành công!', [], 'Thành công!');
     }
 
     /**
