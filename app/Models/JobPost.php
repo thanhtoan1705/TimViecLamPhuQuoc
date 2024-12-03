@@ -33,6 +33,7 @@ class JobPost extends Model
         'employer_id',
         'experience_id',
         'job_type_id',
+        'benefit_job_id',
         'rank_id',
         'degrees_id',
         'salary_id',
@@ -55,6 +56,11 @@ class JobPost extends Model
         'premium',
         'address',
     ];
+
+    public function benefitJob()
+    {
+        return $this->belongsTo(BenefitJob::class, 'benefit_job_id');
+    }
 
     public function job_category()
     {

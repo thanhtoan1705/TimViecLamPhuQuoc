@@ -46,12 +46,27 @@
                 <div class="border-bottom pt-10 pb-10"></div>
             </div>
         </section>
+        <style>
+            .section-custom {
+                border: thin solid #E0E6F7;
+                border-radius: 8px;
+                padding: 20px 30px 30px 30px;
+                margin-bottom: 20px;
+            }
+
+            .section-custom h5{
+                color:  #05264E;
+                margin-top: 0px;
+            }
+
+
+        </style>
         <section class="section-box mt-50">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-md-12 col-sm-12 col-12">
-                        <div class="job-overview">
-                            <h5 class="border-bottom pb-15 mb-30">Thông tin việc làm</h5>
+                        <div class="job-overview mb-20">
+                            <h5 class="border-bottom pb-15 mb-30 mt-0">Thông tin việc làm</h5>
                             <div class="row">
                                 <div class="col-md-6 d-flex">
                                     <div class="sidebar-icon-item"><img
@@ -148,21 +163,53 @@
                         <div class="content-single">
 
 
-                            <div class="section">
-                                <div class="section-title-sm">Mô tả công việc</div>
+                            <div class="section-custom">
+                                <h5 class="border-bottom pb-15 mb-30">Mô tả công việc</h5>
                                 <p class="mt-5 mb-1">
                                     {!! $job->description !!}
                                 </p>
                             </div>
-                            <div class="section-sm">
-                                <div class="section-title-sm">Yêu cầu công việc</div>
+
+                            <div>
+                                <div class="section-custom mt-5">
+                                    <h5 class="border-bottom pb-15 mb-30">Yêu cầu công việc</h5>
+                                    <p class="mt-5">
+                                        {!! $job->job_requirement !!}
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="section-custom">
+                                <h5 class="border-bottom pb-15 mb-30">Quyền lợi được hưởng</h5>
+                                <div class="row">
+                                    @php
+                                        // Lấy danh sách phúc lợi từ benefitJob, loại bỏ các giá trị false/null và các cột không cần thiết
+                                        $benefits = collect($job->benefitJob->toArray())
+                                            ->except(['id', 'created_at', 'updated_at', 'description']) // Loại bỏ các cột không cần thiết
+                                            ->filter(function ($value) {
+                                                return $value; // Loại bỏ những giá trị false/null
+                                            })
+                                            ->keys(); // Lấy danh sách các tên phúc lợi (các key)
+                                    @endphp
+
+                                    @foreach ($benefits as $benefit)
+                                        <div class="col-md-4">
+                                            <div class="benefit-item">
+                                                <i class="{{ __('benefits.' . $benefit . '.icon') }}"></i>
+                                                {{ __('benefits.' . $benefit . '.label') }}
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
                                 <p class="mt-5">
-                                    {!! $job->job_requirement !!}
+                                    {!! $job->benefitJob->description !!}
                                 </p>
                             </div>
 
-                            <div class="section">
-                                <div class="section-title-sm">Yêu cầu hồ sơ</div>
+                            <div class="section-custom">
+                                <h5 class="border-bottom pb-15 mb-30">Yêu cầu hồ sơ</h5>
                                 <p class="mt-5 mb-1">
                                     {!! $job->cv_requirement !!}
                                 </p>
@@ -174,25 +221,21 @@
 
 
                         <style>
-                            .section-title-sm {
-                                font-weight: bold;
-                                margin-top: 10px;
-                                font-size: 20px;
-                            }
-                            .section-title-sm::after {
-                                content: '';
-                                display: block;
-                                width: 50px;
-                                height: 2px;
-                                background-color: #007bff;
-                                margin-top: 5px;
-                            }
+
                             .benefits-icons i {
                                 margin-right: 10px;
                             }
-                            .benefits-icons {
-                                margin-bottom: 10px;
+
+                            .benefit-item {
+                                display: flex;
+                                align-items: center;
+                                margin-bottom: 0.5rem;
                             }
+                            .benefit-item i {
+                                margin-right: 0.5rem;
+                                color: #007bff;
+                            }
+
                         </style>
 
 

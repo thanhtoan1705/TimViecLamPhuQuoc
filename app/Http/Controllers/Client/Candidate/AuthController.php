@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Employer\LoginRequest;
 use App\Http\Requests\Client\Employer\RegisterRequest;
 use App\Jobs\Client\VerificationEmailRegister;
+use App\Livewire\Client\Candidate\Candidate;
 use App\Models\User;
 use App\Repositories\Candidate\CandidateInterface;
 use App\Repositories\User\UserInterface;
@@ -172,6 +173,20 @@ class AuthController extends Controller
         return $slug;
     }
 
+    public function generateSlug($model, string $name): string
+    {
+        // Lấy bản ghi Candidate có ID lớn nhất
+        $candidate = $model::latest('id')->first();
+
+        // Lấy ID của Candidate hoặc gán mặc định là 1 nếu chưa có bản ghi nào
+        $idCandidate = $candidate ? $candidate->id + 1 : 1;
+
+        // Chuyển tên thành slug và kết hợp với ID của Candidate
+        $slug = Str::slug($name, '-') . '-' . $idCandidate;
+
+        return $slug;
+    }
+
     private function isAccountActive(string $email): bool
     {
         $user = User::where('email', $email)->first();
@@ -185,16 +200,7 @@ class AuthController extends Controller
             $googleUser = Socialite::driver('google')->stateless()->user();
 
 
-            //Kiểm tra tài khoản còn hoạt động
-            if (!$this->isAccountActive($googleUser->email)) {
-                flash()->warning(
-                    'Tài khoản đã bị tạm dùng hoạt động. Liên hệ quản trị viên để biết thêm chi tiết.',
-                    [],
-                    'Thông báo!'
-                );
-                return redirect()->route('client.candidate.login');
-            }
-            //end Kiểm tra tài khoản còn hoạt động
+
 
             $user = $this->userRepository->createOrUpdateGoogleUser([
                 'name' => $googleUser->name,
@@ -212,7 +218,7 @@ class AuthController extends Controller
                 // Tạo candidate mới nếu chưa tồn tại
                 $candidate = $this->candidateRepository->create([
                     'user_id' => $user->id,
-                    'slug' => $this->generateUniqueSlug($user->name)
+                    'slug' => $this->generateSlug('App\Models\Candidate', $user->name)
                 ]);
                 Log::info('New candidate created with slug', ['candidate_id' => $candidate->id, 'slug' => $candidate->slug]);
             } else if (empty($candidate->slug)) {
@@ -221,6 +227,17 @@ class AuthController extends Controller
                 $candidate->save();
                 Log::info('Existing candidate updated with new slug', ['candidate_id' => $candidate->id, 'slug' => $candidate->slug]);
             }
+
+            //Kiểm tra tài khoản còn hoạt động
+            if (!$this->isAccountActive($googleUser->email)) {
+                flash()->warning(
+                    'Tài khoản đã bị tạm dùng hoạt động. Liên hệ quản trị viên để biết thêm chi tiết.',
+                    [],
+                    'Thông báo!'
+                );
+                return redirect()->route('client.candidate.login');
+            }
+            //end Kiểm tra tài khoản còn hoạt động
 
             Auth::login($user);
 

@@ -3,15 +3,18 @@
 namespace App\Filament\Resources\Employer\JobPost;
 
 use App\Filament\Resources\Employer\JobPost\JobPostResource\RelationManagers;
+use App\Models\BenefitJob;
 use App\Models\Employer;
 use App\Models\JobPost;
 use App\Models\Notification;
 use App\Models\UserJobPackage;
 use Filament\Forms;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
@@ -304,6 +307,53 @@ class JobPostResource extends Resource
                                        '),
 
                             ]),
+
+
+                        Section::make('Chế độ phúc lợi')->schema([
+                            Grid::make(3)->schema([
+
+                                Checkbox::make('benefitJob.insurance')
+                                    ->label('Chế độ bảo hiểm')->default(true),
+                                Checkbox::make('benefitJob.annual_leave')->label('Nghỉ phép năm')->default(true),
+                                Checkbox::make('benefitJob.uniform')->label('Đồng phục')->default(true),
+                                Checkbox::make('benefitJob.salary_increase')->label('Tăng lương')->default(true),
+                                Checkbox::make('benefitJob.bonus')->label('Chế độ thưởng'),
+                                Checkbox::make('benefitJob.training')->label('Đào tạo'),
+
+                                // Checkbox tiếp theo sẽ bị ẩn if `show_all` là false
+                                Checkbox::make('benefitJob.allowance')->label('Phụ cấp')->hidden(fn ($get) => !$get('show_all')),
+                                Checkbox::make('benefitJob.laptop')->label('Laptop')->hidden(fn ($get) => !$get('show_all')),
+                                Checkbox::make('benefitJob.benefitJob.business_trip')->label('Công tác phí')->hidden(fn ($get) => !$get('show_all')),
+                                Checkbox::make('benefitJob.travel')->label('Du lịch')->hidden(fn ($get) => !$get('show_all')),
+                                Checkbox::make('benefitJob.seniority_allowance')->label('Phụ cấp thâm niên')->hidden(fn ($get) => !$get('show_all')),
+                                Checkbox::make('benefitJob.healthcare')->label('Chăm sóc sức khoẻ')->hidden(fn ($get) => !$get('show_all')),
+                                Checkbox::make('benefitJob.shuttle_bus')->label('Xe đưa đón')->hidden(fn ($get) => !$get('show_all')),
+                                Checkbox::make('benefitJob.sports_club')->label('CLB thể thao')->hidden(fn ($get) => !$get('show_all')),
+                                Checkbox::make('benefitJob.international_travel')->label('Du lịch nước ngoài')->hidden(fn ($get) => !$get('show_all')),
+
+
+                                Toggle::make('show_all')
+                                    ->label('Xem thêm')
+                                    ->reactive()
+                                    ->afterStateUpdated(function ($state) {
+                                        // Lưu trạng thái của toggle nếu cần
+                                    }),
+
+
+                                Forms\Components\RichEditor::make('benefitJob.description')
+                                    ->label(fn() => new HtmlString('
+                                            Giới hạn <span style="font-weight: bold; color: #007bff;">1.000</span> ký tự
+                                        '))
+                                    ->maxLength(1000)
+                                    ->toolbarButtons([])
+                                    ->placeholder('- Mức lương: không dưới 10 triệu đồng/tháng
+                                            - BHXH, BHYT đầy đủ
+                                            - Được hưởng % hoa hồng dự án
+                                       ')->columnSpanFull(),
+                            ]),
+                        ]),
+
+
 
                         Section::make('Cách nộp hồ sơ')
                             ->schema([
