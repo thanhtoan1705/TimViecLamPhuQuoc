@@ -205,7 +205,11 @@ class InterviewResource extends Resource
                                 ->label('Chọn ứng viên')
                                 ->multiple()
                                 ->options(function (Interview $record) {
-                                    return $record->candidates->pluck('user.name', 'id');
+                                    return $record->candidates->mapWithKeys(function ($candidate) {
+                                        $userName = $candidate->user->name;
+                                        $userEmail = $candidate->user->email;
+                                        return [$candidate->id => "{$userName} ({$userEmail})"];
+                                    });
                                 })
                                 ->required(),
 
@@ -238,6 +242,8 @@ class InterviewResource extends Resource
                                         "<p>Vui lòng xác nhận tham dự qua email này.</p>" .
                                         "<p>Trân trọng,</p>";
                                 })
+                                ->extraInputAttributes(['contentEditable' => 'false'])
+                                ->toolbarButtons([])
                                 ->columnSpanFull(),
                         ])
                         ->action(function (Interview $record, array $data) {
