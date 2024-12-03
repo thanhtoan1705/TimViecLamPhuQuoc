@@ -6,10 +6,16 @@
         <div class="candidate-grid">
             @foreach($candidates as $candidate)
                 <div class="candidate-card">
-                    <button wire:click="saveCandidate({{ $candidate->id }})" class="save-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-                        </svg>
+                    <button wire:click="saveCandidate({{ $candidate->id }})" class="save-button {{ $candidate->is_saved ? 'saved' : '' }}">
+                        @if($candidate->is_saved)
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM20.25 5.507v11.561L5.853 2.671c.15-.043.306-.075.467-.094a49.255 49.255 0 0 1 11.36 0c1.1.128 1.907 1.077 1.907 2.185V5.507ZM4.5 19.93l.75-11.25a.75.75 0 0 0-.75.75v10.5Z" />
+                            </svg>
+                        @else
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                            </svg>
+                        @endif
                     </button>
 
                     <div class="card-header">
@@ -233,6 +239,17 @@
             width: 16px;
             height: 16px;
             transition: all 0.3s ease;
+        }
+
+        .save-button.saved {
+            background-color: #3C65F5;
+            border-color: #3C65F5;
+            color: white;
+        }
+
+        .save-button.saved:hover {
+            background-color: #ff4444;
+            border-color: #ff4444;
         }
 
     </style>

@@ -26,6 +26,8 @@ class JobPostRepository implements JobPostInterface
                 })
                     ->where('expires_at', '>', now());
             })
+            ->where('end_date', '>=', now())
+            ->where('status', 1)
             ->with(['employer' => function ($query) {
                 $query->select('id', 'company_name', 'company_logo', 'company_photo_cover', 'slug', 'address_id')
                     ->withCount('job_post as total_jobs')
@@ -127,6 +129,8 @@ class JobPostRepository implements JobPostInterface
                 })
                     ->where('expires_at', '>', now());
             })
+            ->where('end_date', '>=', now())
+            ->where('status', 1)
             ->orderBy('created_at', 'desc')
             ->orderBy('updated_at', 'desc')
             ->get();
@@ -143,6 +147,8 @@ class JobPostRepository implements JobPostInterface
                 })
                     ->where('expires_at', '>', now());
             })
+            ->where('end_date', '>=', now())
+            ->where('status', 1)
             ->get();
     }
 

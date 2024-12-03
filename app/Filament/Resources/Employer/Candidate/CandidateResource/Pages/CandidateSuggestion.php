@@ -56,27 +56,42 @@ class CandidateSuggestion extends Page
     protected function loadCandidates()
     {
         $employerId = Auth::user()->employer->id;
-        $this->candidates = app(EmployerInterface::class)
+        $candidates = app(EmployerInterface::class)
             ->getSuggestedCandidatesByEmployer($employerId, $this->sortOrder);
+
+        foreach ($candidates as $candidate) {
+            $candidate->is_saved = app(EmployerInterface::class)
+                ->isCandidateSaved($employerId, $candidate->id);
+        }
+
+        $this->candidates = $candidates;
     }
 
     public function saveCandidate($candidateId)
     {
         $employerId = Auth::user()->employer->id;
 
-        $isSaved = app(EmployerInterface::class)->saveCandidate($employerId, $candidateId);
-
+        // Kiểm tra xem đã lưu chưa
+        $isSaved = app(EmployerInterface::class)->isCandidateSaved($employerId, $candidateId);
+        
         if ($isSaved) {
+            // Nếu đã lưu thì hủy lưu
+            app(EmployerInterface::class)->unsaveCandidate($employerId, $candidateId);
+            Notification::make()
+                ->title('Đã hủy lưu ứng viên')
+                ->success()
+                ->send();
+        } else {
+            // Nếu chưa lưu thì lưu mới
+            app(EmployerInterface::class)->saveCandidate($employerId, $candidateId);
             Notification::make()
                 ->title('Ứng viên đã được lưu')
                 ->success()
                 ->send();
-        } else {
-            Notification::make()
-                ->title('Ứng viên đã được lưu trước đó')
-                ->warning()
-                ->send();
         }
+
+        // Reload lại danh sách candidates để cập nhật trạng thái
+        $this->loadCandidates();
     }
 
 

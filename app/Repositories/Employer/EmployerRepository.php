@@ -153,5 +153,11 @@ class EmployerRepository implements EmployerInterface
         return false;
     }
 
+    public function isCandidateSaved($employerId, $candidateId)
+    {
+        return SaveCandidate::where('employer_id', $employerId)
+            ->where('candidate_id', $candidateId)
+            ->exists();
+    }
 
 }

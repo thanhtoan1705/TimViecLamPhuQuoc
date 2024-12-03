@@ -21,8 +21,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @production
+    @php
+        $manifest = json_decode(file_get_contents(public_path('build/manifest.json')), true);
+    @endphp
+    <!-- Load tất cả CSS từ manifest -->
+    @foreach ($manifest as $entry)
+        @if (isset($entry['css']))
+            @foreach ($entry['css'] as $css)
+                <link rel="stylesheet" href="{{ asset('build/'.$css) }}">
+            @endforeach
+        @endif
+    @endforeach
+    <!-- Load JS chính -->
+    <script type="module" src="{{ asset('build/' . $manifest['resources/js/app.js']['file']) }}"></script>
+@else
     @viteReactRefresh
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @endproduction
 
     @livewireStyles
     @stack('css')

@@ -80,12 +80,15 @@ class InterviewResource extends Resource
                                 'online' => 'Phỏng vấn online',
                                 'offline' => 'Phỏng vấn trực tiếp',
                             ])
-                            ->required(),
+                            ->required()
+                            ->reactive(),
 
                         Forms\Components\TextInput::make('location')
                             ->label('Địa điểm')
                             ->required()
-                            ->visible(fn (callable $get) => $get('interview_type') === 'offline'),
+                            ->hidden(fn (\Filament\Forms\Get $get): bool =>
+                                $get('interview_type') !== 'offline'
+                            ),
 
                         Forms\Components\DateTimePicker::make('start_time')
                             ->label('Thời gian bắt đầu')

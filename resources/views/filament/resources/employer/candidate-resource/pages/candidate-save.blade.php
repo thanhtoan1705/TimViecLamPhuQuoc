@@ -6,9 +6,9 @@
         <div class="candidate-grid">
             @foreach($savedCandidates as $candidate)
                 <div class="candidate-card">
-                    <button wire:click="unsaveCandidate({{ $candidate->candidate->id }})" class="save-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                    <button wire:click="unsaveCandidate({{ $candidate->candidate->id }})" class="save-button saved">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM20.25 5.507v11.561L5.853 2.671c.15-.043.306-.075.467-.094a49.255 49.255 0 0 1 11.36 0c1.1.128 1.907 1.077 1.907 2.185V5.507ZM4.5 19.93l.75-11.25a.75.75 0 0 0-.75.75v10.5Z" />
                         </svg>
                     </button>
 
@@ -224,6 +224,17 @@
             width: 16px;
             height: 16px;
             transition: all 0.3s ease;
+        }
+
+        .save-button.saved {
+            background-color: #3C65F5;
+            border-color: #3C65F5;
+            color: white;
+        }
+
+        .save-button.saved:hover {
+            background-color: #ff4444;
+            border-color: #ff4444;
         }
     </style>
 </x-filament-panels::page>
