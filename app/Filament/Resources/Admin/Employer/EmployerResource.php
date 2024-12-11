@@ -102,7 +102,10 @@ class EmployerResource extends Resource implements HasShieldPermissions
                                         TextInput::make('user.phone')
                                             ->required()
                                             ->maxLength(20)
-                                            ->label('Số điện thoại'),
+                                            ->label('Số điện thoại')
+                                            ->rules([
+                                                'regex:/^((\+?[1-9]\d{1,14})|(0\d{9,10}))$/',
+                                            ]),
 
                                         TextInput::make('user.password')
                                             ->label('Mật khẩu')

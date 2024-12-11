@@ -40,7 +40,7 @@ class EmployerController extends Controller
         $selectedCompanyTypes = $request->query('company_types', []);
         $selectedYears = $request->query('years', []);
         $selectedSizes = $request->query('sizes', []);
-        $selectedLocation = $request->query('location', '');
+        $selectedLocation = $request->query('locations', '');
         $sortBy = $request->input('sortBy', 'newest');
         $perPage = $request->input('perPage', 10);
 
@@ -59,7 +59,6 @@ class EmployerController extends Controller
             $selectedYears,
             $selectedSizes,
         );
-
         $data = [
             'sortBy' => $sortBy,
             'perPage' => $perPage,
