@@ -24,6 +24,7 @@ class Comment extends Model
         'content',
         'parent_id',
         'commentable',
+        'status',
     ];
 
     public function blog()

@@ -143,6 +143,27 @@ class CommentResource extends Resource implements HasShieldPermissions
                     ->limit(50)
                     ->url(fn($record) => route('client.post.detail', ['slug' => $record->blog->slug]) . '#comment-' . $record->id)
                     ->openUrlInNewTab(),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Trạng thái')
+                    ->getStateUsing(fn($record) => match($record->status) {
+                        'unread' => 'Chưa xem',
+                        'read' => 'Đã xem',
+                        'replied' => 'Đã phản hồi',
+                        default => 'Không xác định',
+                    })
+                    ->icon(function ($record) {
+                        return match ($record->status) {
+                            'read' => 'heroicon-o-eye',
+                            'unread' => 'heroicon-o-eye-slash',
+                            'replied' => 'heroicon-o-chat-bubble-left-right',
+                            default => null,
+                        };
+                    })
+                    ->colors([
+                        'danger' => fn($record) => $record->status === 'unread',
+                        'success' => fn($record) => $record->status === 'read',
+                        'primary' => fn($record) => $record->status === 'replied',
+                    ]),
             ])
             ->filters([
                 Filter::make('user_id')
@@ -161,6 +182,23 @@ class CommentResource extends Resource implements HasShieldPermissions
                             ->label('Tiêu đề bài viết')
                             ->placeholder('Nhập tiêu đề để lọc...')
                     ]),
+                Filter::make('status')
+                    ->label('Lọc theo trạng thái')
+                    ->query(fn(Builder $query, array $data) =>
+                    isset($data['value']) && $data['value'] !== ''
+                        ? $query->where('status', $data['value'])
+                        : $query
+                    )
+                    ->form([
+                        Select::make('value')
+                            ->label('Trạng thái')
+                            ->placeholder('Chọn trạng thái...')
+                            ->options([
+                                'unread' => 'Chưa xem',
+                                'read' => 'Đã xem',
+                                'replied' => 'Đã phản hồi',
+                            ])
+                    ]),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
@@ -177,7 +215,9 @@ class CommentResource extends Resource implements HasShieldPermissions
                                 'user_id' => auth()->id(),
 //                                'commentable_id' => $record->commentable_id,
 //                                'commentable_type' => $record->commentable_type,
+                                'status' => 'read',
                             ]);
+                            $record->update(['status' => 'replied']);
                             $userToNotify = $record->user; // Người bình luận gốc
                             $userToNotify->notify(new \App\Notifications\CommentReplyNotification($newComment));
                             Notification::make()
@@ -226,6 +266,7 @@ class CommentResource extends Resource implements HasShieldPermissions
             'index' => \App\Filament\Resources\Admin\Comment\CommentResource\Pages\ListComments::route('/'),
             'create' => \App\Filament\Resources\Admin\Comment\CommentResource\Pages\CreateComment::route('/create'),
             'edit' => \App\Filament\Resources\Admin\Comment\CommentResource\Pages\EditComment::route('/{record}/edit'),
+            'view' => \App\Filament\Resources\Admin\Comment\CommentResource\Pages\CommentDetail::route('/{record}'),
         ];
     }
 }

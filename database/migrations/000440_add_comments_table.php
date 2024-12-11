@@ -12,6 +12,7 @@ return new class extends Migration
             $table->foreignId('parent_id')->nullable()->constrained('comments')->onDelete('cascade');
             $table->nullableMorphs('commentable');
             $table->softDeletes();
+            $table->string('status')->default('unread'); // Giá trị mặc định là "chưa xem"
         });
     }
     public function down()
