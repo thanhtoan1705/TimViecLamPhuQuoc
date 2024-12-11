@@ -40,6 +40,8 @@ return new class extends Migration
 
             $table->string('color')->nullable();
 
+            $table->boolean('reminder_sent')->default(false);
+
             $table->timestamps();
             $table->softDeletes(); // Thêm soft delete
         });

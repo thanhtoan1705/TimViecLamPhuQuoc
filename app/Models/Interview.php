@@ -31,12 +31,14 @@ class Interview extends Model
         'contact_email',
         'contact_phone',
         'color',
+        'reminder_sent',
     ];
 
     protected $casts = [
         'start_time' => 'datetime',
         'status' => 'string',
         'interview_type' => 'string',
+        'reminder_sent' => 'boolean',
     ];
 
     public function candidate()
@@ -61,7 +63,7 @@ class Interview extends Model
 
         // Kiểm tra và xử lý mảng 'job_post_candidates' trước khi đồng bộ vào bảng trung gian
         if (isset($this->attributes['job_post_candidates']) && is_array($this->attributes['job_post_candidates'])) {
-            // Chuyển đổi giá trị trong mảng từ chuỗi thành số nguyên (đảm bảo tính tương thích với MySQL)
+            // Chuyển đổi giá trị trong mảng t��� chuỗi thành số nguyên (đảm bảo tính tương thích với MySQL)
             $candidateIds = array_map('intval', $this->attributes['job_post_candidates']);
 
             // Đồng bộ với bảng trung gian candidate_interviews
@@ -122,5 +124,35 @@ class Interview extends Model
                 $interview->employer_id = auth()->user()->employer->id;
             }
         });
+    }
+
+    public function getStatusColorAttribute()
+    {
+        switch($this->status) {
+            case 'pending': return 'warning';
+            case 'completed': return 'success';
+            case 'cancelled': return 'danger';
+            default: return 'primary';
+        }
+    }
+
+    public function getStatusTextAttribute()
+    {
+        switch($this->status) {
+            case 'pending': return 'Chờ phỏng vấn';
+            case 'completed': return 'Đã hoàn thành';
+            case 'cancelled': return 'Đã hủy';
+            default: return 'Không xác định';
+        }
+    }
+
+    public function getIsOnlineAttribute()
+    {
+        return $this->interview_type === 'online';
+    }
+
+    public function getIsOfflineAttribute()
+    {
+        return $this->interview_type === 'offline';
     }
 }

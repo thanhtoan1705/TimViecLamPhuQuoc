@@ -235,4 +235,10 @@ class CandidateController extends Controller
             'candidate' => $candidate
         ]);
     }
+
+    public function interviews()
+    {
+        $interviews = $this->candidateRepository->getInterviews();
+        return view('client.candidate.interview', compact('interviews'));
+    }
 }

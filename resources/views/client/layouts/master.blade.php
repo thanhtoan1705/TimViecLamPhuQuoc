@@ -11,7 +11,7 @@
     <meta name="template-color" content="#0E0E0E">
     {{--    <link rel="manifest" href="manifest.html" crossorigin>--}}
     <meta name="msapplication-config" content="browserconfig.html">
-
+    <meta property="zalo-platform-site-verification" content="JzA3EvtD1M4Nshr2oFyHNKlAYmIdl5fRDJ0t" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('assets/client/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/client/css/stylecd4e.css?version=4.1') }}" rel="stylesheet">

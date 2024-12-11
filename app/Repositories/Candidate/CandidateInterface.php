@@ -27,4 +27,6 @@ interface CandidateInterface
     public function findBySlug($slug);
 
     public function findByUserId($userId);
+
+    public function getInterviews();
 }

@@ -8,6 +8,16 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
     /**
+     * Danh sách các commands cho application.
+     *
+     * @var array
+     */
+    // protected $commands = [
+    //     Commands\TestZaloMessage::class,
+    //     Commands\SendInterviewReminders::class,
+    // ];
+
+    /**
      * Đăng ký các lệnh Artisan.
      */
     protected function commands()
@@ -22,7 +32,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // Ví dụ: Lệnh này sẽ chạy mỗi ngày lúc 8 giờ sáng
-        $schedule->command('notify:package-expiry')->dailyAt('00:00');
+        // Lệnh gửi nhắc nhở package hết hạn
+        $schedule->command('notify:package-expiry')
+            ->dailyAt('00:00');
+
+        // Lệnh gửi nhắc nhở phỏng vấn (email + zalo)
+        $schedule->command('interviews:send-reminders')
+            ->everyMinute()
+            ->withoutOverlapping()
+            ->appendOutputTo(storage_path('logs/interview-reminders.log'));
     }
 }

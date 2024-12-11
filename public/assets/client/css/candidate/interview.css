@@ -1,0 +1,120 @@
+@keyframes interview-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.interview-wrapper .interview-item {
+    padding: 25px;
+    border-bottom: 1px solid #e0e6f7;
+    transition: all 0.3s ease;
+}
+
+.interview-wrapper .interview-item:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+}
+
+.interview-wrapper .interview-item.unread {
+    background-color: #f0f9ff;
+}
+
+.interview-wrapper .interview-company {
+    padding: 10px;
+}
+
+.interview-wrapper .interview-logo {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e0e6f7;
+}
+
+.interview-wrapper .interview-content {
+    padding: 10px 20px;
+    background: #fff;
+    border-radius: 12px;
+}
+
+.interview-wrapper .interview-heading {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1F2937;
+}
+
+.interview-wrapper .interview-info {
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.interview-wrapper .interview-time-info,
+.interview-wrapper .interview-location-info,
+.interview-wrapper .interview-type-info {
+    font-size: 14px;
+    color: #4B5563;
+}
+
+.interview-wrapper .interview-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #6B7280;
+}
+
+.interview-wrapper .interview-status {
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 10px;
+}
+
+.interview-wrapper .interview-btn {
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.interview-wrapper .interview-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    .interview-wrapper .interview-item {
+        padding: 15px;
+    }
+
+    .interview-wrapper .interview-content {
+        padding: 10px;
+    }
+
+    .interview-wrapper .interview-actions {
+        margin-top: 15px;
+    }
+}
+
+.interview-wrapper .hidden-item {
+    display: none;
+}
+
+.interview-wrapper .show-item {
+    display: block;
+    animation: interview-fade-in 0.5s forwards;
+}
+
+.interview-wrapper #show-less-container {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.interview-wrapper #show-less-container.visible {
+    opacity: 1;
+}

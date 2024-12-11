@@ -49,5 +49,9 @@ return [
         'client_id' => env('ZOOM_CLIENT_ID'),
         'client_secret' => env('ZOOM_CLIENT_SECRET'),
     ],
+    'zalo' => [
+        'app_id' => env('ZALO_APP_ID'),
+        'secret_key' => env('ZALO_SECRET_KEY'),
+    ],
 
 ];

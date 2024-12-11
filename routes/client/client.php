@@ -3,6 +3,7 @@
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\VideoCall\VideoCallController;
 use App\Http\Controllers\Client\Page\PageController;
+use App\Http\Controllers\Zalo\ZaloController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/')->name('client.')->group(function () {
@@ -15,5 +16,8 @@ Route::prefix('/')->name('client.')->group(function () {
     Route::get('/room', [VideoCallController::class, 'room'])->name('room');
     Route::post('/subscribe', [PageController::class, 'subscribe'])->name('subscribe');
     Route::get('subscribe/verify/{token}', [PageController::class, 'verifyEmail'])->name('verifyEmail');
+    Route::get('/zalo/redirect', [ZaloController::class, 'redirect'])->name('zalo.redirect');
+    Route::get('/zalo/callback', [ZaloController::class, 'callback'])->name('zalo.callback');
+    Route::get('/zalo/auth', [ZaloController::class, 'redirect'])->name('zalo.auth');
 });
 

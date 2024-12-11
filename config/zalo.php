@@ -1,8 +1,6 @@
 <?php
 
 return [
-    "app_id" => env('ZALO_APP_ID'),
-    "key1" => env('ZALO_KEY1'),
-    "key2" => env('ZALO_KEY2'),
-    "endpoint" => env('ZALO_ENDPOINT'),
+    'online_template_id' => env('ZALO_ONLINE_TEMPLATE_ID', '391547'),
+    'offline_template_id' => env('ZALO_OFFLINE_TEMPLATE_ID', '391548'),
 ];

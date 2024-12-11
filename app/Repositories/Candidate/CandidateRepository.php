@@ -131,4 +131,18 @@ class CandidateRepository implements CandidateInterface
     {
         return Candidate::where('user_id', $userId)->first();
     }
+
+    public function getInterviews()
+    {
+        $candidate = Auth::user()->candidate;
+
+        if (!$candidate) {
+            return collect();
+        }
+
+        return $candidate->interviews()
+            ->with(['job_post', 'employer'])
+            ->orderBy('start_time', 'desc')
+            ->paginate(9);
+    }
 }

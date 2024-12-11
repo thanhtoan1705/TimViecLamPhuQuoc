@@ -14,6 +14,12 @@
                 </a>
             </li>
             <li class="rounded-3 my-3 w-100">
+                <a class="btn btn-border w-100" href="{{route('client.candidate.interviews')}}" role="tab"
+                    aria-controls="tab-saved-jobs" aria-selected="false">
+                    <i class="bi bi-calendar2-check-fill me-2" style="font-size: 15px"></i>Lịch phỏng vấn
+                </a>
+            </li>
+            <li class="rounded-3 my-3 w-100">
                 <a class="btn btn-border w-100" href="{{route('client.cv.saved')}}" role="tab"
                     aria-controls="tab-saved-jobs" aria-selected="false">
                     <i class="bi bi-person-fill-gear me-2" style="font-size: 15px"></i>Quản lý cv
