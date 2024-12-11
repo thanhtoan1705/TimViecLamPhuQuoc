@@ -4,7 +4,7 @@
 @section('seo_title', $postDetail->title)
 @section('seo_description', $postDetail->meta_description)
 @section('seo_keywords', $postDetail->meta_keywords)
-@section('seo_image',  $postDetail->image)
+@section('seo_image',  getStorageImageUrl($postDetail->image, config('image.banner-vieclamphuquoc')))
 
 @section('content')
     <main class="main">

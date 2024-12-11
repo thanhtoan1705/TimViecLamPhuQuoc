@@ -153,7 +153,7 @@
                                 @endif
                             </li>
                         @endif
-                        <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
+                        <li>Đăng thêm {{ $package->limit_job_post }} bản tin/tuần</li>
                     </ul>
                     @php
                         $userpackages = $this->userpackages;
@@ -212,7 +212,7 @@
                                 @endif
                             </li>
                         @endif
-                        <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
+                        <li>Đăng thêm {{ $package->limit_job_post }} bản tin/tháng</li>
                     </ul>
                     @php
                         $userpackages = $this->userpackages;
@@ -258,7 +258,7 @@
                                 Tin tuyển dụng được gắn nhãn HOT vào tiêu đề tin.
                             @endif
                         </li>
-                        <li>Đăng {{ $package->limit_job_post }} bản tin/tháng</li>
+                        <li>Đăng thêm {{ $package->limit_job_post }} bản tin/tháng</li>
                     </ul>
                     @php
                         $userpackages = $this->userpackages;

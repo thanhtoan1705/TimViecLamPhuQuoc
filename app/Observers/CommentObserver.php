@@ -18,7 +18,7 @@ class CommentObserver
                 if ($admin->id !== $comment->user_id) {
                     Notification::make()
                         ->success()
-                        ->title("{$comment->user->name} đã bình luận trên bài viết của bạn")
+                        ->title("{$comment->user->name} đã bình luận trên bài viết: {$comment->blog->title}")
                         ->actions([
                             Action::make('view')
                                 ->label('Xem bình luận')

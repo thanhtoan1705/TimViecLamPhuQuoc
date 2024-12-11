@@ -8,5 +8,6 @@ return [
     'square-logo' => 'default/square-logo.svg',
     'avatar' => 'default/user.png',
     'blog' => 'default/blog.jpg',
-    'company-banner' => 'default/photo-cover.png'
+    'company-banner' => 'default/photo-cover.png',
+    'banner-vieclamphuquoc' => 'default/banner-vieclamphuquoc.png'
 ];
