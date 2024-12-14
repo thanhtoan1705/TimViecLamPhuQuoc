@@ -6,10 +6,10 @@ use App\Filament\Components\ImageUploadComponent;
 use App\Filament\Resources\Blog\BlogResource\Pages;
 use App\Filament\Resources\Blog\BlogResource\RelationManagers;
 use App\Models\Blog;
+use App\Models\BlogCategory;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
@@ -26,7 +26,6 @@ use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
@@ -218,10 +217,8 @@ class BlogResource extends Resource implements HasShieldPermissions
 
                 Tables\Columns\TextColumn::make('title')
                     ->label('Tiêu đề')
+                    ->limit(30)
                     ->searchable(),
-
-
-
 
                 Tables\Columns\TextColumn::make('category.name')
                     ->label('Chuyên mục')
@@ -240,30 +237,26 @@ class BlogResource extends Resource implements HasShieldPermissions
                     ->falseColor('danger'),
             ])
             ->filters([
-                Filter::make('title')
-                    ->label('Lọc theo tên')
-                    ->query(fn(Builder $query, array $data) => $query->where('title', 'like', '%' . $data['value'] . '%'))
-                    ->form([
-                        TextInput::make('value')
-                            ->label('Tiêu đề bài viết')
-                            ->placeholder('Nhập tiêu đề bài viết để lọc...')
-                    ]),
-                Filter::make('user_id')
-                    ->label('Lọc theo tên')
-                    ->query(fn(Builder $query, array $data) => $query->whereHas('user', fn($q) => $q->where('name', 'like', '%' . $data['value'] . '%')))
-                    ->form([
-                        TextInput::make('value')
-                            ->label('Tên người dùng')
-                            ->placeholder('Nhập tên để lọc...')
-                    ]),
-                Filter::make('blog_id')
-                    ->label('Lọc theo danh mục bài viết')
-                    ->query(fn(Builder $query, array $data) => $query->whereHas('category', fn($q) => $q->where('name', 'like', '%' . $data['value'] . '%')))
-                    ->form([
-                        TextInput::make('value')
-                            ->label('Danh mục bài viết')
-                            ->placeholder('Nhập danh mục để lọc...')
-                    ]),
+                Tables\Filters\SelectFilter::make('title')
+                    ->label('Tên bài viết')
+                    ->options(Blog::pluck('title', 'title')->toArray())
+                    ->searchable()
+                    ->preload(),
+
+                Tables\Filters\SelectFilter::make('user_id')
+                    ->label('Tác giả')
+                    ->relationship('user', 'name', function (Builder $query) {
+                        $query->where('role', 'admin');
+                    })
+                    ->searchable()
+                    ->preload(),
+
+                Tables\Filters\SelectFilter::make('category_id')
+                    ->label('Danh mục')
+                    ->relationship('category', 'name')
+                    ->options(BlogCategory::pluck('name', 'id')->toArray())
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

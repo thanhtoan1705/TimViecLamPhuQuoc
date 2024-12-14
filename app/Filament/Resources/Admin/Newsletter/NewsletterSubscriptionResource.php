@@ -8,7 +8,6 @@ use App\Filament\Resources\Admin\Newsletter\NewsletterSubscriptionResource\Pages
 use App\Filament\Resources\Admin\Newsletter\NewsletterSubscriptionResource\RelationManagers;
 use App\Jobs\Client\SendNewsletterEmail;
 use App\Models\NewsletterSubscription;
-use Filament\Notifications\Notification;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
@@ -17,6 +16,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\BulkAction;
@@ -24,7 +24,6 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Mail;
 
 class NewsletterSubscriptionResource extends Resource
 {
@@ -94,7 +93,13 @@ class NewsletterSubscriptionResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')->label('Ngày đăng ký')->date(),
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make('verified')
+                    ->label('Đã xác thực')
+                    ->query(fn($query) => $query->where('status', true)),
+
+                Tables\Filters\Filter::make('unverified')
+                    ->label('Chưa xác thực')
+                    ->query(fn($query) => $query->where('status', false)),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

@@ -37,7 +37,6 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -47,7 +46,7 @@ class EmployerResource extends Resource implements HasShieldPermissions
 
     protected static ?string $slug = 'business';
 
-    protected static ?string $navigationLabel = 'Nhà tuyên dụng';
+    protected static ?string $navigationLabel = 'Nhà tuyển dụng';
 
     protected static ?string $modelLabel = 'Nhà tuyển dụng';
 

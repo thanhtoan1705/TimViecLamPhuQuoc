@@ -18,7 +18,6 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 
 class JobTypeResource extends Resource implements HasShieldPermissions
 {
@@ -68,11 +67,8 @@ class JobTypeResource extends Resource implements HasShieldPermissions
                                         ->rules([
                                             'min:2',
                                             'max:255',
-                                            'unique:job_types,name',
-                                            function (\Filament\Forms\Get $get) {
-                                                return Rule::unique('job_types', 'name')->ignore($get('id'));
-                                            }
                                         ])
+                                        ->unique(JobType::class, 'name', ignoreRecord: true)
                                         ->maxLength(255)
                                         ->live(onBlur: true)
                                         ->afterStateUpdated(fn(string $operation, $state, Set $set) => $operation

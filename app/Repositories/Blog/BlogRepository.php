@@ -34,7 +34,8 @@ class BlogRepository implements BlogInterface
             ->orderBy('created_at', 'desc')
             ->orderBy('view', 'desc')
             ->orderBy('comments_count', 'desc')
-            ->paginate($limit);
+            ->take($limit)
+            ->get();
     }
 }
 

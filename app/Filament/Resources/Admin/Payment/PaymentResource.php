@@ -143,6 +143,7 @@ class PaymentResource extends Resource implements HasShieldPermissions
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('payment_date', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('row_number')
                     ->label('STT')

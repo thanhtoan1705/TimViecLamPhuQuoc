@@ -3,31 +3,23 @@
 namespace App\Filament\Resources\Employer\Candidate;
 
 use App\Filament\Resources\Employer\Candidate\CandidateApplyResource\Pages;
-use App\Jobs\Client\SendNewsletterEmail;
 use App\Jobs\Employer\SendMailStatusApplyNotification;
 use App\Models\JobPost;
 use App\Models\JobPostCandidate;
-use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Columns\Layout\Split;
-use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 
 
 class CandidateApplyResource extends Resource
@@ -297,6 +289,21 @@ class CandidateApplyResource extends Resource
                             $query->where('employer_id', $employerId);
                         });
                     }),
+                Filter::make('viewed')
+                    ->label('Lọc theo trạng thái')
+                    ->query(fn(Builder $query, array $data) => isset($data['value']) && $data['value'] !== ''
+                        ? $query->where('viewed', $data['value'])
+                        : $query
+                    )
+                    ->form([
+                        Select::make('value')
+                            ->label('Trạng thái')
+                            ->placeholder('Chọn trạng thái...')
+                            ->options([
+                                0 => 'Chưa xem',
+                                1 => 'Đã xem',
+                            ])
+                    ]),
             ]);
 
 
