@@ -14,7 +14,7 @@ const Avatar = ({image, onImageChange, isEditable, className = ''}) => {
     };
 
     return (
-        <div className={`avatar-container ${className}`} style={{width: '100%', height: '100%'}}>
+        <div className={`avatar-container ${className}`}>
             <div className="avatar-wrapper">
                 {image ? (
                     <img

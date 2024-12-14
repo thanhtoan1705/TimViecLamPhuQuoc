@@ -609,6 +609,48 @@
             height: 100%;
         }
 
+        /* Style cho tiêu đề công việc */
+        .card-block-info h6 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .card-block-info h6 a {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-decoration: none;
+        }
+
+        .card-block-info h6 a:hover {
+            color: #0d6efd;
+        }
+
+        .name-job {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .name-job:hover {
+            color: #0d6efd;
+        }
+
+        /* Đảm bảo container giữ đúng width */
+        .right-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            max-width: 70%;
+        }
+
         .card-grid-2-image-left {
             padding: 10px 20px 15px 20px;
             display: flex;

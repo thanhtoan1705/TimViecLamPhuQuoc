@@ -23,17 +23,19 @@
 }
 
 .profile-image-container {
-    width: 120px;
-    height: 120px;
+    width: 105px;
+    height: 140px;
     flex-shrink: 0;
     position: relative;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    overflow: hidden;
 }
 
 .profile-image-container .avatar-container,
 .profile-image-container .avatar-wrapper,
 .profile-image-container .avatar-image {
-    width: 100%;
-    height: 100%;
+    border-radius: 4px;
 }
 
 .profile-image {

@@ -149,7 +149,7 @@ class CandidateController extends Controller
         $selectedLocation = $request->input('locations', null);
 
         $sortBy = $request->input('sortBy', 'newest');
-        $perPage = $request->input('perPage', 10);
+        $perPage = $request->input('perPage', 12);
 
         $filteredCandidatesQuery = $this->filterService->filterCandidate(
             $selectedLocation,

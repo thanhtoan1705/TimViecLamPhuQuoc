@@ -24,11 +24,9 @@
                                                         <div class="col-lg-2 col-md-2 col-sm-3 mb-md-0 mb-3">
                                                             <div class="interview-company text-center">
                                                                 <div class="interview-logo mx-auto mb-2">
-                                                                    @if(!empty($interview->employer->company_logo))
-                                                                        <img src="{{ asset('storage/' . $interview->employer->company_logo) }}" alt="Company Logo">
-                                                                    @else
-                                                                        <img src="{{ asset('default/logo.svg') }}" alt="Default Logo">
-                                                                    @endif
+                                                                    <img
+                                                                        src="{{ getStorageImageUrl($interview->employer->company_logo, config('image.square-logo')) }}"
+                                                                        alt="Company Logo">
                                                                 </div>
                                                                 <div class="interview-company-name">
                                                                     <a href="{{ route('client.employer.single', $interview->employer->slug) }}" class="text-brand-1 font-sm">{{ $interview->employer->company_name }}</a>
@@ -43,7 +41,8 @@
                                                                         <i class="bi bi-calendar-event me-1"></i>
                                                                         {{ $interview->title }}
                                                                     </h5>
-                                                                    <span class="interview-status bg-{{ $interview->status_color }}">
+                                                                    <span
+                                                                        class="interview-status bg-{{ $interview->status_color }} text-white">
                                                                         {{ $interview->status_text }}
                                                                     </span>
                                                                 </div>
@@ -122,14 +121,13 @@
                                                             <div class="col-lg-2 col-md-2 col-sm-3 mb-md-0 mb-3">
                                                                 <div class="interview-company text-center">
                                                                     <div class="interview-logo mx-auto mb-2">
-                                                                        @if(!empty($interview->employer->company_logo))
-                                                                            <img src="{{ asset('storage/' . $interview->employer->company_logo) }}" alt="Company Logo">
-                                                                        @else
-                                                                            <img src="{{ asset('default/logo.svg') }}" alt="Default Logo">
-                                                                        @endif
+                                                                        <img
+                                                                            src="{{ getStorageImageUrl($interview->employer->company_logo, config('image.square-logo')) }}"
+                                                                            alt="Company Logo">
                                                                     </div>
                                                                     <div class="interview-company-name">
-                                                                        <a href="#" class="text-brand-1 font-sm">{{ $interview->employer->company_name }}</a>
+                                                                        <a href="{{ route('client.employer.single', $interview->employer->slug) }}"
+                                                                           class="text-brand-1 font-sm">{{ $interview->employer->company_name }}</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -141,7 +139,8 @@
                                                                             <i class="bi bi-calendar-event me-1"></i>
                                                                             {{ $interview->title }}
                                                                         </h5>
-                                                                        <span class="interview-status bg-{{ $interview->status_color }}">
+                                                                        <span
+                                                                            class="interview-status bg-{{ $interview->status_color }} text-white">
                                                                             {{ $interview->status_text }}
                                                                         </span>
                                                                     </div>

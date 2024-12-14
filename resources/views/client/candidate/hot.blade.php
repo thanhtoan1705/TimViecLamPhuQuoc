@@ -223,70 +223,77 @@
                         </div>
 
                         <div class="row">
-                            @foreach($candidates as $candidate)
-                                @if(!isset($candidate->user))
-                                    @continue
-                                @endif
-                                <div class="col-xl-4 col-lg-4 col-md-6">
-                                    <div class="card-grid-2 hover-up">
-                                        <div class="card-grid-2-image-left">
-                                            <div class="card-grid-2-image-rd online">
-                                                <a href='{{ route('client.candidate.detail', $candidate->slug) }}'>
-                                                    <figure>
+                            @if(isset($candidates) && !$candidates->isEmpty())
+                                @foreach($candidates as $candidate)
+                                    @if(!isset($candidate->user))
+                                        @continue
+                                    @endif
+                                    <div class="col-xl-4 col-lg-4 col-md-6">
+                                        <div class="card-grid-2 hover-up">
+                                            <div class="card-grid-2-image-left">
+                                                <div class="card-grid-2-image-rd online">
+                                                    <a href='{{ route('client.candidate.detail', $candidate->slug) }}'>
+                                                        <figure>
 
-                                                        @php
-                                                            $avatar_url = getStorageImageUrl($candidate->user->avatar_url, config('image.avatar'));
+                                                            @php
+                                                                $avatar_url = getStorageImageUrl($candidate->user->avatar_url, config('image.avatar'));
 
-                                                            $candidate_name = $candidate->user->name
-                                                        @endphp
+                                                                $candidate_name = $candidate->user->name
+                                                            @endphp
 
 
-                                                        <img alt="{{ $candidate_name }}" src="{{ $avatar_url }}">
-                                                    </figure>
-                                                </a>
-                                            </div>
-                                            <div class="card-profile pt-10">
-                                                <a href='{{ route('client.candidate.detail', $candidate->slug) }}'>
-                                                    <h5>{{ $candidate_name }}</h5>
-                                                </a>
-                                                <span
-                                                    class="font-xs color-text-mutted">{{ $candidate->major->name ?? '' }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="card-block-info">
-                                            <p class="candidate-description font-xs color-text-paragraph-2">
-                                                {{ strip_tags($candidate->description) }}
-                                            </p>
-                                            <div class="card-2-bottom card-2-bottom-candidate mt-30">
-                                                <div class="text-start">
-                                                    @foreach($candidate->skills as $skill)
-                                                        <a class='btn btn-tags-sm mb-10 mr-5'
-                                                           href='#'>{{ $skill->name }}</a>
-                                                    @endforeach
+                                                            <img alt="{{ $candidate_name }}" src="{{ $avatar_url }}">
+                                                        </figure>
+                                                    </a>
+                                                </div>
+                                                <div class="card-profile pt-10">
+                                                    <a href='{{ route('client.candidate.detail', $candidate->slug) }}'>
+                                                        <h5>{{ $candidate_name }}</h5>
+                                                    </a>
+                                                    <span
+                                                        class="font-xs color-text-mutted">{{ $candidate->major->name ?? '' }}</span>
                                                 </div>
                                             </div>
-                                            <div class="employers-info align-items-center justify-content-center mt-15">
-                                                <div class="row">
-                                                    <div class="col-6">
-                                        <span class="d-flex align-items-center">
-                                            <i class="fi-rr-marker mr-5 ml-0"></i>
-                                            <span
-                                                class="font-sm color-text-mutted">{{ $candidate->address->province->name ?? ''}}</span>
-                                        </span>
+                                            <div class="card-block-info">
+                                                <p class="candidate-description font-xs color-text-paragraph-2">
+                                                    {{ strip_tags($candidate->description) }}
+                                                </p>
+                                                <div class="card-2-bottom card-2-bottom-candidate mt-30">
+                                                    <div class="text-start">
+                                                        @foreach($candidate->skills as $skill)
+                                                            <a class='btn btn-tags-sm mb-10 mr-5'
+                                                               href='#'>{{ $skill->name }}</a>
+                                                        @endforeach
                                                     </div>
-                                                    <div class="col-6">
-                                        <span class="d-flex justify-content-end align-items-center">
-                                            <span
-                                                class="font-sm color-brand-1">{{ $candidate->salary->name ?? '' }}</span>
-                                            <i class="fi-rr-clock mr-5"></i>
-                                        </span>
+                                                </div>
+                                                <div
+                                                    class="employers-info align-items-center justify-content-center mt-15">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                            <span class="d-flex align-items-center">
+                                                <i class="fi-rr-marker mr-5 ml-0"></i>
+                                                <span
+                                                    class="font-sm color-text-mutted">{{ $candidate->address->province->name ?? null}}</span>
+                                            </span>
+                                                        </div>
+                                                        <div class="col-6">
+                                            <span class="d-flex justify-content-end align-items-center">
+                                                <span
+                                                    class="font-sm color-brand-1">{{ $candidate->salary->name ?? '' }}</span>
+                                                <i class="fi-rr-clock mr-5"></i>
+                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                @endforeach
+                            @else
+                                <div class="no-results">
+                                    <h6>Không có kết quả tìm kiếm phù hợp</h6>
                                 </div>
-                            @endforeach
+                            @endif
                         </div>
                         <div class="paginations">
                             {{ $candidates->appends(['sortBy' => $sortBy, 'perPage' => $perPage])->links('vendor.pagination.custom') }}

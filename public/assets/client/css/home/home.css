@@ -103,6 +103,20 @@
     max-width: 70%;
 }
 
+.right-info .name-job {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
+    color: #333;
+    text-decoration: none;
+}
+
+.right-info .name-job:hover {
+    color: #0d6efd;
+}
+
 .location-small {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -676,7 +690,7 @@
     padding-bottom: 130px; /* Tạo khoảng trống cho job listing */
 }
 
-/* Animation cho job items khi hiển thị */
+/* Animation cho job items khi hiển th��� */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -914,5 +928,45 @@
     color: #ffffff;  /* Màu xanh sáng hơn */
     margin-bottom: 5px;
     transition: color 0.3s ease;
+}
+
+.card-block-info h6 {
+    margin: 0;
+    padding: 0;
+}
+
+.card-block-info h6 a {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    line-height: 1.5;
+}
+
+.card-block-info h6 a:hover {
+    color: #0d6efd;
+}
+
+.card-briefcase, .card-time {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 45%; /* Để 2 span không bị đè lên nhau */
+}
+
+.btn-grey-small {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px; /* Giới hạn độ rộng của mỗi skill tag */
+    display: inline-block;
+}
+
+.card-grid-2 .card-block-info {
+    display: inline-block !important;
+    width: 100% !important;
+    padding: 5px 20px 30px 20px !important;
 }
 

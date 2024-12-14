@@ -37,7 +37,7 @@
                                                             class="card-briefcase">{{ $job->jobType->name }}</span><span
                                                             class="card-time">{{ \Carbon\Carbon::parse($job->created_at)->diffForHumans() }}</span>
                                                     </div>
-                                                    <p class="font-sm color-text-paragraph mt-15">{{ Str::limit($job->description, 100) }}</p>
+                                                    <p class="font-sm color-text-paragraph mt-15">{!! Str::limit($job->description, 100) !!}</p>
                                                     <div class="mt-30">
                                                         @foreach($job->skills as $skill)
                                                             <a class='btn btn-grey-small mr-5'

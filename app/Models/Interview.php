@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Services\ZoomService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Services\ZoomService;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Interview extends Model
@@ -128,22 +128,43 @@ class Interview extends Model
 
     public function getStatusColorAttribute()
     {
-        switch($this->status) {
-            case 'pending': return 'warning';
-            case 'completed': return 'success';
-            case 'cancelled': return 'danger';
-            default: return 'primary';
+        return $this->time_status === 'completed' ? 'secondary' : 'primary';
+    }
+
+    // public function getStatusColorAttribute()
+    // {
+    //     switch($this->status) {
+    //         case 'pending': return 'warning';
+    //         case 'completed': return 'success';
+    //         case 'cancelled': return 'danger';
+    //         default: return 'primary';
+    //     }
+    // }
+
+    // public function getStatusTextAttribute()
+    // {
+    //     switch($this->status) {
+    //         case 'pending': return 'Chờ phỏng vấn';
+    //         case 'completed': return 'Đã hoàn thành';
+    //         case 'cancelled': return 'Đã hủy';
+    //         default: return 'Không xác định';
+    //     }
+    // }
+
+    public function getTimeStatusAttribute()
+    {
+        $endTime = $this->start_time->addMinutes($this->duration);
+        $now = now();
+
+        if ($now > $endTime) {
+            return 'completed';
         }
+        return 'pending';
     }
 
     public function getStatusTextAttribute()
     {
-        switch($this->status) {
-            case 'pending': return 'Chờ phỏng vấn';
-            case 'completed': return 'Đã hoàn thành';
-            case 'cancelled': return 'Đã hủy';
-            default: return 'Không xác định';
-        }
+        return $this->time_status === 'completed' ? 'Đã kết thúc' : 'Sắp diễn ra';
     }
 
     public function getIsOnlineAttribute()

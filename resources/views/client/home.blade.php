@@ -209,7 +209,7 @@
                 <div class="box-we-hiring">
                     <div class="text-1"><span class="text-we-are">Chúng tôi là</span><span class="text-hiring">Ứng
                             tuyển</span></div>
-                    <div class="text-2">Hãy cùng nhau&rsquo;s <span class="color-brand-1">làm việc</span> <br> &amp;
+                    <div class="text-2">Hãy cùng nhau<span class="color-brand-1">làm việc</span> <br> &amp;
                         <span
                             class="color-brand-1">và khám phá</span> cơ hội
                     </div>

@@ -38,6 +38,11 @@ class ApplyJob extends Component
 
     public function submit()
     {
+        if (!Auth::check() || !Auth::user()->candidate) {
+            flash()->warning('Vui lòng đăng nhập tài khoản ứng viên để ứng tuyển.', [], 'Thông báo!');
+            return redirect()->to(request()->header('Referer'));
+        }
+
         $candidateId = Auth::user()->candidate->id;
 
         $this->validate();

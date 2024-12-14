@@ -42,7 +42,7 @@ class EmployerController extends Controller
         $selectedSizes = $request->query('sizes', []);
         $selectedLocation = $request->query('locations', '');
         $sortBy = $request->input('sortBy', 'newest');
-        $perPage = $request->input('perPage', 10);
+        $perPage = $request->input('perPage', 12);
 
         $filteredEmployers = $this->filterService->filterEmployer(
             $selectedLocation,

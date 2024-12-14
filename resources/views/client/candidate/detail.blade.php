@@ -98,7 +98,7 @@
                                                 </span>
                                             </div>
                                             <p class="mb-1"><strong>Công ty:</strong> {{ $experience->company_name }}</p>
-                                            <p class="mb-0"><strong>Mô tả:</strong> {{ $experience->description }}</p>
+                                            <p class="mb-0"><strong>Mô tả:</strong> {!! $experience->description !!}</p>
                                         </div>
                                     </div>
                                 @endforeach
@@ -229,8 +229,6 @@
                 </div>
             </div>
         </section>
-
-
     </main>
 @endsection
 @push('css')

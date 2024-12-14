@@ -1,0 +1,34 @@
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid var(--primary-color);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+}
+
+.section-icon {
+    color: var(--primary-color);
+    font-size: 1.2em;
+}
+
+.t6-section-title {
+    color: var(--primary-color);
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 16px;
+}
+
+
+.skill-level {
+    background-color: var(--primary-color);
+    height: 8px;
+    border-radius: 4px;
+}
+
+/* Thêm các styles khác cần dùng màu chủ đạo */
