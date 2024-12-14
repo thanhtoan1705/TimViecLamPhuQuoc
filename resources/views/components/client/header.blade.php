@@ -389,7 +389,7 @@
                             </div>
 
                             <div class="d-flex justify-content-center mt-1">
-                                <a style="width: 200px" href="{{ route('filament.employer.resources.job-posts.index') }}" class="btn dropdown-employer_list__child">
+                                <a style="width: 200px" href="{{ route('filament.admin.resources.job-posts.index') }}" class="btn dropdown-employer_list__child">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0)">
                                             <path d="M12.8002 4.80005H3.2002V6.40006H12.8002V4.80005Z" fill="#02528E"></path>

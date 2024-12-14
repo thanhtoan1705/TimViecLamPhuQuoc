@@ -14,7 +14,7 @@
                 </div>
                 <div>
                     <label class="text-sm font-medium text-gray-700">Nội dung bình luận</label>
-                    <textarea class="w-full bg-gray-100 border border-gray-300 rounded-md" rows="3" disabled>{{ $record->content }}</textarea>
+                    <textarea class="w-full bg-gray-100 border border-gray-300 rounded-md" rows="3" disabled>{{ strip_tags($record->content) }}</textarea>
                 </div>
             </div>
         </x-filament::section>

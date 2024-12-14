@@ -16,7 +16,9 @@ use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Rmsramos\Activitylog\Actions\ActivityLogTimelineTableAction;
 use Rmsramos\Activitylog\RelationManagers\ActivitylogRelationManager;
 use App\Filament\Components\ImageUploadComponent;
@@ -140,10 +142,14 @@ class UserResource extends Resource implements HasShieldPermissions
                 Tables\Columns\TextColumn::make('row_number')
                     ->label('STT')
                     ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
-                Tables\Columns\ImageColumn::make('avatar_url')
+
+
+                ImageColumn::make('avatar_urll')
+                    ->grow(false)
                     ->circular()
-                    ->defaultImageUrl(asset('default/user.png'))
+                    ->getStateUsing(fn($record) => getStorageImageUrl($record->avatar_url, config('image.avatar')))
                     ->label('Avatar'),
+
                 Tables\Columns\TextColumn::make('name')->label('Họ tên'),
                 Tables\Columns\TextColumn::make('email')->label('Email'),
                 Tables\Columns\TextColumn::make('phone')->label('Điện thoại'),

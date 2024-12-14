@@ -6,10 +6,12 @@ use App\Filament\Resources\Admin\JobPost\JobPostResource\RelationManagers;
 use App\Models\JobPost;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
@@ -22,6 +24,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\ImageColumn;
@@ -150,6 +153,7 @@ class JobPostResource extends Resource implements HasShieldPermissions
                                             ->preload(),
                                         TextInput::make('quantity')
                                             ->numeric()
+                                            ->required()
                                             ->rule('min:1')
                                             ->label('Số lượng')
                                             ->placeholder('Vui lòng nhập số lượng'),
@@ -204,6 +208,8 @@ class JobPostResource extends Resource implements HasShieldPermissions
                                         Forms\Components\RichEditor::make('job_requirement')
                                             ->label('Yêu cầu tuyển dụng')
                                             ->required()
+                                            ->toolbarButtons([])
+                                            ->maxLength(1000)
                                             ->placeholder('- Số lượng: 02 (Nam/Nữ).
                                         - Thời gian làm việc 8 tiếng/ngày.
                                         - Giao tiếp tiếng Anh cơ bản.')
@@ -216,6 +222,9 @@ class JobPostResource extends Resource implements HasShieldPermissions
                                 ->schema([
                                     Forms\Components\RichEditor::make('cv_requirement')
                                         ->label('Giới hạn 1.000 ký tự')
+                                        ->required()
+                                        ->toolbarButtons([])
+                                        ->maxLength(1000)
                                         ->placeholder('- Đơn xin việc.
                                         - Sơ yếu lý lịch.
                                         - Hộ khẩu, chứng minh nhân dân và giấy khám sức khỏe.
@@ -223,6 +232,50 @@ class JobPostResource extends Resource implements HasShieldPermissions
                                        '),
 
                                 ]),
+
+                            Section::make('Chế độ phúc lợi')->schema([
+                                Grid::make(3)->schema([
+
+                                    Checkbox::make('benefitJob.insurance')
+                                        ->label('Chế độ bảo hiểm')->default(true),
+                                    Checkbox::make('benefitJob.annual_leave')->label('Nghỉ phép năm')->default(true),
+                                    Checkbox::make('benefitJob.uniform')->label('Đồng phục')->default(true),
+                                    Checkbox::make('benefitJob.salary_increase')->label('Tăng lương')->default(true),
+                                    Checkbox::make('benefitJob.bonus')->label('Chế độ thưởng'),
+                                    Checkbox::make('benefitJob.training')->label('Đào tạo'),
+
+                                    // Checkbox tiếp theo sẽ bị ẩn if `show_all` là false
+                                    Checkbox::make('benefitJob.allowance')->label('Phụ cấp')->hidden(fn ($get) => !$get('show_all')),
+                                    Checkbox::make('benefitJob.laptop')->label('Laptop')->hidden(fn ($get) => !$get('show_all')),
+                                    Checkbox::make('benefitJob.business_trip')->label('Công tác phí')->hidden(fn ($get) => !$get('show_all')),
+                                    Checkbox::make('benefitJob.travel')->label('Du lịch')->hidden(fn ($get) => !$get('show_all')),
+                                    Checkbox::make('benefitJob.seniority_allowance')->label('Phụ cấp thâm niên')->hidden(fn ($get) => !$get('show_all')),
+                                    Checkbox::make('benefitJob.healthcare')->label('Chăm sóc sức khoẻ')->hidden(fn ($get) => !$get('show_all')),
+                                    Checkbox::make('benefitJob.shuttle_bus')->label('Xe đưa đón')->hidden(fn ($get) => !$get('show_all')),
+                                    Checkbox::make('benefitJob.sports_club')->label('CLB thể thao')->hidden(fn ($get) => !$get('show_all')),
+                                    Checkbox::make('benefitJob.international_travel')->label('Du lịch nước ngoài')->hidden(fn ($get) => !$get('show_all')),
+
+
+                                    Toggle::make('show_all')
+                                        ->label('Xem thêm')
+                                        ->reactive()
+                                        ->afterStateUpdated(function ($state) {
+                                            // Lưu trạng thái của toggle nếu cần
+                                        }),
+
+
+                                    Forms\Components\RichEditor::make('benefitJob.description')
+                                        ->label(fn() => new HtmlString('
+                                            Giới hạn <span style="font-weight: bold; color: #007bff;">1.000</span> ký tự
+                                        '))
+                                        ->maxLength(1000)
+                                        ->toolbarButtons([])
+                                        ->placeholder('- Mức lương: không dưới 10 triệu đồng/tháng
+                                            - BHXH, BHYT đầy đủ
+                                            - Được hưởng % hoa hồng dự án
+                                       ')->columnSpanFull(),
+                                ]),
+                            ]),
 
                             Section::make('Cách nộp hồ sơ')
                                 ->schema([

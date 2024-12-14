@@ -63,7 +63,7 @@
                                             <ul class="features-list">
                                                 <li>
                                                     <i class="fi-rs-check"></i>
-                                                    Đăng {{ $package->limit_job_post }} tin tuyển dụng/tháng
+                                                    Đăng thêm {{ $package->limit_job_post }} tin tuyển dụng
                                                 </li>
 
                                                 @if ($package->label != 0)

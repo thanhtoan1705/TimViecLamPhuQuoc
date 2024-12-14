@@ -23,6 +23,7 @@ use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\Filter;
@@ -213,14 +214,14 @@ class BlogResource extends Resource implements HasShieldPermissions
                 Tables\Columns\TextColumn::make('row_number')
                     ->label('STT')
                     ->getStateUsing(fn($rowLoop) => $rowLoop->index + 1),
+                ImageColumn::make('image')->label('Hình ảnh'),
 
                 Tables\Columns\TextColumn::make('title')
                     ->label('Tiêu đề')
                     ->searchable(),
 
-                ImageColumn::make('image')->label('Hình ảnh'),
 
-                Tables\Columns\TextColumn::make('slug')->label('Đường dẫn')->searchable(),
+
 
                 Tables\Columns\TextColumn::make('category.name')
                     ->label('Chuyên mục')
@@ -266,6 +267,11 @@ class BlogResource extends Resource implements HasShieldPermissions
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
+                    Action::make('view_live')
+                        ->label('Xem thực tế') // Đổi nhãn thành "Xem thực tế"
+                        ->url(fn ($record) => route('client.post.detail', $record->slug)) // Tạo URL dựa vào slug của công việc
+                        ->icon('heroicon-o-link') // Thêm biểu tượng
+                        ->openUrlInNewTab(), // Mở liên kết trong tab mới
                     Tables\Actions\ViewAction::make()
                         ->modalWidth('8xl'),
                     Tables\Actions\EditAction::make(),

@@ -32,12 +32,8 @@
                             <h5>{{$candidate->user->name}}
                             </h5>
                             <p>
-                                @foreach ($candidate->addresses as $address)
-                                    {{ $address->street }},
-                                    {{ $address->district->name }},
-                                    {{ $address->province->name }}
-                                    <br>
-                                @endforeach
+
+                                {{ $candidate->address->province->name ?? '' }}
                             </p>
                             <p class="mt-0 font-md color-text-paragraph-2 mb-15">{{$candidate->major->name ?? ''}}</p>
                         </div>
@@ -234,9 +230,7 @@
             </div>
         </section>
 
-        <!-- Component newsletter -->
-        <x-client.newsletter/>
-        <!-- End component newsletter -->
+
     </main>
 @endsection
 @push('css')

@@ -236,6 +236,7 @@ class JobPostResource extends Resource
                                         ->preload(),
                                     TextInput::make('quantity')
                                         ->numeric()
+                                        ->required()
                                         ->rule('min:1')
                                         ->label('Số lượng')
                                         ->placeholder('Vui lòng nhập số lượng'),
@@ -312,6 +313,7 @@ class JobPostResource extends Resource
                                             Giới hạn <span style="font-weight: bold; color: #007bff;">1.000</span> ký tự
                                         '))
                                     ->maxLength(1000)
+                                    ->required()
                                     ->toolbarButtons([])
                                     ->placeholder('- Đơn xin việc.
                                         - Sơ yếu lý lịch.
@@ -336,7 +338,7 @@ class JobPostResource extends Resource
                                 // Checkbox tiếp theo sẽ bị ẩn if `show_all` là false
                                 Checkbox::make('benefitJob.allowance')->label('Phụ cấp')->hidden(fn ($get) => !$get('show_all')),
                                 Checkbox::make('benefitJob.laptop')->label('Laptop')->hidden(fn ($get) => !$get('show_all')),
-                                Checkbox::make('benefitJob.benefitJob.business_trip')->label('Công tác phí')->hidden(fn ($get) => !$get('show_all')),
+                                Checkbox::make('benefitJob.business_trip')->label('Công tác phí')->hidden(fn ($get) => !$get('show_all')),
                                 Checkbox::make('benefitJob.travel')->label('Du lịch')->hidden(fn ($get) => !$get('show_all')),
                                 Checkbox::make('benefitJob.seniority_allowance')->label('Phụ cấp thâm niên')->hidden(fn ($get) => !$get('show_all')),
                                 Checkbox::make('benefitJob.healthcare')->label('Chăm sóc sức khoẻ')->hidden(fn ($get) => !$get('show_all')),

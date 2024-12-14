@@ -13,7 +13,12 @@ class EditBlog extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\ViewAction::make('view_live')
+                ->label('Xem thực tế')
+                ->url(fn ($record) => route('client.post.detail', $record->slug)) // Tạo URL dựa vào slug của công việc
+                ->icon('heroicon-o-link')
+                ->openUrlInNewTab()
+                ->color('primary'),
         ];
     }
 }

@@ -101,8 +101,8 @@ class StatsOverview extends BaseWidget
                 ->color('warning'),
 
             Stat::make('Tổng doanh thu', number_format($totalRevenueMonth, 0, ',', ',') . ' vnđ')
-                ->description("Tăng " . number_format($percentageIncrease, 2) . "% so với tháng trước")
-                ->descriptionIcon('heroicon-m-arrow-trending-up', 'before')
+                ->description(number_format($percentageIncrease, 2) . "% so với tháng trước")
+//                ->descriptionIcon('heroicon-m-arrow-trending-up', 'before')
                 ->color('primary'),
         ];
     }

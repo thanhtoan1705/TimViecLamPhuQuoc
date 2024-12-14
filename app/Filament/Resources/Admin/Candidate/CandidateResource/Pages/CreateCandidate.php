@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\Admin\Candidate\CandidateResource\Pages;
 
 use App\Filament\Resources\Admin\Candidate\CandidateResource;
+use App\Models\Candidate;
 use App\Models\User;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\Str;
 
 class CreateCandidate extends CreateRecord
 {
@@ -34,6 +36,13 @@ class CreateCandidate extends CreateRecord
 
 
         $data['user_id'] = $user->id;
+
+        $maxId = Candidate::max('id');
+        $id = $maxId + 1;
+
+        // Tạo slug trước khi tạo bản ghi mới
+        $data['slug'] = Str::slug($data['user']['name'] .'-'. $id);
+
         return $data;
     }
 

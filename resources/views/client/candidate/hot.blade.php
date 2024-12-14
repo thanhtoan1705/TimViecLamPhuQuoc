@@ -271,7 +271,7 @@
                                         <span class="d-flex align-items-center">
                                             <i class="fi-rr-marker mr-5 ml-0"></i>
                                             <span
-                                                class="font-sm color-text-mutted">{{ $candidate->address->province->name ?? null}}</span>
+                                                class="font-sm color-text-mutted">{{ $candidate->address->province->name ?? ''}}</span>
                                         </span>
                                                     </div>
                                                     <div class="col-6">

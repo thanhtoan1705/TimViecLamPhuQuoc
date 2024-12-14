@@ -180,6 +180,7 @@
                             </div>
 
 
+                            @if(isset($job->benefitJob))
                             <div class="section-custom">
                                 <h5 class="border-bottom pb-15 mb-30">Quyền lợi được hưởng</h5>
                                 <div class="row">
@@ -207,6 +208,8 @@
                                     {!! $job->benefitJob->description !!}
                                 </p>
                             </div>
+
+                            @endif
 
                             <div class="section-custom">
                                 <h5 class="border-bottom pb-15 mb-30">Yêu cầu hồ sơ</h5>
@@ -242,7 +245,13 @@
                         <div class="single-apply-jobs">
                             <div class="row align-items-center">
                                 <div class="col-md-5 d-flex align-content-center">
-                                    <button type="submit" class="btn btn-primary me-3">Nộp hồ sơ</button>
+                                    <button class="btn btn-apply-icon btn-apply btn-apply-big hover-up btn-sm me-3"
+                                            type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="{{ auth()->check() ? '#ModalApplyJobForm' : '#ModalLoginForm' }}">
+                                        Nộp hồ sơ
+                                    </button>
+{{--                                    <button type="submit" class="btn btn-primary me-3">Nộp hồ sơ</button>--}}
                                     <form action="{{ route('client.candidate.saveJob', ['job_id' => $job->id]) }}"
                                           method="POST">
                                         @csrf
@@ -313,7 +322,7 @@
                                                 </div>
                                                 <div class="info-text">
                                                     <h5 class="font-md font-bold color-brand-1">
-                                                        <a href="{{ route('client.job.single', ['jobSlug' => $otherJob->slug]) }}">{{$otherJob->title}}</a>
+                                                        <a href="{{ route('client.job.single', ['jobSlug' => $otherJob->slug]) }}">{{ limit_text($otherJob->title, 30) }}</a>
                                                     </h5>
                                                     <div class="mt-0">
                                                         <span

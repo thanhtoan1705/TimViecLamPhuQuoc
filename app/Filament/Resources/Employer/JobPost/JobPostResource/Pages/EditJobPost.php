@@ -80,56 +80,7 @@ class EditJobPost extends EditRecord
 
 
 
-//    protected function mutateFormDataBeforeFill(array $data): array
-//    {
-//        // Lấy đối tượng BenefitJob từ JobPost (hoặc mô hình hiện tại)
-//        $benefitJob = $this->record->benefitJob;
-//
-//        // Kiểm tra xem benefitJob có tồn tại không
-//        if ($benefitJob) {
-//            // Điền các trường benefitJob vào dữ liệu biểu mẫu
-//            $data['benefitJob']['insurance'] = (bool) $benefitJob->insurance; // Kiểu boolean
-//            $data['benefitJob']['annual_leave'] = (bool) $benefitJob->annual_leave; // Kiểu boolean
-//            $data['benefitJob']['uniform'] = (bool) $benefitJob->uniform; // Kiểu boolean
-//            $data['benefitJob']['salary_increase'] = (bool) $benefitJob->salary_increase; // Kiểu boolean
-//            $data['benefitJob']['bonus'] = (bool) $benefitJob->bonus; // Kiểu boolean
-//            $data['benefitJob']['training'] = (bool) $benefitJob->training; // Kiểu boolean
-//            $data['benefitJob']['allowance'] = (bool) $benefitJob->allowance; // Kiểu boolean
-//            $data['benefitJob']['laptop'] = (bool) $benefitJob->laptop; // Kiểu boolean
-//            $data['benefitJob']['business_trip'] = (bool) $benefitJob->business_trip; // Kiểu boolean
-//            $data['benefitJob']['travel'] = (bool) $benefitJob->travel; // Kiểu boolean
-//            $data['benefitJob']['seniority_allowance'] = (bool) $benefitJob->seniority_allowance; // Kiểu boolean
-//            $data['benefitJob']['healthcare'] = (bool) $benefitJob->healthcare; // Kiểu boolean
-//            $data['benefitJob']['shuttle_bus'] = (bool) $benefitJob->shuttle_bus; // Kiểu boolean
-//            $data['benefitJob']['sports_club'] = (bool) $benefitJob->sports_club; // Kiểu boolean
-//            $data['benefitJob']['international_travel'] = (bool) $benefitJob->international_travel; // Kiểu boolean
-//
-//            // Trường description là kiểu TEXT
-//            $data['benefitJob']['description'] = (string) $benefitJob->description; // Kiểu TEXT
-//        } else {
-//            // Nếu benefitJob không tồn tại, bạn có thể gán giá trị mặc định cho các trường
-//            $data['benefitJob'] = [
-//                'insurance' => false,
-//                'annual_leave' => false,
-//                'uniform' => false,
-//                'salary_increase' => false,
-//                'bonus' => false,
-//                'training' => false,
-//                'allowance' => false,
-//                'laptop' => false,
-//                'business_trip' => false,
-//                'travel' => false,
-//                'seniority_allowance' => false,
-//                'healthcare' => false,
-//                'shuttle_bus' => false,
-//                'sports_club' => false,
-//                'international_travel' => false,
-//                'description' => '', // Trường TEXT, có thể gán chuỗi rỗng
-//            ];
-//        }
-//
-//        return $data;
-//    }
+
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
