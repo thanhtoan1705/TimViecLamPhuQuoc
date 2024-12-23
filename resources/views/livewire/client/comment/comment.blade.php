@@ -17,8 +17,8 @@
                                 style="width: 24px; height: 24px;"
                                 src="{{ getStorageImageUrl($comment->user->avatar_url, config('image.avatar')) }}"
                                 alt="{{ $comment->user->name }}"><strong
-                                class="text-primary ms-2">{{ Str::ucfirst($comment->user->name) }}</strong>
-                            <em class="mx-2 fst-italic small">trả lời</em> {{ $parentComment->user->name }}
+                                class="text-primary ms-2 text-truncate">{{ Str::ucfirst($comment->user->name) }}</strong>
+                            <em class="mx-2 fst-italic small">trả lời</em> <p class="text-truncate">{{ $parentComment->user->name }}</p>
                         </p>
                     @else
                         <p class="d-inline-flex align-items-center mr-3 text-muted"><img class="mr-2 rounded-circle"

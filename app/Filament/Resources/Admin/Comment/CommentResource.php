@@ -231,7 +231,7 @@ class CommentResource extends Resource implements HasShieldPermissions
                                     return 'Từ: ' . $record->user->name;
                                 })
                                 ->default(function ($record) {
-                                    return $record->content;
+                                    return strip_tags($record->content);
                                 })
                                 ->disabled(),
 

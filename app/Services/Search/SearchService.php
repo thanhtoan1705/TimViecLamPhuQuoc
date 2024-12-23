@@ -42,6 +42,6 @@ class SearchService
         $query->where('status', 1);
         $query->orderBy('created_at', 'desc');
 
-        return $query->paginate(10);
+        return $query->paginate(12);
     }
 }

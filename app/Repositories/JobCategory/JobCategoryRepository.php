@@ -17,12 +17,16 @@ class JobCategoryRepository implements JobCategoryInterface
     public function hotJobCategories()
     {
         return $this->jobCategory
-            ->withCount('jobPosts as total_job_posts')
+            ->withCount(['jobPosts as total_job_posts' => function ($query) {
+                $query->where('status', 1);
+            }])
             ->withCount(['jobPosts as total_employers' => function ($query) {
-                $query->select(DB::raw('COUNT(DISTINCT employer_id)'));
+                $query->select(DB::raw('COUNT(DISTINCT employer_id)'))
+                    ->where('status', 1) // Chỉ đếm công việc có status = 1
+                    ->where('end_date', '<', now());
             }])
             ->orderBy('total_employers', 'desc')
-            ->limit(6)
+            ->limit(8)
             ->get();
     }
 

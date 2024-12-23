@@ -82,6 +82,10 @@ class PageController extends Controller
     public function subscribe(Request $request)
     {
         $email = $request->input('email');
+        if (empty($email)) {
+            flash()->error('Vui lòng nhập email để đăng ký!', [], 'Lỗi');
+            return back();
+        }
         $checkMail = NewsletterSubscription::where('email', $email)->exists();
         $verificationToken = Str::random(40);
 
