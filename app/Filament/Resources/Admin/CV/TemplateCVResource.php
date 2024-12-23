@@ -6,6 +6,7 @@ use App\Filament\Resources\Admin\CV\TemplateCVResource\Pages;
 use App\Filament\Resources\Admin\CV\TemplateCVResource\RelationManagers;
 use App\Models\CV\TemplateCV;
 use App\Models\CvTemplate;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,13 +14,25 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use App\Services\TemplateService;
 
-class TemplateCVResource extends Resource
+class TemplateCVResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = CvTemplate::class;
     protected static ?string $navigationIcon = 'heroicon-o-document';
     protected static ?string $navigationGroup = 'CV Management';
     protected static ?string $navigationLabel = 'Mẫu CV';
     protected static ?string $slug = 'cv';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function form(Form $form): Form
     {

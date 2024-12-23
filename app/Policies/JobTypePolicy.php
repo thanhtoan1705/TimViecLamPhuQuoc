@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\JobType;
 use App\Models\User;
+use App\Models\JobType;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class JobTypePolicy

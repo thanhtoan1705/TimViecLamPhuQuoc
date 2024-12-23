@@ -629,7 +629,7 @@
                             <li class="has-children"><a href='{{route('client.employer.index')}}'>Công ty</a></li>
                             <li class="has-children"><a href='{{route('client.cv.list')}}'>Mẫu CV</a></li>
                             <li class="has-children"><a href='{{route('client.post.index')}}'>Tin tức</a></li>
-                            <li class="has-children"><a href='{{route('client.client.about')}}'>Giới thiệu</a></li>
+
                             <li class="has-children"><a href='{{route('client.pricing.index')}}'>Bảng giá</a></li>
 
                         </ul>

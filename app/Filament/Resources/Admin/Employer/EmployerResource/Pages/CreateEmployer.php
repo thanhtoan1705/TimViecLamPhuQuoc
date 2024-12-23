@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Admin\Employer\EmployerResource\Pages;
 use App\Filament\Resources\Admin\Employer\EmployerResource;
 use App\Models\Address;
 use App\Models\User;
+use Database\Seeders\RegisterEmployerPermissionsSeeder;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Hash;
 
@@ -59,6 +60,10 @@ class CreateEmployer extends CreateRecord
         }
 
         $data['user_id'] = $user->id;
+
+        // Chạy seeder AssignEmployerPermissionsSeeder
+        // Phân quyền Employer cho người dùng vừa đăng ký
+        (new RegisterEmployerPermissionsSeeder())->run($user->id);
 
         return $data;
     }

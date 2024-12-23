@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Admin\Candidate\CandidateResource\Pages;
 
 use App\Filament\Resources\Admin\Candidate\CandidateResource;
+use App\Models\Address;
 use App\Models\Candidate;
 use App\Models\User;
 use Filament\Resources\Pages\CreateRecord;
@@ -32,6 +33,19 @@ class CreateCandidate extends CreateRecord
             ]);
         } else {
             $user = $existingUser;
+        }
+
+        // Lưu địa chỉ
+        $addressData = $data ?? [];
+        if (!empty($addressData)) {
+            $address = Address::create([
+                'province_id' => $data['province_id'] ?? null,
+                'district_id' => $data['district_id'] ?? null,
+                'ward_id' => $data['ward_id'] ?? null,
+                'street' => $data['street'] ?? null,
+            ]);
+
+            $data['address_id'] = $address->id;
         }
 
 

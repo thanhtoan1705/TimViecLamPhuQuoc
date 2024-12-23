@@ -176,8 +176,16 @@ class EmployerResource extends Resource implements HasShieldPermissions
                                                     ->label('Số nhân viên')
                                                     ->numeric(),
 
-                                                TextInput::make('company_type')
-                                                    ->label('Loại công ty'),
+
+                                                Select::make('company_type')
+                                                    ->label(__('Loại hình công ty'))
+                                                    ->options([
+                                                        'Công ty TNHH' => 'Công ty TNHH',
+                                                        'Công ty Cổ phần' => 'Công ty Cổ phần',
+                                                        'Doanh nghiệp tư nhân' => 'Doanh nghiệp tư nhân',
+                                                        'Khác' => 'Khác',
+                                                    ])
+                                                    ->required()
                                             ]),
                                     ]),
 

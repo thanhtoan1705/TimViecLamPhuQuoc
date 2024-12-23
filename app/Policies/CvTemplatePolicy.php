@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\CvTemplate;
 use App\Models\User;
+use App\Models\CvTemplate;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CvTemplatePolicy
@@ -15,7 +15,7 @@ class CvTemplatePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_admin::c::v::cv::template');
+        return $user->can('view_any_admin::c::v::template::c::v');
     }
 
     /**
@@ -23,7 +23,7 @@ class CvTemplatePolicy
      */
     public function view(User $user, CvTemplate $cvTemplate): bool
     {
-        return $user->can('view_admin::c::v::cv::template');
+        return $user->can('view_admin::c::v::template::c::v');
     }
 
     /**
@@ -31,7 +31,7 @@ class CvTemplatePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_admin::c::v::cv::template');
+        return $user->can('create_admin::c::v::template::c::v');
     }
 
     /**
@@ -39,7 +39,7 @@ class CvTemplatePolicy
      */
     public function update(User $user, CvTemplate $cvTemplate): bool
     {
-        return $user->can('update_admin::c::v::cv::template');
+        return $user->can('update_admin::c::v::template::c::v');
     }
 
     /**
@@ -47,7 +47,7 @@ class CvTemplatePolicy
      */
     public function delete(User $user, CvTemplate $cvTemplate): bool
     {
-        return $user->can('delete_admin::c::v::cv::template');
+        return $user->can('delete_admin::c::v::template::c::v');
     }
 
     /**
@@ -55,7 +55,7 @@ class CvTemplatePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_admin::c::v::cv::template');
+        return $user->can('delete_any_admin::c::v::template::c::v');
     }
 
     /**
@@ -63,7 +63,7 @@ class CvTemplatePolicy
      */
     public function forceDelete(User $user, CvTemplate $cvTemplate): bool
     {
-        return $user->can('{{ ForceDelete }}');
+        return $user->can('force_delete_admin::c::v::template::c::v');
     }
 
     /**
@@ -71,7 +71,7 @@ class CvTemplatePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('{{ ForceDeleteAny }}');
+        return $user->can('force_delete_any_admin::c::v::template::c::v');
     }
 
     /**
@@ -79,7 +79,7 @@ class CvTemplatePolicy
      */
     public function restore(User $user, CvTemplate $cvTemplate): bool
     {
-        return $user->can('{{ Restore }}');
+        return $user->can('restore_admin::c::v::template::c::v');
     }
 
     /**
@@ -87,7 +87,7 @@ class CvTemplatePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('{{ RestoreAny }}');
+        return $user->can('restore_any_admin::c::v::template::c::v');
     }
 
     /**
@@ -95,7 +95,7 @@ class CvTemplatePolicy
      */
     public function replicate(User $user, CvTemplate $cvTemplate): bool
     {
-        return $user->can('{{ Replicate }}');
+        return $user->can('replicate_admin::c::v::template::c::v');
     }
 
     /**
@@ -103,6 +103,6 @@ class CvTemplatePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('{{ Reorder }}');
+        return $user->can('reorder_admin::c::v::template::c::v');
     }
 }

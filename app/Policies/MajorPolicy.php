@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Major;
 use App\Models\User;
+use App\Models\Major;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MajorPolicy

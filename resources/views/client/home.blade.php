@@ -46,7 +46,7 @@
                                                     <span style="font-size: 16px;" class="pl-5">
                                                         Việc làm đang tuyển
                                                     </span>
-                                                    <a style="font-size: 16px;" href="/viec-lam-moi-nhat"
+                                                    <a style="font-size: 16px;" href="#"
                                                        class="text-primary ml-5">
                                                         {{ !empty($jobPostCountAll) ? number_format($jobPostCountAll) : '0' }}
                                                     </a>
@@ -56,7 +56,7 @@
                                                     <span style="font-size: 16px;" class="section-description_title">
                                                         Việc làm hôm nay
                                                     </span>
-                                                    <a style="font-size: 16px;" href="/viec-lam-can-tho-moi-nhat"
+                                                    <a style="font-size: 16px;" href="#"
                                                        class="text-primary ml-5">
                                                         {{ !empty($jobPostCountToday) ? number_format($jobPostCountToday) : '0' }}
                                                     </a>

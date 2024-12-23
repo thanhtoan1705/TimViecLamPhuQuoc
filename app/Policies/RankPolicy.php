@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Rank;
 use App\Models\User;
+use App\Models\Rank;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RankPolicy

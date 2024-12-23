@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\JobPost;
+use App\Models\Founder;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class JobPostPolicy
+class FounderPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class JobPostPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_admin::job::post::job::post');
+        return $user->can('view_any_admin::founder::founder');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, JobPost $jobPost): bool
+    public function view(User $user, Founder $founder): bool
     {
-        return $user->can('view_admin::job::post::job::post');
+        return $user->can('view_admin::founder::founder');
     }
 
     /**
@@ -31,23 +31,23 @@ class JobPostPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_admin::job::post::job::post');
+        return $user->can('create_admin::founder::founder');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, JobPost $jobPost): bool
+    public function update(User $user, Founder $founder): bool
     {
-        return $user->can('update_admin::job::post::job::post');
+        return $user->can('update_admin::founder::founder');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, JobPost $jobPost): bool
+    public function delete(User $user, Founder $founder): bool
     {
-        return $user->can('delete_admin::job::post::job::post');
+        return $user->can('delete_admin::founder::founder');
     }
 
     /**
@@ -55,15 +55,15 @@ class JobPostPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_admin::job::post::job::post');
+        return $user->can('delete_any_admin::founder::founder');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, JobPost $jobPost): bool
+    public function forceDelete(User $user, Founder $founder): bool
     {
-        return $user->can('{{ ForceDelete }}');
+        return $user->can('force_delete_admin::founder::founder');
     }
 
     /**
@@ -71,15 +71,15 @@ class JobPostPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('{{ ForceDeleteAny }}');
+        return $user->can('force_delete_any_admin::founder::founder');
     }
 
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, JobPost $jobPost): bool
+    public function restore(User $user, Founder $founder): bool
     {
-        return $user->can('{{ Restore }}');
+        return $user->can('restore_admin::founder::founder');
     }
 
     /**
@@ -87,15 +87,15 @@ class JobPostPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('{{ RestoreAny }}');
+        return $user->can('restore_any_admin::founder::founder');
     }
 
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, JobPost $jobPost): bool
+    public function replicate(User $user, Founder $founder): bool
     {
-        return $user->can('{{ Replicate }}');
+        return $user->can('replicate_admin::founder::founder');
     }
 
     /**
@@ -103,6 +103,6 @@ class JobPostPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('{{ Reorder }}');
+        return $user->can('reorder_admin::founder::founder');
     }
 }

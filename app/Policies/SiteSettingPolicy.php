@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\SiteSetting;
 use App\Models\User;
+use App\Models\SiteSetting;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SiteSettingPolicy

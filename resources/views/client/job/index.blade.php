@@ -38,10 +38,10 @@
                 <div class="banner-hero banner-single banner-single-bg">
                     <div class="block-banner text-center">
                         <h3 class="wow animate__animated animate__fadeInUp"><span
-                                class="color-brand-2">{{ count($jobs) }} Công Việc</span> Có Sẵn Ngay Bây Giờ</h3>
+                                class="color-brand-2"></span>Tìm kiếm vệc làm phù hợp với bạn</h3>
                         <div class="font-sm color-text-paragraph-2 mt-10 wow animate__animated animate__fadeInUp"
                              data-wow-delay=".1s">Khám phá cơ hội việc làm tuyệt vời và tìm kiếm công việc phù hợp với
-                            bạn.<br class="d-none d-xl-block">Ứng tuyển ngay để bắt đầu sự nghiệp của bạn!?
+                            bạn.
                         </div>
                         <x-client.search></x-client.search>
                     </div>

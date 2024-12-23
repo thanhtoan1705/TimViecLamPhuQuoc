@@ -8,6 +8,7 @@ use App\Filament\Resources\Admin\Newsletter\NewsletterSubscriptionResource\Pages
 use App\Filament\Resources\Admin\Newsletter\NewsletterSubscriptionResource\RelationManagers;
 use App\Jobs\Client\SendNewsletterEmail;
 use App\Models\NewsletterSubscription;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
@@ -25,7 +26,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 
-class NewsletterSubscriptionResource extends Resource
+class NewsletterSubscriptionResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = NewsletterSubscription::class;
 
@@ -38,6 +39,18 @@ class NewsletterSubscriptionResource extends Resource
     protected static ?string $navigationGroup = 'Quản lý nhận tin';
 
     protected static ?string $navigationIcon = 'heroicon-o-envelope';
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function getNavigationBadge(): ?string
     {

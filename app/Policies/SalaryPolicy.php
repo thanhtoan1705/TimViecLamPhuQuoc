@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Salary;
 use App\Models\User;
+use App\Models\Salary;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SalaryPolicy

@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\Promotion;
 use App\Models\User;
+use App\Models\Promotion;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PromotionPolicy

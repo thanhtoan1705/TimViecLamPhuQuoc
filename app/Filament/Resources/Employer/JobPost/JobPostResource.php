@@ -398,20 +398,7 @@ class JobPostResource extends Resource
                                 ]),
                             ]),
 
-                        Section::make('SEO')->schema([
-                            Grid::make(2)->schema([
-                                TextInput::make('meta_title')
-                                    ->placeholder('Vui lòng nhập Meta Title')
-                                    ->label('Meta Title'),
-                                TextInput::make('meta_keyword')
-                                    ->placeholder('Vui lòng nhập Meta Keyword')
-                                    ->label('Meta Keyword'),
-                                TextInput::make('meta_description')
-                                    ->placeholder('Vui lòng nhập Meta Description')
-                                    ->label('Meta Description')
-                                    ->columnSpanFull(),
-                            ]),
-                        ]),
+
                     ])->columnSpan(3),
                 ])
         ];

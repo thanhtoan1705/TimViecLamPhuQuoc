@@ -21,40 +21,7 @@ class CreateJobPost extends CreateRecord
     // Tạo slug
     public function mutateFormDataBeforeCreate(array $data): array
     {
-//        $user = Auth::user();
-//        $employer = $user->employer;
-//
-//        // Kiểm tra nếu không phải nhà tuyển dụng
-//        if (!$employer) {
-//            abort(403, 'Bạn không phải nhà tuyển dụng.');
-//        }
-//
-//        // Kiểm tra lượt đăng miễn phí hôm nay
-//        $today = now()->toDateString();
-//        $freePostToday = JobPost::where('employer_id', $employer->id)
-//            ->whereDate('created_at', $today)
-//            ->exists();
-//
-//        // Nếu không sử dụng lượt miễn phí hôm nay
-//        if ($freePostToday) {
-//            // Lấy tất cả các gói hợp lệ
-//            $jobPackages = UserJobPackage::where('employer_id', $employer->id)
-//                ->where('expires_at', '>=', now())
-//                ->where('remaining_posts', '>', 0)
-//                ->get();
-//
-//            // Tìm gói có số bài đăng còn lại nhiều nhất
-//            $availablePackage = $jobPackages->sortByDesc('remaining_posts')->first();
-//
-//            // Nếu có gói hợp lệ, trừ remaining_posts
-//            if ($availablePackage) {
-//                $availablePackage->remaining_posts -= 1;
-//                $availablePackage->save();
-//            } else {
-//                // Nếu không còn gói hợp lệ và không có lượt miễn phí, báo lỗi
-//                abort(403, 'Bạn đã sử dụng hết lượt đăng tin miễn phí hôm nay và không còn gói hợp lệ.');
-//            }
-//        }
+
 
         $employer = Auth::user()->employer;
 
@@ -77,6 +44,11 @@ class CreateJobPost extends CreateRecord
 
         // Tạo slug trước khi tạo bản ghi mới
         $data['slug'] = Str::slug($companyName . '-tuyen-dung-' . $data['title']. '-'. $id);
+
+        //SEO
+        $data['meta_title'] = $data['title'];
+        $data['meta_keyword'] = limit_text($data['description'], 200);
+        $data['meta_description'] = limit_text($data['description'], 200);
 
         // Chế độ phúc lợi
 

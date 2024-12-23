@@ -35,6 +35,32 @@ class EditCandidate extends EditRecord
 
         $user->save();
 
+
+        // Xử lý address data
+        if (!$employer->address_id) {
+            // Nếu chưa có address, tạo mới
+            $address = new \App\Models\Address([
+                'province_id' => $data['province_id'],
+                'district_id' => $data['district_id'],
+                'ward_id' => $data['ward_id'],
+                'street' => $data['street'],
+            ]);
+            $address->save();
+
+            // Cập nhật address_id cho employer
+            $employer->address_id = $address->id;
+            $employer->save();
+        } else {
+            // Nếu đã có address, cập nhật
+            $address = $employer->address;
+            $address->update([
+                'province_id' => $data['province_id'],
+                'district_id' => $data['district_id'],
+                'ward_id' => $data['ward_id'],
+                'street' => $data['street'],
+            ]);
+        }
+
         return $data;
     }
 
@@ -48,6 +74,18 @@ class EditCandidate extends EditRecord
 //        $data['user']['password'] = $user->password;
         $data['user']['avatar_url'] = $user->avatar_url;
         $data['user']['email_verified_at'] = $user->email_verified_at;
+
+
+        // Xử lý address
+        $address = $this->record->address;
+        if ($address) {
+            $data['province_id'] = $address->province_id;
+            $data['district_id'] = $address->district_id;
+            $data['ward_id'] = $address->ward_id;
+            $data['street'] = $address->street;
+
+
+        }
 
         return $data;
     }

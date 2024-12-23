@@ -275,52 +275,43 @@ class CandidateResource extends Resource implements HasShieldPermissions
 
                                 Section::make('Thông tin địa chỉ')
                                     ->schema([
+                                        Select::make('province_id')
+                                            ->label('Tỉnh/Thành phố')
+                                            ->searchable()
+                                            ->options(Province::pluck('name', 'id')->toArray())
+                                            ->reactive()
+                                            ->required()
+                                            ->afterStateUpdated(function (callable $set, $state) {
+                                                $districts = District::where('province_id', $state)->pluck('name', 'id')->toArray();
+                                                $set('district_id', null);
+                                                $set('ward_id', null);
+                                                $set('district_options', $districts);
+                                            }),
 
-                                        Repeater::make('addresses')
-                                            ->relationship('addresses')
-                                            ->label('Nhập địa chỉ (nếu có)')
-                                            ->schema([
+                                        Select::make('district_id')
+                                            ->label('Quận/Huyện')
+                                            // ->searchable()
+                                            ->required()
+                                            ->options(fn($get) => District::where('province_id', $get('province_id'))->pluck('name', 'id')->toArray())
+                                            ->reactive()
+                                            ->afterStateUpdated(function (callable $set, $state) {
+                                                $wards = Ward::where('district_id', $state)->pluck('name', 'id')->toArray();
+                                                $set('ward_id', null);
+                                                $set('ward_options', $wards);
+                                            }),
 
-                                                // Province/City Selector
-                                                Select::make('province_id')
-                                                    ->label('Tỉnh/Thành phố')
-                                                    ->searchable()
-                                                    ->options(Province::pluck('name', 'id')->toArray())
-                                                    ->reactive()
-                                                    ->afterStateUpdated(function (callable $set, $state) {
-                                                        $districts = District::where('province_id', $state)->pluck('name', 'id')->toArray();
-                                                        $set('district_id', null); // Reset quận/huyện khi tỉnh thay đổi
-                                                        $set('ward_id', null); // Reset xã khi tỉnh thay đổi
-                                                        $set('district_options', $districts);
-                                                    }),
+                                        Select::make('ward_id')
+                                            ->label('Xã/Phường')
+                                            ->required()
+                                            ->options(fn($get) => Ward::where('district_id', $get('district_id'))->pluck('name', 'id')->toArray()),
 
-
-                                                // District Selector
-                                                Select::make('district_id')
-                                                    ->label('Quận/Huyện')
-                                                    // ->searchable()
-                                                    ->options(fn($get) => District::where('province_id', $get('province_id'))->pluck('name', 'id')->toArray())
-                                                    ->reactive()
-                                                    ->afterStateUpdated(function (callable $set, $state) {
-                                                        $wards = Ward::where('district_id', $state)->pluck('name', 'id')->toArray();
-                                                        $set('ward_id', null); // Reset xã khi quận/huyện thay đổi
-                                                        $set('ward_options', $wards);
-                                                    }),
-
-                                                // Ward Selector
-                                                Select::make('ward_id')
-                                                    ->label('Xã/Phường')
-                                                    ->relationship('ward', 'name')
-                                                    ->options(fn($get) => Ward::where('district_id', $get('district_id'))->pluck('name', 'id')->toArray()),
-
-                                                TextInput::make('street')
-                                                    ->label('Địa chỉ')
-                                                    ->nullable(),
-
-                                            ])->columns(1),
+                                        TextInput::make('street')
+                                            ->label('Địa chỉ')
+                                            ->maxLength(255),
 
 
-                                    ])->columnSpanFull()
+                                    ])
+                                    ->columnSpanFull(),
 
 
                             ])->columnSpan(1),

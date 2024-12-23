@@ -12,6 +12,7 @@ use App\Models\Major;
 use App\Models\Province;
 use App\Models\Salary;
 use App\Models\Ward;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -32,7 +33,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
-class FounderResource extends Resource
+class FounderResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Founder::class;
 
@@ -42,6 +43,18 @@ class FounderResource extends Resource
     protected static ?string $navigationLabel = 'Nhà sáng lập';
     protected static ?string $navigationGroup = 'Cấu hình chung';
     protected static ?int $navigationSort = 2;
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+        ];
+    }
 
     public static function form(Form $form): Form
     {
