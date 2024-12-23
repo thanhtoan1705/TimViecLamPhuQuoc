@@ -99,9 +99,9 @@
           <div class="col-md-6"><span class="font-xs color-text-paragraph">{{ $settings->copyright }}</span></div>
           <div class="col-md-6 text-md-end text-start">
             <div class="footer-social">
-                <a class="font-xs color-text-paragraph" href="#">Chính sách bảo mật</a>
-                <a class="font-xs color-text-paragraph mr-30 ml-30" href="#">Điều khoản & điều kiện</a>
-                <a class="font-xs color-text-paragraph" href="#">Cơ chế tranh chấp</a>
+                @foreach($pages as $page)
+                    <a class="font-xs color-text-paragraph mr-30" href="{{ route('client.client.page.detail', $page->slug) }}">{{ $page->title }}</a>
+                @endforeach
             </div>
           </div>
         </div>

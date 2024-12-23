@@ -5,7 +5,7 @@
         <section class="section-box">
             <div class="breacrumb-cover bg-img-about">
                 <div class="container">
-                    <div class="row">
+                    <div class="row d-flex align-items-lg-end ">
                         <div class="col-lg-6">
                             <h2 class="mb-10">{{ $page->title }}</h2>
                         </div>

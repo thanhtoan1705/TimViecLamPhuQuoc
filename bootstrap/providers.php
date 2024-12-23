@@ -6,5 +6,6 @@ return [
     App\Providers\Filament\AdminPanelProvider::class,
     App\Providers\Filament\EmployerPanelProvider::class,
     App\Providers\Filament\PluginProvider::class,
+    App\Providers\Client\Page\PageSeviceProvider::class,
     App\Providers\ZaloServiceProvider::class,
 ];
