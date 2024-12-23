@@ -103,32 +103,55 @@ const TemplateView = ({templateId, isPreview = false}) => {
                     return;
                 }
 
-                const opt = {
-                    margin: 0,
-                    filename: `${fileName}.pdf`,
-                    image: {type: 'jpeg', quality: 0.98},
-                    html2canvas: {
-                        scale: 2,
-                        useCORS: true,
-                        logging: true,
-                        letterRendering: true
-                    },
-                    jsPDF: {
-                        unit: 'mm',
-                        format: 'a4',
-                        orientation: 'portrait',
-                        compress: true
-                    },
-                    pagebreak: {mode: ['avoid-all', 'css', 'legacy']}
-                };
+                // Wait for images to load before generating PDF
+                const images = element.getElementsByTagName('img');
+                const imagePromises = Array.from(images).map(img => {
+                    if (img.complete) return Promise.resolve();
+                    return new Promise(resolve => {
+                        img.onload = resolve;
+                        img.onerror = resolve;
+                    });
+                });
 
-                setTimeout(() => {
+                Promise.all(imagePromises).then(() => {
+                    const opt = {
+                        margin: 0,
+                        filename: `${fileName}.pdf`,
+                        image: {
+                            type: 'jpeg',
+                            quality: 1.0  // Increased image quality
+                        },
+                        html2canvas: {
+                            scale: 2,
+                            useCORS: true,
+                            logging: true,
+                            letterRendering: true,
+                            imageTimeout: 0,  // Remove timeout for image loading
+                            onclone: (clonedDoc) => {
+                                // Ensure images maintain aspect ratio
+                                const clonedImages = clonedDoc.getElementsByTagName('img');
+                                Array.from(clonedImages).forEach(img => {
+                                    img.style.maxWidth = '100%';
+                                    img.style.height = 'auto';
+                                    img.style.objectFit = 'contain';
+                                });
+                            }
+                        },
+                        jsPDF: {
+                            unit: 'mm',
+                            format: 'a4',
+                            orientation: 'portrait',
+                            compress: true
+                        },
+                        pagebreak: {mode: ['avoid-all', 'css', 'legacy']}
+                    };
+
                     html2pdf.default()
                         .from(element)
                         .set(opt)
                         .save()
                         .catch(err => console.error('PDF generation error:', err));
-                }, 500);
+                });
             }).catch(err => console.error('html2pdf import error:', err));
         } catch (error) {
             console.error('Download handler error:', error);

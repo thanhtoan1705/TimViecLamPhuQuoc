@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="msapplication-TileColor" content="#0E0E0E">
     <meta name="template-color" content="#0E0E0E">
+    <meta name="google-site-verification" content="XsRpCat5KpVnXtsG9N5IB3w8UW8JrE65qslTl1bodKo" />
     {{--    <link rel="manifest" href="manifest.html" crossorigin>--}}
     <meta name="msapplication-config" content="browserconfig.html">
     <meta property="zalo-platform-site-verification" content="JzA3EvtD1M4Nshr2oFyHNKlAYmIdl5fRDJ0t" />
@@ -60,7 +61,17 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
+            <!-- Google tag (gtag.js) -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-6GL6HDNQL2"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'G-6GL6HDNQL2');
+            </script>
 </head>
+
 <body>
 
 <x-client.utilities></x-client.utilities>

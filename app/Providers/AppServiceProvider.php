@@ -30,6 +30,8 @@ use App\Repositories\Promotional\PromotionalInterface;
 use App\Repositories\Promotional\PromotionalRepository;
 use App\Repositories\User\UserInterface;
 use App\Repositories\User\UserRepository;
+use App\Repositories\Page\PageInterface;
+use App\Repositories\Page\PageRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -50,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(LocationInterface::class, LocationRepository::class);
         $this->app->bind(FilterInterface::class, FilterRepository::class);
         $this->app->bind(PromotionalInterface::class, PromotionalRepository::class);
+        $this->app->bind(PageInterface::class, PageRepository::class);
     }
 
     /**

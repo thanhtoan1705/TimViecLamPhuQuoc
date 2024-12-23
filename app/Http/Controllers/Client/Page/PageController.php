@@ -15,8 +15,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use App\Repositories\Page\PageInterface;
+
 class PageController extends Controller
 {
+    protected $pageRepository;
+
+    public function __construct(PageInterface $pageRepository)
+    {
+        $this->pageRepository = $pageRepository;
+    }
+
     public function about()
     {
         $founders = Founder::where('status', 1)->get();
@@ -126,5 +135,12 @@ class PageController extends Controller
         }
 
         return back();
+    }
+
+    public function show($slug)
+    {
+        $page = $this->pageRepository->findBySlug($slug);
+
+        return view('client.page', compact('page'));
     }
 }

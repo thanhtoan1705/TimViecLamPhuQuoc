@@ -24,6 +24,21 @@ class SendInterviewReminders extends Command
         $this->zaloService = $zaloService;
     }
 
+    private function formatPhone($phone)
+    {
+        $phone = preg_replace('/[^0-9]/', '', $phone);
+
+        if (substr($phone, 0, 1) === '0') {
+            $phone = '84' . substr($phone, 1);
+        }
+
+        if (substr($phone, 0, 2) !== '84') {
+            $phone = '84' . $phone;
+        }
+
+        return $phone;
+    }
+
     public function handle()
     {
         try {
@@ -45,51 +60,36 @@ class SendInterviewReminders extends Command
 
                 // Gửi thông báo cho ứng viên
                 foreach ($interview->candidates as $candidate) {
-                    $this->info("Sending reminder to candidate: " . $candidate->user->email);
+                    if ($candidate->user->phone) {
+                        $formattedPhone = $this->formatPhone($candidate->user->phone);
 
-                    // Gửi email
-                    Mail::to($candidate->user->email)
-                        ->send(new InterviewReminder($interview, $candidate));
+                        $zaloData = [
+                            'customer_name' => $candidate->user->name,
+                            'title_interview' => $interview->title,
+                            'time_interview' => $interview->start_time->format('H:i d/m/Y'),
+                            'type_interview' => $interview->interview_type === 'online' ? 'Phỏng vấn online' : 'Phỏng vấn trực tiếp',
+                            'code_interview' => (string)$interview->id
+                        ];
 
-                    // Format dữ liệu cho Zalo
-                    $zaloData = [
-                        'customer_name' => $candidate->user->name,
-                        'title_interview' => $interview->title,
-                        'time_interview' => $interview->start_time->format('H:i d/m/Y'),
-                        'type_interview' => $interview->interview_type === 'online' ? 'Phỏng vấn online' : 'Phỏng vấn trực tiếp',
-                        'code_interview' => (string)$interview->id
-                    ];
+                        if ($interview->interview_type === 'offline' && $interview->location) {
+                            $zaloData['address_intervew'] = $interview->location;
+                        }
 
-                    // Thêm địa chỉ nếu là phỏng vấn offline
-                    if ($interview->interview_type === 'offline' && $interview->location) {
-                        $zaloData['address_intervew'] = $interview->location;
+                        $isOnline = $interview->interview_type === 'online';
+
+                        $result = $this->zaloService->sendMessage(
+                            $formattedPhone,
+                            $zaloData,
+                            $isOnline
+                        );
+
+                        $this->info("Sending Zalo message to candidate phone: " . $formattedPhone);
                     }
-
-                    $isOnline = $interview->interview_type === 'online';
-
-                    // Gửi tin nhắn
-                    $result = $this->zaloService->sendMessage(
-                        '84932995604',
-                        $zaloData,
-                        $isOnline
-                    );
-
-                    if ($result) {
-                        $this->info("Zalo message sent successfully!");
-                    } else {
-                        $this->error("Failed to send Zalo message!");
-                    }
-
-                    Log::info('Sent reminders to candidate: ' . $candidate->user->email);
-                    sleep(1);
                 }
 
                 // Gửi thông báo cho nhà tuyển dụng
-                if ($interview->employer && $interview->employer->user) {
-                    $this->info("Sending reminder to employer: " . $interview->employer->user->email);
-
-                    Mail::to($interview->employer->user->email)
-                        ->send(new EmployerInterviewReminder($interview));
+                if ($interview->employer && $interview->employer->user && $interview->employer->user->phone) {
+                    $formattedPhone = $this->formatPhone($interview->employer->user->phone);
 
                     $zaloData = [
                         'customer_name' => $interview->employer->user->name,
@@ -106,16 +106,12 @@ class SendInterviewReminders extends Command
                     $isOnline = $interview->interview_type === 'online';
 
                     $result = $this->zaloService->sendMessage(
-                        '84932995604',
+                        $formattedPhone,
                         $zaloData,
                         $isOnline
                     );
 
-                    if ($result) {
-                        $this->info("Zalo message to employer sent successfully!");
-                    } else {
-                        $this->error("Failed to send Zalo message to employer!");
-                    }
+                    $this->info("Sending Zalo message to employer phone: " . $formattedPhone);
                 }
 
                 $interview->update(['reminder_sent' => true]);

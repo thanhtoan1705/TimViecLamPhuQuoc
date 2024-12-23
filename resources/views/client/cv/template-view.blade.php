@@ -26,24 +26,6 @@
                         </button>
                         <div id="sectionModalContainer"></div>
                     </div>
-                    <button class="action-card">
-                        <div class="action-icon">
-                            <i class="bi bi-archive"></i>
-                        </div>
-                        <span>Thư viện CV</span>
-                    </button>
-                    <button class="action-card">
-                        <div class="action-icon">
-                            <i class="bi bi-question-circle"></i>
-                        </div>
-                        <span>Hướng dẫn viết CV</span>
-                    </button>
-                    <button class="action-card">
-                        <div class="action-icon">
-                            <i class="bi bi-briefcase"></i>
-                        </div>
-                        <span>Việc làm phù hợp</span>
-                    </button>
                 </div>
             </div>
 

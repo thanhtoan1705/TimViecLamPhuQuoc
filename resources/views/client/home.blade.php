@@ -103,7 +103,7 @@
                         sự nghiệp tiếp theo ca bạn, hợp đồng biểu diễn tự do hoặc thực tập</p>
                 </div>
                 <div class="box-swiper mt-50">
-                    <div class="swiper-container swiper-group-1 swiper">
+                    <div class="swiper-container-1 swiper-group-1 swiper">
                         <div class="swiper-wrapper">
                             @foreach($topEmployers as $employer)
                                 <div class="swiper-slide">
@@ -120,7 +120,7 @@
                                                     <a href="{{ route('client.employer.single', ['slug' => $employer->slug]) }}">
                                                         <h3 class="company-name-highlight">{{ $employer->company_name ?? '' }}</h3>
                                                     </a>
-                                                    <p>{{ $employer->address->province->name ?? '' }}</p>
+                                                    <p class="text-white">{{ $employer->address->province->name ?? '' }}</p>
                                                 </div>
                                             </div>
 
@@ -204,23 +204,6 @@
                 </div>
             </div>
         </section>
-        <div class="section-box mb-30 mt-85">
-            <div class="container">
-                <div class="box-we-hiring">
-                    <div class="text-1"><span class="text-we-are">Chúng tôi là</span><span class="text-hiring">Ứng
-                            tuyển</span></div>
-                    <div class="text-2">Hãy cùng nhau<span class="color-brand-1">làm việc</span> <br> &amp;
-                        <span
-                            class="color-brand-1">và khám phá</span> cơ hội
-                    </div>
-                    <div class="text-3">
-                        <div class="btn btn-apply btn-apply-icon" data-bs-toggle="modal"
-                             data-bs-target="#ModalApplyJobForm">Ứng tuyển ngay
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <section class="section-box mt-50">
             <div class="container">
                 <div class="text-center">
@@ -473,10 +456,6 @@
                                                                 <i class="bi bi-people"></i>
                                                                 {{ $employer->company_size ?? '100-200' }}
                                                             </span>
-                                                            <span class="company-type">
-                                                                <i class="bi bi-building"></i>
-                                                                {{ $employer->company_type ?? 'Công ty TNHH' }}
-                                                            </span>
                                                             <span class="company-industry">
                                                                 <i class="bi bi-briefcase"></i>
                                                                 {{ $firstJob->job_category->name ?? 'Kinh doanh dịch vụ' }}
@@ -635,10 +614,6 @@
                                                                 <span class="employee-count">
                                                                     <i class="bi bi-people"></i>
                                                                     {{ $employer->company_size ?? '100-200' }}
-                                                                </span>
-                                                                <span class="company-type">
-                                                                    <i class="bi bi-building"></i>
-                                                                    {{ $employer->company_type ?? 'Công ty TNHH' }}
                                                                 </span>
                                                                 <span class="company-industry">
                                                                     <i class="bi bi-briefcase"></i>
@@ -834,10 +809,6 @@
                                                                 <i class="bi bi-people"></i>
                                                                 {{ $employer->company_size ?? '100-200' }}
                                                             </span>
-                                                            <span class="company-type">
-                                                                <i class="bi bi-building"></i>
-                                                                {{ $employer->company_type ?? 'Công ty TNHH' }}
-                                                            </span>
                                                             <span class="company-industry">
                                                                 <i class="bi bi-briefcase"></i>
                                                                 {{ $firstJob->job_category->name ?? 'Kinh doanh dịch vụ' }}
@@ -997,10 +968,6 @@
                                                             <span class="employee-count">
                                                                 <i class="bi bi-people"></i>
                                                                 {{ $employer->company_size ?? '100-200' }}
-                                                            </span>
-                                                            <span class="company-type">
-                                                                <i class="bi bi-building"></i>
-                                                                {{ $employer->company_type ?? 'Công ty TNHH' }}
                                                             </span>
                                                             <span class="company-industry">
                                                                 <i class="bi bi-briefcase"></i>

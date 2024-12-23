@@ -54,7 +54,7 @@
                         </span>
                         </button>
 
-                        <ul class="dropdown-menu dropdown-menu-end p-2"
+                        <ul class="dropdown-menu dropdown-menu-end p-20"
                             style="width: 500px; max-height: 450px; overflow-y: auto;">
                             <h5 class="mb-2">Thông báo</h5>
                             @php

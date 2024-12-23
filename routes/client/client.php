@@ -19,5 +19,6 @@ Route::prefix('/')->name('client.')->group(function () {
     Route::get('/zalo/redirect', [ZaloController::class, 'redirect'])->name('zalo.redirect');
     Route::get('/zalo/callback', [ZaloController::class, 'callback'])->name('zalo.callback');
     Route::get('/zalo/auth', [ZaloController::class, 'redirect'])->name('zalo.auth');
+    Route::get('/trang/{slug}', [PageController::class, 'show'])->name('client.page.show');
 });
 

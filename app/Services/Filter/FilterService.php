@@ -238,7 +238,7 @@ class FilterService
     {
         $jobs = $this->jobPost->query();
 
-        $jobs->where('end_date', '>', now());
+        $jobs->where('end_date', '>', now())->where('status', '1');
 
         if (!empty($selectedLocation)) {
             $jobs->whereHas('employer.address.province', function ($query) use ($selectedLocation) {

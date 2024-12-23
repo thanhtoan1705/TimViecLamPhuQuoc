@@ -221,7 +221,7 @@
                                                             {{ limit_text($item->title, 65) }}
                                                         </a>
                                                     </h6>
-                                                    <div class="mt-5"><span
+                                                    <div class="mt-5 job-meta-info"><span
                                                             class="card-briefcase">{{ $item->jobType->name }}</span>
                                                         <span
                                                             class="card-time">{{ \Carbon\Carbon::parse($item['created_at'])->diffForHumans() }}</span>

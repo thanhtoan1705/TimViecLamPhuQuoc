@@ -22,7 +22,7 @@
                             $finalAvatarUrl = $isFullUrl ? $avatarUrl : asset('storage/' . $avatarUrl);
                         @endphp
 
-                            <img alt="{{ $candidate->user->name }}" width="100px" src="{{ $finalAvatarUrl }}">
+                            <img alt="{{ $candidate->user->name }}" width="100px" height="100px" src="{{ $finalAvatarUrl }}">
                         @else
                             <img alt="jobBox" width="10px" src="{{ asset('default/user.png') }}">
                         @endif
@@ -37,9 +37,9 @@
                             </p>
                             <p class="mt-0 font-md color-text-paragraph-2 mb-15">{{$candidate->major->name ?? ''}}</p>
                         </div>
-                        <div class="col-lg-4 col-md-12 text-lg-end"><a
-                                class='btn btn-download-icon btn-apply btn-apply-big'
-                                href=''>Tải xuống CV</a></div>
+{{--                        <div class="col-lg-4 col-md-12 text-lg-end"><a--}}
+{{--                                class='btn btn-download-icon btn-apply btn-apply-big'--}}
+{{--                                href=''>Tải xuống CV</a></div>--}}
                     </div>
                 </div>
                 <div class="border-bottom pt-10 pb-10"></div>
@@ -68,7 +68,7 @@
                                             <div class="d-flex justify-content-between mb-2">
                                                 <h5 class="mb-0 mt-0">{{ $education->major_name }}</h5>
                                                 <span class="text-muted">
-                                                    {{ $education->start_date->format('m/Y') }} -
+                                                    {{ $education->start_date ? $education->start_date->format('m/Y') : '' }} -
                                                     {{ $education->end_date ? $education->end_date->format('m/Y') : 'Hiện tại' }}
                                                 </span>
                                             </div>
@@ -93,7 +93,7 @@
                                             <div class="d-flex justify-content-between mb-2">
                                                 <h5 class="mb-0 mt-0">{{ $experience->position }}</h5>
                                                 <span class="text-muted">
-                                                    {{ $experience->start_date->format('m/Y') }} -
+                                                     {{ $experience->start_date ? $experience->start_date->format('m/Y') : '' }} -
                                                     {{ $experience->end_date ? $experience->end_date->format('m/Y') : 'Hiện tại' }}
                                                 </span>
                                             </div>
@@ -216,8 +216,8 @@
                                     <li>Phone: {{$candidate->user->phone}}</li>
                                     <li>Email: {{$candidate->user->email}}</li>
                                 </ul>
-                                <div class="mt-30"><a class='btn btn-send-message' href='page-contact.html'>Gửi tin</a>
-                                </div>
+{{--                                <div class="mt-30"><a class='btn btn-send-message' href='page-contact.html'>Gửi tin</a>--}}
+{{--                                </div>--}}
                             </div>
                         </div>
                         <div class="sidebar-border-bg bg-right"><span class="text-grey">Chúng tôi</span><span
