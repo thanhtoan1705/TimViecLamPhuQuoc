@@ -52,6 +52,7 @@ class EmployerViewedProfileNotification extends Notification
         return [
             'message' => 'Nhà tuyển dụng ' .  $this->jobPost->employer->company_name . ' đã xem hồ sơ của bạn cho vị trí ' . $this->jobPost->title,
             'job_post_id' => $this->jobPost->id,
+            'url' => route('client.job.single', ['jobSlug' => $this->jobPost->slug]),
         ];
     }
 }

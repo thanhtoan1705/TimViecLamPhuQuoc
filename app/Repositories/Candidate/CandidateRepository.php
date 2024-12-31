@@ -104,6 +104,14 @@ class CandidateRepository implements CandidateInterface
 
     public function getAllCandidates($query, $sortBy, $perPage)
     {
+        $query->where('status', 1)
+            ->whereHas('user')
+            ->whereHas('major')
+            ->whereHas('skills')
+            ->whereHas('addresses')
+            ->whereNotNull('description')
+            ->whereHas('salary');
+
         if ($sortBy === 'newest') {
             $query->orderBy('created_at', 'desc');
         } elseif ($sortBy === 'oldest') {

@@ -20,7 +20,7 @@
                 </div>
                 <div class="box-company-profile">
                     <div class="image-compay"><img src="{{ getStorageImageUrl($employer->company_logo, config('image.square-logo'))}}"
-                                                   alt="jobBox" width="85px" height="85px" style="width: 85px; height: 85px;"></div>
+                                                   alt="jobBox" width="85px" height="85px" style="width: 85px; height: 85px; object-fit: cover;"></div>
                     <div class="row mt-10">
                         <div class="col-lg-8 col-md-12">
                             <h5 class="f-18">{{$employer->company_name}}

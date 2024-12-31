@@ -20,5 +20,7 @@ Route::prefix('/')->name('client.')->group(function () {
     Route::get('/zalo/callback', [ZaloController::class, 'callback'])->name('zalo.callback');
     Route::get('/zalo/auth', [ZaloController::class, 'redirect'])->name('zalo.auth');
     Route::get('/trang/{slug}', [PageController::class, 'show'])->name('page.detail');
+    Route::post('/notifications/mark-as-read/{notification}', [PageController::class, 'markNotificationAsRead'])
+        ->name('notifications.markAsRead');
 });
 

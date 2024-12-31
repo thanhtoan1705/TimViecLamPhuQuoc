@@ -29,14 +29,18 @@
                                             <ul class="list-group">
                                                 @foreach ($notifications->slice(0, $displayLimit) as $notification)
                                                     @if(isset($notification->data['message']) && !empty($notification->data['message']))
-                                                        <li class="list-group-item notification-item d-flex justify-content-between align-items-center">
-                                                            <div class="d-flex align-items-center">
-                                                                <i class="bi bi-bell-fill notification-icon text-white me-3"></i>
-                                                                <span
-                                                                    class="notification-message">{{ $notification->data['message'] }}</span>
-                                                            </div>
-                                                            <span
-                                                                class="badged bg-gradient-primary">{{ $notification->created_at->diffForHumans() }}</span>
+                                                        <li class="list-group-item notification-item d-flex justify-content-between align-items-center {{ $notification->read_at ? 'read' : 'unread' }}">
+                                                            <a href="{{ $notification->data['url'] ?? '#' }}" class="d-flex align-items-center text-decoration-none w-100 notification-link justify-content-between"
+                                                               data-notification-id="{{ $notification->id }}">
+                                                                <div class="d-flex align-items-center">
+                                                                    @if(!$notification->read_at)
+                                                                        <span class="unread-dot"></span>
+                                                                    @endif
+                                                                    <i class="bi bi-bell-fill notification-icon text-white me-3"></i>
+                                                                    <span class="notification-message">{{ $notification->data['message'] }}</span>
+                                                                </div>
+                                                                <span class="badged bg-gradient-primary">{{ $notification->created_at->diffForHumans() }}</span>
+                                                            </a>
                                                         </li>
                                                     @endif
                                                 @endforeach
@@ -224,29 +228,181 @@
             .list-group-item:hover:before {
                 width: 10px;
             }
+
+            .notification-link {
+                color: inherit;
+            }
+
+            .notification-link:hover {
+                color: inherit;
+            }
+
+            .notification-item.read {
+                background-color: #f8f9fa;
+            }
+
+            .notification-item.read .notification-icon {
+                background-color: #6c757d;
+            }
+
+            .notification-item.read .notification-message {
+                color: #6c757d;
+            }
+
+            .notification-item.unread {
+                background-color: #fff;
+                border-left: 4px solid #007bff;
+            }
+
+            .notification-item.read {
+                background-color: #f8f9fa;
+                border-left: 4px solid #e9ecef;
+            }
+
+            .notification-item.read .notification-message {
+                color: #6c757d;
+            }
+
+            .notification-item.read .notification-icon {
+                background-color: #6c757d;
+            }
+
+            .unread-dot {
+                width: 8px;
+                height: 8px;
+                background-color: #007bff;
+                border-radius: 50%;
+                display: inline-block;
+                margin-right: 10px;
+                animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+                0% {
+                    transform: scale(0.95);
+                    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+                }
+
+                70% {
+                    transform: scale(1);
+                    box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+                }
+
+                100% {
+                    transform: scale(0.95);
+                    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+                }
+            }
+
+            .notification-item:hover {
+                transform: translateX(5px);
+            }
+
+            .notification-item {
+                transition: all 0.3s ease;
+            }
+
+            /* Thêm animation styles */
+            .fade-in {
+                opacity: 0;
+                transform: translateY(20px);
+                animation: fadeInUp 0.5s ease forwards;
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Smooth height transition for container */
+            .list-group {
+                transition: height 0.3s ease;
+            }
+
+            /* Thêm transition cho tất cả các thông báo */
+            .notification-item {
+                transition: all 0.3s ease;
+                transform-origin: top;
+            }
         </style>
 
     @endpush
 
     @push('script')
         <script>
+            document.querySelectorAll('.notification-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const notificationId = this.dataset.notificationId;
+                    fetch(`/notifications/mark-as-read/${notificationId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            this.closest('.notification-item').classList.add('read');
+                        }
+                    });
+                });
+            });
+
             document.getElementById('showMoreBtn')?.addEventListener('click', function() {
                 let notificationsList = '';
                 @foreach ($notifications->slice($displayLimit) as $notification)
                     @if(isset($notification->data['message']) && !empty($notification->data['message']))
                     notificationsList += `
-                    <li class="list-group-item notification-item d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-bell-fill notification-icon text-white me-3"></i>
-                            <span class="notification-message">{{ $notification->data['message'] }}</span>
-                        </div>
-                        <span class="badged bg-gradient-primary">{{ $notification->created_at->diffForHumans() }}</span>
+                    <li class="list-group-item notification-item d-flex justify-content-between align-items-center fade-in {{ $notification->read_at ? 'read' : 'unread' }}">
+                        <a href="{{ $notification->data['url'] ?? '#' }}" class="d-flex align-items-center justify-content-between text-decoration-none w-100 notification-link"
+                           data-notification-id="{{ $notification->id }}">
+                            <div class="d-flex align-items-center">
+                                @if(!$notification->read_at)
+                <span class="unread-dot"></span>
+@endif
+                <i class="bi bi-bell-fill notification-icon text-white me-3"></i>
+                <span class="notification-message">{{ $notification->data['message'] }}</span>
+                            </div>
+                            <span class="badged bg-gradient-primary">{{ $notification->created_at->diffForHumans() }}</span>
+                        </a>
                     </li>`;
                 @endif
                 @endforeach
 
-                document.querySelector('.list-group').innerHTML += notificationsList;
+                const container = document.querySelector('.list-group');
+                const fragment = document.createRange().createContextualFragment(notificationsList);
+                container.appendChild(fragment);
+
+                // Thêm animation cho các thông báo mới
+                const newItems = container.querySelectorAll('.fade-in');
+                newItems.forEach((item, index) => {
+                    item.style.animationDelay = `${index * 0.2}s`;
+                });
+
                 this.style.display = 'none';
+
+                // Thêm event listeners cho các thông báo mới
+                document.querySelectorAll('.notification-link').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        const notificationId = this.dataset.notificationId;
+                        fetch(`/notifications/mark-as-read/${notificationId}`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json'
+                            }
+                        }).then(response => {
+                            if (response.ok) {
+                                this.closest('.notification-item').classList.add('read');
+                            }
+                        });
+                    });
+                });
             });
         </script>
     @endpush

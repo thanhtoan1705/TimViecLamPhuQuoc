@@ -143,4 +143,17 @@ class PageController extends Controller
 
         return view('client.page', compact('page'));
     }
+
+    public function markNotificationAsRead($id)
+    {
+        $notification = auth()->user()->notifications()->where('id', $id)->first();
+
+        if ($notification) {
+            // Phương thức markAsRead() sẽ tự động cập nhật cột read_at với thời gian hiện tại
+            $notification->markAsRead();
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false], 404);
+    }
 }
